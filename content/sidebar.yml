@@ -4,4 +4,3 @@ website:
       - index.qmd
       - 01_diffusionIntroPost.ipynb
       - about.qmd
-      - repo_readme.ipynb
