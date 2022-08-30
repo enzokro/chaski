@@ -3,4 +3,5 @@ website:
     contents:
       - index.qmd
       - 01_diffusionIntroPost.ipynb
-      - readme.ipynb
+      - about.qmd
+      - repo_readme.ipynb
