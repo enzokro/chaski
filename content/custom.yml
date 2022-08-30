@@ -1,0 +1,14 @@
+website:
+  favicon: images/thumb.jpg
+  navbar:
+    collapse-below: lg
+    left:
+      - text: "Home"
+        file: index.qmd
+      - text: "About"
+        file: about.qmd
+    background: primary
+    search: true
+    right:
+      - icon: github
+        href: "https://github.com/enzokro/chaski"
