@@ -10,6 +10,7 @@ about:
     # (additional links excluded for brevity)
 ---
 
-## About this blog
+## Enzo's blog
 
-Applied ML for RF, speech, and video processing. Some DSP and random thoughts. 
+Research Engineer in the bay area. 
+Writings for applied ML in RF, speech, and video domains. Some DSP and theory.
