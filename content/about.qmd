@@ -1,0 +1,15 @@
+---
+title: "About"
+image: images/thumb.jpg
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com
+    # (additional links excluded for brevity)
+---
+
+## About this blog
+
+ML research for RF, speech, and video applications. Some theory, DSP, and random thoughts. 

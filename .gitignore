@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# where nbdev builds docs and, by extension, the site
+_docs/
+/.quarto/

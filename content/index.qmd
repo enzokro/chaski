@@ -1,0 +1,15 @@
+---
+title: Posts
+pagetitle: Enzo's blog
+listing:
+  contents:
+    - "0*_*Post.ipynb"
+  type: default
+  sort:
+    - "date"
+  categories: true
+section-divs: false
+toc: false
+image: images/thumb.jpg
+description: Applied ML, DSP, and other things
+---
