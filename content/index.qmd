@@ -1,5 +1,5 @@
 ---
-title: Posts
+title: Home
 pagetitle: Enzo's blog
 listing:
   contents:
