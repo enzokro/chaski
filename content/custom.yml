@@ -15,5 +15,5 @@ website:
 website:
   sidebar:
     contents:
-      - *.qmd
-      - 0*_*Post.ipynb
+      - "*.qmd"
+      - "0*_*Post.ipynb"
