@@ -1,6 +1,6 @@
 ---
 title: "About"
-image: images/dallE_about.jpg
+image: images/dallE_about.png
 about:
   template: jolla
   links:
