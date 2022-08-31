@@ -6,3 +6,5 @@ __all__ = []
 # %% ../content/02_complexRayleighInitPost.ipynb 3
 import matplotlib.pyplot as plt
 import numpy as np
+import torch
+from numpy.random import RandomState
