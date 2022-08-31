@@ -1,5 +1,5 @@
 website:
-  favicon: images/dallE_about.jpg
+  favicon: images/dallE_about.png
   navbar:
     collapse-below: lg
     left:
@@ -12,8 +12,3 @@ website:
     right:
       - icon: github
         href: "https://github.com/enzokro/chaski"
-website:
-  sidebar:
-    contents:
-      - "*.qmd"
-      - "0*_*Post.ipynb"
