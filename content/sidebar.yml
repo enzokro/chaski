@@ -3,4 +3,6 @@ website:
     contents:
       - index.qmd
       - 01_diffusionIntroPost.ipynb
+      - 02_complexRayleighInitPost.ipynb
+      - 03_normalizingSpectrogramsPost.ipynb
       - about.qmd
