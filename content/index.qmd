@@ -11,5 +11,5 @@ listing:
 section-divs: false
 toc: false
 image: images/thumb.jpg
-description: Applied ML, DSP, and random thoughts.
+description: Applied ML, DSP, random thoughts.
 ---
