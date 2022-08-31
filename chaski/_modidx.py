@@ -5,4 +5,4 @@ d = { 'settings': { 'branch': 'master',
                 'doc_host': 'https://enzokro.github.io',
                 'git_url': 'https://github.com/enzokro/chaski',
                 'lib_path': 'chaski'},
-  'syms': {'chaski.diffusionIntroPost': {}}}
+  'syms': {'chaski.complexRayleighInit': {}, 'chaski.diffusionIntroPost': {}, 'chaski.normalizingSpectrogramsPost': {}}}
