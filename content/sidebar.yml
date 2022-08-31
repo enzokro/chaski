@@ -6,3 +6,4 @@ website:
       - 02_complexRayleighInitPost.ipynb
       - 03_normalizingSpectrogramsPost.ipynb
       - about.qmd
+      - repo_index.ipynb

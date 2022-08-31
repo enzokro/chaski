@@ -31,6 +31,9 @@ website:
       - icon: github
         href: "https://github.com/enzokro/chaski"
 
+  sidebar:
+    style: "floating"
+
 metadata-files: 
   - sidebar.yml
   - custom.yml
