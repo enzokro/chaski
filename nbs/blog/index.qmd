@@ -2,8 +2,7 @@
 title: Home
 pagetitle: Enzo's blog
 listing:
-  contents:
-    - "/blog/posts/0*_*Post.ipynb"
+  contents: "posts"
   type: default
   sort:
     - "date"

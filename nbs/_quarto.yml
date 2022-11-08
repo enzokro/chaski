@@ -4,7 +4,6 @@ project:
 format:
   html:
     theme: cosmo
-    css: styles.css
     toc: true
 
 website:
@@ -12,9 +11,12 @@ website:
   open-graph: true
   repo-actions: [issue]
   navbar:
+    left:
+      - text: "Blog"
+        href: blog/index.qmd
     background: primary
     search: true
   sidebar:
     style: floating
 
-metadata-files: [nbdev.yml, sidebar.yml]
+metadata-files: [nbdev.yml]
