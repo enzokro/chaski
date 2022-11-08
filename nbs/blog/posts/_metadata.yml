@@ -1,0 +1,14 @@
+# Table of content settings
+toc: true
+toc-depth: 3
+
+# make all posts articles by default
+page-layout: article
+
+jupyter: python3
+
+badges: true
+
+comments: 
+  utterances: 
+    repo:  enzokro/chaski_comments

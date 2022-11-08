@@ -9,6 +9,8 @@ format:
     toc-depth: 4
 
 website:
+  site-url: https://enzokro.dev
+  description: "Enzo's personal Blog."
   twitter-card: true
   open-graph: true
   repo-actions: [issue]
@@ -17,8 +19,9 @@ website:
     left:
       - text: "Blog"
         href: blog/index.qmd
-      - text: "About"
-        href: repo_index.ipynb
+    right:
+      - icon: github
+        href: "https://github.com/enzokro/chaski"
     background: primary
     search: true
   sidebar:
