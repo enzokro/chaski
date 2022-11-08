@@ -1,0 +1,30 @@
+{
+  "repo_index.ipynb": {
+    "README.md": "cc3eb2f8",
+    "repo_index.html": "7d0b77e1"
+  },
+  "about.qmd": {
+    "about.html": "43d645d0"
+  },
+  "01_diffusionIntroPost.ipynb": {
+    "diffusionIntroPost.html": "05827e53"
+  },
+  "index.qmd": {
+    "index.html": "d23e0d28"
+  },
+  "02_complexRayleighInitPost.ipynb": {
+    "complexRayleighInit.html": "2df06ddc"
+  },
+  "03_normalizingSpectrogramsPost.ipynb": {
+    "normalizingSpectrogramsPost.html": "f07bd426"
+  },
+  "posts/01_diffusionIntroPost.ipynb": {
+    "01_diffusionIntroPost.html": "0584a4e3"
+  },
+  "posts/02_complexRayleighInitPost.ipynb": {
+    "02_complexRayleighInitPost.html": "9adb873a"
+  },
+  "posts/03_normalizingSpectrogramsPost.ipynb": {
+    "03_normalizingSpectrogramsPost.html": "47532087"
+  }
+}

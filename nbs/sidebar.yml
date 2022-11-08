@@ -1,0 +1,8 @@
+website:
+  sidebar:
+    contents:
+      - index.qmd
+      - /blog/posts/01_diffusionIntroPost.ipynb
+      - /blog/posts/02_complexRayleighInitPost.ipynb
+      - /blog/posts/03_normalizingSpectrogramsPost.ipynb
+      - about.qmd
