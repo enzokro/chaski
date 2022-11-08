@@ -1,5 +1,5 @@
 ---
-title: Home
+title: Posts
 pagetitle: Enzo's blog
 listing:
   contents: "posts"
@@ -10,5 +10,5 @@ listing:
 section-divs: false
 toc: false
 page-layout: full
-description: Applied ML, DSP, random thoughts.
+description: Applied ML and DSP.
 ---
