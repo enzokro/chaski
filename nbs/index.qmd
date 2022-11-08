@@ -3,7 +3,7 @@ title: Home
 pagetitle: Enzo's blog
 listing:
   contents:
-    - "0*_*Post.ipynb"
+    - "/blog/posts/0*_*Post.ipynb"
   type: default
   sort:
     - "date"
