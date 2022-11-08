@@ -1,0 +1,9 @@
+---
+title: Enzo's site
+pagetitle: Enzo's blog
+page-layout: custom
+section-divs: false
+toc: false
+image: favicon.png
+description: Applied ML, DSP, random thoughts.
+---

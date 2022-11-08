@@ -4,6 +4,6 @@ project:
 website:
   title: "chaski"
   site-url: "https://enzokro.github.io/chaski"
-  description: "blog"
+  description: "All Signal No Noise"
   repo-branch: master
   repo-url: "https://github.com/enzokro/chaski"

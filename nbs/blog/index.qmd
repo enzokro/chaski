@@ -9,6 +9,6 @@ listing:
   categories: true
 section-divs: false
 toc: false
-image: images/dallE_about.png
+page-layout: full
 description: Applied ML, DSP, random thoughts.
 ---

@@ -1,5 +1,5 @@
 website:
-  favicon: images/dallE_about.png
+  favicon: favicon.png
   navbar:
     collapse-below: lg
     left:

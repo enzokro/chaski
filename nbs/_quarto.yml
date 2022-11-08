@@ -4,16 +4,21 @@ project:
 format:
   html:
     theme: cosmo
+    css: styles.css
     toc: true
+    toc-depth: 4
 
 website:
   twitter-card: true
   open-graph: true
   repo-actions: [issue]
+  favicon: favicon.png
   navbar:
     left:
       - text: "Blog"
         href: blog/index.qmd
+      - text: "About"
+        href: repo_index.ipynb
     background: primary
     search: true
   sidebar:
