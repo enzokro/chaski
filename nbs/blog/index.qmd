@@ -7,9 +7,9 @@ listing:
   sort:
     - "date desc"
   categories: true
-  feed: true
   sort-ui: false
   filter-ui: false
+sidebar: false
 page-layout: full
 description: Applied ML and DSP.
 ---
