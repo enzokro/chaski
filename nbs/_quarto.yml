@@ -3,29 +3,18 @@ project:
 
 format:
   html:
-    theme: flatly
+    theme: cosmo
     css: styles.css
     toc: true
-    toc-depth: 4
 
 website:
-  site-url: https://enzokro.dev
-  description: "Enzo's personal Blog."
   twitter-card: true
   open-graph: true
   repo-actions: [issue]
-  favicon: favicon.png
-  # sidebar:
-  #   style: floating
-  #   contents: "*.ipynb"
   navbar:
-    left:
-      - text: "Blog"
-        href: blog/index.qmd
-    right:
-      - icon: github
-        href: "https://github.com/enzokro/chaski"
     background: primary
     search: true
+  sidebar:
+    style: floating
 
-metadata-files: [nbdev.yml]
+metadata-files: [nbdev.yml, sidebar.yml]
