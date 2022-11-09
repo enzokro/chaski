@@ -4,6 +4,11 @@
 __all__ = ['get_complex_inits']
 
 # %% ../nbs/api/complex_inits.ipynb 2
+'''
+Code from blog post:
+    https://enzokro.dev/blog/posts/2022-09-01-rayleigh-init/
+''' 
+
 import numpy as np
 import torch
 import torch.nn as nn
