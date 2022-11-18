@@ -30,4 +30,6 @@ d = { 'settings': { 'branch': 'master',
                                                                                     'chaski/guidance_tfm.py'),
                                      'chaski.guidance_tfm.TNormGuidance': ('api/guidance_tfm.html#tnormguidance', 'chaski/guidance_tfm.py'),
                                      'chaski.guidance_tfm.TNormGuidance.guide': ( 'api/guidance_tfm.html#tnormguidance.guide',
-                                                                                  'chaski/guidance_tfm.py')}}}
+                                                                                  'chaski/guidance_tfm.py'),
+                                     'chaski.guidance_tfm.get_cos_sched': ( 'api/guidance_tfm.html#get_cos_sched',
+                                                                            'chaski/guidance_tfm.py')}}}
