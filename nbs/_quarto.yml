@@ -1,6 +1,11 @@
 project:
   type: website
   output-dir: _docs
+  render:
+    - "*.qmd"
+    - "*.ipynb"
+    - "!api/"
+    - "!drafts/"
 
 format:
   html:
