@@ -1,28 +1,35 @@
 project:
   type: website
+  output-dir: _docs
 
 format:
   html:
+    highlight-style: a11y
     theme: flatly
     css: styles.css
     toc: true
     toc-depth: 4
 
 website:
-  site-url: https://enzokro.dev
+  title: "chaski"
   description: "Enzo's personal Blog."
+  site-url: "https://enzokro.dev"
+  repo-branch: master
+  repo-url: "https://github.com/enzokro/chaski"
+  repo-actions: [issue]
   twitter-card: true
   open-graph: true
-  repo-actions: [issue]
   favicon: favicon.png
   navbar:
+    pinned: true
     left:
-      - text: "Blog"
-        href: blog/index.qmd
+      - text: "About"
+        href: about.ipynb
+        icon: person-circle
     right:
+      - icon: twitter
+        href: "https://twitter.com/enzokro_"
       - icon: github
-        href: "https://github.com/enzokro/chaski"
+        href: "https://github.com/enzokro"
     background: primary
     search: true
-
-metadata-files: [nbdev.yml]
