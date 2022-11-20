@@ -4,7 +4,6 @@ project:
 
 format:
   html:
-    highlight-style: a11y
     theme: flatly
     css: styles.css
     toc: true
