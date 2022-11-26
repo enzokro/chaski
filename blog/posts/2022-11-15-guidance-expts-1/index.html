@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="enzokro">
+<meta name="dcterms.date" content="2022-11-13">
+
+<title>chaski - Intro to normalizing and scheduling Classifier-free Guidance</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<meta property="og:title" content="chaski - Intro to normalizing and scheduling Classifier-free Guidance">
+<meta property="og:description" content="This notebook covers the results of dynamically changing the guidance parameter during Classifier-Free Guidance (CFG).">
+<meta property="og:image" content="https://enzokro.dev/blog/posts/2022-11-15-guidance-expts-1/cat2.jpeg">
+<meta property="og:site-name" content="chaski">
+<meta name="twitter:title" content="chaski - Intro to normalizing and scheduling Classifier-free Guidance">
+<meta name="twitter:description" content="This notebook covers the results of dynamically changing the guidance parameter during Classifier-Free Guidance (CFG).">
+<meta name="twitter:image" content="https://enzokro.dev/blog/posts/2022-11-15-guidance-expts-1/cat2.jpeg">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">chaski</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"><i class="bi bi-person-circle" role="img">
+</i> 
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/enzokro_"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/enzokro"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">Background</a>
+  <ul>
+  <li><a href="#classifier-free-guidance-overview" id="toc-classifier-free-guidance-overview" class="nav-link" data-scroll-target="#classifier-free-guidance-overview">Classifier-free Guidance overview</a>
+  <ul class="collapse">
+  <li><a href="#cfg-formula" id="toc-cfg-formula" class="nav-link" data-scroll-target="#cfg-formula">CFG Formula</a></li>
+  </ul></li>
+  <li><a href="#normalizing-the-guidance" id="toc-normalizing-the-guidance" class="nav-link" data-scroll-target="#normalizing-the-guidance">Normalizing the guidance</a></li>
+  <li><a href="#scheduling-the-guidance" id="toc-scheduling-the-guidance" class="nav-link" data-scroll-target="#scheduling-the-guidance">Scheduling the guidance</a></li>
+  <li><a href="#combining-the-changes" id="toc-combining-the-changes" class="nav-link" data-scroll-target="#combining-the-changes">Combining the changes</a></li>
+  </ul></li>
+  <li><a href="#coding-setup" id="toc-coding-setup" class="nav-link" data-scroll-target="#coding-setup">Coding Setup</a>
+  <ul>
+  <li><a href="#python-imports" id="toc-python-imports" class="nav-link" data-scroll-target="#python-imports">Python imports</a></li>
+  <li><a href="#prompt-for-image-generations" id="toc-prompt-for-image-generations" class="nav-link" data-scroll-target="#prompt-for-image-generations">Prompt for image generations</a></li>
+  <li><a href="#picking-a-diffusion-model" id="toc-picking-a-diffusion-model" class="nav-link" data-scroll-target="#picking-a-diffusion-model">Picking a Diffusion model</a></li>
+  <li><a href="#utility-functions." id="toc-utility-functions." class="nav-link" data-scroll-target="#utility-functions.">Utility functions.</a></li>
+  </ul></li>
+  <li><a href="#splitting-the-diffusion-pipeline." id="toc-splitting-the-diffusion-pipeline." class="nav-link" data-scroll-target="#splitting-the-diffusion-pipeline.">Splitting the Diffusion pipeline.</a></li>
+  <li><a href="#cosine-schedules-from-timm" id="toc-cosine-schedules-from-timm" class="nav-link" data-scroll-target="#cosine-schedules-from-timm">Cosine schedules from <code>timm</code></a>
+  <ul>
+  <li><a href="#plotting-the-cosine-schedules" id="toc-plotting-the-cosine-schedules" class="nav-link" data-scroll-target="#plotting-the-cosine-schedules">Plotting the Cosine schedules</a></li>
+  </ul></li>
+  <li><a href="#the-guidance-transform-class" id="toc-the-guidance-transform-class" class="nav-link" data-scroll-target="#the-guidance-transform-class">The Guidance Transform class</a></li>
+  <li><a href="#creating-guidance-experiments" id="toc-creating-guidance-experiments" class="nav-link" data-scroll-target="#creating-guidance-experiments">Creating guidance experiments</a>
+  <ul>
+  <li><a href="#making-schedules-for-guidancetfm" id="toc-making-schedules-for-guidancetfm" class="nav-link" data-scroll-target="#making-schedules-for-guidancetfm">Making <code>schedules</code> for <code>GuidanceTfm</code></a></li>
+  <li><a href="#recreating-the-forum-ideas" id="toc-recreating-the-forum-ideas" class="nav-link" data-scroll-target="#recreating-the-forum-ideas">Recreating the forum ideas</a></li>
+  <li><a href="#combining-scales-and-schedules" id="toc-combining-scales-and-schedules" class="nav-link" data-scroll-target="#combining-scales-and-schedules">Combining scales and schedules</a></li>
+  </ul></li>
+  <li><a href="#generating-images" id="toc-generating-images" class="nav-link" data-scroll-target="#generating-images">Generating images</a></li>
+  <li><a href="#running-the-guidance-experiments." id="toc-running-the-guidance-experiments." class="nav-link" data-scroll-target="#running-the-guidance-experiments.">Running the guidance experiments.</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
+  <ul>
+  <li><a href="#showing-all-images-side-by-side" id="toc-showing-all-images-side-by-side" class="nav-link" data-scroll-target="#showing-all-images-side-by-side">Showing all images side by side</a></li>
+  <li><a href="#biggest-improvement-cosine-with-t-norm-and-fullnorm" id="toc-biggest-improvement-cosine-with-t-norm-and-fullnorm" class="nav-link" data-scroll-target="#biggest-improvement-cosine-with-t-norm-and-fullnorm">Biggest Improvement: Cosine with T-Norm and FullNorm</a></li>
+  <li><a href="#cosine-t-norm-vs.-cosine-fullnorm" id="toc-cosine-t-norm-vs.-cosine-fullnorm" class="nav-link" data-scroll-target="#cosine-t-norm-vs.-cosine-fullnorm">Cosine T-Norm vs.&nbsp;Cosine FullNorm</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a>
+  <ul>
+  <li><a href="#more-examples" id="toc-more-examples" class="nav-link" data-scroll-target="#more-examples">More examples</a></li>
+  </ul></li>
+  <li><a href="#appendix-more-comparisons" id="toc-appendix-more-comparisons" class="nav-link" data-scroll-target="#appendix-more-comparisons">Appendix: More comparisons</a>
+  <ul>
+  <li><a href="#original-vs.-basenorm" id="toc-original-vs.-basenorm" class="nav-link" data-scroll-target="#original-vs.-basenorm">Original vs.&nbsp;BaseNorm</a></li>
+  <li><a href="#original-vs.-t-norm" id="toc-original-vs.-t-norm" class="nav-link" data-scroll-target="#original-vs.-t-norm">Original vs.&nbsp;T-Norm</a></li>
+  <li><a href="#original-vs.-fullnorm" id="toc-original-vs.-fullnorm" class="nav-link" data-scroll-target="#original-vs.-fullnorm">Original vs.&nbsp;FullNorm</a></li>
+  <li><a href="#original-vs.-cosine" id="toc-original-vs.-cosine" class="nav-link" data-scroll-target="#original-vs.-cosine">Original vs.&nbsp;Cosine</a></li>
+  <li><a href="#original-vs.-basenorm-with-cosine" id="toc-original-vs.-basenorm-with-cosine" class="nav-link" data-scroll-target="#original-vs.-basenorm-with-cosine">Original vs.&nbsp;BaseNorm with Cosine</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Intro to normalizing and scheduling Classifier-free Guidance</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">diffusion</div>
+    <div class="quarto-category">classifier-free guidance</div>
+    <div class="quarto-category">deep learning</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>enzokro </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 13, 2022</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<blockquote class="blockquote">
+<p>Changing the Classifier-Free Guidance parameter during diffusion.</p>
+</blockquote>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>This notebook covers the results of dynamically changing the guidance parameter during Classifier-Free Guidance (CFG). Most notably, we create a <a href="https://enzokro.github.io/chaski/api/guidance_tfm.html#guidancetfm"><code>GuidanceTfm</code></a> class so that others may easily import these ideas and start experimenting.</p>
+</section>
+<section id="background" class="level1">
+<h1>Background</h1>
+<p>We build on a great series of discussions on the <a href="https://forums.fast.ai/">fast.ai forums</a> about Classifier-Free Guidance. Some of the users involved were: (please let me know if I missed anyone):</p>
+<ul>
+<li><a href="https://twitter.com/FahimFarook">FahimF</a><br>
+</li>
+<li><a href="https://twitter.com/sebderhy">Seb</a><br>
+</li>
+<li><a href="https://twitter.com/rekil_prashanth">Rekil</a><br>
+</li>
+<li><a href="https://twitter.com/namrata_kamath">Namrata</a><br>
+</li>
+<li><a href="https://twitter.com/jeremyphoward">Jeremy</a></li>
+</ul>
+<p>In these talks, two two ideas came up for better Guidance:</p>
+<ul>
+<li>Normalizing the latents.<br>
+</li>
+<li>Scheduling the guidance scalar value.</li>
+</ul>
+<p>To see why these are good ideas, let’s quickly recap how Classifier-free Guidance works.</p>
+<section id="classifier-free-guidance-overview" class="level2">
+<h2 class="anchored" data-anchor-id="classifier-free-guidance-overview">Classifier-free Guidance overview</h2>
+<p><a href="https://arxiv.org/abs/2207.12598">Classifier-free Guidance</a> is a way of steering the outputs of Diffusion models to better align with a given input. It is a key aspect of how we are able to type in a text prompt and get back a relevant, generated image.</p>
+<p>CFG was needed because, by default, a Diffusion model starts from pure noise and randomly “walks” to unearth an image. Classifier-free Guidance can instead align the output according to a known, specific input. This known input is usually a meaningful piece of context like a sentence, or a segment of speech, or even another image.</p>
+<p>In summary: Instead of randomly walking to generate random images, CFG allows Diffusion models to create targeted outputs.</p>
+<section id="cfg-formula" class="level3">
+<h3 class="anchored" data-anchor-id="cfg-formula">CFG Formula</h3>
+<p>CFG updates the unconditioned latents to better match the conditional inputs as follows:</p>
+<p><span class="math display">\[\hat{\epsilon}(x \ |\  y) = \epsilon(x) + G\left(\ \epsilon(x\  |\  y) - \epsilon(x)\ \right)\]</span></p>
+<p>We can think of this equation as a type of moving average. To be more specific, the terms are:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th><strong>Equation Term</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\epsilon(x)\)</span></td>
+<td>Unconditioned noise prediction</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\epsilon(x\ |\ y)\)</span></td>
+<td>Conditional noise prediction</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(G\)</span></td>
+<td>Guidance scaling factor</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\hat{\epsilon}(x\ |\ y)\)</span></td>
+<td>The final, guided prediction.</td>
+</tr>
+</tbody>
+</table>
+<p>As several people have noticed, this update is not balanced. The reason for the unbalance is that <span class="math inline">\(G\)</span> is usually a large, fixed scalar. For example the default <span class="math inline">\(G\)</span> in Stable Diffusion pipelines is <span class="math inline">\(G = 7.5\)</span>.</p>
+<p>This brings up two questions:</p>
+<ul>
+<li>Does a large <span class="math inline">\(G\)</span> make the vectors too different?<br>
+</li>
+<li>Should <span class="math inline">\(G\)</span> be a fixed constant throughout the entire diffusion process?</li>
+</ul>
+<p>Fahim compiled the forum’s answers to these questions in <a href="https://github.com/FahimF/fai-exp/blob/main/guidance_variations.ipynb">this notebook</a>. His work compares both different normalizations and schedules for the Guidance parameter.</p>
+<p>At first glance, it seems that both normalizing and scheduling the diffusion parameter improves the generated images. These better images are achieved for “free”, in the sense that we didn’t need any fine-tuning or new data.</p>
+<p>Let’s take a look at some of the details and benefits of a dynamic guidance parameter.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As <a href="https://twitter.com/poolio/status/1584699239342694402?s=20&amp;t=DxGXG7GsU6uLFqUN55tHWw">Ben Poole</a> points out in Jeremy’s twitter thread, these ideas are not new on their own.</p>
+<p>One of the scalings was described in <a href="https://arxiv.org/pdf/2205.15370.pdf">Guided-TTS</a> for Speech diffusion. The normalizations are also related to the ones in <a href="https://arxiv.org/pdf/2205.12952.pdf">Pretraining is All You Need for Image-to-Image Translation</a> by Wang et. al.&nbsp;</p>
+<p>Our normalizations are similar in spirit to the <code>Dynamic Thresholding</code> in the <a href="https://arxiv.org/abs/2205.11487">Imagen paper</a>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="normalizing-the-guidance" class="level2">
+<h2 class="anchored" data-anchor-id="normalizing-the-guidance">Normalizing the guidance</h2>
+<p>This notebook explores two types of normalization we call <code>BaseNorm</code> and <code>T-Norm</code>:</p>
+<ul>
+<li><p><code>BaseNorm</code>: Normalize the entire prediction by the ratio of the conditioned and unconditioned norms.<br>
+<span class="math display">\[\hat{\epsilon}(x \ |\  y)_\text{BaseNorm} = \hat{\epsilon}(x \ |\  y)\cdot \frac{\|\epsilon(x)\|}{\|\epsilon(x \ |\  y)\|}\]</span></p></li>
+<li><p><code>T-Norm</code>: Normalize the difference of the conditioned and unconditioned predictions. <span class="math display">\[\hat{\epsilon}(x \ |\  y)_\text{TNorm} = \epsilon(x) + G\ \frac{\epsilon(x \ |\  y) - \epsilon(x)}{\|\epsilon(x \ |\  y) - \epsilon(x)\|\cdot \|\epsilon(x)\|}\]</span></p></li>
+</ul>
+</section>
+<section id="scheduling-the-guidance" class="level2">
+<h2 class="anchored" data-anchor-id="scheduling-the-guidance">Scheduling the guidance</h2>
+<p>In standard CFG the guidance scaling value is fixed. But since the final and initial images are so different, should we expect that the same value is optimal for the entire time?</p>
+<p>To explore this question we can borrow from Neural Network optimizers. Specifically, our idea of a “guidance schedule” is based on the popular schedules for learning rates.</p>
+<p>This notebook explores two new schedules for the CFG parameter <span class="math inline">\(G\)</span>:</p>
+<ul>
+<li>Cosine<br>
+</li>
+<li>Cosine with Warmup.</li>
+</ul>
+</section>
+<section id="combining-the-changes" class="level2">
+<h2 class="anchored" data-anchor-id="combining-the-changes">Combining the changes</h2>
+<p>The natural idea is to combine these approaches: we should both normalize <em>and</em> schedule <span class="math inline">\(G\)</span>.</p>
+<p>After exploring each change in isolation we combine them to see their joint effects.</p>
+</section>
+</section>
+<section id="coding-setup" class="level1">
+<h1>Coding Setup</h1>
+<section id="python-imports" class="level2">
+<h2 class="anchored" data-anchor-id="python-imports">Python imports</h2>
+<p>First we import the python, PyTorch, and HuggingFace modules that we need. We also use the <code>timm</code> library for its built-in Cosine schedules.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> List</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> types <span class="im">import</span> SimpleNamespace</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> textwrap <span class="im">import</span> wrap</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm.auto <span class="im">import</span> tqdm </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># imports for diffusion models</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> logging</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> CLIPTextModel, CLIPTokenizer</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> huggingface_hub <span class="im">import</span> notebook_login</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusers <span class="im">import</span> StableDiffusionPipeline</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusers <span class="im">import</span> AutoencoderKL, UNet2DConditionModel</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusers <span class="im">import</span> LMSDiscreteScheduler</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># use cosine scheduler from timm</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timm.scheduler.cosine_lr <span class="im">import</span> CosineLRScheduler</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timm.optim <span class="im">import</span> create_optimizer</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> timm <span class="im">import</span> create_model</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co"># for clean outputs</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>logging.set_verbosity_error()</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co"># set the hardware device</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> <span class="st">"cuda"</span> <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> <span class="st">"mps"</span> <span class="cf">if</span> torch.has_mps <span class="cf">else</span> <span class="st">"cpu"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>2022-11-20 19:51:47.940762: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library libcudart.so.11.0</code></pre>
+</div>
+</div>
+</section>
+<section id="prompt-for-image-generations" class="level2">
+<h2 class="anchored" data-anchor-id="prompt-for-image-generations">Prompt for image generations</h2>
+<p>We use the following prompt to test our guidance changes:</p>
+<blockquote class="blockquote">
+<p>“a photograph of an astronaut riding a horse”</p>
+</blockquote>
+<p>This is the same prompt folks used in the forums. It seems like a good, simple starting point for future runs.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the input prompt for diffusion</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"a photograph of an astronaut riding a horse"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="picking-a-diffusion-model" class="level2">
+<h2 class="anchored" data-anchor-id="picking-a-diffusion-model">Picking a Diffusion model</h2>
+<p>We also have to pick a Diffusion model. Some possible options are:</p>
+<ul>
+<li><code>stable-Diffusion-v1-4</code> from CompVis.<br>
+</li>
+<li><code>stable-Diffusion v1-5</code> from Runway.ml.</li>
+</ul>
+<p>Here we use the Stable Diffusion <code>v1-4</code> model from CompVis.</p>
+<p>But it is worth mentioning that this code will work with any Diffusion model name on the HuggingFace hub.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set the diffusion model</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"CompVis/stable-diffusion-v1-4"</span> <span class="co"># "runwayml/stable-diffusion-v1-5"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="utility-functions." class="level2">
+<h2 class="anchored" data-anchor-id="utility-functions.">Utility functions.</h2>
+<p>Next we define some helper functions.</p>
+<p>These helpers create the text embeddings, convert latent features into images, and plot the decoded images. All of these functions are directly from Fahim’s notebook.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> text_embeddings(prompts, maxlen<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Extracts text embeddings from the given `prompts`."</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    maxlen <span class="op">=</span> maxlen <span class="kw">or</span> tokenizer.model_max_length</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    inp <span class="op">=</span> tokenizer(prompts, padding<span class="op">=</span><span class="st">"max_length"</span>, max_length<span class="op">=</span>maxlen, truncation<span class="op">=</span><span class="va">True</span>, return_tensors<span class="op">=</span><span class="st">"pt"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> text_encoder(inp.input_ids.to(device))[<span class="dv">0</span>]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> image_from_latents(latents):</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Scales the diffusion `latents` and turns them into a PIL Image."</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># scale and decode the latents</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    latents <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> <span class="fl">0.18215</span> <span class="op">*</span> latents</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> vae.decode(latents).sample[<span class="dv">0</span>]</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create PIL image</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> (data <span class="op">/</span> <span class="dv">2</span> <span class="op">+</span> <span class="fl">0.5</span>).clamp(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> data.cpu().permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>).<span class="bu">float</span>().numpy()</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> (data <span class="op">*</span> <span class="dv">255</span>).<span class="bu">round</span>().astype(<span class="st">"uint8"</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    image <span class="op">=</span> Image.fromarray(data)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> image</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> show_image(image, scale<span class="op">=</span><span class="fl">0.5</span>):</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Displays the given `image` resized based on `scale`."</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    img <span class="op">=</span> image.resize(((<span class="bu">int</span>)(image.width <span class="op">*</span> scale), (<span class="bu">int</span>)(image.height <span class="op">*</span> scale)))</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    display(img)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> img</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> image_grid(images, rows <span class="op">=</span> <span class="dv">1</span>, width<span class="op">=</span><span class="dv">256</span>, height<span class="op">=</span><span class="dv">256</span>, title<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Display an array of images in a nice grid, or single row"</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    count <span class="op">=</span> <span class="bu">len</span>(images)</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    cols <span class="op">=</span> <span class="bu">int</span>(count <span class="op">/</span> rows)</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> cols <span class="op">*</span> rows <span class="op">&lt;</span> count:</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>        rows <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate fig size based on individual image sizes    </span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    px <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>plt.rcParams[<span class="st">'figure.dpi'</span>]</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> cols <span class="op">*</span> width <span class="op">*</span> px</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add some extra space for the caption/title since that can wrap</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    h <span class="op">=</span> (rows <span class="op">*</span> height <span class="op">*</span> px) <span class="op">+</span> (rows <span class="op">*</span> <span class="dv">30</span> <span class="op">*</span> px)</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(rows, cols, figsize<span class="op">=</span>(w, h))</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> y <span class="kw">in</span> <span class="bu">range</span>(rows):</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(cols):</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>            index <span class="op">=</span> y<span class="op">*</span>cols <span class="op">+</span> x</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>            ref <span class="op">=</span> axes[x] <span class="cf">if</span> rows <span class="op">==</span> <span class="dv">1</span> <span class="cf">else</span> axes[y] <span class="cf">if</span> cols <span class="op">==</span> <span class="dv">1</span> <span class="cf">else</span> axes[y, x]</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>            ref.axis(<span class="st">'off'</span>)</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> index <span class="op">&gt;</span> count <span class="op">-</span> <span class="dv">1</span>:</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>            img <span class="op">=</span> images[index]</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>            txt <span class="op">=</span> <span class="ss">f'Frame: </span><span class="sc">{</span>index<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> title <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="bu">isinstance</span>(title, <span class="bu">str</span>):</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>                    txt <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>title<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>index<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>                <span class="cf">elif</span> <span class="bu">isinstance</span>(title, List):</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>                    txt <span class="op">=</span> title[index]</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>            <span class="co"># small change for bigger, more visible titles</span></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>            txt <span class="op">=</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(wrap(txt, width<span class="op">=</span><span class="dv">70</span>))</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>            ref.set_title(txt, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>            ref.imshow(img)</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>            ref.axis(<span class="st">'off'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="splitting-the-diffusion-pipeline." class="level1">
+<h1>Splitting the Diffusion pipeline.</h1>
+<p>To test our hypotheses we need to change the parameter <span class="math inline">\(G\)</span> during diffusion.</p>
+<p>That means we need more control than what is available via HuggingFace’s <code>pipeline</code> API.</p>
+<p>We can achieve this finer control by separately loading each piece of the Stable Diffusion pipeline. Then, we can use these pieces to write our own image generation loop.</p>
+<p>The function <code>get_sd_pieces()</code> returns the following pieces for a given Diffusion model:</p>
+<ul>
+<li>Tokenizer.</li>
+<li>Text Encoder.<br>
+</li>
+<li>Variational Auto-Encoder (VAE).<br>
+</li>
+<li>U-Net.<br>
+</li>
+<li>Sampler.</li>
+</ul>
+<blockquote class="blockquote">
+<p>Note: We are using a different <span class="math inline">\(\text{VAE}\)</span> from <code>stability.ai</code> that was fine-tuned for more steps.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_sd_pieces(model_name, dtype<span class="op">=</span>torch.float32):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Loads and returns the individual pieces in a Diffusion pipeline."</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create the tokenizer and text encoder</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    tokenizer <span class="op">=</span> CLIPTokenizer.from_pretrained(</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        model_name,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        subfolder<span class="op">=</span><span class="st">"tokenizer"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        torch_dtype<span class="op">=</span>dtype)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    text_encoder <span class="op">=</span> CLIPTextModel.from_pretrained(</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        model_name,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        subfolder<span class="op">=</span><span class="st">"text_encoder"</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        torch_dtype<span class="op">=</span>dtype).to(device)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># we are using a VAE from stability that was trained for longer than the baseline </span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    vae <span class="op">=</span> AutoencoderKL.from_pretrained(<span class="st">"stabilityai/sd-vae-ft-ema"</span>, torch_dtype<span class="op">=</span>dtype).to(device)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">## </span><span class="al">NOTE</span><span class="co">: we can also use these vae from Stability that were trained for even longer</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#vae = AutoencoderKL.from_pretrained("stabilityai/sd-vae-ft-mse", torch_dtype=dtype).to(device)</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># build the unet</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    unet <span class="op">=</span> UNet2DConditionModel.from_pretrained(</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>        model_name,</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>        subfolder<span class="op">=</span><span class="st">"unet"</span>,</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>        torch_dtype<span class="op">=</span>dtype).to(device)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># enable unet attention slicing</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    slice_size <span class="op">=</span> unet.config.attention_head_dim <span class="op">//</span> <span class="dv">2</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    unet.set_attention_slice(slice_size)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># build the scheduler</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    scheduler <span class="op">=</span> LMSDiscreteScheduler.from_config(model_name, subfolder<span class="op">=</span><span class="st">"scheduler"</span>)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>        tokenizer,</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>        text_encoder,</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>        vae,</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>        unet,</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>        scheduler,</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="co"># load the individual diffusion pieces</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>pieces <span class="op">=</span> get_sd_pieces(model_name, dtype<span class="op">=</span>torch.float16)</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>(tokenizer, text_encoder, vae, unet, scheduler) <span class="op">=</span> pieces</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="cosine-schedules-from-timm" class="level1">
+<h1>Cosine schedules from <code>timm</code></h1>
+<p>We test two different schedules for <span class="math inline">\(G\)</span>:</p>
+<ul>
+<li>Cosine schedule.<br>
+</li>
+<li>Cosine with Warmup.</li>
+</ul>
+<p>The HuggingFace <code>pipeline</code> uses 50 diffusion timesteps by default. To keep things comparable, we also use 50 steps.</p>
+<p>The Cosine schedule starts from the default <span class="math inline">\(G_\text{max} = 7.5\)</span>. It then slowly works down to a minimum of <span class="math inline">\(G_\text{min} = 0.15\)</span>.</p>
+<p>We also make a schedule with Warmup. Warmup means that <span class="math inline">\(G\)</span> first starts low, then linearly works its way up to <span class="math inline">\(G_\text{max}\)</span>. Only then does it start decreasing back down to <span class="math inline">\(G_\text{min}\)</span>. As a starting point, we warmup during the first 10% of the Diffusion process (aka during the first 5 steps).</p>
+<p>For T-Norm, we use a slightly different Cosine schedule with smaller values. We need this because a large <span class="math inline">\(G\)</span> with T-Norm makes the problem we are trying to solve (<span class="math inline">\(G\)</span> too large) even worse. The smaller T-Norm values also align much better with how we typically think about mixing or moving averages.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># parameters for CFG cosine schedules</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>max_g <span class="op">=</span> <span class="fl">7.5</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>min_g <span class="op">=</span> <span class="fl">0.15</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>num_steps <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># warmup from the minimum over 10% of the process</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>warmup_ratio <span class="op">=</span> <span class="fl">0.10</span>  </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>warmup_start <span class="op">=</span> min_g</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># cosine schedule parameters</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>cos_params <span class="op">=</span> {</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_val'</span>:         max_g,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_steps'</span>:       num_steps,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'min_val'</span>:         warmup_start,</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'warmup_fact'</span>:     <span class="dv">0</span>,</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co"># warmup-cosine parameters</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>warmup_cos_params <span class="op">=</span> {</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_val'</span>:         max_g,</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">'warmup_start'</span>:    warmup_start,</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_steps'</span>:       num_steps,</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">'min_val'</span>:         warmup_start,</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">'warmup_init_val'</span>: warmup_start,</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">'warmup_fact'</span>:     warmup_ratio,</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="co"># cosine schedule for T-Norm guidance</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>t_scale_params <span class="op">=</span> {</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_val'</span>:         <span class="fl">0.25</span>,</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_steps'</span>:       num_steps,</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">'min_val'</span>:         <span class="fl">0.05</span>,</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We use the Cosine scheduler in <code>timm</code> for convenience.</p>
+<p>That means we need a bit of overhead code. Mainly, we need a dummy PyTorch optimizer and module.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create dummy model</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> torch.nn.Linear(<span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># arguments for the dummy optimizer</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>default_opt_args <span class="op">=</span> {</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'opt'</span>:           <span class="st">'adam'</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'momentum'</span>:      <span class="fl">1.0</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'weight_decay'</span>:  <span class="dv">0</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_cos_sched(<span class="op">**</span>sched_params):</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Creates a Cosine schedule using the `timm` library."""</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># number of diffusion iterations</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    num_steps <span class="op">=</span> sched_params[<span class="st">'num_steps'</span>]</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    min_val, max_val <span class="op">=</span> sched_params[<span class="st">'min_val'</span>], sched_params[<span class="st">'max_val'</span>]</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute number of warmup steps, if given</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> sched_params.get(<span class="st">'warmup_fact'</span>):</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        warmup_t <span class="op">=</span> <span class="bu">int</span>(num_steps <span class="op">*</span> sched_params[<span class="st">'warmup_fact'</span>])</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>        warmup_init_val <span class="op">=</span> sched_params.get(<span class="st">'warmup_init_val'</span>, <span class="dv">0</span>)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>        warmup_t <span class="op">=</span> warmup_init_val <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get the dummy optimizer for the timm scheduler</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    opt_args <span class="op">=</span> SimpleNamespace(lr<span class="op">=</span>max_val, <span class="op">**</span>default_opt_args)</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    optimizer <span class="op">=</span> create_optimizer(opt_args, model)</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create the cosine schedule</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    lr_sched <span class="op">=</span> CosineLRScheduler(</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>        optimizer,</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>        t_initial<span class="op">=</span>num_steps,</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>        lr_min<span class="op">=</span>min_val,</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>        warmup_t<span class="op">=</span>warmup_t,</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>        warmup_lr_init<span class="op">=</span>warmup_init_val,</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># extract and return the CFG values at each iteration</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    cfg_per_step <span class="op">=</span> [lr_sched.get_epoch_values(step)[<span class="dv">0</span>] <span class="cf">for</span> step <span class="kw">in</span> <span class="bu">range</span>(num_steps)]</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cfg_per_step</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now that we have both the parameters and builder functions for Cosine schedules, we can create them:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># baseline cosine guidance schedule</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>cos_g <span class="op">=</span> get_cos_sched(<span class="op">**</span>cos_params)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># cosine schedule with warmup </span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>warmup_cos_g <span class="op">=</span> get_cos_sched(<span class="op">**</span>warmup_cos_params)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># cosine schedule with smaller G values for T-Norm</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>t_scale_cos_g <span class="op">=</span> get_cos_sched(<span class="op">**</span>t_scale_params)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="plotting-the-cosine-schedules" class="level2">
+<h2 class="anchored" data-anchor-id="plotting-the-cosine-schedules">Plotting the Cosine schedules</h2>
+<p>Let’s plot these new schedules to compare them against the previous, constant guidance.</p>
+<div class="cell">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="the-guidance-transform-class" class="level1">
+<h1>The Guidance Transform class</h1>
+<p>Here we create the Guidance Transformation class, <a href="https://enzokro.github.io/chaski/api/guidance_tfm.html#guidancetfm"><code>GuidanceTfm</code></a>. This class is heavily inspired by other <a href="https://fastai1.fast.ai/vision.transform.html">Transforms in the fast.ai library</a>.</p>
+<p><a href="https://enzokro.github.io/chaski/api/guidance_tfm.html#guidancetfm"><code>GuidanceTfm</code></a> has an <code>encode()</code> method that takes the following inputs:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th><strong>encode Argument</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\epsilon(x)\)</span></td>
+<td>Unconditioned latents</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\epsilon(x\ |\ y)\)</span></td>
+<td>Conditional latents</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\text{idx}\)</span></td>
+<td>The current diffusion step</td>
+</tr>
+</tbody>
+</table>
+<p>For convenience we call the unconditioned latents “<span class="math inline">\(\text{u}\)</span>” and the conditioned latents “<span class="math inline">\(\text{t}\)</span>”.</p>
+<p>The base class applies a standard CFG update. However, there are also methods to pre and post process the latents. The goal of these other methods is to easily try different and custom normalizations. For example, we can implement all of our normalization ideas with these methods.</p>
+<p>Lastly, <a href="https://enzokro.github.io/chaski/api/guidance_tfm.html#guidancetfm"><code>GuidanceTfm</code></a> takes one initialization parameter: <code>schedules</code>. This is a dictionary that maps a parameter name to an array-like, indexable sequence of values. This sequence is how we tap in to the scheduled <span class="math inline">\(G\)</span> value at timestep <span class="math inline">\(\text{idx}\)</span>. And if we ever want to include or schedule other parameters, we can add them to <code>schedules</code> and access them in any of the <code>encode()</code> functions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> GuidanceTfm:</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Baseline Classifier-free Guidance for Difussion."</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="st">"CFGuidance"</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, schedules, <span class="op">*</span>args, <span class="op">**</span>kwargs):</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.schedules <span class="op">=</span> schedules</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> encode(<span class="va">self</span>, u, t, idx<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">"Applies guidance on `u` and `t` with optional pre/post processing."</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.pre_proc(u, t, idx)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.guide(u, t, idx)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.post_proc(u, t, idx)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.pred</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> guide(<span class="va">self</span>, u, t, idx<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        <span class="co">"Mixes latents `u` and `t` based on guidance schedule for `g`."</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.pred <span class="op">=</span> u <span class="op">+</span> (<span class="va">self</span>.scheduler(<span class="st">'g'</span>, idx) <span class="op">*</span> (t <span class="op">-</span> u))</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> pre_proc (<span class="va">self</span>, u, t, idx<span class="op">=</span><span class="va">None</span>): <span class="cf">pass</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> post_proc(<span class="va">self</span>, u, t, idx<span class="op">=</span><span class="va">None</span>): <span class="cf">pass</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> scheduler(<span class="va">self</span>, name, idx):</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>        <span class="co">"Gets the scheduled value for parameter `name` at timestep `idx`."</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.schedules.get(name)[idx]</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BaseNormGuidance(GuidanceTfm):</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Scales the noise prediction by its overall norm."</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="st">"BaseNormGuidance"</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> post_proc(<span class="va">self</span>, u, t, idx<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.pred <span class="op">=</span> <span class="va">self</span>.pred <span class="op">*</span> (torch.linalg.norm(u) <span class="op">/</span> torch.linalg.norm(<span class="va">self</span>.pred))</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TNormGuidance(GuidanceTfm):</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Scales the latent mix of `t - u`"</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="st">"TNormGuidance"</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> guide(<span class="va">self</span>, u, t, idx<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.pred <span class="op">=</span> u <span class="op">+</span> (<span class="va">self</span>.scheduler(<span class="st">'g'</span>, idx) <span class="op">*</span> (t <span class="op">-</span> u)) <span class="op">/</span> torch.linalg.norm(t <span class="op">-</span> u) <span class="op">*</span> torch.linalg.norm(u)</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FullNormGuidance(TNormGuidance, BaseNormGuidance):</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Applies both Base and T-Norm on the noise prediction."</span></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="st">"FullNormGuidance"</span></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="creating-guidance-experiments" class="level1">
+<h1>Creating guidance experiments</h1>
+<p>Now that we have the transforms and schedules, we are finally ready to create some experiments!</p>
+<section id="making-schedules-for-guidancetfm" class="level2">
+<h2 class="anchored" data-anchor-id="making-schedules-for-guidancetfm">Making <code>schedules</code> for <a href="https://enzokro.github.io/chaski/api/guidance_tfm.html#guidancetfm"><code>GuidanceTfm</code></a></h2>
+<p>We start with the following family of Guidance schedules:<br>
+- Constant guidance with <span class="math inline">\(\left(G = 7.5\right)\)</span><br>
+- Constant guidance with <span class="math inline">\(\left(G = 0.15\right)\)</span><br>
+- A cosine schedule from <span class="math inline">\(\left(G = 7.5\right)\)</span> down to <span class="math inline">\(\left(G = 0.15\right)\)</span><br>
+- A cosine schedule that warms up to <span class="math inline">\(\left(G = 7.5\right)\)</span> over the first 10% of steps</p>
+<p>For the T-Norm experiments, we also define a smaller-valued cosine schedule:<br>
+- T-Norm cosine schedule from <span class="math inline">\(\left(G = 0.25\right)\)</span> down to <span class="math inline">\(\left(G = 0.05\right)\)</span></p>
+<p>The schedule maps below will be the arguments to our <a href="https://enzokro.github.io/chaski/api/guidance_tfm.html#guidancetfm"><code>GuidanceTfm</code></a> instances.&nbsp;</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># baseline constant schedules with min and max values</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>max_sched        <span class="op">=</span> {<span class="st">'g'</span>: [max_g] <span class="op">*</span> num_steps}</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>min_sched        <span class="op">=</span> {<span class="st">'g'</span>: [min_g] <span class="op">*</span> num_steps}</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># cosine schedules</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>cos_sched        <span class="op">=</span> {<span class="st">'g'</span>: cos_g}</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>cos_warmup_sched <span class="op">=</span> {<span class="st">'g'</span>: warmup_cos_g}</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># normalized cosing schedules for T and Full-scale guidance</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>small_cos_sched <span class="op">=</span> {<span class="st">'g'</span>:  t_scale_cos_g}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="recreating-the-forum-ideas" class="level2">
+<h2 class="anchored" data-anchor-id="recreating-the-forum-ideas">Recreating the forum ideas</h2>
+<p>First, let’s recreate the experiment baselines from the forums and Fahim’s notebook.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># stores the guidance experiements to run</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>expts <span class="op">=</span> {}</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">### RECREATE SCALING RUNS FROM fast.ai FORUM POSTS</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#################################################</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#################################################</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>baseline        <span class="op">=</span> GuidanceTfm(max_sched)       <span class="co"># 1) No scaling, guidance fixed to 7.5</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>scale_base_hi_g <span class="op">=</span> BaseNormGuidance(max_sched)  <span class="co"># 2) Scale the "whole" update</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>scale_T_lo_g    <span class="op">=</span> TNormGuidance(min_sched)     <span class="co"># 3) Scale the update of "t"</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>scale_all_hi_g  <span class="op">=</span> FullNormGuidance(min_sched)  <span class="co"># 4) Scale everything (steps 2 + 3)</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># add baselines to the experiment list</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>expts[<span class="ss">f'NoNorm_FixedG_</span><span class="sc">{</span>max_g<span class="sc">:.2f}</span><span class="ss">'</span>]   <span class="op">=</span> baseline</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>expts[<span class="ss">f'BaseNorm_FixedG_</span><span class="sc">{</span>max_g<span class="sc">:.2f}</span><span class="ss">'</span>] <span class="op">=</span> scale_base_hi_g</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>expts[<span class="ss">f'TNorm_FixedG_0</span><span class="sc">{</span>min_g<span class="sc">:.2f}</span><span class="ss">'</span>]   <span class="op">=</span> scale_T_lo_g</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>expts[<span class="ss">f'FullNorm_FixedG_</span><span class="sc">{</span>min_g<span class="sc">:.2f}</span><span class="ss">'</span>] <span class="op">=</span> scale_all_hi_g</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co">#################################################</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="combining-scales-and-schedules" class="level2">
+<h2 class="anchored" data-anchor-id="combining-scales-and-schedules">Combining scales and schedules</h2>
+<p>Next, we leverage our <a href="https://enzokro.github.io/chaski/api/guidance_tfm.html#guidancetfm"><code>GuidanceTfm</code></a> class to easily make new experiments.</p>
+<p>We create the following:</p>
+<ul>
+<li>Default and BaseNorm Guidance with Cosine and Cosine Warmup schedules.</li>
+<li>T-Norm and FullNorm Guidance with the smaller T-Cosine schedule.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># group the cosine to run, and their names for plotting</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>name2sched <span class="op">=</span> {</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Cos'</span>:        cos_sched,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'CosWarmup'</span>:  cos_warmup_sched,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'TCos'</span>:       small_cos_sched,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># T-Norm and FullNorm guidance with small T-Cosine</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>norm_scalers <span class="op">=</span> [TNormGuidance, FullNormGuidance]</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> scaler <span class="kw">in</span> norm_scalers:</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># step through all cosine schedules</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> name <span class="kw">in</span> [<span class="st">'TCos'</span>]:</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># experiment for this (scaling, schedule) pair</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>        expt <span class="op">=</span> scaler(name2sched[name])</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>        <span class="co"># unique name for this experiment</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>        expt_name <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>scaler<span class="sc">.</span>name<span class="sc">}</span><span class="ss">_Sched_</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># add scaler to lists of experiments</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>        expts[expt_name] <span class="op">=</span> expt</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Default and BaseNorm guidance with cosine schedules </span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>g_scalers <span class="op">=</span> [GuidanceTfm, BaseNormGuidance]</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> scaler <span class="kw">in</span> g_scalers:</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># step through all cosine schedules</span></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> name <span class="kw">in</span> [<span class="st">'Cos'</span>, <span class="st">'CosWarmup'</span>]:</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>        <span class="co"># experiment for this (scaling, schedule) pair</span></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>        expt <span class="op">=</span> scaler(name2sched[name])</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>        <span class="co"># unique name for this experiment</span></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>        expt_name <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>scaler<span class="sc">.</span>name<span class="sc">}</span><span class="ss">_Sched_</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>        <span class="co"># add scaler to lists of experiments</span></span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>        expts[expt_name] <span class="op">=</span> expt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here we print all of the queued experiments:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Guidance experiments to run:</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(<span class="ss">f'</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> k,_ <span class="kw">in</span> expts.items()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Guidance experiments to run:
+
+NoNorm_FixedG_7.50
+BaseNorm_FixedG_7.50
+TNorm_FixedG_00.15
+FullNorm_FixedG_0.15
+TNormGuidance_Sched_TCos
+FullNormGuidance_Sched_TCos
+CFGuidance_Sched_Cos
+CFGuidance_Sched_CosWarmup
+BaseNormGuidance_Sched_Cos
+BaseNormGuidance_Sched_CosWarmup</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="generating-images" class="level1">
+<h1>Generating images</h1>
+<p>We are almost there! Now we need a way to actually generate images.</p>
+<p>The <code>generate()</code> function below is almost identical to the the <code>StableDiffusionPipeline()</code> from HuggingFace.</p>
+<p>We make a few changes to ensure that the initial latents are the same between runs. That means that only the guidance schedule and/or normalization affects the outputs.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the shared, initial latents</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>width, height <span class="op">=</span> <span class="dv">512</span>, <span class="dv">512</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># grab the initial set of latents</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>seed <span class="op">=</span> <span class="dv">1024</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(seed)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>init_latents <span class="op">=</span> torch.randn((<span class="dv">1</span>, unet.in_channels, height<span class="op">//</span><span class="dv">8</span>, width<span class="op">//</span><span class="dv">8</span>), dtype<span class="op">=</span>unet.dtype, device<span class="op">=</span>device)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate(prompt, gtfm<span class="op">=</span><span class="va">None</span>, width<span class="op">=</span>width, height<span class="op">=</span>height, guidance<span class="op">=</span>max_g, steps<span class="op">=</span>num_steps, <span class="op">**</span>kwargs):</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># make sure we got a guidance function</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> gtfm</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># prepare text embeddings</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text_embeddings(prompt)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    uncond <span class="op">=</span> text_embeddings(<span class="st">''</span>)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    emb <span class="op">=</span> torch.cat([uncond, text]).<span class="bu">type</span>(unet.dtype)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># start from the shared, initial latents</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    latents <span class="op">=</span> torch.clone(init_latents)</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    scheduler.set_timesteps(steps)</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    latents <span class="op">=</span> latents <span class="op">*</span> scheduler.init_noise_sigma</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># run diffusion</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i,ts <span class="kw">in</span> <span class="bu">enumerate</span>(tqdm(scheduler.timesteps)):</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>        inp <span class="op">=</span> scheduler.scale_model_input(torch.cat([latents] <span class="op">*</span> <span class="dv">2</span>), ts)</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> torch.no_grad(): </span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>            tf <span class="op">=</span> ts</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> torch.has_mps:</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>                tf <span class="op">=</span> ts.<span class="bu">type</span>(torch.float32)</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>            u,t <span class="op">=</span> unet(inp, tf, encoder_hidden_states<span class="op">=</span>emb).sample.chunk(<span class="dv">2</span>)</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>        <span class="co"># run the guidance transform</span></span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>        pred <span class="op">=</span> gtfm.encode(u, t, idx<span class="op">=</span>i)</span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>        <span class="co"># update the latents</span></span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>        latents <span class="op">=</span> scheduler.step(pred, ts, latents).prev_sample</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># decode and return the final latents</span></span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>    image <span class="op">=</span> image_from_latents(latents)</span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> image</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s save ourselves some work by writing a harness function to automatically store the experiment results:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># store generated images and their title (the experiment name)</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>images, titles <span class="op">=</span> [], []</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> harness(prompt, gtfm, title<span class="op">=</span><span class="st">''</span>):</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    img <span class="op">=</span> generate(prompt, gtfm)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(title)</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#show_image(img, scale=1)</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    images.append(img)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    titles.append(title)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="running-the-guidance-experiments." class="level1">
+<h1>Running the guidance experiments.</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run each of the functions with the harness</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gname, gtfm <span class="kw">in</span> expts.items():</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Running experiment: </span><span class="sc">{</span>gname<span class="sc">}</span><span class="ss">...'</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    harness(prompt, gtfm, title<span class="op">=</span>gname)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Done.'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running experiment: NoNorm_FixedG_7.50...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"9e3cb44d425b4994a0aa363d1a14011d","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Running experiment: BaseNorm_FixedG_7.50...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"134fb54d395046bba9856700ca610b80","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Running experiment: TNorm_FixedG_00.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"fbf505ed0abd45378c252fb8670988e7","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Running experiment: FullNorm_FixedG_0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"ffca5d3f1d67453db00db873b9614ebc","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Running experiment: TNormGuidance_Sched_TCos...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"4495dd788635406ba678603645c592d7","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Running experiment: FullNormGuidance_Sched_TCos...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"1e1dc057dcda4a3987b63e783d2b09d9","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Running experiment: CFGuidance_Sched_Cos...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"886b4658518844ea8201f02fa98af963","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Running experiment: CFGuidance_Sched_CosWarmup...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"1177d0ab4c4e4a2fadb288795f0fcc9f","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Running experiment: BaseNormGuidance_Sched_Cos...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"b9fe3e42d55b4e2283c09dc82b1f7576","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Running experiment: BaseNormGuidance_Sched_CosWarmup...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"28da7d2dcd1b4038b89354c866c156f5","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.</code></pre>
+</div>
+</div>
+</section>
+<section id="results" class="level1">
+<h1>Results</h1>
+<section id="showing-all-images-side-by-side" class="level2">
+<h2 class="anchored" data-anchor-id="showing-all-images-side-by-side">Showing all images side by side</h2>
+<p>Our starting image, the baseline, is in the top-left. All other images are from different Guidance normalizations and schedules.</p>
+<div class="cell">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>That’s a lot of images. Thankfully, there is one result that stands out above the rest:</p>
+</section>
+<section id="biggest-improvement-cosine-with-t-norm-and-fullnorm" class="level2">
+<h2 class="anchored" data-anchor-id="biggest-improvement-cosine-with-t-norm-and-fullnorm">Biggest Improvement: Cosine with T-Norm and FullNorm</h2>
+<p>There seems to be a consistent gain from using either T-Norm or FullNorm with a Cosine schedule.</p>
+<p>The image below compares our baseline to T-Norm and Cosine schedule. We can see:</p>
+<ul>
+<li>A more semantically correct horse (it has all of its legs!).<br>
+</li>
+<li>Better details and colors in the background.</li>
+</ul>
+<p>The horse’s body is still not quite right, but it’s a marked improvement from the baseline.</p>
+<div class="cell">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="cosine-t-norm-vs.-cosine-fullnorm" class="level2">
+<h2 class="anchored" data-anchor-id="cosine-t-norm-vs.-cosine-fullnorm">Cosine T-Norm vs.&nbsp;Cosine FullNorm</h2>
+<p>These images are close, and both are better than the baseline. It seems we traded some background quality for subject quality with FullNorm vs.&nbsp;T-Norm.</p>
+<div class="cell">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-22-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>This notebook recaps a set of discussions on the fast.ai forums about how to improve Classifier-free Guidance.</p>
+<p>Two changes were proposed and tested:<br>
+- Normalizing the guidance parameter.<br>
+- Scheduling the guidance parameter.</p>
+<p>A <a href="https://enzokro.github.io/chaski/api/guidance_tfm.html#guidancetfm"><code>GuidanceTfm</code></a> class was created to easily leverage these approaches in other runs.</p>
+<p>Overall, it seems that a combination of T-Norm and Cosine schedule improves both the details and syntax of generated images.</p>
+<p>Given that these improvements are achieved for “free”, with a negligible increase in computation time, and without any external data or fine-tuning, they could be a healthy addition to any existing diffusion process.</p>
+<section id="more-examples" class="level3">
+<h3 class="anchored" data-anchor-id="more-examples">More examples</h3>
+<p>Here is an example from a run using a different prompt:</p>
+<blockquote class="blockquote">
+<p>“a portrait of a great Incan Warlord wearing his ornate ceremonial armor”</p>
+</blockquote>
+<p>With a few Diffusion pipeline changes:</p>
+<ul>
+<li>Using Stable Diffusion <code>v1-5</code> from Runway.ml<br>
+</li>
+<li>Using <span class="math inline">\(\text{VAE-mse}\)</span> from stability.ai</li>
+</ul>
+<p>We again see a huge improvement from using FullNorm with a Cosine schedule.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Baseline</strong></th>
+<th style="text-align: left;"><strong>FullNorm with Cosine schedule</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><img src="comp1.png" class="img-fluid"></td>
+<td style="text-align: left;"><img src="comp2.png" class="img-fluid"></td>
+</tr>
+</tbody>
+</table>
+<p>This shows that the improvements may not be isolated to <code>v1-4</code> or any particular <span class="math inline">\(VAE\)</span>!</p>
+</section>
+</section>
+<section id="appendix-more-comparisons" class="level1">
+<h1>Appendix: More comparisons</h1>
+<p>The gains from other schedules are normalizations are less noticeable.</p>
+<p>There are likely still universal gains from normalizing. But with Cosine schedules on their own the results are more mixed.</p>
+<p>To drive this point home: there is a lot more exploration left to do for both schedule values and warmups. This notebook is hopefully a good starting point for others to build on!</p>
+<section id="original-vs.-basenorm" class="level2">
+<h2 class="anchored" data-anchor-id="original-vs.-basenorm">Original vs.&nbsp;BaseNorm</h2>
+<p>Here we plot our default image and the result from BaseNorm.</p>
+<p>The differences are subtle, but track the general observations from the forums:<br>
+- More detail in the backgrounds.<br>
+- Better shadowing on subjects.<br>
+- Some moderate clarity gains.</p>
+<div class="cell">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-23-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="original-vs.-t-norm" class="level2">
+<h2 class="anchored" data-anchor-id="original-vs.-t-norm">Original vs.&nbsp;T-Norm</h2>
+<div class="cell">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-24-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="original-vs.-fullnorm" class="level2">
+<h2 class="anchored" data-anchor-id="original-vs.-fullnorm">Original vs.&nbsp;FullNorm</h2>
+<div class="cell">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-25-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="original-vs.-cosine" class="level2">
+<h2 class="anchored" data-anchor-id="original-vs.-cosine">Original vs.&nbsp;Cosine</h2>
+<div class="cell">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-26-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="original-vs.-basenorm-with-cosine" class="level2">
+<h2 class="anchored" data-anchor-id="original-vs.-basenorm-with-cosine">Original vs.&nbsp;BaseNorm with Cosine</h2>
+<div class="cell">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-27-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
