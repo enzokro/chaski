@@ -191,7 +191,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">Background</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#classifier-free-guidance-overview" id="toc-classifier-free-guidance-overview" class="nav-link" data-scroll-target="#classifier-free-guidance-overview">Classifier-free Guidance overview</a>
   <ul class="collapse">
   <li><a href="#cfg-formula" id="toc-cfg-formula" class="nav-link" data-scroll-target="#cfg-formula">CFG Formula</a></li>
@@ -201,7 +201,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#combining-the-changes" id="toc-combining-the-changes" class="nav-link" data-scroll-target="#combining-the-changes">Combining the changes</a></li>
   </ul></li>
   <li><a href="#coding-setup" id="toc-coding-setup" class="nav-link" data-scroll-target="#coding-setup">Coding Setup</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#python-imports" id="toc-python-imports" class="nav-link" data-scroll-target="#python-imports">Python imports</a></li>
   <li><a href="#prompt-for-image-generations" id="toc-prompt-for-image-generations" class="nav-link" data-scroll-target="#prompt-for-image-generations">Prompt for image generations</a></li>
   <li><a href="#picking-a-diffusion-model" id="toc-picking-a-diffusion-model" class="nav-link" data-scroll-target="#picking-a-diffusion-model">Picking a Diffusion model</a></li>
@@ -209,12 +209,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   <li><a href="#splitting-the-diffusion-pipeline." id="toc-splitting-the-diffusion-pipeline." class="nav-link" data-scroll-target="#splitting-the-diffusion-pipeline.">Splitting the Diffusion pipeline.</a></li>
   <li><a href="#cosine-schedules-from-timm" id="toc-cosine-schedules-from-timm" class="nav-link" data-scroll-target="#cosine-schedules-from-timm">Cosine schedules from <code>timm</code></a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#plotting-the-cosine-schedules" id="toc-plotting-the-cosine-schedules" class="nav-link" data-scroll-target="#plotting-the-cosine-schedules">Plotting the Cosine schedules</a></li>
   </ul></li>
   <li><a href="#the-guidance-transform-class" id="toc-the-guidance-transform-class" class="nav-link" data-scroll-target="#the-guidance-transform-class">The Guidance Transform class</a></li>
   <li><a href="#creating-guidance-experiments" id="toc-creating-guidance-experiments" class="nav-link" data-scroll-target="#creating-guidance-experiments">Creating guidance experiments</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#making-schedules-for-guidancetfm" id="toc-making-schedules-for-guidancetfm" class="nav-link" data-scroll-target="#making-schedules-for-guidancetfm">Making <code>schedules</code> for <code>GuidanceTfm</code></a></li>
   <li><a href="#recreating-the-forum-ideas" id="toc-recreating-the-forum-ideas" class="nav-link" data-scroll-target="#recreating-the-forum-ideas">Recreating the forum ideas</a></li>
   <li><a href="#combining-scales-and-schedules" id="toc-combining-scales-and-schedules" class="nav-link" data-scroll-target="#combining-scales-and-schedules">Combining scales and schedules</a></li>
@@ -222,17 +222,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#generating-images" id="toc-generating-images" class="nav-link" data-scroll-target="#generating-images">Generating images</a></li>
   <li><a href="#running-the-guidance-experiments." id="toc-running-the-guidance-experiments." class="nav-link" data-scroll-target="#running-the-guidance-experiments.">Running the guidance experiments.</a></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#showing-all-images-side-by-side" id="toc-showing-all-images-side-by-side" class="nav-link" data-scroll-target="#showing-all-images-side-by-side">Showing all images side by side</a></li>
   <li><a href="#biggest-improvement-cosine-with-t-norm-and-fullnorm" id="toc-biggest-improvement-cosine-with-t-norm-and-fullnorm" class="nav-link" data-scroll-target="#biggest-improvement-cosine-with-t-norm-and-fullnorm">Biggest Improvement: Cosine with T-Norm and FullNorm</a></li>
   <li><a href="#cosine-t-norm-vs.-cosine-fullnorm" id="toc-cosine-t-norm-vs.-cosine-fullnorm" class="nav-link" data-scroll-target="#cosine-t-norm-vs.-cosine-fullnorm">Cosine T-Norm vs.&nbsp;Cosine FullNorm</a></li>
   </ul></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#more-examples" id="toc-more-examples" class="nav-link" data-scroll-target="#more-examples">More examples</a></li>
   </ul></li>
   <li><a href="#appendix-more-comparisons" id="toc-appendix-more-comparisons" class="nav-link" data-scroll-target="#appendix-more-comparisons">Appendix: More comparisons</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#original-vs.-basenorm" id="toc-original-vs.-basenorm" class="nav-link" data-scroll-target="#original-vs.-basenorm">Original vs.&nbsp;BaseNorm</a></li>
   <li><a href="#original-vs.-t-norm" id="toc-original-vs.-t-norm" class="nav-link" data-scroll-target="#original-vs.-t-norm">Original vs.&nbsp;T-Norm</a></li>
   <li><a href="#original-vs.-fullnorm" id="toc-original-vs.-fullnorm" class="nav-link" data-scroll-target="#original-vs.-fullnorm">Original vs.&nbsp;FullNorm</a></li>
@@ -279,13 +279,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
 <blockquote class="blockquote">
 <p>Changing the Classifier-Free Guidance parameter during diffusion.</p>
 </blockquote>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>This notebook covers the results of dynamically changing the guidance parameter during Classifier-Free Guidance (CFG). Most notably, we create a <a href="https://enzokro.github.io/chaski/api/guidance_tfm.html#guidancetfm"><code>GuidanceTfm</code></a> class so that others may easily import these ideas and start experimenting.</p>
+<p>This notebook covers the results of dynamically changing the guidance parameter during Classifier-Free Guidance (CFG). Most notably, we create a <code>GuidanceTfm</code> class so that others may easily import these ideas and start experimenting.</p>
 </section>
 <section id="background" class="level1">
 <h1>Background</h1>
@@ -534,7 +533,8 @@ Note
 <span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>            txt <span class="op">=</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(wrap(txt, width<span class="op">=</span><span class="dv">70</span>))</span>
 <span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>            ref.set_title(txt, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
 <span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>            ref.imshow(img)</span>
-<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>            ref.axis(<span class="st">'off'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>            ref.axis(<span class="st">'off'</span>)</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>            </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -719,8 +719,8 @@ Note
 </section>
 <section id="the-guidance-transform-class" class="level1">
 <h1>The Guidance Transform class</h1>
-<p>Here we create the Guidance Transformation class, <a href="https://enzokro.github.io/chaski/api/guidance_tfm.html#guidancetfm"><code>GuidanceTfm</code></a>. This class is heavily inspired by other <a href="https://fastai1.fast.ai/vision.transform.html">Transforms in the fast.ai library</a>.</p>
-<p><a href="https://enzokro.github.io/chaski/api/guidance_tfm.html#guidancetfm"><code>GuidanceTfm</code></a> has an <code>encode()</code> method that takes the following inputs:</p>
+<p>Here we create the Guidance Transformation class, <code>GuidanceTfm</code>. This class is heavily inspired by other <a href="https://fastai1.fast.ai/vision.transform.html">Transforms in the fast.ai library</a>.</p>
+<p><code>GuidanceTfm</code> has an <code>encode()</code> method that takes the following inputs:</p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -745,7 +745,7 @@ Note
 </table>
 <p>For convenience we call the unconditioned latents “<span class="math inline">\(\text{u}\)</span>” and the conditioned latents “<span class="math inline">\(\text{t}\)</span>”.</p>
 <p>The base class applies a standard CFG update. However, there are also methods to pre and post process the latents. The goal of these other methods is to easily try different and custom normalizations. For example, we can implement all of our normalization ideas with these methods.</p>
-<p>Lastly, <a href="https://enzokro.github.io/chaski/api/guidance_tfm.html#guidancetfm"><code>GuidanceTfm</code></a> takes one initialization parameter: <code>schedules</code>. This is a dictionary that maps a parameter name to an array-like, indexable sequence of values. This sequence is how we tap in to the scheduled <span class="math inline">\(G\)</span> value at timestep <span class="math inline">\(\text{idx}\)</span>. And if we ever want to include or schedule other parameters, we can add them to <code>schedules</code> and access them in any of the <code>encode()</code> functions.</p>
+<p>Lastly, <code>GuidanceTfm</code> takes one initialization parameter: <code>schedules</code>. This is a dictionary that maps a parameter name to an array-like, indexable sequence of values. This sequence is how we tap in to the scheduled <span class="math inline">\(G\)</span> value at timestep <span class="math inline">\(\text{idx}\)</span>. And if we ever want to include or schedule other parameters, we can add them to <code>schedules</code> and access them in any of the <code>encode()</code> functions.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> GuidanceTfm:</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Baseline Classifier-free Guidance for Difussion."</span></span>
@@ -796,7 +796,7 @@ Note
 <h1>Creating guidance experiments</h1>
 <p>Now that we have the transforms and schedules, we are finally ready to create some experiments!</p>
 <section id="making-schedules-for-guidancetfm" class="level2">
-<h2 class="anchored" data-anchor-id="making-schedules-for-guidancetfm">Making <code>schedules</code> for <a href="https://enzokro.github.io/chaski/api/guidance_tfm.html#guidancetfm"><code>GuidanceTfm</code></a></h2>
+<h2 class="anchored" data-anchor-id="making-schedules-for-guidancetfm">Making <code>schedules</code> for <code>GuidanceTfm</code></h2>
 <p>We start with the following family of Guidance schedules:<br>
 - Constant guidance with <span class="math inline">\(\left(G = 7.5\right)\)</span><br>
 - Constant guidance with <span class="math inline">\(\left(G = 0.15\right)\)</span><br>
@@ -804,7 +804,7 @@ Note
 - A cosine schedule that warms up to <span class="math inline">\(\left(G = 7.5\right)\)</span> over the first 10% of steps</p>
 <p>For the T-Norm experiments, we also define a smaller-valued cosine schedule:<br>
 - T-Norm cosine schedule from <span class="math inline">\(\left(G = 0.25\right)\)</span> down to <span class="math inline">\(\left(G = 0.05\right)\)</span></p>
-<p>The schedule maps below will be the arguments to our <a href="https://enzokro.github.io/chaski/api/guidance_tfm.html#guidancetfm"><code>GuidanceTfm</code></a> instances.&nbsp;</p>
+<p>The schedule maps below will be the arguments to our <code>GuidanceTfm</code> instances.&nbsp;</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># baseline constant schedules with min and max values</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>max_sched        <span class="op">=</span> {<span class="st">'g'</span>: [max_g] <span class="op">*</span> num_steps}</span>
@@ -844,7 +844,7 @@ Note
 </section>
 <section id="combining-scales-and-schedules" class="level2">
 <h2 class="anchored" data-anchor-id="combining-scales-and-schedules">Combining scales and schedules</h2>
-<p>Next, we leverage our <a href="https://enzokro.github.io/chaski/api/guidance_tfm.html#guidancetfm"><code>GuidanceTfm</code></a> class to easily make new experiments.</p>
+<p>Next, we leverage our <code>GuidanceTfm</code> class to easily make new experiments.</p>
 <p>We create the following:</p>
 <ul>
 <li>Default and BaseNorm Guidance with Cosine and Cosine Warmup schedules.</li>
@@ -956,7 +956,7 @@ BaseNormGuidance_Sched_CosWarmup</code></pre>
 <span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>        </span>
 <span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># decode and return the final latents</span></span>
 <span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>    image <span class="op">=</span> image_from_latents(latents)</span>
-<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> image</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> image    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s save ourselves some work by writing a harness function to automatically store the experiment results:</p>
 <div class="cell">
@@ -1117,7 +1117,7 @@ Running experiment: BaseNormGuidance_Sched_CosWarmup...</code></pre>
 <p>Two changes were proposed and tested:<br>
 - Normalizing the guidance parameter.<br>
 - Scheduling the guidance parameter.</p>
-<p>A <a href="https://enzokro.github.io/chaski/api/guidance_tfm.html#guidancetfm"><code>GuidanceTfm</code></a> class was created to easily leverage these approaches in other runs.</p>
+<p>A <code>GuidanceTfm</code> class was created to easily leverage these approaches in other runs.</p>
 <p>Overall, it seems that a combination of T-Norm and Cosine schedule improves both the details and syntax of generated images.</p>
 <p>Given that these improvements are achieved for “free”, with a negligible increase in computation time, and without any external data or fine-tuning, they could be a healthy addition to any existing diffusion process.</p>
 <section id="more-examples" class="level3">
@@ -1337,6 +1337,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
+</script>
+<script src="https://utteranc.es/client.js" repo="enzokro/chaski_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
 

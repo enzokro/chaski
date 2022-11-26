@@ -194,44 +194,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#recap-of-parts-1-4" id="toc-recap-of-parts-1-4" class="nav-link" data-scroll-target="#recap-of-parts-1-4">Recap of Parts 1-4</a></li>
   <li><a href="#part-5-exploring-values-for-t-normalization" id="toc-part-5-exploring-values-for-t-normalization" class="nav-link" data-scroll-target="#part-5-exploring-values-for-t-normalization">Part 5: Exploring values for <code>T-Normalization</code></a></li>
   </ul></li>
   <li><a href="#python-imports" id="toc-python-imports" class="nav-link" data-scroll-target="#python-imports">Python imports</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#seed-for-reproducibility" id="toc-seed-for-reproducibility" class="nav-link" data-scroll-target="#seed-for-reproducibility">Seed for reproducibility</a></li>
   </ul></li>
   <li><a href="#constant-schedules-with-a-range-of-g_textsmall-values" id="toc-constant-schedules-with-a-range-of-g_textsmall-values" class="nav-link" data-scroll-target="#constant-schedules-with-a-range-of-g_textsmall-values">Constant schedules with a range of <span class="math inline">\(G_\text{small}\)</span> values</a></li>
   <li><a href="#plotting-the-g_textsmall-values" id="toc-plotting-the-g_textsmall-values" class="nav-link" data-scroll-target="#plotting-the-g_textsmall-values">Plotting the <span class="math inline">\(G_\text{small}\)</span> values</a></li>
   <li><a href="#loading-the-openjourney-model-from-prompt-hero" id="toc-loading-the-openjourney-model-from-prompt-hero" class="nav-link" data-scroll-target="#loading-the-openjourney-model-from-prompt-hero">Loading the <code>openjourney</code> model from Prompt Hero</a></li>
   <li><a href="#text-prompt-for-image-generations" id="toc-text-prompt-for-image-generations" class="nav-link" data-scroll-target="#text-prompt-for-image-generations">Text prompt for image generations</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#image-parameters" id="toc-image-parameters" class="nav-link" data-scroll-target="#image-parameters">Image parameters</a></li>
   </ul></li>
   <li><a href="#running-the-experiments" id="toc-running-the-experiments" class="nav-link" data-scroll-target="#running-the-experiments">Running the experiments</a></li>
   <li><a href="#sweeping-the-g_textsmall-values" id="toc-sweeping-the-g_textsmall-values" class="nav-link" data-scroll-target="#sweeping-the-g_textsmall-values">Sweeping the <span class="math inline">\(G_\text{small}\)</span> values</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#t-normalization-with-g_textsmall-sweep" id="toc-t-normalization-with-g_textsmall-sweep" class="nav-link" data-scroll-target="#t-normalization-with-g_textsmall-sweep"><code>T-Normalization</code> with <span class="math inline">\(G_\text{small}\)</span> sweep</a></li>
   <li><a href="#full-normalization-with-g_textsmall-sweep" id="toc-full-normalization-with-g_textsmall-sweep" class="nav-link" data-scroll-target="#full-normalization-with-g_textsmall-sweep"><code>Full Normalization</code> with <span class="math inline">\(G_\text{small}\)</span> sweep</a></li>
   </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#t-normalization-g_textsmall-results" id="toc-t-normalization-g_textsmall-results" class="nav-link" data-scroll-target="#t-normalization-g_textsmall-results"><code>T-Normalization</code> <span class="math inline">\(G_\text{small}\)</span> results</a></li>
   <li><a href="#full-normalization-g_textsmall-results" id="toc-full-normalization-g_textsmall-results" class="nav-link" data-scroll-target="#full-normalization-g_textsmall-results"><code>Full Normalization</code> <span class="math inline">\(G_\text{small}\)</span> results</a></li>
   </ul></li>
   <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">Analysis</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#phase-change-in-the-image" id="toc-phase-change-in-the-image" class="nav-link" data-scroll-target="#phase-change-in-the-image">Phase change in the image</a></li>
   </ul></li>
   <li><a href="#re-runs-to-find-the-phase-change" id="toc-re-runs-to-find-the-phase-change" class="nav-link" data-scroll-target="#re-runs-to-find-the-phase-change">Re-runs to find the phase change</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#t-normalization-with-g_textsmall-phase-change" id="toc-t-normalization-with-g_textsmall-phase-change" class="nav-link" data-scroll-target="#t-normalization-with-g_textsmall-phase-change"><code>T-Normalization</code> with <span class="math inline">\(G_\text{small}\)</span> phase change</a></li>
   <li><a href="#full-normalization-with-g_textsmall-phase-change" id="toc-full-normalization-with-g_textsmall-phase-change" class="nav-link" data-scroll-target="#full-normalization-with-g_textsmall-phase-change"><code>Full Normalization</code> with <span class="math inline">\(G_\text{small}\)</span> phase change</a></li>
   </ul></li>
   <li><a href="#re-runs-to-find-earlier-potentially-better-values" id="toc-re-runs-to-find-earlier-potentially-better-values" class="nav-link" data-scroll-target="#re-runs-to-find-earlier-potentially-better-values">Re-runs to find earlier, potentially better values</a></li>
   <li><a href="#the-final-check-g-from-0.1-to-0.2" id="toc-the-final-check-g-from-0.1-to-0.2" class="nav-link" data-scroll-target="#the-final-check-g-from-0.1-to-0.2">The final check: <span class="math inline">\(G\ \)</span> from <span class="math inline">\(0.1\)</span> to <span class="math inline">\(0.2\)</span></a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#checking-for-phase-change-multiples" id="toc-checking-for-phase-change-multiples" class="nav-link" data-scroll-target="#checking-for-phase-change-multiples">Checking for phase change multiples</a></li>
   </ul></li>
   <li><a href="#cosines-for-the-best-g_textsmall" id="toc-cosines-for-the-best-g_textsmall" class="nav-link" data-scroll-target="#cosines-for-the-best-g_textsmall">Cosines for the best <span class="math inline">\(G_\text{small}\)</span></a></li>
@@ -276,7 +276,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
 <blockquote class="blockquote">
 <p>Exploring a range of guidance values for T-Normalization.</p>
 </blockquote>
@@ -1803,6 +1802,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
+</script>
+<script src="https://utteranc.es/client.js" repo="enzokro/chaski_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
 
