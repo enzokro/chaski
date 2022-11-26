@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="enzokro">
+<meta name="dcterms.date" content="2022-11-22">
+
+<title>chaski - Dynamic Classifier-free Guidance Pt. 2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<meta property="og:title" content="chaski - Dynamic Classifier-free Guidance Pt. 2">
+<meta property="og:description" content="This notebook is Part 2 in a series on dynamic Classifier-free Guidance.">
+<meta property="og:image" content="https://enzokro.dev/blog/posts/2022-11-21-guidance-expts-3/better_horse_3.png">
+<meta property="og:site-name" content="chaski">
+<meta property="og:image:height" content="1438">
+<meta property="og:image:width" content="1438">
+<meta name="twitter:title" content="chaski - Dynamic Classifier-free Guidance Pt. 2">
+<meta name="twitter:description" content="This notebook is Part 2 in a series on dynamic Classifier-free Guidance.">
+<meta name="twitter:image" content="https://enzokro.dev/blog/posts/2022-11-21-guidance-expts-3/better_horse_3.png">
+<meta name="twitter:image-height" content="1438">
+<meta name="twitter:image-width" content="1438">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">chaski</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"><i class="bi bi-person-circle" role="img">
+</i> 
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/enzokro_"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/enzokro"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#quick-recap-of-part-1" id="toc-quick-recap-of-part-1" class="nav-link" data-scroll-target="#quick-recap-of-part-1">Quick recap of Part 1</a></li>
+  <li><a href="#part-2-bringing-in-normalizations" id="toc-part-2-bringing-in-normalizations" class="nav-link" data-scroll-target="#part-2-bringing-in-normalizations">Part 2: Bringing in Normalizations</a></li>
+  <li><a href="#leveraging-a-few-helper-libraries" id="toc-leveraging-a-few-helper-libraries" class="nav-link" data-scroll-target="#leveraging-a-few-helper-libraries">Leveraging a few helper libraries</a></li>
+  </ul></li>
+  <li><a href="#experiment-setup" id="toc-experiment-setup" class="nav-link" data-scroll-target="#experiment-setup">Experiment Setup</a>
+  <ul class="collapse">
+  <li><a href="#python-imports" id="toc-python-imports" class="nav-link" data-scroll-target="#python-imports">Python Imports</a></li>
+  <li><a href="#the-min_diffusion-library" id="toc-the-min_diffusion-library" class="nav-link" data-scroll-target="#the-min_diffusion-library">The <code>min_diffusion</code> library</a>
+  <ul class="collapse">
+  <li><a href="#loading-the-openjourney-model-from-prompt-hero" id="toc-loading-the-openjourney-model-from-prompt-hero" class="nav-link" data-scroll-target="#loading-the-openjourney-model-from-prompt-hero">Loading the <code>openjourney</code> model from Prompt Hero</a></li>
+  </ul></li>
+  <li><a href="#text-prompt-for-generations" id="toc-text-prompt-for-generations" class="nav-link" data-scroll-target="#text-prompt-for-generations">Text prompt for generations</a></li>
+  <li><a href="#image-parameters" id="toc-image-parameters" class="nav-link" data-scroll-target="#image-parameters">Image parameters</a></li>
+  </ul></li>
+  <li><a href="#the-baseline-guidance-with-a-constant-g-7.5" id="toc-the-baseline-guidance-with-a-constant-g-7.5" class="nav-link" data-scroll-target="#the-baseline-guidance-with-a-constant-g-7.5">The Baseline: Guidance with a constant <span class="math inline">\(G =7.5\)</span></a>
+  <ul class="collapse">
+  <li><a href="#wrapper-to-run-the-experiments" id="toc-wrapper-to-run-the-experiments" class="nav-link" data-scroll-target="#wrapper-to-run-the-experiments">Wrapper to run the experiments</a></li>
+  </ul></li>
+  <li><a href="#improving-the-baseline-with-normalizations" id="toc-improving-the-baseline-with-normalizations" class="nav-link" data-scroll-target="#improving-the-baseline-with-normalizations">Improving the baseline with normalizations</a>
+  <ul class="collapse">
+  <li><a href="#details-on-normalized-guidance-values" id="toc-details-on-normalized-guidance-values" class="nav-link" data-scroll-target="#details-on-normalized-guidance-values">Details on normalized Guidance values</a></li>
+  <li><a href="#prediction-norm-runs" id="toc-prediction-norm-runs" class="nav-link" data-scroll-target="#prediction-norm-runs"><code>Prediction Norm</code> runs</a></li>
+  <li><a href="#t-norm-runs" id="toc-t-norm-runs" class="nav-link" data-scroll-target="#t-norm-runs"><code>T-Norm</code> runs</a></li>
+  <li><a href="#full-norm-runs" id="toc-full-norm-runs" class="nav-link" data-scroll-target="#full-norm-runs"><code>Full Norm</code> runs</a></li>
+  </ul></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
+  <ul class="collapse">
+  <li><a href="#prediction-norm-results" id="toc-prediction-norm-results" class="nav-link" data-scroll-target="#prediction-norm-results"><code>Prediction Norm</code> results</a></li>
+  <li><a href="#t-norm-results" id="toc-t-norm-results" class="nav-link" data-scroll-target="#t-norm-results"><code>T-Norm</code> results</a></li>
+  <li><a href="#full-norm-results" id="toc-full-norm-results" class="nav-link" data-scroll-target="#full-norm-results"><code>Full Norm</code> results</a></li>
+  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">Analysis</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Dynamic Classifier-free Guidance Pt. 2</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">diffusion</div>
+    <div class="quarto-category">classifier-free guidance</div>
+    <div class="quarto-category">deep learning</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>enzokro </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 22, 2022</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<blockquote class="blockquote">
+<p>Experiments with normalizations for Classifier-free Guidance.</p>
+</blockquote>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>This notebook is Part 2 in a <a href="https://enzokro.dev/blog/posts/2022-11-15-guidance-expts-2/">series</a> on dynamic Classifier-free Guidance.</p>
+<section id="quick-recap-of-part-1" class="level2">
+<h2 class="anchored" data-anchor-id="quick-recap-of-part-1">Quick recap of Part 1</h2>
+<p>In Part 1, we generated a baseline image using the default, static Classifier-free Guidance. To see if we could improve on the baseline, we swept a range of Cosine Schedules on the guidance parameter <span class="math inline">\(G\)</span>.</p>
+<p>To recap the results of the sweep, there are a few promising guidance schedules to explore:</p>
+<ul>
+<li>Setting a higher guidance value.<br>
+</li>
+<li>Allowing the Cosine schedule to go through multiple cycles.<br>
+</li>
+<li>Warming up the guidance for a few steps.</li>
+</ul>
+</section>
+<section id="part-2-bringing-in-normalizations" class="level2">
+<h2 class="anchored" data-anchor-id="part-2-bringing-in-normalizations">Part 2: Bringing in Normalizations</h2>
+<p>In Part 2, we bring in normalizations as another kind of dynamic guidance.</p>
+<p>The idea is that normalizing the guidance might improve the updates in the Diffusion model’s latent image space. To test this we explore three kinds of guidance normalizations:</p>
+<ol type="1">
+<li>Normalizing the prediction by its overall norm.<br>
+</li>
+<li>Normalizing the guidance update vector, <span class="math inline">\(\left(t - u\right)\)</span>, by its norm.<br>
+</li>
+<li>Combining the Normalizations in <code>1.</code> and <code>2.</code></li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>More details about the normalizations can be found in <a href="https://enzokro.dev/blog/posts/2022-11-15-guidance-expts-1/#normalizing-the-guidance">this section</a> of the original post.</p>
+</div>
+</div>
+<p>After these runs, we should have a good idea of both the schedules and normalizations that can improve Diffusion images. We will then combine the two approaches and explore other, more advanced schedules.</p>
+</section>
+<section id="leveraging-a-few-helper-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="leveraging-a-few-helper-libraries">Leveraging a few helper libraries</h2>
+<p>We use two new libraries that make it easier to run dynamic Classifier-free Guidances.<br>
+These two libraries are:</p>
+<ul>
+<li><code>min_diffusion</code></li>
+<li><code>cf_guidance</code></li>
+</ul>
+<p>The helper libraries remove a lot of overhead and boilerplate code. They allow us to jump straight to the important parts: running the guidance experiments.</p>
+<p>For more details, the libraries were introduced in <a href="https://enzokro.dev/blog/posts/2022-11-20-minimal-diffusion/">this earlier post</a>.</p>
+</section>
+</section>
+<section id="experiment-setup" class="level1">
+<h1>Experiment Setup</h1>
+<section id="python-imports" class="level2">
+<h2 class="anchored" data-anchor-id="python-imports">Python Imports</h2>
+<p>To start we import the needed python modules.</p>
+<p>We also handle random seeding to make sure that our results are reproducible across the series.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> List</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> types <span class="im">import</span> SimpleNamespace</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastcore.<span class="bu">all</span> <span class="im">import</span> L</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># imports for diffusion models</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> logging</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># for clean outputs</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>logging.set_verbosity_error()</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># seed for reproducibility</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>SEED <span class="op">=</span> <span class="dv">1024</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> seed_everything(seed: <span class="bu">int</span>):</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    random.seed(seed)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    os.environ[<span class="st">'PYTHONHASHSEED'</span>] <span class="op">=</span> <span class="bu">str</span>(seed)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    np.random.seed(seed)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    generator <span class="op">=</span> torch.manual_seed(seed)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    torch.backends.cudnn.deterministic <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    torch.backends.cudnn.benchmark <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> generator</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co"># for sampling the initial, noisy latents</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>generator <span class="op">=</span> seed_everything(SEED)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co"># set the hardware device</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> <span class="st">"cuda"</span> <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> <span class="st">"mps"</span> <span class="cf">if</span> torch.has_mps <span class="cf">else</span> <span class="st">"cpu"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>2022-11-23 14:58:50.779076: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library libcudart.so.11.0</code></pre>
+</div>
+</div>
+</section>
+<section id="the-min_diffusion-library" class="level2">
+<h2 class="anchored" data-anchor-id="the-min_diffusion-library">The <code>min_diffusion</code> library</h2>
+<p>We use the <code>min_diffusion</code> library to load a Stable Diffusion model from the HuggingFace hub.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to load Stable Diffusion pipelines</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> min_diffusion.core <span class="im">import</span> MinimalDiffusion</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># helpers to plot the generated images</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> min_diffusion.utils <span class="im">import</span> show_image, image_grid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="loading-the-openjourney-model-from-prompt-hero" class="level3">
+<h3 class="anchored" data-anchor-id="loading-the-openjourney-model-from-prompt-hero">Loading the <code>openjourney</code> model from Prompt Hero</h3>
+<p>The following code loads the <code>openjourney</code> model in <code>torch.float16</code> precision and puts it on the GPU.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">'prompthero/openjourney'</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>device     <span class="op">=</span> <span class="st">'cuda'</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>dtype      <span class="op">=</span> torch.float16</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> MinimalDiffusion(model_name, device, dtype)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pipeline.load()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Enabling default unet attention slicing.</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="text-prompt-for-generations" class="level2">
+<h2 class="anchored" data-anchor-id="text-prompt-for-generations">Text prompt for generations</h2>
+<p>We use the familiar, running prompt in our series to generate an image:</p>
+<blockquote class="blockquote">
+<p>“a photograph of an astronaut riding a horse”</p>
+</blockquote>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>openjourney</code> model was fine-tuned to create images in the style of <a href="https://mezha.media/en/2022/11/11/midjourney-v4-is-an-incredible-new-version-of-the-ai-image-generator/">Midjourney v4</a>.</p>
+<p>To enable this fine-tuned style, we need to add the keyword <code>"mdjrny-v4"</code> at the start of the prompt.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># text prompt for image generations</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"mdjrny-v4 style a photograph of an astronaut riding a horse"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="image-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="image-parameters">Image parameters</h2>
+<p>The images will be generated over <span class="math inline">\(50\)</span> diffusion steps. They will have a height and width of <code>512 x 512</code> pixels.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the number of diffusion steps</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>num_steps <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># generated image dimensions</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>width, height <span class="op">=</span> <span class="dv">512</span>, <span class="dv">512</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="the-baseline-guidance-with-a-constant-g-7.5" class="level1">
+<h1>The Baseline: Guidance with a constant <span class="math inline">\(G =7.5\)</span></h1>
+<p>First we create the baseline. Then we will check how a normalized, dynamic guidance changes the output.</p>
+<p>The baseline Classifier-free Guidance uses a static, constant update of <span class="math inline">\(G = 7.5\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cf_guidance.transforms <span class="im">import</span> GuidanceTfm, BaseNormGuidance, TNormGuidance, FullNormGuidance</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the baseline Classifier-free Guidance</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>baseline_run <span class="op">=</span> {<span class="st">'max_val'</span>: [<span class="fl">7.5</span>]}</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># parameters we are sweeping</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>baselines_names <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">list</span>(baseline_run))</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>baseline_scheds <span class="op">=</span> L()</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># step through each parameter</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx,name <span class="kw">in</span> <span class="bu">enumerate</span>(baselines_names):</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># step through each of its values</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> idj,val <span class="kw">in</span> <span class="bu">enumerate</span>(baseline_run[name]):</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># create the baseline experimeent</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        expt <span class="op">=</span> {</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">'param_name'</span>: name,</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">'val'</span>: val,</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">'schedule'</span>: [val <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_steps)]</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>        <span class="co"># for plotting</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>        expt[<span class="st">'title'</span>] <span class="op">=</span> <span class="ss">f'Param: "</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">", val=</span><span class="sc">{</span>val<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># add to the running list of experiments</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>        baseline_scheds.append(expt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="wrapper-to-run-the-experiments" class="level2">
+<h2 class="anchored" data-anchor-id="wrapper-to-run-the-experiments">Wrapper to run the experiments</h2>
+<p>The <code>run</code> function below generates images from a given prompt.</p>
+<p>It also takes an argument <code>guide_tfm</code> for the specific Guidance Transformation class that will guide the outputs. The <code>schedules</code> argument has the parameter values of <span class="math inline">\(G\)</span> at each diffusion timestep.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run(prompt, schedules, guide_tfm<span class="op">=</span><span class="va">None</span>, generator<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>        show_each<span class="op">=</span><span class="va">False</span>, test_run<span class="op">=</span><span class="va">False</span>):</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Runs a dynamic Classifier-free Guidance experiment. </span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Generates an image for the text `prompt` given all the values in `schedules`.</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Uses a Guidance Transformation class from the `cf_guidance` library.  </span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Stores the output images with a matching title for plotting. </span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Optionally shows each image as its generated.</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">    If `test_run` is true, it runs a single schedule for testing. </span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># store generated images and their title (the experiment name)</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    images, titles <span class="op">=</span> [], []</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># make sure we have a valid guidance transform</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> guide_tfm</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Using Guidance Transform: </span><span class="sc">{</span>guide_tfm<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># optionally run a single test schedule</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> test_run:</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f'Running a single schedule for testing.'</span>)</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>        schedules <span class="op">=</span> schedules[:<span class="dv">1</span>]</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># run all schedule experiments</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i,s <span class="kw">in</span> <span class="bu">enumerate</span>(schedules):</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>        <span class="co"># parse out the title for the current run</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>        cur_title  <span class="op">=</span> s[<span class="st">'title'</span>]</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>        titles.append(cur_title)</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>        <span class="co"># create the guidance transformation </span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>        cur_sched <span class="op">=</span> s[<span class="st">'schedule'</span>]</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>        gtfm <span class="op">=</span> guide_tfm({<span class="st">'g'</span>: cur_sched})</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f'Running experiment [</span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss"> of </span><span class="sc">{</span><span class="bu">len</span>(schedules)<span class="sc">}</span><span class="ss">]: </span><span class="sc">{</span>cur_title<span class="sc">}</span><span class="ss">...'</span>)</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>        img <span class="op">=</span> pipeline.generate(prompt, gtfm, generator<span class="op">=</span>generator)</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>        images.append(img)</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>        <span class="co"># optionally plot the image</span></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> show_each:</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>            show_image(img, scale<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Done.'</span>)</span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">'images'</span>: images,</span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>            <span class="st">'titles'</span>: titles,}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s create the baseline image. The hope is that our guidance changes will then improve on it.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>baseline_res <span class="op">=</span> run(prompt, baseline_scheds, guide_tfm<span class="op">=</span>GuidanceTfm, generator<span class="op">=</span>generator)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Using Guidance Transform: &lt;class 'cf_guidance.transforms.GuidanceTfm'&gt;
+Running experiment [1 of 1]: Param: "max_val", val=7.5...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"7aa68e80fb914df4b934fc9f14547902","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># view the baseline image</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>baseline_res[<span class="st">'images'</span>][<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Not a bad starting point. Let’s see if we can do better.</p>
+</section>
+</section>
+<section id="improving-the-baseline-with-normalizations" class="level1">
+<h1>Improving the baseline with normalizations</h1>
+<p>It seems that normalizations can improve both the syntax and details of Diffusion images.</p>
+<p>We explore three kinds of normalizations:</p>
+<ol type="1">
+<li><code>Prediction Normalization</code><br>
+</li>
+<li><code>T-Normalization</code></li>
+<li><code>Full Normalization</code></li>
+</ol>
+<section id="details-on-normalized-guidance-values" class="level2">
+<h2 class="anchored" data-anchor-id="details-on-normalized-guidance-values">Details on normalized Guidance values</h2>
+<p>For <code>Prediction Normalization</code> we can use the same static <span class="math inline">\(G = 7.5\)</span> from the baseline.</p>
+<p>For both <code>T-Normalization</code> and <code>Full Normalization</code>, however, we need a much smaller guidance value. The reason is that these normalizations scale the update vector <span class="math inline">\(\left( t - u \right)\)</span> itself. That means that a large value like <span class="math inline">\(G = 7.5\)</span> would de-scale the vectors even more! That is the exact situation we are trying to avoid with normalization in the first place.</p>
+<p>To prevent this, we create a special <span class="math inline">\(G_\text{small}\)</span> schedule for T and Full Normalizations with a smaller value of <span class="math inline">\(G_\text{small} = 0.15\)</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the baseline Classifier-free Guidance</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>T_run <span class="op">=</span> {<span class="st">'max_val'</span>: [<span class="fl">0.15</span>]}</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># parameters we are sweeping</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>T_scheds <span class="op">=</span> L()</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># step through each parameter</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx,name <span class="kw">in</span> <span class="bu">enumerate</span>(baselines_names):</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># step through each of its values</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> idj,val <span class="kw">in</span> <span class="bu">enumerate</span>(T_run[name]):</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># create the baseline experimeent</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>        expt <span class="op">=</span> {</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">'param_name'</span>: name,</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">'val'</span>: val,</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">'schedule'</span>: [val <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_steps)]</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>        <span class="co"># for plotting</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>        expt[<span class="st">'title'</span>] <span class="op">=</span> <span class="ss">f'Param: "</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">", val=</span><span class="sc">{</span>val<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># add to the running list of experiments</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>        T_scheds.append(expt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="prediction-norm-runs" class="level2">
+<h2 class="anchored" data-anchor-id="prediction-norm-runs"><code>Prediction Norm</code> runs</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the BaseNorm experiments...'</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>base_norm_res <span class="op">=</span> run(prompt, baseline_scheds, guide_tfm<span class="op">=</span>BaseNormGuidance, generator<span class="op">=</span>generator)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running the BaseNorm experiments...
+Using Guidance Transform: &lt;class 'cf_guidance.transforms.BaseNormGuidance'&gt;
+Running experiment [1 of 1]: Param: "max_val", val=7.5...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"00ea0b8029ea424cba0aef86cc74bd45","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.</code></pre>
+</div>
+</div>
+</section>
+<section id="t-norm-runs" class="level2">
+<h2 class="anchored" data-anchor-id="t-norm-runs"><code>T-Norm</code> runs</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the T-Norm experiments...'</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>t_norm_res <span class="op">=</span> run(prompt, T_scheds, guide_tfm<span class="op">=</span>TNormGuidance, generator<span class="op">=</span>generator)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running the T-Norm experiments...
+Using Guidance Transform: &lt;class 'cf_guidance.transforms.TNormGuidance'&gt;
+Running experiment [1 of 1]: Param: "max_val", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"49d8b9791466436897e08e23fe7b4c41","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.</code></pre>
+</div>
+</div>
+</section>
+<section id="full-norm-runs" class="level2">
+<h2 class="anchored" data-anchor-id="full-norm-runs"><code>Full Norm</code> runs</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the FullNorm experiments...'</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>full_norm_res <span class="op">=</span> run(prompt, T_scheds, guide_tfm<span class="op">=</span>FullNormGuidance, generator<span class="op">=</span>generator)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running the FullNorm experiments...
+Using Guidance Transform: &lt;class 'cf_guidance.transforms.FullNormGuidance'&gt;
+Running experiment [1 of 1]: Param: "max_val", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"b69d1346091f4f7cb362e38b7d001f91","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="results" class="level1">
+<h1>Results</h1>
+<p>Let’s compare each result to the baseline.</p>
+<p>The baseline image is on the left, and the normalized version is on the right.</p>
+<section id="prediction-norm-results" class="level2">
+<h2 class="anchored" data-anchor-id="prediction-norm-results"><code>Prediction Norm</code> results</h2>
+<div class="cell">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Comparing left to right, <code>Prediction Normalization</code> improves the overall image.</p>
+<p>The horse’s body and hair are more defined. The clouds in the background have more texture. The lowest orb in the sky is much better defined. The shadows on the ground also have better coverage and a more natural transition. The ground itself has more details and texture, and is better separated from the background sky.</p>
+<p>Even the reflection on the astronaut’s helmet has more depth and looks smoother.</p>
+<p>Overall, it seems that <code>Prediction Normalization</code> is a global improvement on the baseline.</p>
+</section>
+<section id="t-norm-results" class="level2">
+<h2 class="anchored" data-anchor-id="t-norm-results"><code>T-Norm</code> results</h2>
+<div class="cell">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>This one is much more interesting. <code>T-Normalization</code> completely changed the image! Even though they started from the exact same noisy latents.</p>
+<p>Here the horse’s anatomy, especially its head, look more correct. Even though we lost overall illumination on the horse’s body.</p>
+<p>The patches and details on the astronaut’s gear are also better defined. And maybe it’s subjective, but this one <em>feels</em> more like a photograph (thanks to helmet’s glare) while the baseline looks more like digital art.</p>
+</section>
+<section id="full-norm-results" class="level2">
+<h2 class="anchored" data-anchor-id="full-norm-results"><code>Full Norm</code> results</h2>
+<div class="cell">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-22-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p><code>Full Normalization</code> feels like a mix of the best from both worlds.</p>
+<p>The horse’s anatomy and astronaut details are better, following the results from <code>T-Normalization</code>. And we regained some background vs.&nbsp;foreground separation from <code>Prediction Normalization</code>.</p>
+<p>It seems this dual benefit came at the cost of some symmetry for the orbs in the sky, and a loss of resolution on the horse’s tail.</p>
+</section>
+<section id="analysis" class="level2">
+<h2 class="anchored" data-anchor-id="analysis">Analysis</h2>
+<p>Overall, at least for this example, it is fair to say that normalizations can improve Diffusion images.</p>
+<p>Either the baseline image was improved overall (<code>Prediction Normalization</code>), or we gained better image syntax and details (<code>T-Normalization</code> and <code>Full Normalization</code>).</p>
+<p>Given that <code>T-Normalization</code> and <code>Full Normalization</code> completely changed the style of the baseline image, there is a lot to explore here. To start, there is likely a much better set of <span class="math inline">\(G_\text{small}\)</span> values. Consider the baseline’s value of <span class="math inline">\(G = 7.5\)</span>. This value is the standard across many Diffusion models and empirically produces good results. Meanwhile, our <span class="math inline">\(G_\text{small} = 0.15\)</span> is only a starting point that has not been thoroughly tested.</p>
+<p>In summary, it seems that <code>Prediction Normalization</code> could be an easy way to improve all Diffusion images. As for the others, they definitely have potential that should be explored further.</p>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>This notebook was Part 2 in a series on dynamic Classifier-free Guidance.</p>
+<p>We showed that normalizing the guidance has a big impact on the generated images. We found that <code>Prediction Normalization</code> has the potential to improve any Diffusion image.</p>
+<p>Now, after Parts 1 and 2, we have a good idea of the guidance schedules and normalizations that might improve generated images.</p>
+<p>In Part 3, we will combine schedules with normalizations to see if their gains compound.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="enzokro/chaski_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
