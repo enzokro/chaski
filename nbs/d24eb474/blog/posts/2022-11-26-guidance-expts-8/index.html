@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="enzokro">
+<meta name="dcterms.date" content="2022-11-26">
+
+<title>chaski - Classifier-free Guidance with Cosine Schedules Pt. 7</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<meta property="og:title" content="chaski - Classifier-free Guidance with Cosine Schedules Pt. 7">
+<meta property="og:description" content="This notebook is Part 7 in a series on dynamic Classifier-free Guidance. It checks whether our proposed schedules and normalizations improve images across Diffusion models.">
+<meta property="og:site-name" content="chaski">
+<meta name="twitter:title" content="chaski - Classifier-free Guidance with Cosine Schedules Pt. 7">
+<meta name="twitter:description" content="This notebook is Part 7 in a series on dynamic Classifier-free Guidance. It checks whether our proposed schedules and normalizations improve images across Diffusion models.">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">chaski</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"><i class="bi bi-person-circle" role="img">
+</i> 
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/enzokro_"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/enzokro"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#recap-of-parts-1-6" id="toc-recap-of-parts-1-6" class="nav-link" data-scroll-target="#recap-of-parts-1-6">Recap of Parts 1-6</a></li>
+  <li><a href="#part-7-improvement-across-models" id="toc-part-7-improvement-across-models" class="nav-link" data-scroll-target="#part-7-improvement-across-models">Part 7: Improvement across models</a></li>
+  </ul></li>
+  <li><a href="#python-imports" id="toc-python-imports" class="nav-link" data-scroll-target="#python-imports">Python imports</a>
+  <ul class="collapse">
+  <li><a href="#seed-for-reproducibility" id="toc-seed-for-reproducibility" class="nav-link" data-scroll-target="#seed-for-reproducibility">Seed for reproducibility</a></li>
+  </ul></li>
+  <li><a href="#cosine-schedules-with-k-decay" id="toc-cosine-schedules-with-k-decay" class="nav-link" data-scroll-target="#cosine-schedules-with-k-decay">Cosine schedules with k-decay</a></li>
+  <li><a href="#loading-different-stablediffusion-models" id="toc-loading-different-stablediffusion-models" class="nav-link" data-scroll-target="#loading-different-stablediffusion-models">Loading different StableDiffusion models</a></li>
+  <li><a href="#text-prompt-for-image-generations" id="toc-text-prompt-for-image-generations" class="nav-link" data-scroll-target="#text-prompt-for-image-generations">Text prompt for image generations</a>
+  <ul class="collapse">
+  <li><a href="#image-parameters" id="toc-image-parameters" class="nav-link" data-scroll-target="#image-parameters">Image parameters</a></li>
+  </ul></li>
+  <li><a href="#running-the-experiments" id="toc-running-the-experiments" class="nav-link" data-scroll-target="#running-the-experiments">Running the experiments</a></li>
+  <li><a href="#gathering-models-and-arguments" id="toc-gathering-models-and-arguments" class="nav-link" data-scroll-target="#gathering-models-and-arguments">Gathering models and arguments</a>
+  <ul class="collapse">
+  <li><a href="#creating-the-baseline-image-with-g-7.5" id="toc-creating-the-baseline-image-with-g-7.5" class="nav-link" data-scroll-target="#creating-the-baseline-image-with-g-7.5">Creating the baseline image with <span class="math inline">\(G = 7.5\)</span></a></li>
+  <li><a href="#improving-the-baseline-with-schedules-and-normalizations" id="toc-improving-the-baseline-with-schedules-and-normalizations" class="nav-link" data-scroll-target="#improving-the-baseline-with-schedules-and-normalizations">Improving the baseline with schedules and normalizations</a></li>
+  </ul></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#sd-1-4" id="toc-sd-1-4" class="nav-link" data-scroll-target="#sd-1-4">SD 1-4</a></li>
+  <li><a href="#sd-1-5" id="toc-sd-1-5" class="nav-link" data-scroll-target="#sd-1-5">SD 1-5</a></li>
+  <li><a href="#openjourney" id="toc-openjourney" class="nav-link" data-scroll-target="#openjourney">openjourney</a></li>
+  <li><a href="#sd-2-base" id="toc-sd-2-base" class="nav-link" data-scroll-target="#sd-2-base">SD 2-base</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Classifier-free Guidance with Cosine Schedules Pt. 7</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">diffusion</div>
+    <div class="quarto-category">classifier-free guidance</div>
+    <div class="quarto-category">deep learning</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>enzokro </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 26, 2022</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<blockquote class="blockquote">
+<p>dynamic Classifier-free Guidance across several Diffusion models.</p>
+</blockquote>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># from huggingface_hub import notebook_login</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># notebook_login()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This notebook is Part 7 in a <a href="https://enzokro.dev/blog/posts/2022-11-15-guidance-expts-6/">series</a> on dynamic Classifier-free Guidance. It checks whether our proposed schedules and normalizations improve images across Diffusion models.</p>
+<section id="recap-of-parts-1-6" class="level2">
+<h2 class="anchored" data-anchor-id="recap-of-parts-1-6">Recap of Parts 1-6</h2>
+<p>In the first six parts, we found a good set of schedules and normalizations for a dynamic Classifier-free Guidance. The best performing schedules are used in this notebook.</p>
+</section>
+<section id="part-7-improvement-across-models" class="level2">
+<h2 class="anchored" data-anchor-id="part-7-improvement-across-models">Part 7: Improvement across models</h2>
+<p>Part 7 takes our best schedule so far, <code>Inverse kDecay</code>, and tries it on a few different models:</p>
+<ul>
+<li>Stable Diffusion v1-4</li>
+<li>Stable Diffusion v1-5</li>
+<li>Prompt Hero’s openjourney</li>
+<li>Stable Diffusion 2-base</li>
+</ul>
+</section>
+</section>
+<section id="python-imports" class="level1">
+<h1>Python imports</h1>
+<p>We start with a few python imports.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functools <span class="im">import</span> partial</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.colors <span class="im">as</span> mcolors</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="seed-for-reproducibility" class="level2">
+<h2 class="anchored" data-anchor-id="seed-for-reproducibility">Seed for reproducibility</h2>
+<p><code>seed_everything</code> makes sure that the results are reproducible across notebooks.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set the seed and pseudo random number generator</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># SEED = 4262829004 # cat</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>SEED <span class="op">=</span> <span class="dv">1337802893</span> <span class="co"># inca</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># SEED = 977145576 # inca2, warrior</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> seed_everything(seed):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    random.seed(seed)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    os.environ[<span class="st">'PYTHONHASHSEED'</span>] <span class="op">=</span> <span class="bu">str</span>(seed)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    np.random.seed(seed)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    generator <span class="op">=</span> torch.manual_seed(seed)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    torch.backends.cudnn.deterministic <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    torch.backends.cudnn.benchmark <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> generator</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># for sampling the initial, noisy latents</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>generator <span class="op">=</span> seed_everything(SEED)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="cosine-schedules-with-k-decay" class="level1">
+<h1>Cosine schedules with k-decay</h1>
+<p>We create the schedules with different <span class="math inline">\(k\)</span> values using the <code>cf_guidance</code> library.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># helpers to create cosine schedules</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cf_guidance.schedules  <span class="im">import</span> get_cos_sched</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># normalizations for classifier-free guidance</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cf_guidance.transforms <span class="im">import</span> GuidanceTfm, BaseNormGuidance, TNormGuidance, FullNormGuidance</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For the other schedule parameters, we keep the <a href="https://enzokro.dev/blog/posts/2022-11-20-guidance-expts-2/#default-schedule-parameters">same values</a> from the rest of the series. The functions below are also shared with previous notebooks.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Default schedule parameters from the blog post</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">######################################</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>max_val           <span class="op">=</span> <span class="fl">7.5</span>   <span class="co"># guidance scaling value</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>min_val           <span class="op">=</span> <span class="dv">1</span>     <span class="co"># minimum guidance scaling</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>num_steps         <span class="op">=</span> <span class="dv">50</span>    <span class="co"># number of diffusion steps</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>num_warmup_steps  <span class="op">=</span> <span class="dv">0</span>     <span class="co"># number of warmup steps</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>warmup_init_val   <span class="op">=</span> <span class="dv">0</span>     <span class="co"># the intial warmup value</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>num_cycles        <span class="op">=</span> <span class="fl">0.5</span>     <span class="co"># number of cosine cycles</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>k_decay           <span class="op">=</span> <span class="dv">1</span>     <span class="co"># k-decay for cosine curve scaling </span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># smaller values for T-Norm and FullNorm</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>max_T <span class="op">=</span> <span class="fl">0.15</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>min_T <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">######################################</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>DEFAULT_COS_PARAMS <span class="op">=</span> {</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_val'</span>:           max_val,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_steps'</span>:         num_steps,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">'min_val'</span>:           min_val,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_cycles'</span>:        num_cycles,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'k_decay'</span>:           k_decay,</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_warmup_steps'</span>:  num_warmup_steps,</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">'warmup_init_val'</span>:   warmup_init_val,</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>DEFAULT_T_PARAMS <span class="op">=</span> {</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_val'</span>:           max_T,</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_steps'</span>:         num_steps,</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">'min_val'</span>:           min_T,</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_cycles'</span>:        num_cycles,</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">'k_decay'</span>:           k_decay,</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_warmup_steps'</span>:  num_warmup_steps,</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">'warmup_init_val'</span>:   warmup_init_val,</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cos_harness(new_params<span class="op">=</span>{}, default_params<span class="op">=</span>{}):</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''Creates cosine schedules with updated parameters in `new_params`</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># start from the given baseline `default_params`</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    cos_params <span class="op">=</span> <span class="bu">dict</span>(default_params)</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update the with the new, given parameters</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    cos_params.update(new_params)</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># return the new cosine schedule</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    sched <span class="op">=</span> get_cos_sched(<span class="op">**</span>cos_params)</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sched</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_expts(params: <span class="bu">dict</span>, schedule_func) <span class="op">-&gt;</span> <span class="bu">list</span>:</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''Creates a list of experiments.</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="co">    Each element is a dictionary with the name, value, and schedule for a given parameter.</span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a><span class="co">    A `title` field is also added for easy plotting.</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>    names <span class="op">=</span> <span class="bu">sorted</span>(params)</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>    expts <span class="op">=</span> []</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># step through parameter names and their values</span></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i,name <span class="kw">in</span> <span class="bu">enumerate</span>(names):</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j,val <span class="kw">in</span> <span class="bu">enumerate</span>(params[name]):</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>            <span class="co"># create the experiment</span></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>            expt <span class="op">=</span> {<span class="st">'param_name'</span>: name,</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'val'</span>: val,</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'schedule'</span>: schedule_func({name: val})}</span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>            <span class="co"># name for plotting</span></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>            expt[<span class="st">'title'</span>] <span class="op">=</span> <span class="ss">f'Param: "</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">", val=</span><span class="sc">{</span>val<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>            <span class="co"># add it to the experiment list</span></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>            expts.append(expt)</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> expts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next we create the best k-decay cosine schedules.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup for the Inverse-k-decay cosine schedules</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>inv_k_params <span class="op">=</span> {<span class="st">'k_decay'</span>: [<span class="fl">0.15</span>]}</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>inv_k_func <span class="op">=</span> partial(cos_harness, default_params<span class="op">=</span>DEFAULT_COS_PARAMS)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>inv_k_expts <span class="op">=</span> create_expts(inv_k_params, inv_k_func)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># invert the `k` schedules</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> s <span class="kw">in</span> inv_k_expts:</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    s[<span class="st">'schedule'</span>] <span class="op">=</span> [max_val <span class="op">-</span> g <span class="op">+</span> min_val <span class="cf">for</span> g <span class="kw">in</span> s[<span class="st">'schedule'</span>]]</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># put all schedules together</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>all_k_expts <span class="op">=</span> inv_k_expts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>We repeat this for the <code>T</code> and <code>Full</code> Normalizations as well</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the Inverse-k-decay cosine experiments</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>T_inv_k_func <span class="op">=</span> partial(cos_harness, default_params<span class="op">=</span>DEFAULT_T_PARAMS)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>T_inv_k_expts <span class="op">=</span> create_expts(inv_k_params, T_inv_k_func)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># stores the inverted schedules</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># invert the `k` schedules</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> s <span class="kw">in</span> T_inv_k_expts:</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    s[<span class="st">'schedule'</span>] <span class="op">=</span> [max_T <span class="op">-</span> g <span class="op">+</span> min_T <span class="cf">for</span> g <span class="kw">in</span> s[<span class="st">'schedule'</span>]]</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>all_T_k_expts <span class="op">=</span> T_inv_k_expts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="loading-different-stablediffusion-models" class="level1">
+<h1>Loading different StableDiffusion models</h1>
+<p>We need to wrap our experiment pipeline in a single loop so we can easily run it with different models. To do this, we’ll move the model loading code below in its own function, and add a function cleanup gpu memory.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>capture</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># to load Stable Diffusion pipelines</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> min_diffusion.core <span class="im">import</span> MinimalDiffusion</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># to plot generated images</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> min_diffusion.utils <span class="im">import</span> show_image, image_grid, plot_grid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>2022-11-26 02:49:42.635884: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-11-26 02:49:43.342102: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory
+2022-11-26 02:49:43.342191: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory
+2022-11-26 02:49:43.342198: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.</code></pre>
+</div>
+</div>
+<p>We use it to load the <code>Stable Diffusion v1-4</code> model on the GPU, with <code>torch.float16</code> precision.</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_sd_model(model_name, device, dtype, model_kwargs<span class="op">=</span>{}, generator<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    pipeline <span class="op">=</span> MinimalDiffusion(model_name, device, dtype, generator<span class="op">=</span>generator)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    pipeline.load(<span class="op">**</span>model_kwargs)<span class="op">;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pipeline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="text-prompt-for-image-generations" class="level1">
+<h1>Text prompt for image generations</h1>
+<p>We use the familiar, running prompt in our series to generate an image:</p>
+<blockquote class="blockquote">
+<p>“a photograph of an astronaut riding a horse”</p>
+</blockquote>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># text prompt for image generations</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># prompt = "a beautiful painting of an elegant cat, highly detailed, 4K, 8K, trending on art station, Award winning"</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"digital painting of hanan pacha, the incan world above us where the sun and moon live, by filipe pagliuso and justin gerard, symmetric, fantasy, realistic, highly detailed, realistic, intricate, sharp focus, tarot card, portrait"</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># prompt = "digital painting of masked incan warrior, by filipe pagliuso and justin gerard, symmetric, fantasy, highly detailed, realistic, intricate, portrait, sharp focus, tarot card, face, handsome, peruvian, ax"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="image-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="image-parameters">Image parameters</h2>
+<p>Images will be generated over <span class="math inline">\(50\)</span> diffusion steps. They will have a height and width of <code>512 x 512</code> pixels.</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the number of diffusion steps</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>num_steps <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># dimensions for v1 and v2 Stable Diffusions</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>sd2_dims <span class="op">=</span> {<span class="st">'height'</span>: <span class="dv">768</span>, <span class="st">'width'</span>: <span class="dv">768</span>}</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>sd_dims  <span class="op">=</span> {<span class="st">'height'</span>: <span class="dv">640</span>, <span class="st">'width'</span>: <span class="dv">512</span>} <span class="co"># goddess prompt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="running-the-experiments" class="level1">
+<h1>Running the experiments</h1>
+<p>We modify the <code>run</code> function to now load the Stable Diffusion model internally. This makes it easy to pass in and try different generators. We add a bit of GPU cleanup at the end to make sure there is enough memory for the models.</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run(pipeline, prompt, schedules,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>        guide_tfm<span class="op">=</span><span class="va">None</span>, generator<span class="op">=</span><span class="va">None</span>, show_each<span class="op">=</span><span class="va">False</span>, test_run<span class="op">=</span><span class="va">False</span>, gen_kwargs<span class="op">=</span>{}):</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Runs a dynamic Classifier-free Guidance experiment. </span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Generates an image for the text `prompt` given all the values in `schedules`.</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Uses a Guidance Transformation class from the `cf_guidance` library.  </span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Stores the output images with a matching title for plotting. </span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Optionally shows each image as its generated.</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">    If `test_run` is true, it runs a single schedule for testing. </span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># store generated images and their title (the experiment name)</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    images, titles <span class="op">=</span> [], []</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># make sure we have a valid guidance transform</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> guide_tfm</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Using Guidance Transform: </span><span class="sc">{</span>guide_tfm<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># optionally run a single test schedule</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> test_run:</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f'Running a single schedule for testing.'</span>)</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>        schedules <span class="op">=</span> schedules[:<span class="dv">1</span>]</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># run all schedule experiments</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i,s <span class="kw">in</span> <span class="bu">enumerate</span>(schedules):</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># parse out the title for the current run</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>        cur_title  <span class="op">=</span> s[<span class="st">'title'</span>]</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>        titles.append(cur_title)</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>        <span class="co"># create the guidance transformation </span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>        cur_sched <span class="op">=</span> s[<span class="st">'schedule'</span>]</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>        gtfm <span class="op">=</span> guide_tfm({<span class="st">'g'</span>: cur_sched})</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f'Running experiment [</span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss"> of </span><span class="sc">{</span><span class="bu">len</span>(schedules)<span class="sc">}</span><span class="ss">]: </span><span class="sc">{</span>cur_title<span class="sc">}</span><span class="ss">...'</span>)</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>        img <span class="op">=</span> pipeline.generate(prompt, gtfm, <span class="op">**</span>gen_kwargs)</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>        images.append(img)</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>        <span class="co"># optionally plot the image</span></span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> show_each:</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>            show_image(img, scale<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Done.'</span>)</span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">'images'</span>: images,</span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>            <span class="st">'titles'</span>: titles}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="gathering-models-and-arguments" class="level1">
+<h1>Gathering models and arguments</h1>
+<p>Next we create the arguments and parameters to run different models.</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># group the different models to run</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>model_expts <span class="op">=</span> [</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># SD v1-4</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'model_name'</span>: <span class="st">'CompVis/stable-diffusion-v1-4'</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">'model_kwargs'</span>: {<span class="st">'better_vae'</span>: <span class="st">'mse'</span>}},</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># SD v1-5</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'model_name'</span>: <span class="st">'runwayml/stable-diffusion-v1-5'</span>,</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>     <span class="st">'model_kwargs'</span>: {<span class="st">'better_vae'</span>: <span class="st">'mse'</span>}},</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># openjourney</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'model_name'</span>: <span class="st">"prompthero/openjourney"</span>,</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>     <span class="st">'model_kwargs'</span>: {}},</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># SD 2-base</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'model_name'</span>: <span class="st">'stabilityai/stable-diffusion-2-base'</span>,</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>     <span class="st">'model_kwargs'</span>: {<span class="st">'unet_attn_slice'</span>: <span class="va">False</span>}},</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # SD 2</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># {'model_name': 'stabilityai/stable-diffusion-2',</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  'model_kwargs': {'unet_attn_slice': False}},</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="creating-the-baseline-image-with-g-7.5" class="level2">
+<h2 class="anchored" data-anchor-id="creating-the-baseline-image-with-g-7.5">Creating the baseline image with <span class="math inline">\(G = 7.5\)</span></h2>
+<p>First we create the baseline image using a constant Classifier-free Guidance with <span class="math inline">\(G = 7.5\)</span>. Since this is a constant schedule, <span class="math inline">\(k\)</span> does not come into play.</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the baseline schedule with the new function</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>baseline_g <span class="op">=</span> <span class="fl">7.5</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>baseline_params <span class="op">=</span> {<span class="st">'max_val'</span>: [baseline_g]}</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>baseline_func <span class="op">=</span> <span class="kw">lambda</span> <span class="op">*</span>args, <span class="op">**</span>kwargs: [baseline_g <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_steps)]</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>baseline_expts <span class="op">=</span> create_expts(baseline_params, baseline_func)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>T_baseline_g <span class="op">=</span> <span class="fl">0.15</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>T_baseline_params <span class="op">=</span> {<span class="st">'max_val'</span>: [T_baseline_g]}</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>T_baseline_func <span class="op">=</span> <span class="kw">lambda</span> <span class="op">*</span>args, <span class="op">**</span>kwargs: [T_baseline_g <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_steps)]</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>T_baseline_expts <span class="op">=</span> create_expts(T_baseline_params, T_baseline_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="improving-the-baseline-with-schedules-and-normalizations" class="level2">
+<h2 class="anchored" data-anchor-id="improving-the-baseline-with-schedules-and-normalizations">Improving the baseline with schedules and normalizations</h2>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>outputs <span class="op">=</span> {}</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> <span class="st">'cuda'</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>dtype <span class="op">=</span> torch.float16</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> mparams <span class="kw">in</span> model_expts:</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Running model: </span><span class="sc">{</span>mparams<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    model_name <span class="op">=</span> mparams[<span class="st">'model_name'</span>]</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    model_kwargs <span class="op">=</span> mparams[<span class="st">'model_kwargs'</span>]</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># a bit of a manual patch, we need a keyword for openjourney model</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">'openjourney'</span> <span class="kw">in</span> model_name:</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>        cur_prompt <span class="op">=</span> <span class="st">"mdjrny-v4 style "</span> <span class="op">+</span> prompt</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>        cur_prompt <span class="op">=</span> prompt</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Using prompt: </span><span class="sc">{</span>cur_prompt<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> model_name <span class="op">==</span> <span class="st">'stabilityai/stable-diffusion-2'</span>:</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>        gen_kwargs <span class="op">=</span> sd2_dims</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>        gen_kwargs <span class="op">=</span> sd_dims</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Generation kwargs: </span><span class="sc">{</span>gen_kwargs<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># load the current Diffusion model</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    pipeline <span class="op">=</span> load_sd_model(model_name, device, dtype, generator<span class="op">=</span>generator,</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>                             model_kwargs<span class="op">=</span>model_kwargs)</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># make the baseline for this model</span></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>    baseline_res <span class="op">=</span> run(pipeline, cur_prompt, baseline_expts, gen_kwargs<span class="op">=</span>gen_kwargs,</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>                       guide_tfm<span class="op">=</span>GuidanceTfm, generator<span class="op">=</span>generator)</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>    outputs[(model_name,<span class="st">'baseline'</span>)] <span class="op">=</span> baseline_res</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># generate images with different normalizations and schedules</span></span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>    base_norm_res <span class="op">=</span> run(pipeline, cur_prompt, baseline_expts <span class="op">+</span> all_k_expts, gen_kwargs<span class="op">=</span>gen_kwargs,</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>                        guide_tfm<span class="op">=</span>BaseNormGuidance, generator<span class="op">=</span>generator)</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>    outputs[(model_name,<span class="st">'baseNorm'</span>)] <span class="op">=</span> base_norm_res</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>                            </span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>    T_res <span class="op">=</span> run(pipeline, cur_prompt, T_baseline_expts <span class="op">+</span> all_T_k_expts, gen_kwargs<span class="op">=</span>gen_kwargs,</span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>                guide_tfm<span class="op">=</span>TNormGuidance, generator<span class="op">=</span>generator)</span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>    outputs[(model_name,<span class="st">'TNorm'</span>)] <span class="op">=</span> T_res</span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>    full_res <span class="op">=</span> run(pipeline, cur_prompt, T_baseline_expts <span class="op">+</span> all_T_k_expts, gen_kwargs<span class="op">=</span>gen_kwargs,</span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>                   guide_tfm<span class="op">=</span>FullNormGuidance, generator<span class="op">=</span>generator)</span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>    outputs[(model_name,<span class="st">'FullNorm'</span>)] <span class="op">=</span> full_res</span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># cleanup the model for the next run</span></span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>    <span class="kw">del</span> pipeline</span>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a>    pipeline <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a>    torch.cuda.empty_cache()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running model: {'model_name': 'CompVis/stable-diffusion-v1-4', 'model_kwargs': {'better_vae': 'mse'}}
+Using prompt: digital painting of hanan pacha, the incan world above us where the sun and moon live, by filipe pagliuso and justin gerard, symmetric, fantasy, realistic, highly detailed, realistic, intricate, sharp focus, tarot card, portrait
+Generation kwargs: {'height': 640, 'width': 512}
+Using the improved VAE "mse" from stabiliy.ai
+Enabling default unet attention slicing.
+Using Guidance Transform: &lt;class 'cf_guidance.transforms.GuidanceTfm'&gt;
+Running experiment [1 of 1]: Param: "max_val", val=7.5...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"f54457af83304bf899ed1c2cc69ca530","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Using Guidance Transform: &lt;class 'cf_guidance.transforms.BaseNormGuidance'&gt;
+Running experiment [1 of 2]: Param: "max_val", val=7.5...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"df0c7645d3a04030989576fabdcf8022","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"fe74a56aa16b483f80ec5ba797db6818","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Using Guidance Transform: &lt;class 'cf_guidance.transforms.TNormGuidance'&gt;
+Running experiment [1 of 2]: Param: "max_val", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"5a0000bd9526423490855fcf91ee3a41","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"356e9f854ab248dfb631d6233f39e8bc","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Using Guidance Transform: &lt;class 'cf_guidance.transforms.FullNormGuidance'&gt;
+Running experiment [1 of 2]: Param: "max_val", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"400e4d0c9d8843ba9181239bb4b0befd","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"98c22b6b9e3440d589aabf5261c269e0","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Running model: {'model_name': 'runwayml/stable-diffusion-v1-5', 'model_kwargs': {'better_vae': 'mse'}}
+Using prompt: digital painting of hanan pacha, the incan world above us where the sun and moon live, by filipe pagliuso and justin gerard, symmetric, fantasy, realistic, highly detailed, realistic, intricate, sharp focus, tarot card, portrait
+Generation kwargs: {'height': 640, 'width': 512}
+Using the improved VAE "mse" from stabiliy.ai
+Enabling default unet attention slicing.
+Using Guidance Transform: &lt;class 'cf_guidance.transforms.GuidanceTfm'&gt;
+Running experiment [1 of 1]: Param: "max_val", val=7.5...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"cc9c4a74cd90442e94ae14720e6e9925","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Using Guidance Transform: &lt;class 'cf_guidance.transforms.BaseNormGuidance'&gt;
+Running experiment [1 of 2]: Param: "max_val", val=7.5...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"b7fd633375dc4862be652551ad2683a3","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"920b391a199243de817671310d8318f7","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Using Guidance Transform: &lt;class 'cf_guidance.transforms.TNormGuidance'&gt;
+Running experiment [1 of 2]: Param: "max_val", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"1de0cd16a1c843a2af24dc9d7c637fb8","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"2c98767d00e648998be66cdfb02724c2","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Using Guidance Transform: &lt;class 'cf_guidance.transforms.FullNormGuidance'&gt;
+Running experiment [1 of 2]: Param: "max_val", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"bd0e895e5fac4d6da8d2c7d9a5423d24","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"65c4ed4e7b05448d8a3b92e1b31ab11d","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Running model: {'model_name': 'prompthero/openjourney', 'model_kwargs': {}}
+Using prompt: mdjrny-v4 style digital painting of hanan pacha, the incan world above us where the sun and moon live, by filipe pagliuso and justin gerard, symmetric, fantasy, realistic, highly detailed, realistic, intricate, sharp focus, tarot card, portrait
+Generation kwargs: {'height': 640, 'width': 512}
+Enabling default unet attention slicing.
+Using Guidance Transform: &lt;class 'cf_guidance.transforms.GuidanceTfm'&gt;
+Running experiment [1 of 1]: Param: "max_val", val=7.5...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"137cfa0339384d56a4e5894c12c7a92d","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Using Guidance Transform: &lt;class 'cf_guidance.transforms.BaseNormGuidance'&gt;
+Running experiment [1 of 2]: Param: "max_val", val=7.5...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"acf4612343964c3a85f3f6331fc4387a","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"59a30ac6bc2948c8b3ea5cee12fb86ed","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Using Guidance Transform: &lt;class 'cf_guidance.transforms.TNormGuidance'&gt;
+Running experiment [1 of 2]: Param: "max_val", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"ad28ff3ce0df496c897d7f676ba6bdd1","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"3173ffd783f34c9eba6e210c32f493a5","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Using Guidance Transform: &lt;class 'cf_guidance.transforms.FullNormGuidance'&gt;
+Running experiment [1 of 2]: Param: "max_val", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"f0b08564bffb4c5c844e7e005798a358","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"5a306d9a5e4d4f9184c7f5be81a4b9de","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Running model: {'model_name': 'stabilityai/stable-diffusion-2-base', 'model_kwargs': {'unet_attn_slice': False}}
+Using prompt: digital painting of hanan pacha, the incan world above us where the sun and moon live, by filipe pagliuso and justin gerard, symmetric, fantasy, realistic, highly detailed, realistic, intricate, sharp focus, tarot card, portrait
+Generation kwargs: {'height': 640, 'width': 512}
+Using Guidance Transform: &lt;class 'cf_guidance.transforms.GuidanceTfm'&gt;
+Running experiment [1 of 1]: Param: "max_val", val=7.5...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"dc70fb537a544fbab844ab165f32a6a6","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Using Guidance Transform: &lt;class 'cf_guidance.transforms.BaseNormGuidance'&gt;
+Running experiment [1 of 2]: Param: "max_val", val=7.5...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"ee397dfcddb240ae9df8d48bbe0a2f98","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"38dcad47c1ed4084882a2788f509a51d","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Using Guidance Transform: &lt;class 'cf_guidance.transforms.TNormGuidance'&gt;
+Running experiment [1 of 2]: Param: "max_val", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"b56c54cbe12b4a0c816a33585c17e941","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"4aa0caca1ad54fee996008aeb30f26e0","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.
+Using Guidance Transform: &lt;class 'cf_guidance.transforms.FullNormGuidance'&gt;
+Running experiment [1 of 2]: Param: "max_val", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"af0a6b56f1574dfca5bef9b3a287b5d1","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"9f9d427017bd46c8831836d12dc25c64","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Done.</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="results" class="level1">
+<h1>Results</h1>
+<p>Let’s make some helpers to grab all output images for a given Stable Diffusion model.</p>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># names of all the models we tried</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>model_names <span class="op">=</span> [</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'CompVis/stable-diffusion-v1-4'</span>,</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'runwayml/stable-diffusion-v1-5'</span>,</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'prompthero/openjourney'</span>,</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'stabilityai/stable-diffusion-2-base'</span>,</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="co"># number of images to plot</span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>num_runs <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>num_rows <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a><span class="co"># plot dimensions</span></span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>plot_height, plot_width <span class="op">=</span> <span class="dv">640</span>, <span class="dv">512</span></span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_results(model_name):</span>
+<span id="cb46-17"><a href="#cb46-17" aria-hidden="true" tabindex="-1"></a>    types <span class="op">=</span> [<span class="st">'baseline'</span>, <span class="st">'baseNorm'</span>, <span class="st">'TNorm'</span>, <span class="st">'FullNorm'</span>]</span>
+<span id="cb46-18"><a href="#cb46-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [outputs[(model_name,t)] <span class="cf">for</span> t <span class="kw">in</span> types]</span>
+<span id="cb46-19"><a href="#cb46-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-20"><a href="#cb46-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_all_results(model_name):</span>
+<span id="cb46-21"><a href="#cb46-21" aria-hidden="true" tabindex="-1"></a>    mres <span class="op">=</span> get_results(model_name)</span>
+<span id="cb46-22"><a href="#cb46-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(num_runs):</span>
+<span id="cb46-23"><a href="#cb46-23" aria-hidden="true" tabindex="-1"></a>        image_grid(</span>
+<span id="cb46-24"><a href="#cb46-24" aria-hidden="true" tabindex="-1"></a>            [mres[<span class="dv">0</span>][<span class="st">'images'</span>][<span class="dv">0</span>]] <span class="op">+</span> [o[<span class="st">'images'</span>][i] <span class="cf">for</span> o <span class="kw">in</span> mres[<span class="dv">1</span>:]], </span>
+<span id="cb46-25"><a href="#cb46-25" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span>[mres[<span class="dv">0</span>][<span class="st">'titles'</span>][<span class="dv">0</span>]] <span class="op">+</span> [o[<span class="st">'titles'</span>][i] <span class="cf">for</span> o <span class="kw">in</span> mres[<span class="dv">1</span>:]],</span>
+<span id="cb46-26"><a href="#cb46-26" aria-hidden="true" tabindex="-1"></a>            rows<span class="op">=</span>num_rows, width<span class="op">=</span>plot_width, height<span class="op">=</span>plot_height</span>
+<span id="cb46-27"><a href="#cb46-27" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb46-28"><a href="#cb46-28" aria-hidden="true" tabindex="-1"></a>        plt.suptitle(<span class="ss">f'Model: </span><span class="sc">{</span>model_name<span class="sc">}</span><span class="ss"> | Output #</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="sd-1-4" class="level1">
+<h1>SD 1-4</h1>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>plot_all_results(<span class="st">'CompVis/stable-diffusion-v1-4'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-20-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="sd-1-5" class="level1">
+<h1>SD 1-5</h1>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>plot_all_results(<span class="st">'runwayml/stable-diffusion-v1-5'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-21-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="openjourney" class="level1">
+<h1>openjourney</h1>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>plot_all_results(<span class="st">'prompthero/openjourney'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-22-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-22-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="sd-2-base" class="level1">
+<h1>SD 2-base</h1>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>plot_all_results(<span class="st">'stabilityai/stable-diffusion-2-base'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-23-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-23-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="enzokro/chaski_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
