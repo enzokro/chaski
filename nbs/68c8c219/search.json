@@ -1,0 +1,1087 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Posts",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\nClassifier-free Guidance with Cosine Schedules Pt. 7\n\n\n\n\n\n\n\ndiffusion\n\n\nclassifier-free guidance\n\n\ndeep learning\n\n\n\n\n\n\n\n\n\n\n\nNov 27, 2022\n\n\nenzokro\n\n\n\n\n\n\n  \n\n\n\n\nClassifier-free Guidance with Cosine Schedules Pt. 6\n\n\n\n\n\n\n\ndiffusion\n\n\nclassifier-free guidance\n\n\ndeep learning\n\n\n\n\n\n\n\n\n\n\n\nNov 26, 2022\n\n\nenzokro\n\n\n\n\n\n\n  \n\n\n\n\nClassifier-free Guidance with Cosine Schedules Pt. 5\n\n\n\n\n\n\n\ndiffusion\n\n\nclassifier-free guidance\n\n\ndeep learning\n\n\n\n\n\n\n\n\n\n\n\nNov 25, 2022\n\n\nenzokro\n\n\n\n\n\n\n  \n\n\n\n\nClassifier-free Guidance with Cosine Schedules Pt. 4\n\n\n\n\n\n\n\ndiffusion\n\n\nclassifier-free guidance\n\n\ndeep learning\n\n\n\n\n\n\n\n\n\n\n\nNov 24, 2022\n\n\nenzokro\n\n\n\n\n\n\n  \n\n\n\n\nClassifier-free Guidance with Cosine Schedules Pt. 3\n\n\n\n\n\n\n\ndiffusion\n\n\nclassifier-free guidance\n\n\ndeep learning\n\n\n\n\n\n\n\n\n\n\n\nNov 23, 2022\n\n\nenzokro\n\n\n\n\n\n\n  \n\n\n\n\nDynamic Classifier-free Guidance Pt. 2\n\n\n\n\n\n\n\ndiffusion\n\n\nclassifier-free guidance\n\n\ndeep learning\n\n\n\n\n\n\n\n\n\n\n\nNov 22, 2022\n\n\nenzokro\n\n\n\n\n\n\n  \n\n\n\n\nLibraries for dynamic Classifier-free Guidance\n\n\n\n\n\n\n\ndiffusion\n\n\ndeep learning\n\n\n\n\n\n\n\n\n\n\n\nNov 21, 2022\n\n\nenzokro\n\n\n\n\n\n\n  \n\n\n\n\nDynamic Classifier-free Guidance Pt. 1\n\n\n\n\n\n\n\ndiffusion\n\n\nclassifier-free guidance\n\n\ndeep learning\n\n\n\n\n\n\n\n\n\n\n\nNov 20, 2022\n\n\nenzokro\n\n\n\n\n\n\n  \n\n\n\n\nA PyTorch SLERP implementation\n\n\n\n\n\n\n\ndiffusion\n\n\nlatent interpolation\n\n\nSLERP\n\n\n\n\n\n\n\n\n\n\n\nNov 16, 2022\n\n\nenzokro\n\n\n\n\n\n\n  \n\n\n\n\nIntro to normalizing and scheduling Classifier-free Guidance\n\n\n\n\n\n\n\ndiffusion\n\n\nclassifier-free guidance\n\n\ndeep learning\n\n\n\n\n\n\n\n\n\n\n\nNov 13, 2022\n\n\nenzokro\n\n\n\n\n\n\n  \n\n\n\n\nMerging an arbitrary number of Binary Trees\n\n\n\n\n\n\n\nBinary Tree\n\n\nalgorithms\n\n\nfunctional\n\n\n\n\n\n\n\n\n\n\n\nNov 8, 2022\n\n\nenzokro\n\n\n\n\n\n\n  \n\n\n\n\nComplex Rayleigh Weight Initializations\n\n\n\n\n\n\n\ndeep learning\n\n\ncomplex networks\n\n\n\n\n\n\n\n\n\n\n\nSep 1, 2022\n\n\nenzokro\n\n\n\n\n\n\n  \n\n\n\n\nNormalizing spectrograms for Deep Learning\n\n\n\n\n\n\n\ndeep learning\n\n\nspectrogram normalizations\n\n\n\n\n\n\n\n\n\n\n\nAug 20, 2022\n\n\nenzokro\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Enzo’s site",
+    "section": "",
+    "text": "Research Engineer in the Bay Area.\n\n\nPosts on applied ML and DSP."
+  },
+  {
+    "objectID": "blog/posts/2022-08-20-spec-norms/index.html",
+    "href": "blog/posts/2022-08-20-spec-norms/index.html",
+    "title": "Normalizing spectrograms for Deep Learning",
+    "section": "",
+    "text": "Scaling spectrograms for classification tasks with neural networks."
+  },
+  {
+    "objectID": "blog/posts/2022-08-20-spec-norms/index.html#a-quick-note-on-transfer-learning",
+    "href": "blog/posts/2022-08-20-spec-norms/index.html#a-quick-note-on-transfer-learning",
+    "title": "Normalizing spectrograms for Deep Learning",
+    "section": "A quick note on Transfer Learning",
+    "text": "A quick note on Transfer Learning\nWe also have to talk about Transfer Learning in the context of normalization. In Transfer Learning, it is best-practice to normalize the new dataset with the statistics from the old dataset. This makes sure that the new network inputs are at the same scale as the original inputs. Since most pretrained vision models were trained on ImageNet, we normalize any new inputs with ImageNet statistics.\nHowever, we avoid Transfer Learning in this post and instead train an 18-layer xResNet from scratch. The reason is that pretrained image models operate at a completely different scale than spectrograms. And the main goal here is to learn our own scalings instead!"
+  },
+  {
+    "objectID": "blog/posts/2022-08-20-spec-norms/index.html#the-esc-50-dataset",
+    "href": "blog/posts/2022-08-20-spec-norms/index.html#the-esc-50-dataset",
+    "title": "Normalizing spectrograms for Deep Learning",
+    "section": "The ESC-50 dataset",
+    "text": "The ESC-50 dataset\nThe first step is to download the data. ESC-50 is already included in fastaudio so we can grab it with untar_data.\n\n\nCode\n# from fastai.vision.all import *\n# from fastaudio.core.all import *\n# from fastaudio.augment.all import *\n\n# already in fastaudio, can download with fastai's `untar_data`\n# path = untar_data(URLs.ESC50)\n\n\nThe downloaded audio files are inside the aptly named audio folder. Below we use the ls method, a fastai addition to python’s pathlib.Path, to check the contents of this folder.\n\n\nCode\n# wavs = (path/\"audio\").ls()\n# wavs\n\n\nThe output of ls shows 2,000 audio files. But the filenames are not very descriptive, so how do we know what is actually in each one?\nThankfully, as with many datasets, the download includes a table with more information about the data (aka metadata).\n\n\nCode\n# # read the audio metadata and show the first few rows\n# df = pd.read_csv(path/\"meta\"/\"esc50.csv\")\n# df.head()\n\n\nThe key info from this table are in the filename and category columns.\nfilename gives the name of a file inside of the audio folder.\ncategory tells us which class a file belongs to.\nThe last file in the data directory will be our working example for normalization. We can index into the metadata table above using this file’s name to learn more about it.\n\n\nCode\n# # pick the row where \"filename\" matches the file's \"name\".\n# df.loc[df.filename == wavs[-1].name]\n\n\nThis is a recording of crickets!\nWe can load this file with the AudioTensor class in fastaudio. Its create function reads the audio samples straight into a torch.Tensor.\n\n\nCode\n# # create an AudioTensor from a file path\n# sample = AudioTensor.create(wavs[-1])\n\n\nAn AudioTensor can plot and even play the audio with its show method.\n\n\nCode\n# print(f'Audio shape [channels, samples]: {sample.shape}')\n# sample.show();\n\n\nEach “burst” in the plot above is a cricket chirp. There are three full chirps and the early starts of a fourth chirp."
+  },
+  {
+    "objectID": "blog/posts/2022-08-20-spec-norms/index.html#building-the-dataset-loader",
+    "href": "blog/posts/2022-08-20-spec-norms/index.html#building-the-dataset-loader",
+    "title": "Normalizing spectrograms for Deep Learning",
+    "section": "Building the dataset loader",
+    "text": "Building the dataset loader\nThe setup below follows the fastaudio ESC-50 baseline to step through the training dataset. It is worth mentioning that the files in ESC-50 are sampled 44.1 kHz, but fastaudio will resample them to 16 kHz by default. Downsampling like this risks throwing away some information. But, keeping the higher sampling rate almost triples the “width” (aka time) of the spectrogram. This larger image will take up more memory in the GPU and limits our batch size and architecture choices. We keep this downsampling since it gives the spectrograms a very reasonable shape of [201, 401], compared with the much larger shape of [201, 1103] if we don’t downsample.\n\n\nCode\n# def CrossValidationSplitter(col='fold', fold=1):\n#     \"Split `items` (supposed to be a dataframe) by fold in `col`\"\n#     def _inner(o):\n#         assert isinstance(o, pd.DataFrame), \"ColSplitter only works when your items are a pandas DataFrame\"\n#         col_values = o.iloc[:,col] if isinstance(col, int) else o[col]\n#         valid_idx = (col_values == fold).values.astype('bool')\n#         return IndexSplitter(mask2idxs(valid_idx))(o)\n#     return _inner\n\n# auds = DataBlock(blocks=(AudioBlock, CategoryBlock),  \n#                  get_x=ColReader(\"filename\", pref=path/\"audio\"), \n#                  splitter=CrossValidationSplitter(fold=1),\n#                  item_tfms = [AudioNormalize],\n#                  batch_tfms = [audio2spec],\n#                  get_y=ColReader(\"category\"))\n# dbunch = auds.dataloaders(df, bs=64)\n# dbunch.show_batch(figsize=(7,7))"
+  },
+  {
+    "objectID": "blog/posts/2022-08-20-spec-norms/index.html#calculating-the-statistics",
+    "href": "blog/posts/2022-08-20-spec-norms/index.html#calculating-the-statistics",
+    "title": "Normalizing spectrograms for Deep Learning",
+    "section": "Calculating the statistics",
+    "text": "Calculating the statistics\nNext we make two recorders: one for global statistics and the other for channel-based statistics. Then we step through the training dataset to find both sets of stats.\n\n\nCode\n# # create recorders\n# global_stats  = StatsRecorder()\n# channel_stats = StatsRecorder(red_dims=(0,1,3))\n\n# # step through the training dataset\n# with torch.no_grad():\n#     for idx,(x,y) in enumerate(iter(dbunch.train)):\n#         # update normalization statistics\n#         global_stats.update(x)\n#         channel_stats.update(x)\n    \n# # parse out both sets of stats\n# global_mean,global_std = global_stats.mean,global_stats.std\n# channel_mean,channel_std = channel_stats.mean,channel_stats.std\n\n\nWe can check the shape of the statistics to make sure they are correct. For the global statistics, we expect a shape of: [1,1,1,1]. With spectrogram channel normalizations, we expect one value per spectrogram bin for a shape of [1,1,201,1].\n\n\nCode\n# print(f'Shape of global mean: {global_mean.shape}')\n# print(f'Shape of global standard dev: {global_std.shape}')\n\n\n\n\nCode\n# print(f'Shape of channel mean: {channel_mean.shape}')\n# print(f'Shape of channel standard dev: {channel_std.shape}')"
+  },
+  {
+    "objectID": "blog/posts/2022-08-20-spec-norms/index.html#transforms-to-normalize-mini-batches",
+    "href": "blog/posts/2022-08-20-spec-norms/index.html#transforms-to-normalize-mini-batches",
+    "title": "Normalizing spectrograms for Deep Learning",
+    "section": "Transforms to normalize mini-batches",
+    "text": "Transforms to normalize mini-batches\nWe need to extend the fastai Normalize class in order to use the spectrogram normalization statistics. The reason is type dispatch. fastai normalization uses ImageNet statistics due to the focus on transfer learning with color images. But this ImageNet normalization is only applied on RGB images of the TensorImage class, while AudioSpectrogram subclasses the different TensorImageBase. The solution is to define encodes and decodes for TensorImageBase instead.\n\n\nCode\n# class SpecNormalize(Normalize):\n#     \"Normalize/denorm batch of `TensorImage`\"\n#     def encodes(self, x:TensorImageBase): return (x-self.mean) / self.std\n#     def decodes(self, x:TensorImageBase):\n#         f = to_cpu if x.device.type=='cpu' else noop\n#         return (x*f(self.std) + f(self.mean))\n\n\n\n\nCode\n# # make global and channel normalizers\n# GlobalSpecNorm  = SpecNormalize(global_mean,  global_std,  axes=(0,2,3))\n# ChannelSpecNorm = SpecNormalize(channel_mean, channel_std, axes=(0,1,3))"
+  },
+  {
+    "objectID": "blog/posts/2022-08-20-spec-norms/index.html#training-helpers",
+    "href": "blog/posts/2022-08-20-spec-norms/index.html#training-helpers",
+    "title": "Normalizing spectrograms for Deep Learning",
+    "section": "Training helpers",
+    "text": "Training helpers\nTo avoid repeating ourselves, the helper functions below build the dataloaders and run the training loops.\nThe get_dls function makes it clear which normalization is being applied. The train_loops function repeats training runs a given number of times.\n\n\nCode\n# def get_dls(bs=64, item_tfms=[], batch_tfms=[]):\n#     \"Get dataloaders with given `bs` and batch/item tfms.\"\n#     auds = DataBlock(blocks=(AudioBlock, CategoryBlock),  \n#                      get_x=ColReader(\"filename\", pref=path/\"audio\"), \n#                      splitter=CrossValidationSplitter(fold=1),\n#                      item_tfms=item_tfms,   # for waveform normalization\n#                      batch_tfms=batch_tfms, # for spectrogram normalization\n#                      get_y=ColReader(\"category\"))\n#     dls = auds.dataloaders(df, bs=bs)\n#     return dls\n\n# def make_xresnet_grayscale(model, n_in=1):\n#     \"Modifies xresnet `model` for single-channel images.\" \n#     model[0][0].in_channels = n_in\n#     # sum weights to reduce dimension\n#     model[0][0].weight = torch.nn.parameter.Parameter(model[0][0].weight.mean(1, keepdim=True))\n\n# def train_loops(dls, name, num_runs=num_runs, epochs=epochs, num_cls=50):\n#     \"Runs `num_runs` training loops with `dls` for given `epochs`.\"\n#     accuracies = []\n#     for i in range(num_runs):\n#         # make new grayscale xresnet\n#         model = xresnet18(pretrained=False, n_out=num_cls)\n#         make_xresnet_grayscale(model, n_in=1)\n#         # get learner for this run\n#         learn = Learner(dls, model, metrics=[accuracy])\n#         # train network and track accuracy\n#         learn.fit_one_cycle(epochs)\n#         accuracies.append(learn.recorder.values[-1][-1])\n#     print(f'Average accuracy for \"{name}\": {sum(accuracies) / num_runs}')"
+  },
+  {
+    "objectID": "blog/posts/2022-08-20-spec-norms/index.html#baseline-performance",
+    "href": "blog/posts/2022-08-20-spec-norms/index.html#baseline-performance",
+    "title": "Normalizing spectrograms for Deep Learning",
+    "section": "Baseline performance",
+    "text": "Baseline performance\nBefore getting carried away with normalization, we have to first set a baseline without normalizations. This allows us to evaluate the impact of normalization later on, else there is no way to know if normalization helps at all.\n\n\nCode\n# # data without normalization\n# dls = get_dls(batch_tfms=[audio2spec])\n# # run training loops\n# train_loops(dls, name='No Norm')"
+  },
+  {
+    "objectID": "blog/posts/2022-08-20-spec-norms/index.html#performance-with-global-normalization",
+    "href": "blog/posts/2022-08-20-spec-norms/index.html#performance-with-global-normalization",
+    "title": "Normalizing spectrograms for Deep Learning",
+    "section": "Performance with global normalization",
+    "text": "Performance with global normalization\nNext we normalize each audio waveform and the spectrograms with global, scalar statistics.\n\n\nCode\n# # data with waveform and global normalization\n# dls = get_dls(item_tfms=[AudioNormalize],\n#               batch_tfms=[audio2spec, GlobalSpecNorm])\n# # run training loops\n# train_loops(dls, name='Global Norm')"
+  },
+  {
+    "objectID": "blog/posts/2022-08-20-spec-norms/index.html#performance-with-channel-normalization",
+    "href": "blog/posts/2022-08-20-spec-norms/index.html#performance-with-channel-normalization",
+    "title": "Normalizing spectrograms for Deep Learning",
+    "section": "Performance with channel normalization",
+    "text": "Performance with channel normalization\nFinally, we normalize each audio waveform and the spectrograms with channel-based statistics.\n\n\nCode\n# # get data with waveform and channel normalization\n# dls = get_dls(item_tfms=[AudioNormalize],\n#               batch_tfms=[audio2spec, ChannelSpecNorm])\n# # run training loops\n# train_loops(dls, name='Channel Norm')"
+  },
+  {
+    "objectID": "blog/posts/2022-09-01-rayleigh-init/index.html",
+    "href": "blog/posts/2022-09-01-rayleigh-init/index.html",
+    "title": "Complex Rayleigh Weight Initializations",
+    "section": "",
+    "text": "Creating complex-valued Rayleigh initializations for neural networks."
+  },
+  {
+    "objectID": "blog/posts/2022-09-01-rayleigh-init/index.html#complex-numbers-a-brief-recap",
+    "href": "blog/posts/2022-09-01-rayleigh-init/index.html#complex-numbers-a-brief-recap",
+    "title": "Complex Rayleigh Weight Initializations",
+    "section": "Complex Numbers: A brief recap",
+    "text": "Complex Numbers: A brief recap\n Complex numbers have two components:\n- A real part.\n- An imaginary part.\nThe real component is a regular number like we would find on a plain number line. The imaginary component exists along the i axis.\nTo keep things simple, we can think of these numbers on a two-dimensional plot. The real number is on the x-axis while the imaginary number is on the y-axis.\n\nStarting with a real number\nPlotting examples is a great way to make things concrete. We first plot a regular, real number that we are all familiar with: \\(x = 2\\)\n\n\n\n\n\n\n\nMagnitude of a real number\nThe distance from the origin to our number tells us its magnitude. With positive values this feels redundant, since the magnitude is always the number itself.\nBut what about negative numbers? That is where the absolute value, represented as \\(|x|\\), comes into play. If we had picked \\(x = -2\\) instead, the magnitude would still be the same: \\(|-2| = |2| = 2\\).\nSo for any real number, positive or negative, we can find its magnitude by drawing an arrow starting from the origin \\(0\\). The absolute length of the arrow will be the number’s magnitude.\nWhy are we spelling out this aspect of numbers so much? That will become clear when we introduce the imaginary component next.\n\n\nAdding an imaginary component\nWe will keep our real component the same: \\(x = 2\\).\nBut now, let’s an imaginary component: \\(y = 3\\), to turn it into a complex number.\nWhat does this new complex number look like? We can visualize it on a 2D plot:\n\n\n\n\n\nWe combined these two components to get a complex number! Let’s call this number \\(z\\).\n\\(z\\) will be defined as: \\(z = x + iy\\)\nThe “\\(i\\)” next to a number means that it is the imaginary component.\n\n\nMagnitude of a complex number\nWhile we could use the real and imaginary components, there is another representation of complex numbers that will be more useful to us. This other representation is the magnitude and phase of a complex number.\nRemember how for a real number, its magnitude was the length of an arrow starting from the origin? The same idea applies to complex numbers. With one new detail: we have two components now, so our arrow’s length will be different.\nLet’s first draw our new complex number as an arrow.\n\n\n\n\n\nThe formula to compute the magnitude of a complex number \\(z\\) is:\n\\[|z| = \\sqrt{x^{2} + y^{2}}\\]\nPlugging in our \\(x\\) and \\(y\\) values gives our complex \\(z\\) a magnitude of:\n\\[|z| = \\sqrt{2^{2} + 3^{2}} = \\sqrt{4 + 9} = \\sqrt{13}\\]\nWhile knowing the magnitude is important, it is not enough to fully describe \\(z\\). For example what if instead of \\((x = 2, y = 3)\\) we had swapped them around as \\((x = 3, y = 2)\\). If we plug these values into the magnitude equation we get back the exact same number \\(\\sqrt{13}\\).\nBut looking at our 2D plots, these swapped points would obviously be in different locations. So if we were given only the magnitude, how could we tell that it came from our true, original \\(z\\)?\n\n\nPhase: telling complex magnitudes apart from each other\nThe way to tell two complex numbers with the same magnitude apart lies in the fact that the arrows are no longer flat along the x-axis.\nInstead they are now elevated (“pulled up”) by the imaginary component \\(y = 3\\). The complex number now has an angle respective to the x-axis.\nThis angle, together with a magnitude, is enough to perfectly describe our complex \\(z\\). In other words: we know both how long to make the vector and where to point it.\nLet’s complete the picture by including the angle of \\(z\\):\n\n\n\n\n\nWe use \\(\\theta\\) to represent the angle. The formula to compute \\(\\theta\\) is:\n\\[\\theta = \\arctan{\\frac{y}{x}}\\]\nPlugging in \\(x\\) and \\(y\\) for our complex number \\(z\\) gives us an angle of:\n\\[\\theta = \\arctan{\\frac{3}{2}} = 56.31 ^\\circ\\]\nWith the phase and magnitude, we now have a unique way of representing our complex number \\(z\\)."
+  },
+  {
+    "objectID": "blog/posts/2022-09-01-rayleigh-init/index.html#recap-complex-numbers",
+    "href": "blog/posts/2022-09-01-rayleigh-init/index.html#recap-complex-numbers",
+    "title": "Complex Rayleigh Weight Initializations",
+    "section": "Recap: Complex Numbers",
+    "text": "Recap: Complex Numbers\nIn this section, we gave a brief overview of complex numbers and their representation. To make things concrete, we picked a complex number \\(z\\) with a real component \\(x = 2\\) and an imaginary component \\(y = 3\\).\nThen, we showed that we can perfectly represent this complex number \\(z\\) with two pieces of information: its magnitude and its phase.\n\nMagnitude: the length of a vector.\n\nPhase: the angle, or direction, where a vector is pointing."
+  },
+  {
+    "objectID": "blog/posts/2022-09-01-rayleigh-init/index.html#background-on-neural-network-initializations",
+    "href": "blog/posts/2022-09-01-rayleigh-init/index.html#background-on-neural-network-initializations",
+    "title": "Complex Rayleigh Weight Initializations",
+    "section": "Background on neural network initializations",
+    "text": "Background on neural network initializations\nWhile initializations are now taken for granted, they were part of the first key pieces that made it possible to train deep neural networks. Before we knew how to properly initialize networks, training was very unstable as the gradients would either diverge or collapse to 0. This is known as gradient explosion or vanishing, respectively.\nThe main insights to prevent gradients from vanishing or exploding came from analyzing their variance during training.\n> Aside: this is still an important error analysis tool! Looking at the behavior and distribution of gradients is a surefire way to catch problems with the training. Especially during the earliest optimizer steps.\n\nAchieving smooth gradient flows\nIt was the seminal work by He and Glorot, Bengio that showed how to control the variance of gradients to make sure that training was successful. They found that the variance of the sampling distributions, either Normal or Uniform, must meet certain criteria for the gradients to flow “smoothly”.\nHere, “smoothly” means that the gradients neither disappear nor explode during training.\nThe initializations derived in these papers are now the defaults in popular deep learning libraries like TensorFlow and pytorch.\nUnfortunately, the theory of complex-valued neural networks is not as well established. How can we know what are good variances and distributions for complex weights?\nIt turns out we can borrow these hard-earned lessons about good real-valued initializations to make sure that our complex gradients flow smoothly."
+  },
+  {
+    "objectID": "blog/posts/2022-09-01-rayleigh-init/index.html#initializing-complex-magnitudes",
+    "href": "blog/posts/2022-09-01-rayleigh-init/index.html#initializing-complex-magnitudes",
+    "title": "Complex Rayleigh Weight Initializations",
+    "section": "Initializing complex magnitudes",
+    "text": "Initializing complex magnitudes\nInstead of drawing from a Normal or Uniform distribution, like we do for real-valued networks, the magnitudes will instead be drawn from a Rayleigh distribution. The reasons for this are described below. We can think of a Rayleigh distribution as the complex version of the familiar Normal distribution we use for real-valued weights."
+  },
+  {
+    "objectID": "blog/posts/2022-09-01-rayleigh-init/index.html#initializing-phases",
+    "href": "blog/posts/2022-09-01-rayleigh-init/index.html#initializing-phases",
+    "title": "Complex Rayleigh Weight Initializations",
+    "section": "Initializing phases",
+    "text": "Initializing phases\nThe phases will be drawn from a Uniform distribution. To see why, think about a compass with 360 degrees to choose from.\nWe could randomly pick a degree and start walking in that direction for a given amount of time. Assuming we are on a flat surface, each degree choice will place us in a different, unique location.\nBecause we don’t know which direction our learned complex weights should point in, the best we can do is to start by randomly pointing everywhere and letting the gradients steer the vectors instead."
+  },
+  {
+    "objectID": "blog/posts/2022-09-01-rayleigh-init/index.html#why-rayleigh",
+    "href": "blog/posts/2022-09-01-rayleigh-init/index.html#why-rayleigh",
+    "title": "Complex Rayleigh Weight Initializations",
+    "section": "Why Rayleigh?",
+    "text": "Why Rayleigh?\nWhy do we choose the Rayleigh distribution? The reason is that, without having more information about what our complex magnitudes should be, it is the best, unbiased starting point for the network.\nIn other words, we pick the maximum entropy distribution to avoid a-priori biasing our network toward any particular outcome. One of the successes of Deep Learning has been that it’s best to let the learning procedure figure out the values on its own in its higher dimensional activation feature space.\nThis is the complex-valued version of the same logic for using Normal or Uniform distribution to initialize real-valued networks."
+  },
+  {
+    "objectID": "blog/posts/2022-09-01-rayleigh-init/index.html#details-of-the-rayleigh-distribution",
+    "href": "blog/posts/2022-09-01-rayleigh-init/index.html#details-of-the-rayleigh-distribution",
+    "title": "Complex Rayleigh Weight Initializations",
+    "section": "Details of the Rayleigh distribution",
+    "text": "Details of the Rayleigh distribution\nLet’s dive into the details. The equation below is the Probability Density Function (PDF) of the Rayleigh distribution.\n\\[f(x,\\sigma) = \\frac{x}{\\sigma^2}e^{-x^2/(2\\sigma^2)}, \\ \\ x \\geq 0\\]\nThis equation is a bit intimidating in written form. Let’s instead code it up as a python function with NumPy to make it cleaner.\n\n# start by importing the libraries we need\nimport matplotlib.pyplot as plt\nimport numpy as np\nimport torch\nfrom numpy.random import default_rng\nimport warnings\nwarnings.filterwarnings(\"ignore\")\n\n# define the Rayleigh PDF\ndef rayleigh_pdf(x, sigma):\n    \"Evaluates the Rayleigh PDF at a given point `x`.\"\n    p = (x / sigma**2) * np.exp(-x**2 / (2*sigma**2)) # see if you can match this code to the equation above\n    return p\n\nThe parameter sigma \\((\\sigma)\\) is known as the distribution’s scale. It is commonly found in many probability distributions and often controls how spread out or narrow a distribution is.\nLet us start by setting \\(\\sigma = 1\\) to draw the “basic” Rayleigh shape. We will then change sigma to see how this affects the distribution’s shape.\n\n# start with sigma of one as the base case\nsigma = 1\n\n# calculate the Rayleigh PDF on 100 equally spaced points between 0 and 5\npoints = np.linspace(0, 5, 100)\nray_pdf = rayleigh_pdf(points, sigma)  \n\n# setup the plot\nfig, ax = plt.subplots(figsize=(8,7), dpi=80)\nax.set_xticklabels([-1] + list(range(len(ax.get_xticklabels()))))\nax.set_xlabel('Sample Value', fontsize='x-large')\nax.set_ylabel('Probability Density', fontsize='x-large')\nax.set_title('Rayleigh PDF', fontsize='xx-large');\n\n# plot the Rayleigh pdf\nax.plot(ray_pdf);\n\n\n\n\nAs we mentioned the scale \\(\\sigma\\) controls the width or narrowness of the distribution.\nLet’s both halve and double sigma to (\\(\\frac{1}{2}, {2})\\) respectively to see what happens.\n\n# setup plot\nfig,ax = plt.subplots(figsize=(8,7), dpi=80)\nax.set_xlabel('Sample Value', fontsize='x-large')\nax.set_ylabel('Probability Density', fontsize='x-large')\nax.set_title('Rayleigh PDFs', fontsize='xx-large'); \n\n\n# different colors for each sigma\nsigmas = [0.5, 1, 2]\ncolors = ['m', 'b', 'r']\n\n# plot the distributions with different scales\nfor color,sig in zip(colors,sigmas):\n    rpdf = rayleigh_pdf(points, sig)\n    ax.plot(points, rpdf, c=color, label=f'σ: {sig}')\nax.set_xticklabels([-1] + list(range(len(ax.get_xticklabels()))))\nax.legend();\n\n\n\n\nThe blue line in the plot above is the same PDF from our first plot where \\(\\sigma = 1\\).\nWe can see how \\((\\sigma = 0.5)\\) pulls the distribution up and to the left, while \\((\\sigma = 2)\\) squishes it down and to the right.\nIn other words, a smaller sigma makes our distribution narrower while a larger sigma makes it wider.\nPlotting the theoretical Rayleigh PDF only shows what the distribution should looks like. Next, we need to actually generate some Rayleigh values."
+  },
+  {
+    "objectID": "blog/posts/2022-09-01-rayleigh-init/index.html#magnitude-phase-vs.-real-imaginary",
+    "href": "blog/posts/2022-09-01-rayleigh-init/index.html#magnitude-phase-vs.-real-imaginary",
+    "title": "Complex Rayleigh Weight Initializations",
+    "section": "(Magnitude, Phase) vs. (Real, Imaginary)",
+    "text": "(Magnitude, Phase) vs. (Real, Imaginary)\nWe mentioned earlier that a complex number has real and imaginary components. But so far we have deal with magnitudes and phases instead. How are these quantities related?\nIt turns out that we can use the phase and magnitude to split our vector into its real and imaginary parts. The cosine of the phase and magnitude gives us the real part, and the sine of the phase gives us the imaginary part.\nThese are two different representations of the same complex number. We do not lose anything going from one to the other or vice-versa.\n\n# splitting our phases and magnitues into real and imaginary components\nreal = ray_vals * np.cos(phase)\nimag = ray_vals * np.sin(phase)\n\nIt turns out this will be a key detail when we are creating complex-valued network layers. As a preview: we will give one set of weights the real values, and another set of weights the imag values. This is because complex operations like addition and multiplication work better on GPUs with real and imaginary representations."
+  },
+  {
+    "objectID": "blog/posts/2022-09-01-rayleigh-init/index.html#visualizing-our-random-phases",
+    "href": "blog/posts/2022-09-01-rayleigh-init/index.html#visualizing-our-random-phases",
+    "title": "Complex Rayleigh Weight Initializations",
+    "section": "Visualizing our random phases",
+    "text": "Visualizing our random phases\nNow we can check if these phases are truly orienting our magnitudes in random directions. To do so we plot the first 500 complex weights in the polar plane.\n\n\n# indexes for the first 500 random weights\nchosen_samples = range(500) \n\n# plot these first complex weights\nplt.figure(figsize=(8,7), dpi=80)\nfor idx in chosen_samples:\n\n    # index into phase and magnitude variables\n    angle,mag = phase[idx],ray_vals[idx]\n\n    # plot them starting from the origin\n    plt.polar([0,angle], [0,mag], marker='o')\n    \nplt.title('Magnitudes and Phases of our Complex Weights');\n\n\n\n\nThat definitely looks like a random, uniform orientation!"
+  },
+  {
+    "objectID": "blog/posts/2022-09-01-rayleigh-init/index.html#he-and-glorot-criteria-for-rayleigh-distributions",
+    "href": "blog/posts/2022-09-01-rayleigh-init/index.html#he-and-glorot-criteria-for-rayleigh-distributions",
+    "title": "Complex Rayleigh Weight Initializations",
+    "section": "He and Glorot criteria for Rayleigh distributions",
+    "text": "He and Glorot criteria for Rayleigh distributions\nHow can we make sure our Rayleigh magnitudes meet the He and Glorot variance criteria?\nThe Complex Neural Nets paper from earlier includes a nice derivation for the variance of a complex Rayleigh distribution: \\[\\text{Var}(W) = 2\\sigma^{2}\\]\nWe can set the Rayleigh variance equal to the He and Glorot criteria and solve for sigma \\(\\sigma\\).\nTo meet the He criteria, sigma should be: \\[\\sigma_{\\text{He}} = \\frac{1}{\\sqrt{\\text{fanIn}}}\\] \nTo meet the Glorot criteria, sigma should be: \\[\\sigma_{\\text{Glorot}} = \\frac{1}{\\sqrt{\\text{fanIn + fanOut}}}\\] \n\nStarting with a simple one-layer network\nIn the previous sections we used a flat vector of complex weights for the examples and plots. Tying it back at our two concrete examples of wind speed and radio noise, it’s as if we took a single series of measurements.\nBut since the He and Glorot criteria are defined for network layers, we need a new example. Let’s start with to a simple one-layer network. Our layer will have 100 inputs and 50 outputs (fanIn = 100, fanOut = 50).\nPlugging these fanIn and fanOut values into the Rayleigh sigma criteria gives: \\[\\sigma_{\\text{He}} = \\frac{1}{10}\\]\n\\[\\sigma_{\\text{Glorot}} = \\frac{1}{5\\sqrt{6}}\\]\nNow we can pass either of these sigmas to our default_rng and it will draw Rayleigh samples with variances that match the chosen criteria.\n\nA quick word about fanIn and fanOut. We saw the simple feed-forward case with in our example for a single network layer. In that case the number of incoming connections was simply fanIn and the outgoing connections were fanOut.\n\n\nHowever, the convolutional case is a bit more complicated. A convolutional layer has input and output feature maps which are roughly analogous to input and output units in feed-forward layers. But they also have a kernel size to consider. PyTorch has a nice convenience function that handles this for us."
+  },
+  {
+    "objectID": "blog/posts/2022-09-01-rayleigh-init/index.html#complex-initializations-for-nn.linear",
+    "href": "blog/posts/2022-09-01-rayleigh-init/index.html#complex-initializations-for-nn.linear",
+    "title": "Complex Rayleigh Weight Initializations",
+    "section": "Complex initializations for nn.Linear",
+    "text": "Complex initializations for nn.Linear\n\n# re-create out earlier example with a single layer\nfan_in, fan_out = 100, 50\nsigma_he = 1. / np.sqrt(fan_in) # to match the He criteria\n\n# get the complex-valued weights\nm = torch.nn.Linear(fan_in, fan_out)\nreal, imag = get_complex_inits(m)\n\nWe should check that the magnitude of the weights actually follow a Rayleigh distribution.\n\n# get linear magnitudes as a flat numpy vector\nmagnitude = torch.sqrt(real**2 + imag**2).numpy().reshape(-1)\n\n\n# setup the plot\nplt.figure(figsize=(8,7), dpi=80)\nplt.title('Complex nn.Linear Weights vs. Theoretical Rayleigh PDF', fontsize='x-large')\nplt.xlabel('Sample Value', fontsize='x-large')\nplt.ylabel('Probability Density', fontsize='x-large')\n\n# pick points that cover the sample range to compare with theoretical rayleigh pdf\npoints = np.linspace(0, magnitude.max(), 1000)\nray_pdf = rayleigh_pdf(points, sigma=sigma_he)\n\n# plot histogram of Linear magnitudes vs. the theoretical pdf\nplt.hist(magnitude, bins=35, density=True)\nplt.plot(points, ray_pdf, c='r', linewidth=3);\n\n\n\n\nSuccess! Our Linear module is properly initialized."
+  },
+  {
+    "objectID": "blog/posts/2022-09-01-rayleigh-init/index.html#complex-initializations-for-nn.conv2d",
+    "href": "blog/posts/2022-09-01-rayleigh-init/index.html#complex-initializations-for-nn.conv2d",
+    "title": "Complex Rayleigh Weight Initializations",
+    "section": "Complex initializations for nn.Conv2d",
+    "text": "Complex initializations for nn.Conv2d\nCan we do the same for a convolutional layer? Our main concern is correctly handling both the tensor shape and fan_in, fan_out.\n\n# make conv layer with 100 input features, 50 output features, and (3x3) kernel\nk = 3 # kernel size\n# now, these are the number of feature maps (chan_in and chan_out)\nfan_in, fan_out = 100, 50\n\nconv_layer = torch.nn.Conv2d(fan_in, fan_out, k)\nreal_conv, imag_conv = get_complex_inits(conv_layer) # get the initial complex weights\n\n# make sure the shape of weights is ok\nprint(f'Shapes of real and imaginary convolutional tensors: {real_conv.shape}, {imag_conv.shape}')\n\nShapes of real and imaginary convolutional tensors: torch.Size([50, 100, 3, 3]), torch.Size([50, 100, 3, 3])\n\n\nLet’s check if these convolutional weights are still Rayleigh distributed.\n\n# get convolutional magnitudes as a flat numpy vector\nconv_magnitude = torch.sqrt(real_conv**2 + imag_conv**2).numpy().reshape(-1)\n\n\n# setup the plots\nplt.figure(figsize=(8,7), dpi=80)\nplt.title('Complex nn.Conv2d Weights vs. Theoretical Rayleigh PDF', fontsize='x-large')\nplt.xlabel('Sample Value', fontsize='x-large')\nplt.ylabel('Probability Density', fontsize='x-large')\n\n\n# pick points that cover sample range to compare with theoretical rayleigh pdf\npoints = np.linspace(0, conv_magnitude.max(), 1000)\n\n# note: we need to re-compute fanIn for the convolutional layer\nfan_in, fan_out = torch.nn.init._calculate_fan_in_and_fan_out(conv_layer.weight)\nsigma_he_conv = sigma=1. / np.sqrt(fan_in)\n\nray_pdf = rayleigh_pdf(points, sigma_he_conv)\n\n# plot histogram of magnitudes vs. theoretical pdf\nplt.hist(conv_magnitude, bins=35, density=True)\nplt.plot(points, ray_pdf, c='r', linewidth=3);\n\n\n\n\nAnother match! Our convolutional layer is also properly initialized."
+  },
+  {
+    "objectID": "blog/posts/2022-11-08-merge-n-BSTs/index.html",
+    "href": "blog/posts/2022-11-08-merge-n-BSTs/index.html",
+    "title": "Merging an arbitrary number of Binary Trees",
+    "section": "",
+    "text": "Using functional python tools to merge several Binary Trees together."
+  },
+  {
+    "objectID": "blog/posts/2022-11-08-merge-n-BSTs/index.html#the-intuition-to-merge-two-binary-trees.",
+    "href": "blog/posts/2022-11-08-merge-n-BSTs/index.html#the-intuition-to-merge-two-binary-trees.",
+    "title": "Merging an arbitrary number of Binary Trees",
+    "section": "The intuition to merge two Binary Trees.",
+    "text": "The intuition to merge two Binary Trees.\nThe general intuition to solve this problem is:\n\nOverlay the two trees together, starting from their root nodes.\n\nThen, merge the values of the root nodes.\n\nFinally, merge both the left and and right subtrees in the same way.\n\nWhat will these steps look like in code?"
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "",
+    "text": "Changing the Classifier-Free Guidance parameter during diffusion."
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html#classifier-free-guidance-overview",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html#classifier-free-guidance-overview",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "Classifier-free Guidance overview",
+    "text": "Classifier-free Guidance overview\nClassifier-free Guidance is a way of steering the outputs of Diffusion models to better align with a given input. It is a key aspect of how we are able to type in a text prompt and get back a relevant, generated image.\nCFG was needed because, by default, a Diffusion model starts from pure noise and randomly “walks” to unearth an image. Classifier-free Guidance can instead align the output according to a known, specific input. This known input is usually a meaningful piece of context like a sentence, or a segment of speech, or even another image.\nIn summary: Instead of randomly walking to generate random images, CFG allows Diffusion models to create targeted outputs.\n\nCFG Formula\nCFG updates the unconditioned latents to better match the conditional inputs as follows:\n\\[\\hat{\\epsilon}(x \\ |\\  y) = \\epsilon(x) + G\\left(\\ \\epsilon(x\\  |\\  y) - \\epsilon(x)\\ \\right)\\]\nWe can think of this equation as a type of moving average. To be more specific, the terms are:\n\n\n\nEquation Term\nDescription\n\n\n\n\n\\(\\epsilon(x)\\)\nUnconditioned noise prediction\n\n\n\\(\\epsilon(x\\ |\\ y)\\)\nConditional noise prediction\n\n\n\\(G\\)\nGuidance scaling factor\n\n\n\\(\\hat{\\epsilon}(x\\ |\\ y)\\)\nThe final, guided prediction.\n\n\n\nAs several people have noticed, this update is not balanced. The reason for the unbalance is that \\(G\\) is usually a large, fixed scalar. For example the default \\(G\\) in Stable Diffusion pipelines is \\(G = 7.5\\).\nThis brings up two questions:\n\nDoes a large \\(G\\) make the vectors too different?\n\nShould \\(G\\) be a fixed constant throughout the entire diffusion process?\n\nFahim compiled the forum’s answers to these questions in this notebook. His work compares both different normalizations and schedules for the Guidance parameter.\nAt first glance, it seems that both normalizing and scheduling the diffusion parameter improves the generated images. These better images are achieved for “free”, in the sense that we didn’t need any fine-tuning or new data.\nLet’s take a look at some of the details and benefits of a dynamic guidance parameter.\n\n\n\n\n\n\nNote\n\n\n\nAs Ben Poole points out in Jeremy’s twitter thread, these ideas are not new on their own.\nOne of the scalings was described in Guided-TTS for Speech diffusion. The normalizations are also related to the ones in Pretraining is All You Need for Image-to-Image Translation by Wang et. al. \nOur normalizations are similar in spirit to the Dynamic Thresholding in the Imagen paper."
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html#normalizing-the-guidance",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html#normalizing-the-guidance",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "Normalizing the guidance",
+    "text": "Normalizing the guidance\nThis notebook explores two types of normalization we call BaseNorm and T-Norm:\n\nBaseNorm: Normalize the entire prediction by the ratio of the conditioned and unconditioned norms.\n\\[\\hat{\\epsilon}(x \\ |\\  y)_\\text{BaseNorm} = \\hat{\\epsilon}(x \\ |\\  y)\\cdot \\frac{\\|\\epsilon(x)\\|}{\\|\\epsilon(x \\ |\\  y)\\|}\\]\nT-Norm: Normalize the difference of the conditioned and unconditioned predictions. \\[\\hat{\\epsilon}(x \\ |\\  y)_\\text{TNorm} = \\epsilon(x) + G\\ \\frac{\\epsilon(x \\ |\\  y) - \\epsilon(x)}{\\|\\epsilon(x \\ |\\  y) - \\epsilon(x)\\|\\cdot \\|\\epsilon(x)\\|}\\]"
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html#scheduling-the-guidance",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html#scheduling-the-guidance",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "Scheduling the guidance",
+    "text": "Scheduling the guidance\nIn standard CFG the guidance scaling value is fixed. But since the final and initial images are so different, should we expect that the same value is optimal for the entire time?\nTo explore this question we can borrow from Neural Network optimizers. Specifically, our idea of a “guidance schedule” is based on the popular schedules for learning rates.\nThis notebook explores two new schedules for the CFG parameter \\(G\\):\n\nCosine\n\nCosine with Warmup."
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html#combining-the-changes",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html#combining-the-changes",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "Combining the changes",
+    "text": "Combining the changes\nThe natural idea is to combine these approaches: we should both normalize and schedule \\(G\\).\nAfter exploring each change in isolation we combine them to see their joint effects."
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html#python-imports",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html#python-imports",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "Python imports",
+    "text": "Python imports\nFirst we import the python, PyTorch, and HuggingFace modules that we need. We also use the timm library for its built-in Cosine schedules.\n\nimport os\nimport math\nimport random\nimport warnings\nfrom PIL import Image\nfrom typing import List\nfrom pathlib import Path\nfrom types import SimpleNamespace\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom textwrap import wrap\nfrom tqdm.auto import tqdm \n\n# imports for diffusion models\nimport torch\nfrom transformers import logging\nfrom transformers import CLIPTextModel, CLIPTokenizer\nfrom huggingface_hub import notebook_login\nfrom diffusers import StableDiffusionPipeline\nfrom diffusers import AutoencoderKL, UNet2DConditionModel\nfrom diffusers import LMSDiscreteScheduler\n\n# use cosine scheduler from timm\nfrom timm.scheduler.cosine_lr import CosineLRScheduler\nfrom timm.optim import create_optimizer\nfrom timm import create_model\n\n# for clean outputs\nwarnings.filterwarnings(\"ignore\")\nlogging.set_verbosity_error()\n\n# set the hardware device\ndevice = \"cuda\" if torch.cuda.is_available() else \"mps\" if torch.has_mps else \"cpu\"\n\n2022-11-20 19:51:47.940762: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library libcudart.so.11.0"
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html#prompt-for-image-generations",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html#prompt-for-image-generations",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "Prompt for image generations",
+    "text": "Prompt for image generations\nWe use the following prompt to test our guidance changes:\n\n“a photograph of an astronaut riding a horse”\n\nThis is the same prompt folks used in the forums. It seems like a good, simple starting point for future runs.\n\n# the input prompt for diffusion\nprompt = \"a photograph of an astronaut riding a horse\""
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html#picking-a-diffusion-model",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html#picking-a-diffusion-model",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "Picking a Diffusion model",
+    "text": "Picking a Diffusion model\nWe also have to pick a Diffusion model. Some possible options are:\n\nstable-Diffusion-v1-4 from CompVis.\n\nstable-Diffusion v1-5 from Runway.ml.\n\nHere we use the Stable Diffusion v1-4 model from CompVis.\nBut it is worth mentioning that this code will work with any Diffusion model name on the HuggingFace hub.\n\n# set the diffusion model\nmodel_name = \"CompVis/stable-diffusion-v1-4\" # \"runwayml/stable-diffusion-v1-5\""
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html#utility-functions.",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html#utility-functions.",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "Utility functions.",
+    "text": "Utility functions.\nNext we define some helper functions.\nThese helpers create the text embeddings, convert latent features into images, and plot the decoded images. All of these functions are directly from Fahim’s notebook.\n\ndef text_embeddings(prompts, maxlen=None):\n    \"Extracts text embeddings from the given `prompts`.\"\n    maxlen = maxlen or tokenizer.model_max_length\n    inp = tokenizer(prompts, padding=\"max_length\", max_length=maxlen, truncation=True, return_tensors=\"pt\")\n    return text_encoder(inp.input_ids.to(device))[0]\n\n\ndef image_from_latents(latents):\n    \"Scales the diffusion `latents` and turns them into a PIL Image.\"\n    \n    # scale and decode the latents\n    latents = 1 / 0.18215 * latents\n    with torch.no_grad():\n        data = vae.decode(latents).sample[0]\n\n    # Create PIL image\n    data = (data / 2 + 0.5).clamp(0, 1)\n    data = data.cpu().permute(1, 2, 0).float().numpy()\n    data = (data * 255).round().astype(\"uint8\")\n    image = Image.fromarray(data)\n    return image\n    \n    \ndef show_image(image, scale=0.5):\n    \"Displays the given `image` resized based on `scale`.\"\n    img = image.resize(((int)(image.width * scale), (int)(image.height * scale)))\n    display(img)\n    return img\n\n\ndef image_grid(images, rows = 1, width=256, height=256, title=None):\n    \"Display an array of images in a nice grid, or single row\"\n    count = len(images)\n    cols = int(count / rows)\n    if cols * rows < count:\n        rows += 1\n    # Calculate fig size based on individual image sizes    \n    px = 1/plt.rcParams['figure.dpi']\n    w = cols * width * px\n    # Add some extra space for the caption/title since that can wrap\n    h = (rows * height * px) + (rows * 30 * px)\n    fig, axes = plt.subplots(rows, cols, figsize=(w, h))\n    for y in range(rows):\n        for x in range(cols):\n            index = y*cols + x\n            ref = axes[x] if rows == 1 else axes[y] if cols == 1 else axes[y, x]\n            ref.axis('off')\n            if index > count - 1:\n                continue\n            img = images[index]\n            txt = f'Frame: {index}'\n            if title is not None:\n                if isinstance(title, str):\n                    txt = f'{title}: {index}'\n                elif isinstance(title, List):\n                    txt = title[index]\n            # small change for bigger, more visible titles\n            txt = '\\n'.join(wrap(txt, width=70))\n            ref.set_title(txt, fontsize='x-large')\n            ref.imshow(img)\n            ref.axis('off')"
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html#plotting-the-cosine-schedules",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html#plotting-the-cosine-schedules",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "Plotting the Cosine schedules",
+    "text": "Plotting the Cosine schedules\nLet’s plot these new schedules to compare them against the previous, constant guidance."
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html#making-schedules-for-guidancetfm",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html#making-schedules-for-guidancetfm",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "Making schedules for GuidanceTfm",
+    "text": "Making schedules for GuidanceTfm\nWe start with the following family of Guidance schedules:\n- Constant guidance with \\(\\left(G = 7.5\\right)\\)\n- Constant guidance with \\(\\left(G = 0.15\\right)\\)\n- A cosine schedule from \\(\\left(G = 7.5\\right)\\) down to \\(\\left(G = 0.15\\right)\\)\n- A cosine schedule that warms up to \\(\\left(G = 7.5\\right)\\) over the first 10% of steps\nFor the T-Norm experiments, we also define a smaller-valued cosine schedule:\n- T-Norm cosine schedule from \\(\\left(G = 0.25\\right)\\) down to \\(\\left(G = 0.05\\right)\\)\nThe schedule maps below will be the arguments to our GuidanceTfm instances. \n\n# baseline constant schedules with min and max values\nmax_sched        = {'g': [max_g] * num_steps}\nmin_sched        = {'g': [min_g] * num_steps}\n\n# cosine schedules\ncos_sched        = {'g': cos_g}\ncos_warmup_sched = {'g': warmup_cos_g}\n\n# normalized cosing schedules for T and Full-scale guidance\nsmall_cos_sched = {'g':  t_scale_cos_g}"
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html#recreating-the-forum-ideas",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html#recreating-the-forum-ideas",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "Recreating the forum ideas",
+    "text": "Recreating the forum ideas\nFirst, let’s recreate the experiment baselines from the forums and Fahim’s notebook.\n\n# stores the guidance experiements to run\nexpts = {}\n\n\n### RECREATE SCALING RUNS FROM fast.ai FORUM POSTS\n#################################################\n#################################################\nbaseline        = GuidanceTfm(max_sched)       # 1) No scaling, guidance fixed to 7.5\nscale_base_hi_g = BaseNormGuidance(max_sched)  # 2) Scale the \"whole\" update\nscale_T_lo_g    = TNormGuidance(min_sched)     # 3) Scale the update of \"t\"\nscale_all_hi_g  = FullNormGuidance(min_sched)  # 4) Scale everything (steps 2 + 3)\n\n# add baselines to the experiment list\nexpts[f'NoNorm_FixedG_{max_g:.2f}']   = baseline\nexpts[f'BaseNorm_FixedG_{max_g:.2f}'] = scale_base_hi_g\nexpts[f'TNorm_FixedG_0{min_g:.2f}']   = scale_T_lo_g\nexpts[f'FullNorm_FixedG_{min_g:.2f}'] = scale_all_hi_g\n#################################################"
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html#combining-scales-and-schedules",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html#combining-scales-and-schedules",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "Combining scales and schedules",
+    "text": "Combining scales and schedules\nNext, we leverage our GuidanceTfm class to easily make new experiments.\nWe create the following:\n\nDefault and BaseNorm Guidance with Cosine and Cosine Warmup schedules.\nT-Norm and FullNorm Guidance with the smaller T-Cosine schedule.\n\n\n# group the cosine to run, and their names for plotting\nname2sched = {\n    'Cos':        cos_sched,\n    'CosWarmup':  cos_warmup_sched,\n    'TCos':       small_cos_sched,\n}\n\n\n# T-Norm and FullNorm guidance with small T-Cosine\nnorm_scalers = [TNormGuidance, FullNormGuidance]\nfor scaler in norm_scalers:\n    \n    # step through all cosine schedules\n    for name in ['TCos']:\n\n        # experiment for this (scaling, schedule) pair\n        expt = scaler(name2sched[name])\n        # unique name for this experiment\n        expt_name = f'{scaler.name}_Sched_{name}'\n\n        # add scaler to lists of experiments\n        expts[expt_name] = expt\n\n        \n# Default and BaseNorm guidance with cosine schedules \ng_scalers = [GuidanceTfm, BaseNormGuidance]\nfor scaler in g_scalers:\n    \n    # step through all cosine schedules\n    for name in ['Cos', 'CosWarmup']:\n\n        # experiment for this (scaling, schedule) pair\n        expt = scaler(name2sched[name])\n        # unique name for this experiment\n        expt_name = f'{scaler.name}_Sched_{name}'\n\n        # add scaler to lists of experiments\n        expts[expt_name] = expt\n\nHere we print all of the queued experiments:\n\nprint(\"Guidance experiments to run:\\n\")\nprint('\\n'.join(f'{k}' for k,_ in expts.items()))\n\nGuidance experiments to run:\n\nNoNorm_FixedG_7.50\nBaseNorm_FixedG_7.50\nTNorm_FixedG_00.15\nFullNorm_FixedG_0.15\nTNormGuidance_Sched_TCos\nFullNormGuidance_Sched_TCos\nCFGuidance_Sched_Cos\nCFGuidance_Sched_CosWarmup\nBaseNormGuidance_Sched_Cos\nBaseNormGuidance_Sched_CosWarmup"
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html#showing-all-images-side-by-side",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html#showing-all-images-side-by-side",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "Showing all images side by side",
+    "text": "Showing all images side by side\nOur starting image, the baseline, is in the top-left. All other images are from different Guidance normalizations and schedules.\n\n\n\n\n\nThat’s a lot of images. Thankfully, there is one result that stands out above the rest:"
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html#biggest-improvement-cosine-with-t-norm-and-fullnorm",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html#biggest-improvement-cosine-with-t-norm-and-fullnorm",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "Biggest Improvement: Cosine with T-Norm and FullNorm",
+    "text": "Biggest Improvement: Cosine with T-Norm and FullNorm\nThere seems to be a consistent gain from using either T-Norm or FullNorm with a Cosine schedule.\nThe image below compares our baseline to T-Norm and Cosine schedule. We can see:\n\nA more semantically correct horse (it has all of its legs!).\n\nBetter details and colors in the background.\n\nThe horse’s body is still not quite right, but it’s a marked improvement from the baseline."
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html#cosine-t-norm-vs.-cosine-fullnorm",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html#cosine-t-norm-vs.-cosine-fullnorm",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "Cosine T-Norm vs. Cosine FullNorm",
+    "text": "Cosine T-Norm vs. Cosine FullNorm\nThese images are close, and both are better than the baseline. It seems we traded some background quality for subject quality with FullNorm vs. T-Norm."
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html#original-vs.-basenorm",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html#original-vs.-basenorm",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "Original vs. BaseNorm",
+    "text": "Original vs. BaseNorm\nHere we plot our default image and the result from BaseNorm.\nThe differences are subtle, but track the general observations from the forums:\n- More detail in the backgrounds.\n- Better shadowing on subjects.\n- Some moderate clarity gains."
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html#original-vs.-t-norm",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html#original-vs.-t-norm",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "Original vs. T-Norm",
+    "text": "Original vs. T-Norm"
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html#original-vs.-fullnorm",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html#original-vs.-fullnorm",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "Original vs. FullNorm",
+    "text": "Original vs. FullNorm"
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html#original-vs.-cosine",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html#original-vs.-cosine",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "Original vs. Cosine",
+    "text": "Original vs. Cosine"
+  },
+  {
+    "objectID": "blog/posts/2022-11-15-guidance-expts-1/index.html#original-vs.-basenorm-with-cosine",
+    "href": "blog/posts/2022-11-15-guidance-expts-1/index.html#original-vs.-basenorm-with-cosine",
+    "title": "Intro to normalizing and scheduling Classifier-free Guidance",
+    "section": "Original vs. BaseNorm with Cosine",
+    "text": "Original vs. BaseNorm with Cosine"
+  },
+  {
+    "objectID": "blog/posts/2022-11-16-pytorch-slerp/index.html",
+    "href": "blog/posts/2022-11-16-pytorch-slerp/index.html",
+    "title": "A PyTorch SLERP implementation",
+    "section": "",
+    "text": "SLERP implemented in PyTorch with proper thresholding."
+  },
+  {
+    "objectID": "blog/posts/2022-11-16-pytorch-slerp/index.html#why-do-we-need-slerp",
+    "href": "blog/posts/2022-11-16-pytorch-slerp/index.html#why-do-we-need-slerp",
+    "title": "A PyTorch SLERP implementation",
+    "section": "Why do we need SLERP?",
+    "text": "Why do we need SLERP?\n\n\n\n\n\n\nNote\n\n\n\nIf you don’t need the theory, you can skip straight to the code.\n\n\nSLERP interpolates two vectors while keeping their magnitudes intact. Why would this be important for Diffusion models?\nThe reason has to do with how Gaussian distributions behave in higher dimensions. This blog post by Ferenc Huszár has an excellent description of how exactly our intuitions fall apart in high dimensions. The post also has many good visualizations to drive the point home.\n\nGaussians in high dimensions\nTo summarize Ferenc’s blog post: a Gaussian in high dimensions is fundamentally different than its 1-D “Bell curve” version.\nAs we climb to higher dimensions the Gaussian distribution becomes a thin, hollow shell. Its probability density spreads out around this thin shell. Think about how different that is to a 1-D Gaussian. In the 1-D case, most of the density falls within a few standard deviations of the mean.\nBefore long, the inside of this high-dimensional Gaussian is empty. Only its thin shell has any probability at all. Borrowing Ferenc’s excellent analogy: the distribution turns into a “soap bubble”.\nRecall that most Diffusion models are based on high-dimensional Gaussians. That means that, in Diffusion, we are actually dealing with many high-dimensional soap bubbles. If we treat them like regular 2-D or 3-D vectors, our intuitions will fail us.\n\n\nOk, so where does SLERP come in?\nIf we linearly interpolate two high-dimensional Gaussians, the result can easily fly away from the soap bubble’s surface. The section below has an example of what this looks like in 2-D space.\nSLERP makes it possible to properly interpolate Diffusion vectors by keeping us firmly grounded on the surface of the soap bubble."
+  },
+  {
+    "objectID": "blog/posts/2022-11-16-pytorch-slerp/index.html#what-about-linear-interpolation",
+    "href": "blog/posts/2022-11-16-pytorch-slerp/index.html#what-about-linear-interpolation",
+    "title": "A PyTorch SLERP implementation",
+    "section": "What about linear interpolation?",
+    "text": "What about linear interpolation?\nRegular linear interpolation (sometimes called LERP) is a powerful tool. It is a cornerstone in modern computer graphics to move an object between two points.\nLERP has a loose analogy with gravity: the shortest distance between two points is a straight line.\nFor example, imagine you are drinking a cup of coffee. The mug is currently on the table. As you go to take a sip, you pick up the mug and bring it directly to your lips. You wouldn’t swing your arm around in a weird way. That would only be more work and delay the sip of coffee.\nIn other words, when moving objects in our 3-D world we want to do the least amount of work possible. That is what LERP does in 2-D and 3-D space. In a manner of speaking, you used LERP to bring the coffee mug to your lips and take a sip.\nThis coffee example brings us back to why we need SLERP in the first place. Our notions of 3-D paths break down in higher dimensions, and LERP does not work as intended. Here we are much better served by SLERP.\n\nA concrete LERP example\nLet’s show how linear interpolation works on vectors.\nFor this example we will use the familiar \\(x\\) and \\(y\\) basis vectors. We also draw the Unit Circle for reference.\n\n\n\n\n\n\nNote\n\n\n\nThe plotting function plot_vectors is available in the post’s notebook. It is omitted here for space.\n\n\n\nimport torch\n\n# use the X and Y unit vectors as an example\nxhat = torch.tensor([1, 0]).float()\nyhat = torch.tensor([0, 1]).float()\n\n\n# plot the basis vectors, with a unit circle outline\nfig = plot_vectors(xhat, yhat, labels=['$\\hat{x}$', '$\\hat{y}$'], draw_unit_circle=True)\n\nplt.xlabel('X Axis', fontsize='x-large')\nplt.ylabel('Y Axis', fontsize='x-large')\nplt.title('Basis Vectors on the Unit Circle', fontsize='xx-large', pad=10);\n\n\n\n\nWhat happens if we linearly interpolate (LERP) these vectors to their midpoint?\n\n# use linear interpolation to find the midpoint\np_lerp = (xhat + yhat) / 2\n\n\n# plotting the LERP of basis vectors x and y\nfig = plot_vectors(xhat, yhat, p_lerp, labels=['$\\hat{x}$', '$\\hat{y}$', 'P_lerp'])\n\nplt.xlabel('X Axis', fontsize='x-large')\nplt.ylabel('Y Axis', fontsize='x-large')\nplt.title('Linear Interpolation of Unit Vectors', fontsize='xx-large', pad=10);\n\n\n\n\nIf we only cared about getting from \\(\\hat{y}\\) to \\(\\hat{x}\\) then we are on the right track. LERP is following the shortest possible path.\nBut imagine if the Unit Circle was like a slice of a high-dimensional Gaussian. In that case, linear interpolation has moved us away from the surface of the soap bubble!\nIf we were dealing with a 1-D Gaussian, it’s as if we have moved very far from the mean. Imagine going out \\(+10\\) \\(\\sigma\\) away. That would obviously be an incredibly unlikely sample. And that is exactly where the \\(P_\\text{LERP}\\) vector ends up.\nWith SLERP, we can still interpolate the vectors while also staying firmly anchored to the soap bubble."
+  },
+  {
+    "objectID": "blog/posts/2022-11-16-pytorch-slerp/index.html#slerp-interpolation-of-the-unit-vectors",
+    "href": "blog/posts/2022-11-16-pytorch-slerp/index.html#slerp-interpolation-of-the-unit-vectors",
+    "title": "A PyTorch SLERP implementation",
+    "section": "SLERP interpolation of the unit vectors",
+    "text": "SLERP interpolation of the unit vectors\nWhat happens if we instead use SLERP to interpolate the unit vectors?\n\n# SLERP the unit vectors to their midpoint\np = slerp(xhat, yhat, 0.5)\n\n\n# plot the SLERP iterpolated vector\nfig = plot_vectors(xhat, yhat, p, labels=['$\\hat{x}$', '$\\hat{y}$', \"P_slerp\"])\nplt.xlabel('X Axis', fontsize='x-large')\nplt.ylabel('Y Axis', fontsize='x-large')\nplt.title('SLERP on Unit Vectors to their midpoint P', fontsize='xx-large', pad=10);\n\n\n\n\nThat looks much better!\nIf the Unit Circle was like a Gaussian soap bubble, then we’ve properly moved along its film."
+  },
+  {
+    "objectID": "blog/posts/2022-11-20-guidance-expts-2/index.html",
+    "href": "blog/posts/2022-11-20-guidance-expts-2/index.html",
+    "title": "Dynamic Classifier-free Guidance Pt. 1",
+    "section": "",
+    "text": "Experiments with cosine schedules for Classifier-free Guidance."
+  },
+  {
+    "objectID": "blog/posts/2022-11-20-guidance-expts-2/index.html#imports",
+    "href": "blog/posts/2022-11-20-guidance-expts-2/index.html#imports",
+    "title": "Dynamic Classifier-free Guidance Pt. 1",
+    "section": "Imports",
+    "text": "Imports\n\nimport os\nimport math\nimport random\nimport warnings\nfrom PIL import Image\nfrom typing import List\nfrom pathlib import Path\nfrom types import SimpleNamespace\nfrom fastcore.all import L\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom textwrap import wrap\nfrom tqdm.auto import tqdm \n\n# imports for diffusion models\nimport torch\nfrom transformers import logging\nfrom transformers import CLIPTextModel, CLIPTokenizer\nfrom huggingface_hub import notebook_login\nfrom diffusers import StableDiffusionPipeline\nfrom diffusers import AutoencoderKL, UNet2DConditionModel\nfrom diffusers import LMSDiscreteScheduler\n\n# for clean outputs\nwarnings.filterwarnings(\"ignore\")\nlogging.set_verbosity_error()\n\n# set the hardware device\ndevice = \"cuda\" if torch.cuda.is_available() else \"mps\" if torch.has_mps else \"cpu\"\n\n2022-11-21 19:06:22.967865: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library libcudart.so.11.0"
+  },
+  {
+    "objectID": "blog/posts/2022-11-20-guidance-expts-2/index.html#helper-functions",
+    "href": "blog/posts/2022-11-20-guidance-expts-2/index.html#helper-functions",
+    "title": "Dynamic Classifier-free Guidance Pt. 1",
+    "section": "Helper functions",
+    "text": "Helper functions\nThe functions below help with:\n\nGenerating text embeddings from a given prompt.\n\nConverting Diffusion latents to a PIL image.\n\nPlotting the images to visualize results.\n\n\ndef text_embeddings(prompts, maxlen=None):\n    \"Extracts text embeddings from the given `prompts`.\"\n    maxlen = maxlen or tokenizer.model_max_length\n    inp = tokenizer(prompts, padding=\"max_length\", max_length=maxlen, truncation=True, return_tensors=\"pt\")\n    return text_encoder(inp.input_ids.to(device))[0]\n\n\ndef image_from_latents(latents):\n    \"Scales diffusion `latents` and turns them into a PIL Image.\"\n    \n    # scale and decode the latents\n    latents = 1 / 0.18215 * latents\n    with torch.no_grad():\n        data = vae.decode(latents).sample[0]\n\n    # Create PIL image\n    data = (data / 2 + 0.5).clamp(0, 1)\n    data = data.cpu().permute(1, 2, 0).float().numpy()\n    data = (data * 255).round().astype(\"uint8\")\n    image = Image.fromarray(data)\n    return image\n    \n    \ndef show_image(image, scale=0.5):\n    \"Displays the given `image` resized based on `scale`.\"\n    img = image.resize(((int)(image.width * scale), (int)(image.height * scale)))\n    display(img)\n    return img\n\n\ndef image_grid(images, rows = 1, width=256, height=256, title=None):\n    \"Display an array of images in a grid with the given number of `rows`\"\n    count = len(images)\n    cols = int(count / rows)\n    if cols * rows < count:\n        rows += 1\n    # Calculate fig size based on individual image sizes    \n    px = 1/plt.rcParams['figure.dpi']\n    w = cols * width * px\n    # Add some extra space for the caption/title since that can wrap\n    h = (rows * height * px) + (rows * 30 * px)\n    fig, axes = plt.subplots(rows, cols, figsize=(w, h))\n    for y in range(rows):\n        for x in range(cols):\n            index = y*cols + x\n            ref = axes[x] if rows == 1 else axes[y] if cols == 1 else axes[y, x]\n            ref.axis('off')\n            if index > count - 1:\n                continue\n            img = images[index]\n            txt = f'Frame: {index}'\n            if title is not None:\n                if isinstance(title, str):\n                    txt = f'{title}: {index}'\n                elif isinstance(title, List):\n                    txt = title[index]\n            # small change for bigger, more visible titles\n            txt = '\\n'.join(wrap(txt, width=70))\n            ref.set_title(txt, fontsize='x-large')\n            ref.imshow(img)\n            ref.axis('off')"
+  },
+  {
+    "objectID": "blog/posts/2022-11-20-guidance-expts-2/index.html#loading-a-diffusion-pipeline",
+    "href": "blog/posts/2022-11-20-guidance-expts-2/index.html#loading-a-diffusion-pipeline",
+    "title": "Dynamic Classifier-free Guidance Pt. 1",
+    "section": "Loading a Diffusion pipeline",
+    "text": "Loading a Diffusion pipeline\nWe need to dynamically change the diffusion guidance parameter \\(G\\).\nThat means we need more control than what is available in the high-level HuggingFace APIs. To achieve this control, we load each piece of a Diffusion pipeline separately. Then, we can write our own image generation loop with full control over \\(G\\).\nThe get_sd_pieces function loads and returns the separate components of a Stable Diffusion pipeline.\n\ndef get_sd_pieces(model_name, dtype=torch.float32, better_vae='ema'):\n    \"Loads and returns the individual pieces in a Diffusion pipeline.\"\n    \n    # create the tokenizer and text encoder\n    tokenizer = CLIPTokenizer.from_pretrained(\n        model_name,\n        subfolder=\"tokenizer\",\n        torch_dtype=dtype)\n    text_encoder = CLIPTextModel.from_pretrained(\n        model_name,\n        subfolder=\"text_encoder\",\n        torch_dtype=dtype).to(device)\n\n    # we are using a VAE from stability that was trained for longer than the baseline \n    if better_vae:\n        assert better_vae in ('ema', 'mse')\n        vae = AutoencoderKL.from_pretrained(f\"stabilityai/sd-vae-ft-{better_vae}\", torch_dtype=dtype).to(device)\n    else:\n        vae = AutoencoderKL.from_pretrained(model_name, subfolder='vae', torch_dtype=dtype).to(device)\n    \n    # build the unet\n    unet = UNet2DConditionModel.from_pretrained(\n        model_name,\n        subfolder=\"unet\",\n        torch_dtype=dtype).to(device)\n    \n    # enable unet attention slicing\n    slice_size = unet.config.attention_head_dim // 2\n    unet.set_attention_slice(slice_size)\n        \n    # build the scheduler\n    scheduler = LMSDiscreteScheduler.from_config(model_name, subfolder=\"scheduler\")\n    \n    return (\n        tokenizer,\n        text_encoder,\n        vae,\n        unet,\n        scheduler,\n    )\n\n\nPicking a model\nThese runs use the openjourney model from Prompt Hero.\n\n\n\n\n\n\nImportant\n\n\n\nopenjourney was fine-tuned to create images in the style of Midjourney v4.\nTo trigger this style, we need to add the special keyword \"mdjrny-v4\" at the front of an input text prompt.\n\n\n\n# set the diffusion model\nmodel_name = \"prompthero/openjourney\"\n\n# other possible models\n# model_name = \"CompVis/stable-diffusion-v1-4\"\n# model_name = \"runwayml/stable-diffusion-v1-5\"\n\nNext we use the function get_sd_pieces to load this model. The pieces are loaded in float16 precision.\n\n# set the data type for the pipeline\ndtype = torch.float16\n\n# load the individual diffusion pieces\npieces = get_sd_pieces(model_name, dtype=dtype)\n(tokenizer, text_encoder, vae, unet, scheduler) = pieces"
+  },
+  {
+    "objectID": "blog/posts/2022-11-20-guidance-expts-2/index.html#text-prompt-for-generations",
+    "href": "blog/posts/2022-11-20-guidance-expts-2/index.html#text-prompt-for-generations",
+    "title": "Dynamic Classifier-free Guidance Pt. 1",
+    "section": "Text prompt for generations",
+    "text": "Text prompt for generations\nWe use the same input text prompt from the previous notebook:\n\n“a photograph of an astronaut riding a horse”\n\nBut, we add the special prefix keyword \"mdjrny-v4\" to create Midjourney-style images.\n\n# input text prompt for diffusion models\nprompt = \"mdjrny-v4 style a photograph of an astronaut riding a horse\""
+  },
+  {
+    "objectID": "blog/posts/2022-11-20-guidance-expts-2/index.html#generating-images",
+    "href": "blog/posts/2022-11-20-guidance-expts-2/index.html#generating-images",
+    "title": "Dynamic Classifier-free Guidance Pt. 1",
+    "section": "Generating images",
+    "text": "Generating images\nThe images will be generated over \\(50\\) diffusion steps. They will have a height and width size of 512 x 512 pixels.\n\n# the number of diffusion steps\nnum_steps = 50\n\n# generated image dimensions\nwidth, height = 512, 512\n\n\nCreating a fixed starting point for diffusion\nThe code below creates an initial set of latent noise.\nThe idea is for every generation to start from this shared, fixed noise. That way we can be sure that only our guidance changes are having an effect on the output image.\n\n# create the shared, initial latents\nseed = 1024\ntorch.manual_seed(seed)\ninit_latents = torch.randn((1, unet.in_channels, height//8, width//8), dtype=unet.dtype, device=device)\n\n\n\nImage generation function\nBelow is the main image generation function: generate. It uses the Stable Diffusion components we loaded earlier.\nNote that this function is almost identical to the StableDiffusionPipeline from HuggingFace. The main difference is plugging in our Guidance Transform instead of doing the default Classifier-free Guidance update.\n\ndef generate(prompt, guide_tfm=None, width=width, height=height, steps=num_steps, **kwargs):\n    # make sure we have a guidance transformation\n    assert guide_tfm\n    \n    # prepare the text embeddings\n    text = text_embeddings(prompt)\n    uncond = text_embeddings('')\n    emb = torch.cat([uncond, text]).type(unet.dtype)\n    \n    # start from the shared, initial latents\n    latents = torch.clone(init_latents)\n    scheduler.set_timesteps(steps)\n    latents = latents * scheduler.init_noise_sigma\n    \n    # run the diffusion process\n    for i,ts in enumerate(tqdm(scheduler.timesteps)):\n        inp = scheduler.scale_model_input(torch.cat([latents] * 2), ts)\n        with torch.no_grad(): \n            tf = ts\n            if torch.has_mps:\n                tf = ts.type(torch.float32)\n            u,t = unet(inp, tf, encoder_hidden_states=emb).sample.chunk(2)\n        \n        # call the guidance transform\n        pred = guide_tfm(u, t, idx=i)\n        \n        # update the latents\n        latents = scheduler.step(pred, ts, latents).prev_sample\n        \n    # decode and return the final latents\n    image = image_from_latents(latents)\n    return image"
+  },
+  {
+    "objectID": "blog/posts/2022-11-20-guidance-expts-2/index.html#default-schedule-parameters",
+    "href": "blog/posts/2022-11-20-guidance-expts-2/index.html#default-schedule-parameters",
+    "title": "Dynamic Classifier-free Guidance Pt. 1",
+    "section": "Default schedule parameters",
+    "text": "Default schedule parameters\nWe start from the guidance schedule value from the previous notebook.\nRecall that there were three kinds of schedules:\n\nA static schedule with a constant \\(G\\).\n\nA decreasing Cosine schedule.\n\nA Cosine schedule with some initial warm up steps.\n\n\n# Default schedule parameters from the blog post\n######################################\nmax_val           = 7.5   # guidance scaling value\nmin_val           = 1     # minimum guidance scaling\nnum_steps         = 50    # number of diffusion steps\nnum_warmup_steps  = 0     # number of warmup steps\nwarmup_init_val   = 0     # the intial warmup value\nnum_cycles        = 0.5   # number of cosine cycles\nk_decay           = 1     # k-decay for cosine curve scaling \n######################################\n\nTo make sure our changes always reference this shared starting point, we can wrap these parameters in a dictionary.\n\nDEFAULT_COS_PARAMS = {\n    'max_val':           max_val,\n    'num_steps':         num_steps,\n    'min_val':           min_val,\n    'num_cycles':        num_cycles,\n    'k_decay':           k_decay,\n    'num_warmup_steps':  num_warmup_steps,\n    'warmup_init_val':   warmup_init_val,\n}\n\nThen, every minimum-pair change will start from this shared dictionary and update a single parameter. The cos_harness below gives us an easy way of making these minimum-pair changes.\n\ndef cos_harness(new_params={}, cos_params=DEFAULT_COS_PARAMS):\n    '''Creates cosine schedules with updated parameters in `new_params`'''\n    \n    # start from the given baseline `cos_params`\n    cos_params = dict(cos_params)\n    \n    # update the schedule with any new parameters\n    if new_params: cos_params.update(new_params)\n    \n    # return the new cosine schedule\n    sched = get_cos_sched(**cos_params)\n    return sched\n\nLet’s use the cosine harness to plot three test schedules, just to make sure things are working:\n\nThe baseline with no warmup.\n\nWarmup for 5 steps.\n\nWarmup for 10 steps.\n\n\n\n\n\n\n\nNote\n\n\n\nThe schedule plotting function plot_schedules is available in the post’s notebook.\n\n\n\n# plot cosine schedules with different number of warmup steps\nwarmup_steps = (0, 5, 10)\nwarm_g = L( \n    {'sched': cos_harness({'num_warmup_steps': w}), \n     'title': f'Warmup Steps: {w}'}\n    for w in warmup_steps\n)\n\n# plot the schedules\nprint('Plotting sample cosine schedules...')\nplot_schedules(warm_g.itemgot('sched'), rows=1, titles=warm_g.itemgot('title'))\n\nPlotting sample cosine schedules..."
+  },
+  {
+    "objectID": "blog/posts/2022-11-20-guidance-expts-2/index.html#creating-the-cosine-experiments",
+    "href": "blog/posts/2022-11-20-guidance-expts-2/index.html#creating-the-cosine-experiments",
+    "title": "Dynamic Classifier-free Guidance Pt. 1",
+    "section": "Creating the Cosine experiments",
+    "text": "Creating the Cosine experiments\nNow we can create the different Cosine schedules that will be swept.\n\ncos_param_sweep = {\n    'num_warmup_steps': [5, 10, 15],\n    'num_cycles':       [1, 1.5],\n    'k_decay':          [0.8, 0.6],\n    'max_val':          [10],\n    'min_val':          [3],\n}\n\nparam_names = sorted(list(cos_param_sweep))\n\ncos_scheds = L()\nfor idx,name in enumerate(param_names):\n    for idj,val in enumerate(cos_param_sweep[name]):\n\n        # create the cosine experimeent\n        expt = {\n            'param_name': name,\n            'val': val,\n            'schedule': cos_harness({name: val})\n        }\n        # for plotting\n        expt['title'] = f'Param: \"{name}\", val={val}'\n        \n        cos_scheds.append(expt)\n    \n\n\nplot_schedules(cos_scheds.itemgot('schedule'), rows=3, titles=cos_scheds.itemgot('title'))"
+  },
+  {
+    "objectID": "blog/posts/2022-11-20-guidance-expts-2/index.html#running-the-cosine-experiments",
+    "href": "blog/posts/2022-11-20-guidance-expts-2/index.html#running-the-cosine-experiments",
+    "title": "Dynamic Classifier-free Guidance Pt. 1",
+    "section": "Running the cosine experiments",
+    "text": "Running the cosine experiments\nWe use the run function from before to run all of the cosine experiments.\n\ncos_res = run(prompt, cos_scheds, guide_tfm=GuidanceTfm, show_each=False)\n\nUsing Guidance Transform: <class 'cf_guidance.transforms.GuidanceTfm'>\nRunning experiment [1 of 9]: Param: \"k_decay\", val=0.8...\n\n\n\n\n\nRunning experiment [2 of 9]: Param: \"k_decay\", val=0.6...\n\n\n\n\n\nRunning experiment [3 of 9]: Param: \"max_val\", val=10...\n\n\n\n\n\nRunning experiment [4 of 9]: Param: \"min_val\", val=3...\n\n\n\n\n\nRunning experiment [5 of 9]: Param: \"num_cycles\", val=1...\n\n\n\n\n\nRunning experiment [6 of 9]: Param: \"num_cycles\", val=1.5...\n\n\n\n\n\nRunning experiment [7 of 9]: Param: \"num_warmup_steps\", val=5...\n\n\n\n\n\nRunning experiment [8 of 9]: Param: \"num_warmup_steps\", val=10...\n\n\n\n\n\nRunning experiment [9 of 9]: Param: \"num_warmup_steps\", val=15...\n\n\n\n\n\nDone."
+  },
+  {
+    "objectID": "blog/posts/2022-11-20-guidance-expts-2/index.html#analysis",
+    "href": "blog/posts/2022-11-20-guidance-expts-2/index.html#analysis",
+    "title": "Dynamic Classifier-free Guidance Pt. 1",
+    "section": "Analysis",
+    "text": "Analysis\nCertain Cosine schedules seem promising. They either increase the details of the astronaut or background, or they create more anatomically correct horses.\nIn the rest of the series, we will explore the promising Cosine changes:\n\nSetting a higher Guidance ceiling.\n\nAllowing the Cosine to go through multiple cycles.\n\nWarming up for a few steps."
+  },
+  {
+    "objectID": "blog/posts/2022-11-20-guidance-expts-2/index.html#bringing-in-normalizations",
+    "href": "blog/posts/2022-11-20-guidance-expts-2/index.html#bringing-in-normalizations",
+    "title": "Dynamic Classifier-free Guidance Pt. 1",
+    "section": "Bringing in Normalizations",
+    "text": "Bringing in Normalizations\nIn the previous notebooks, we found that normalization can have a huge improvement on generated images. The next logical step is to add normalizations to our schedules to see if the gains compound."
+  },
+  {
+    "objectID": "blog/posts/2022-11-20-minimal-diffusion/index.html",
+    "href": "blog/posts/2022-11-20-minimal-diffusion/index.html",
+    "title": "Libraries for dynamic Classifier-free Guidance",
+    "section": "",
+    "text": "Introducing two helper libraries to run dynamic Classifier-free Guidance."
+  },
+  {
+    "objectID": "blog/posts/2022-11-20-minimal-diffusion/index.html#motivation",
+    "href": "blog/posts/2022-11-20-minimal-diffusion/index.html#motivation",
+    "title": "Libraries for dynamic Classifier-free Guidance",
+    "section": "Motivation",
+    "text": "Motivation\nThe initial experiments had a lot of boilerplate and repeated code.\nFor example, the same code was used in multiple notebooks to load Stable Diffusion models. The code for guidance schedules and normalizations was also repeated across notebooks.\nThat meant that each notebook needed a lot of overhead before it got to the actual experiments.\nTo make life a bit easier, and because we hope that these ideas are broadly usable, this repeated code was moved to two libraries:\n\nmin_diffusion\ncf_guidance\n\nNow we can import these libraries and jump straight to the important part: running the guidance experiments."
+  },
+  {
+    "objectID": "blog/posts/2022-11-20-minimal-diffusion/index.html#the-min_diffusion-library",
+    "href": "blog/posts/2022-11-20-minimal-diffusion/index.html#the-min_diffusion-library",
+    "title": "Libraries for dynamic Classifier-free Guidance",
+    "section": "The min_diffusion library",
+    "text": "The min_diffusion library\nIn this section we generate an image using min_diffsion.\n\nfrom min_diffusion.core import MinimalDiffusion\n\n2022-11-22 15:42:08.507717: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library libcudart.so.11.0\n\n\n\nLoading the openjourney model from Prompt Hero\nThe following code load the openjourney Stable Diffusion model on the GPU, in torch.float16 precision.\n\nmodel_name = 'prompthero/openjourney'\ndevice     = 'cuda'\ndtype      = torch.float16\n\n\npipeline = MinimalDiffusion(model_name, device, dtype)\n\n\npipeline.load();\n\nEnabling default unet attention slicing.\n\n\n\n\nGenerating an image\nNext we use the familiar prompt to generate an image:\n\n“a photograph of an astronaut riding a horse”\n\n\n\n\n\n\n\nNote\n\n\n\nThe openjourney model was fine-tuned to create images in the style of Midjourney v4.\nTo enable this fine-tuned style, we have to add the keyword \"mdjrny-v4\" at the start of the prompt.\n\n\n\n# text prompt for image generations\nprompt = \"mdjrny-v4 style a photograph of an astronaut riding a horse\"\n\n\n# set the seed for reproducibility\ntorch.manual_seed(2147483647);\n\n\n# generate the image\nimg = pipeline.generate(prompt);\n\nUsing the default Classifier-free Guidance.\n\n\n\n\n\n\n# display the generated image\nimg\n\n\n\n\nThat’s the entire process!\nThe main difference between MinimalDiffusion and the HuggingFace API is that now we can easily customize the image generation loop. This allows us to explore a wide range of dynamic Classifier-free Guidances."
+  },
+  {
+    "objectID": "blog/posts/2022-11-20-minimal-diffusion/index.html#the-cf_guidance-library",
+    "href": "blog/posts/2022-11-20-minimal-diffusion/index.html#the-cf_guidance-library",
+    "title": "Libraries for dynamic Classifier-free Guidance",
+    "section": "The cf_guidance library",
+    "text": "The cf_guidance library\nThe sections below are based on the cf_guidance documentation.\nWe create a few Cosine schedules and plug them into different Classifier-free Guidances.\nThe schedule parameter come from the initial post on dynamic Classifier-free Guidance.\n\nfrom cf_guidance.schedules import get_cos_sched\n\n\n# Parameters from the blog post\n# https://enzokro.dev/blog/posts/2022-11-15-guidance-expts-1/\nmax_val = 7.5\nmin_val = 0.15\nnum_steps = 50\nnum_warmup_steps = 5\n\n# 1) Baseline cosine schedule\ncos_params = {\n    'max_val':           max_val,\n    'num_steps':         num_steps,\n    'min_val':           min_val,\n    'num_warmup_steps':  0,\n}\n\n# 2) Cosine schedule with warmup \nwarmup_cos_params = {\n    'max_val':           max_val,\n    'num_steps':         num_steps,\n    'min_val':           min_val,\n    'warmup_init_val':   min_val + 1., # to show we can offset the warmup relative to min\n    'num_warmup_steps':  num_warmup_steps,\n}\n\n# create the schedules\ncos_g = get_cos_sched(**cos_params)\nwarmup_g = get_cos_sched(**warmup_cos_params)\n\nLet’s plot these cosine schedules to see what they look like.\n\n# plot the schedules\nplt.plot(cos_g)\nplt.xlabel('Diffusion Timesteps')\nplt.ylabel('$G$ Guidance Parameter')\nplt.title('Cosine Schedule');\n\n\n\n\n\nplt.plot(warmup_g)\nplt.xlabel('Diffusion Timesteps')\nplt.ylabel('$G$ Guidance Parameter')\nplt.title('Warmup Cosine Schedule');\n\n\n\n\n\nCreating Guidance Normalizers\nNow we can use these schedules during Classifier-free Guidance. The Guidance Transform class, GuidanceTfm, makes this possible.\nGuidance transforms take one initialization parameter: schedules. This is a map from parameter names to an array-like, indexable sequence of values.\nFor a given parameter name at diffusion timestep idx, the value of schedules[name][idx] should be the parameter’s scheduled value at the given timestep.\nIn this case we call the guidance parameter \\(G\\) as a lowercase \\(g\\).\n\nfrom cf_guidance.transforms import GuidanceTfm, BaseNormGuidance\n\n\n# create the `schedules` parameter\nexample_schedules = {'g': cos_g}\n\n# Create a Guidance with cosine schedule.\nguidance = GuidanceTfm(example_schedules)\n\n# Normalized Guidance with a cosine schedule.\nnorm_guidance = BaseNormGuidance(example_schedules)\n\n\n\nUsing the transforms in a Diffusion pipeline\nThe following snippet shows where and how the Guidance Transforms are used in a diffusion loop.\nWe use the norm_guidance example class created above. Specifically, we call norm_guidance with the following arguments:\n\nThe unconditioned noise predictions.\n\nThe conditional noise predictions.\n\nThe index of the current timestep.\n\nThe code is borrowed from HuggingFace’s official StableDiffusionPipeline to show where norm_guidance should go.\nThis seems like a good starting point, since many scripts and functions are based on this HuggingFace setup.\n    # inside of `StableDiffusionPipeline`\n    \n    for i, t in enumerate(self.progress_bar(timesteps_tensor)):\n        # expand the latents if we are doing classifier free guidance\n        latent_model_input = torch.cat([latents] * 2) if do_classifier_free_guidance else latents\n        latent_model_input = self.scheduler.scale_model_input(latent_model_input, t)\n\n        # predict the noise residual\n        noise_pred = self.unet(latent_model_input, t, encoder_hidden_states=text_embeddings).sample\n\n        # NOTE: our transforms go here:\n        ###############################\n        if do_classifier_free_guidance:\n            noise_pred_uncond, noise_pred_text = noise_pred.chunk(2)\n\n            ## OLD UPADTE\n            #noise_pred = noise_pred_uncond + guidance_scale * (noise_pred_text - noise_pred_uncond)\n\n            # NEW cf_guidance UPDATE\n            noise_pred = norm_guidance(noise_pred_uncond, noise_pred_text, i)\n\n\nCreating more complex schedules\nOur cosine scheduler is based on a combination of the schedulers in timm and HuggingFace.\nIt has a variety of parameters to support many schedule combinations as shown below.\n\n# cosine schedule with a full cycle\nfull_cycle = {\n    'max_val':           max_val,\n    'num_steps':         num_steps,\n    'min_val':           min_val,\n    'num_cycles':        1,\n    'num_warmup_steps':  0,\n}\n\n# cosine schedule with k-decay\nk_decay_cos = {\n    'max_val':           max_val,\n    'num_steps':         num_steps,\n    'min_val':           min_val,\n    'num_cycles':        1.5,\n    'k_decay':           0.7,\n    'warmup_init_val':   min_val + 1., # to show we can offset the warmup value\n    'num_warmup_steps':  num_warmup_steps,\n}\n\n# create the schedules\nfull_cycle_sched = get_cos_sched(**full_cycle)\nk_decay_sched = get_cos_sched(**k_decay_cos)\n\n\nplt.plot(full_cycle_sched)\nplt.xlabel('Diffusion Timesteps')\nplt.ylabel('$G$ Guidance Parameter')\nplt.title('Cosine With a Full Cycle');\n\n\n\n\n\nplt.plot(k_decay_sched)\nplt.xlabel('Diffusion Timesteps')\nplt.ylabel('$G$ Guidance Parameter')\nplt.title('Cosine with Offset-Warmup, 1.5 Cycles, and K-decay');"
+  },
+  {
+    "objectID": "blog/posts/2022-11-21-guidance-expts-3/index.html",
+    "href": "blog/posts/2022-11-21-guidance-expts-3/index.html",
+    "title": "Dynamic Classifier-free Guidance Pt. 2",
+    "section": "",
+    "text": "Experiments with normalizations for Classifier-free Guidance."
+  },
+  {
+    "objectID": "blog/posts/2022-11-21-guidance-expts-3/index.html#quick-recap-of-part-1",
+    "href": "blog/posts/2022-11-21-guidance-expts-3/index.html#quick-recap-of-part-1",
+    "title": "Dynamic Classifier-free Guidance Pt. 2",
+    "section": "Quick recap of Part 1",
+    "text": "Quick recap of Part 1\nIn Part 1, we generated a baseline image using the default, static Classifier-free Guidance. To see if we could improve on the baseline, we swept a range of Cosine Schedules on the guidance parameter \\(G\\).\nTo recap the results of the sweep, there are a few promising guidance schedules to explore:\n\nSetting a higher guidance value.\n\nAllowing the Cosine schedule to go through multiple cycles.\n\nWarming up the guidance for a few steps."
+  },
+  {
+    "objectID": "blog/posts/2022-11-21-guidance-expts-3/index.html#part-2-bringing-in-normalizations",
+    "href": "blog/posts/2022-11-21-guidance-expts-3/index.html#part-2-bringing-in-normalizations",
+    "title": "Dynamic Classifier-free Guidance Pt. 2",
+    "section": "Part 2: Bringing in Normalizations",
+    "text": "Part 2: Bringing in Normalizations\nIn Part 2, we bring in normalizations as another kind of dynamic guidance.\nThe idea is that normalizing the guidance might improve the updates in the Diffusion model’s latent image space. To test this we explore three kinds of guidance normalizations:\n\nNormalizing the prediction by its overall norm.\n\nNormalizing the guidance update vector, \\(\\left(t - u\\right)\\), by its norm.\n\nCombining the Normalizations in 1. and 2.\n\n\n\n\n\n\n\nNote\n\n\n\nMore details about the normalizations can be found in this section of the original post.\n\n\nAfter these runs, we should have a good idea of both the schedules and normalizations that can improve Diffusion images. We will then combine the two approaches and explore other, more advanced schedules."
+  },
+  {
+    "objectID": "blog/posts/2022-11-21-guidance-expts-3/index.html#leveraging-a-few-helper-libraries",
+    "href": "blog/posts/2022-11-21-guidance-expts-3/index.html#leveraging-a-few-helper-libraries",
+    "title": "Dynamic Classifier-free Guidance Pt. 2",
+    "section": "Leveraging a few helper libraries",
+    "text": "Leveraging a few helper libraries\nWe use two new libraries that make it easier to run dynamic Classifier-free Guidances.\nThese two libraries are:\n\nmin_diffusion\ncf_guidance\n\nThe helper libraries remove a lot of overhead and boilerplate code. They allow us to jump straight to the important parts: running the guidance experiments.\nFor more details, the libraries were introduced in this earlier post."
+  },
+  {
+    "objectID": "blog/posts/2022-11-21-guidance-expts-3/index.html#python-imports",
+    "href": "blog/posts/2022-11-21-guidance-expts-3/index.html#python-imports",
+    "title": "Dynamic Classifier-free Guidance Pt. 2",
+    "section": "Python Imports",
+    "text": "Python Imports\nTo start we import the needed python modules.\nWe also handle random seeding to make sure that our results are reproducible across the series.\n\nimport os\nimport math\nimport random\nimport warnings\nfrom PIL import Image\nfrom typing import List\nfrom pathlib import Path\nfrom types import SimpleNamespace\nfrom fastcore.all import L\n\nimport numpy as np\nimport matplotlib.pyplot as plt\n\n# imports for diffusion models\nimport torch\nfrom transformers import logging\n# for clean outputs\nwarnings.filterwarnings(\"ignore\")\nlogging.set_verbosity_error()\n\n# seed for reproducibility\nSEED = 1024\ndef seed_everything(seed: int):\n    random.seed(seed)\n    os.environ['PYTHONHASHSEED'] = str(seed)\n    np.random.seed(seed)\n    generator = torch.manual_seed(seed)\n    torch.backends.cudnn.deterministic = True\n    torch.backends.cudnn.benchmark = False\n    return generator\n# for sampling the initial, noisy latents\ngenerator = seed_everything(SEED)\n\n# set the hardware device\ndevice = \"cuda\" if torch.cuda.is_available() else \"mps\" if torch.has_mps else \"cpu\"\n\n2022-11-23 14:58:50.779076: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library libcudart.so.11.0"
+  },
+  {
+    "objectID": "blog/posts/2022-11-21-guidance-expts-3/index.html#the-min_diffusion-library",
+    "href": "blog/posts/2022-11-21-guidance-expts-3/index.html#the-min_diffusion-library",
+    "title": "Dynamic Classifier-free Guidance Pt. 2",
+    "section": "The min_diffusion library",
+    "text": "The min_diffusion library\nWe use the min_diffusion library to load a Stable Diffusion model from the HuggingFace hub.\n\n# to load Stable Diffusion pipelines\nfrom min_diffusion.core import MinimalDiffusion\n\n# helpers to plot the generated images\nfrom min_diffusion.utils import show_image, image_grid\n\n\nLoading the openjourney model from Prompt Hero\nThe following code loads the openjourney model in torch.float16 precision and puts it on the GPU.\n\nmodel_name = 'prompthero/openjourney'\ndevice     = 'cuda'\ndtype      = torch.float16\n\n\npipeline = MinimalDiffusion(model_name, device, dtype)\n\n\npipeline.load();\n\nEnabling default unet attention slicing."
+  },
+  {
+    "objectID": "blog/posts/2022-11-21-guidance-expts-3/index.html#text-prompt-for-generations",
+    "href": "blog/posts/2022-11-21-guidance-expts-3/index.html#text-prompt-for-generations",
+    "title": "Dynamic Classifier-free Guidance Pt. 2",
+    "section": "Text prompt for generations",
+    "text": "Text prompt for generations\nWe use the familiar, running prompt in our series to generate an image:\n\n“a photograph of an astronaut riding a horse”\n\n\n\n\n\n\n\nImportant\n\n\n\nThe openjourney model was fine-tuned to create images in the style of Midjourney v4.\nTo enable this fine-tuned style, we need to add the keyword \"mdjrny-v4\" at the start of the prompt.\n\n\n\n# text prompt for image generations\nprompt = \"mdjrny-v4 style a photograph of an astronaut riding a horse\""
+  },
+  {
+    "objectID": "blog/posts/2022-11-21-guidance-expts-3/index.html#image-parameters",
+    "href": "blog/posts/2022-11-21-guidance-expts-3/index.html#image-parameters",
+    "title": "Dynamic Classifier-free Guidance Pt. 2",
+    "section": "Image parameters",
+    "text": "Image parameters\nThe images will be generated over \\(50\\) diffusion steps. They will have a height and width of 512 x 512 pixels.\n\n# the number of diffusion steps\nnum_steps = 50\n\n# generated image dimensions\nwidth, height = 512, 512"
+  },
+  {
+    "objectID": "blog/posts/2022-11-21-guidance-expts-3/index.html#wrapper-to-run-the-experiments",
+    "href": "blog/posts/2022-11-21-guidance-expts-3/index.html#wrapper-to-run-the-experiments",
+    "title": "Dynamic Classifier-free Guidance Pt. 2",
+    "section": "Wrapper to run the experiments",
+    "text": "Wrapper to run the experiments\nThe run function below generates images from a given prompt.\nIt also takes an argument guide_tfm for the specific Guidance Transformation class that will guide the outputs. The schedules argument has the parameter values of \\(G\\) at each diffusion timestep.\n\ndef run(prompt, schedules, guide_tfm=None, generator=None,\n        show_each=False, test_run=False):\n    \"\"\"Runs a dynamic Classifier-free Guidance experiment. \n    \n    Generates an image for the text `prompt` given all the values in `schedules`.\n    Uses a Guidance Transformation class from the `cf_guidance` library.  \n    Stores the output images with a matching title for plotting. \n    Optionally shows each image as its generated.\n    If `test_run` is true, it runs a single schedule for testing. \n    \"\"\"\n    # store generated images and their title (the experiment name)\n    images, titles = [], []\n    \n    # make sure we have a valid guidance transform\n    assert guide_tfm\n    print(f'Using Guidance Transform: {guide_tfm}')\n    \n    # optionally run a single test schedule\n    if test_run:\n        print(f'Running a single schedule for testing.')\n        schedules = schedules[:1]\n        \n\n    # run all schedule experiments\n    for i,s in enumerate(schedules):\n        \n        # parse out the title for the current run\n        cur_title  = s['title']\n        titles.append(cur_title)\n        \n        # create the guidance transformation \n        cur_sched = s['schedule']\n        gtfm = guide_tfm({'g': cur_sched})\n        \n        print(f'Running experiment [{i+1} of {len(schedules)}]: {cur_title}...')\n        img = pipeline.generate(prompt, gtfm, generator=generator)\n        images.append(img)\n        \n        # optionally plot the image\n        if show_each:\n            show_image(img, scale=1)\n\n    print('Done.')\n    return {'images': images,\n            'titles': titles,}\n\nLet’s create the baseline image. The hope is that our guidance changes will then improve on it.\n\nbaseline_res = run(prompt, baseline_scheds, guide_tfm=GuidanceTfm, generator=generator)\n\nUsing Guidance Transform: <class 'cf_guidance.transforms.GuidanceTfm'>\nRunning experiment [1 of 1]: Param: \"max_val\", val=7.5...\n\n\n\n\n\nDone.\n\n\n\n# view the baseline image\nbaseline_res['images'][0]\n\n\n\n\nNot a bad starting point. Let’s see if we can do better."
+  },
+  {
+    "objectID": "blog/posts/2022-11-21-guidance-expts-3/index.html#details-on-normalized-guidance-values",
+    "href": "blog/posts/2022-11-21-guidance-expts-3/index.html#details-on-normalized-guidance-values",
+    "title": "Dynamic Classifier-free Guidance Pt. 2",
+    "section": "Details on normalized Guidance values",
+    "text": "Details on normalized Guidance values\nFor Prediction Normalization we can use the same static \\(G = 7.5\\) from the baseline.\nFor both T-Normalization and Full Normalization, however, we need a much smaller guidance value. The reason is that these normalizations scale the update vector \\(\\left( t - u \\right)\\) itself. That means that a large value like \\(G = 7.5\\) would de-scale the vectors even more! That is the exact situation we are trying to avoid with normalization in the first place.\nTo prevent this, we create a special \\(G_\\text{small}\\) schedule for T and Full Normalizations with a smaller value of \\(G_\\text{small} = 0.15\\)\n\n# create the baseline Classifier-free Guidance\nT_run = {'max_val': [0.15]}\n\n# parameters we are sweeping\nT_scheds = L()\n\n# step through each parameter\nfor idx,name in enumerate(baselines_names):\n    # step through each of its values\n    for idj,val in enumerate(T_run[name]):\n\n        # create the baseline experimeent\n        expt = {\n            'param_name': name,\n            'val': val,\n            'schedule': [val for _ in range(num_steps)]\n        }\n        # for plotting\n        expt['title'] = f'Param: \"{name}\", val={val}'\n        \n        # add to the running list of experiments\n        T_scheds.append(expt)"
+  },
+  {
+    "objectID": "blog/posts/2022-11-21-guidance-expts-3/index.html#prediction-norm-runs",
+    "href": "blog/posts/2022-11-21-guidance-expts-3/index.html#prediction-norm-runs",
+    "title": "Dynamic Classifier-free Guidance Pt. 2",
+    "section": "Prediction Norm runs",
+    "text": "Prediction Norm runs\n\nprint('Running the BaseNorm experiments...')\nbase_norm_res = run(prompt, baseline_scheds, guide_tfm=BaseNormGuidance, generator=generator)\n\nRunning the BaseNorm experiments...\nUsing Guidance Transform: <class 'cf_guidance.transforms.BaseNormGuidance'>\nRunning experiment [1 of 1]: Param: \"max_val\", val=7.5...\n\n\n\n\n\nDone."
+  },
+  {
+    "objectID": "blog/posts/2022-11-21-guidance-expts-3/index.html#t-norm-runs",
+    "href": "blog/posts/2022-11-21-guidance-expts-3/index.html#t-norm-runs",
+    "title": "Dynamic Classifier-free Guidance Pt. 2",
+    "section": "T-Norm runs",
+    "text": "T-Norm runs\n\nprint('Running the T-Norm experiments...')\nt_norm_res = run(prompt, T_scheds, guide_tfm=TNormGuidance, generator=generator)\n\nRunning the T-Norm experiments...\nUsing Guidance Transform: <class 'cf_guidance.transforms.TNormGuidance'>\nRunning experiment [1 of 1]: Param: \"max_val\", val=0.15...\n\n\n\n\n\nDone."
+  },
+  {
+    "objectID": "blog/posts/2022-11-21-guidance-expts-3/index.html#full-norm-runs",
+    "href": "blog/posts/2022-11-21-guidance-expts-3/index.html#full-norm-runs",
+    "title": "Dynamic Classifier-free Guidance Pt. 2",
+    "section": "Full Norm runs",
+    "text": "Full Norm runs\n\nprint('Running the FullNorm experiments...')\nfull_norm_res = run(prompt, T_scheds, guide_tfm=FullNormGuidance, generator=generator)\n\nRunning the FullNorm experiments...\nUsing Guidance Transform: <class 'cf_guidance.transforms.FullNormGuidance'>\nRunning experiment [1 of 1]: Param: \"max_val\", val=0.15...\n\n\n\n\n\nDone."
+  },
+  {
+    "objectID": "blog/posts/2022-11-21-guidance-expts-3/index.html#prediction-norm-results",
+    "href": "blog/posts/2022-11-21-guidance-expts-3/index.html#prediction-norm-results",
+    "title": "Dynamic Classifier-free Guidance Pt. 2",
+    "section": "Prediction Norm results",
+    "text": "Prediction Norm results\n\n\n\n\n\nComparing left to right, Prediction Normalization improves the overall image.\nThe horse’s body and hair are more defined. The clouds in the background have more texture. The lowest orb in the sky is much better defined. The shadows on the ground also have better coverage and a more natural transition. The ground itself has more details and texture, and is better separated from the background sky.\nEven the reflection on the astronaut’s helmet has more depth and looks smoother.\nOverall, it seems that Prediction Normalization is a global improvement on the baseline."
+  },
+  {
+    "objectID": "blog/posts/2022-11-21-guidance-expts-3/index.html#t-norm-results",
+    "href": "blog/posts/2022-11-21-guidance-expts-3/index.html#t-norm-results",
+    "title": "Dynamic Classifier-free Guidance Pt. 2",
+    "section": "T-Norm results",
+    "text": "T-Norm results\n\n\n\n\n\nThis one is much more interesting. T-Normalization completely changed the image! Even though they started from the exact same noisy latents.\nHere the horse’s anatomy, especially its head, look more correct. Even though we lost overall illumination on the horse’s body.\nThe patches and details on the astronaut’s gear are also better defined. And maybe it’s subjective, but this one feels more like a photograph (thanks to helmet’s glare) while the baseline looks more like digital art."
+  },
+  {
+    "objectID": "blog/posts/2022-11-21-guidance-expts-3/index.html#full-norm-results",
+    "href": "blog/posts/2022-11-21-guidance-expts-3/index.html#full-norm-results",
+    "title": "Dynamic Classifier-free Guidance Pt. 2",
+    "section": "Full Norm results",
+    "text": "Full Norm results\n\n\n\n\n\nFull Normalization feels like a mix of the best from both worlds.\nThe horse’s anatomy and astronaut details are better, following the results from T-Normalization. And we regained some background vs. foreground separation from Prediction Normalization.\nIt seems this dual benefit came at the cost of some symmetry for the orbs in the sky, and a loss of resolution on the horse’s tail."
+  },
+  {
+    "objectID": "blog/posts/2022-11-21-guidance-expts-3/index.html#analysis",
+    "href": "blog/posts/2022-11-21-guidance-expts-3/index.html#analysis",
+    "title": "Dynamic Classifier-free Guidance Pt. 2",
+    "section": "Analysis",
+    "text": "Analysis\nOverall, at least for this example, it is fair to say that normalizations can improve Diffusion images.\nEither the baseline image was improved overall (Prediction Normalization), or we gained better image syntax and details (T-Normalization and Full Normalization).\nGiven that T-Normalization and Full Normalization completely changed the style of the baseline image, there is a lot to explore here. To start, there is likely a much better set of \\(G_\\text{small}\\) values. Consider the baseline’s value of \\(G = 7.5\\). This value is the standard across many Diffusion models and empirically produces good results. Meanwhile, our \\(G_\\text{small} = 0.15\\) is only a starting point that has not been thoroughly tested.\nIn summary, it seems that Prediction Normalization could be an easy way to improve all Diffusion images. As for the others, they definitely have potential that should be explored further."
+  },
+  {
+    "objectID": "blog/posts/2022-11-23-guidance-expts-4/index.html",
+    "href": "blog/posts/2022-11-23-guidance-expts-4/index.html",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 3",
+    "section": "",
+    "text": "Experiments with cosine schedules and normalizations for Classifier-free Guidance."
+  },
+  {
+    "objectID": "blog/posts/2022-11-23-guidance-expts-4/index.html#quick-recap-of-parts-1-and-2",
+    "href": "blog/posts/2022-11-23-guidance-expts-4/index.html#quick-recap-of-parts-1-and-2",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 3",
+    "section": "Quick recap of Parts 1 and 2",
+    "text": "Quick recap of Parts 1 and 2\nIn Part 1, we generated a baseline image using a constant Classifier-free Guidance. Attempting to improve on the baseline, we swept the guidance parameter \\(G\\) over a set of Cosine Schedules.\nIn Part 2, we introduced normalizations for Classifier-free Guidance. There was one kind of normalization, Prediction Normalization, that seems to improve the overall quality of generated images."
+  },
+  {
+    "objectID": "blog/posts/2022-11-23-guidance-expts-4/index.html#part-3-combining-schedules-and-normalizations",
+    "href": "blog/posts/2022-11-23-guidance-expts-4/index.html#part-3-combining-schedules-and-normalizations",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 3",
+    "section": "Part 3: Combining schedules and normalizations",
+    "text": "Part 3: Combining schedules and normalizations\nIn Part 3, we build on the previous results by now combining guidance normalizations and schedules.\nThe goal is to find a combo of normalized schedules that universally improve the outputs of Diffusion image models."
+  },
+  {
+    "objectID": "blog/posts/2022-11-23-guidance-expts-4/index.html#leveraging-a-few-helper-libraries",
+    "href": "blog/posts/2022-11-23-guidance-expts-4/index.html#leveraging-a-few-helper-libraries",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 3",
+    "section": "Leveraging a few helper libraries",
+    "text": "Leveraging a few helper libraries\nWe reuse our helper libraries to more efficiently run guidance experiments. The two libraries are:\n\nmin_diffusion\ncf_guidance\n\nThey were introduced in this separate post."
+  },
+  {
+    "objectID": "blog/posts/2022-11-23-guidance-expts-4/index.html#python-imports",
+    "href": "blog/posts/2022-11-23-guidance-expts-4/index.html#python-imports",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 3",
+    "section": "Python Imports",
+    "text": "Python Imports\nFirst we import the needed python modules.\n\nimport os\nimport math\nimport random\nimport warnings\nfrom PIL import Image\nfrom typing import List\nfrom pathlib import Path\nfrom types import SimpleNamespace\nfrom fastcore.all import L\nfrom functools import partial\n\nimport numpy as np\nimport matplotlib.pyplot as plt\n\n# imports for diffusion models\nimport torch\nfrom transformers import logging\n# for clean outputs\nwarnings.filterwarnings(\"ignore\")\nlogging.set_verbosity_error()\n\n# set the hardware device\ndevice = \"cuda\" if torch.cuda.is_available() else \"mps\" if torch.has_mps else \"cpu\"\n\n2022-11-24 18:34:14.079096: I tensorflow/stream_executor/platform/default/dso_loader.cc:53] Successfully opened dynamic library libcudart.so.11.0\n\n\n\nSeed for reproducibility\nWe use the seed_everything function to make sure that the results are repeatable across notebooks.\n\n# set the seed and pseudo random number generator\nSEED = 1024\ndef seed_everything(seed):\n    random.seed(seed)\n    os.environ['PYTHONHASHSEED'] = str(seed)\n    np.random.seed(seed)\n    generator = torch.manual_seed(seed)\n    torch.backends.cudnn.deterministic = True\n    torch.backends.cudnn.benchmark = False\n    return generator\n# for sampling the initial, noisy latents\ngenerator = seed_everything(SEED)"
+  },
+  {
+    "objectID": "blog/posts/2022-11-23-guidance-expts-4/index.html#importing-the-helper-libraries",
+    "href": "blog/posts/2022-11-23-guidance-expts-4/index.html#importing-the-helper-libraries",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 3",
+    "section": "Importing the helper libraries",
+    "text": "Importing the helper libraries\nThe cf_guidance library has the guidance schedules and normalizations.\n\n# helpers to create cosine schedules\nfrom cf_guidance.schedules  import get_cos_sched\n\n# normalizations for classifier-free guidance\nfrom cf_guidance.transforms import GuidanceTfm, BaseNormGuidance, TNormGuidance, FullNormGuidance\n\nThe min_diffusion library loads a Stable Diffusion model from the HuggingFace hub.\n\n# to load Stable Diffusion pipelines\nfrom min_diffusion.core import MinimalDiffusion\n\n# to plot generated images\nfrom min_diffusion.utils import show_image, image_grid, plot_grid"
+  },
+  {
+    "objectID": "blog/posts/2022-11-23-guidance-expts-4/index.html#image-parameters",
+    "href": "blog/posts/2022-11-23-guidance-expts-4/index.html#image-parameters",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 3",
+    "section": "Image parameters",
+    "text": "Image parameters\nThe images will be generated over \\(50\\) diffusion steps. They will have a height and width of 512 x 512 pixels.\n\n# the number of diffusion steps\nnum_steps = 50\n\n# generated image dimensions\nwidth, height = 512, 512"
+  },
+  {
+    "objectID": "blog/posts/2022-11-23-guidance-expts-4/index.html#setting-the-schedule-parameters",
+    "href": "blog/posts/2022-11-23-guidance-expts-4/index.html#setting-the-schedule-parameters",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 3",
+    "section": "Setting the schedule parameters",
+    "text": "Setting the schedule parameters\nRecall that there are three kinds of schedules:\n\nA static schedule with a constant \\(G\\).\n\nA decreasing Cosine schedule.\n\nA Cosine schedule with some initial warm up steps.\n\nWe already created the static schedule 1. in the baseline above. This section creates variations of schedules 2. and 3..\n:::: {.callout-note}.\nWe need smaller guidance values for T-Normalization and Full Normalization.\nThese normalizations get their own, smaller value of \\(G_\\text{small} = 0.15\\). This smaller value keeps the guidance update vector \\(\\left( t - u \\right)\\) from exploding in scale.\n::::\n\n# Default schedule parameters from the blog post\n######################################\nmax_val           = 7.5   # guidance scaling value\nmin_val           = 1     # minimum guidance scaling\nnum_steps         = 50    # number of diffusion steps\nnum_warmup_steps  = 0     # number of warmup steps\nwarmup_init_val   = 0     # the intial warmup value\nnum_cycles        = 0.5   # number of cosine cycles\nk_decay           = 1     # k-decay for cosine curve scaling \n\n# smaller values for T-Norm and FullNorm\nmax_T = 0.15\nmin_T = 0.05\n######################################\n\nTo make sure our changes always reference this shared starting point, we can wrap these parameters in a dictionary.\nWe also create a matching dictionary for the T-Norm params.\n\nDEFAULT_COS_PARAMS = {\n    'max_val':           max_val,\n    'num_steps':         num_steps,\n    'min_val':           min_val,\n    'num_cycles':        num_cycles,\n    'k_decay':           k_decay,\n    'num_warmup_steps':  num_warmup_steps,\n    'warmup_init_val':   warmup_init_val,\n}\n\nDEFAULT_T_PARAMS = {\n    'max_val':           max_T, # max G_small value\n    'num_steps':         num_steps,\n    'min_val':           min_T, # min G_small value\n    'num_cycles':        num_cycles,\n    'k_decay':           k_decay,\n    'num_warmup_steps':  num_warmup_steps,\n    'warmup_init_val':   warmup_init_val,\n}\n\nEvery new, incremental schedule will start from these shared dictionaries. Then, a single parameter is changed at a time.\nThe cos_harness below gives us an easy way of making these minimum-pair changes.\n\ndef cos_harness(new_params={}, default_params={}):\n    '''Creates cosine schedules with updated parameters in `new_params`\n    '''\n    # start from the given baseline `cos_params`\n    cos_params = dict(default_params)\n    # update the schedule with any new parameters\n    cos_params.update(new_params)\n    \n    # return the new cosine schedule\n    sched = get_cos_sched(**cos_params)\n    return sched"
+  },
+  {
+    "objectID": "blog/posts/2022-11-23-guidance-expts-4/index.html#plotting-the-cosine-schedules",
+    "href": "blog/posts/2022-11-23-guidance-expts-4/index.html#plotting-the-cosine-schedules",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 3",
+    "section": "Plotting the Cosine Schedules",
+    "text": "Plotting the Cosine Schedules\nNow we create the different Cosine schedules that will be swept.\n\ncos_params = {\n    'num_warmup_steps': [5, 10],\n    'num_cycles':       [1, 1.5, 2],\n    'k_decay':          [0.7, 2],\n    'max_val':          [8, 10, 12],\n    'min_val':          [2, 3],\n}\n\n# create the cosine experiments\ncos_func  = partial(cos_harness, default_params=DEFAULT_COS_PARAMS)\ncos_expts = create_expts(cos_params, cos_func)\n\n\nplot_grid([o['schedule'] for o in cos_expts], rows=4, titles=[o['title'] for o in cos_expts])\n\n\n\n\nWe repeat the steps above to create the T-Norm experiments\n\nT_params = {\n    'num_warmup_steps': [5, 10],\n    'num_cycles':       [1, 1.5, 2],\n    'k_decay':          [0.7, 2],\n    'max_val':          [0.1, 0.2, 0.3],\n    'min_val':          [0.01, 0.1],\n}\n\n# create the T-norm cosine experiments\nT_func  = partial(cos_harness, default_params=DEFAULT_T_PARAMS)\nT_expts = create_expts(T_params, T_func)\n\nWe also plot the T-Norm schedules below. Note that we are trying a few max and min values.\n\nplot_grid([o['schedule'] for o in T_expts], rows=4, titles=[o['title'] for o in T_expts])"
+  },
+  {
+    "objectID": "blog/posts/2022-11-23-guidance-expts-4/index.html#running-the-normalized-cosine-experiments",
+    "href": "blog/posts/2022-11-23-guidance-expts-4/index.html#running-the-normalized-cosine-experiments",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 3",
+    "section": "Running the normalized cosine experiments",
+    "text": "Running the normalized cosine experiments\nNext we sweep the schedules for each type of normalization."
+  },
+  {
+    "objectID": "blog/posts/2022-11-23-guidance-expts-4/index.html#basenorm-runs",
+    "href": "blog/posts/2022-11-23-guidance-expts-4/index.html#basenorm-runs",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 3",
+    "section": "BaseNorm runs",
+    "text": "BaseNorm runs\n\nprint('Running the BaseNorm experiments...')\nbase_norm_cos_res = run(prompt, cos_expts, guide_tfm=BaseNormGuidance)\n\nRunning the BaseNorm experiments...\nUsing Guidance Transform: <class 'cf_guidance.transforms.BaseNormGuidance'>\nRunning experiment [1 of 12]: Param: \"k_decay\", val=0.7...\n\n\n\n\n\nRunning experiment [2 of 12]: Param: \"k_decay\", val=2...\n\n\n\n\n\nRunning experiment [3 of 12]: Param: \"max_val\", val=8...\n\n\n\n\n\nRunning experiment [4 of 12]: Param: \"max_val\", val=10...\n\n\n\n\n\nRunning experiment [5 of 12]: Param: \"max_val\", val=12...\n\n\n\n\n\nRunning experiment [6 of 12]: Param: \"min_val\", val=2...\n\n\n\n\n\nRunning experiment [7 of 12]: Param: \"min_val\", val=3...\n\n\n\n\n\nRunning experiment [8 of 12]: Param: \"num_cycles\", val=1...\n\n\n\n\n\nRunning experiment [9 of 12]: Param: \"num_cycles\", val=1.5...\n\n\n\n\n\nRunning experiment [10 of 12]: Param: \"num_cycles\", val=2...\n\n\n\n\n\nRunning experiment [11 of 12]: Param: \"num_warmup_steps\", val=5...\n\n\n\n\n\nRunning experiment [12 of 12]: Param: \"num_warmup_steps\", val=10...\n\n\n\n\n\nDone."
+  },
+  {
+    "objectID": "blog/posts/2022-11-23-guidance-expts-4/index.html#t-norm-runs",
+    "href": "blog/posts/2022-11-23-guidance-expts-4/index.html#t-norm-runs",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 3",
+    "section": "T-Norm runs",
+    "text": "T-Norm runs\n\nprint('Running the T-Norm experiments...')\nt_norm_cos_res = run(prompt, T_expts, guide_tfm=TNormGuidance)\n\nRunning the T-Norm experiments...\nUsing Guidance Transform: <class 'cf_guidance.transforms.TNormGuidance'>\nRunning experiment [1 of 12]: Param: \"k_decay\", val=0.7...\n\n\n\n\n\nRunning experiment [2 of 12]: Param: \"k_decay\", val=2...\n\n\n\n\n\nRunning experiment [3 of 12]: Param: \"max_val\", val=0.1...\n\n\n\n\n\nRunning experiment [4 of 12]: Param: \"max_val\", val=0.2...\n\n\n\n\n\nRunning experiment [5 of 12]: Param: \"max_val\", val=0.3...\n\n\n\n\n\nRunning experiment [6 of 12]: Param: \"min_val\", val=0.01...\n\n\n\n\n\nRunning experiment [7 of 12]: Param: \"min_val\", val=0.1...\n\n\n\n\n\nRunning experiment [8 of 12]: Param: \"num_cycles\", val=1...\n\n\n\n\n\nRunning experiment [9 of 12]: Param: \"num_cycles\", val=1.5...\n\n\n\n\n\nRunning experiment [10 of 12]: Param: \"num_cycles\", val=2...\n\n\n\n\n\nRunning experiment [11 of 12]: Param: \"num_warmup_steps\", val=5...\n\n\n\n\n\nRunning experiment [12 of 12]: Param: \"num_warmup_steps\", val=10...\n\n\n\n\n\nDone."
+  },
+  {
+    "objectID": "blog/posts/2022-11-23-guidance-expts-4/index.html#fullnorm-runs",
+    "href": "blog/posts/2022-11-23-guidance-expts-4/index.html#fullnorm-runs",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 3",
+    "section": "FullNorm runs",
+    "text": "FullNorm runs\n\nprint('Running the FullNorm experiments...')\nfull_norm_cos_res = run(prompt, T_expts, guide_tfm=FullNormGuidance)\n\nRunning the FullNorm experiments...\nUsing Guidance Transform: <class 'cf_guidance.transforms.FullNormGuidance'>\nRunning experiment [1 of 12]: Param: \"k_decay\", val=0.7...\n\n\n\n\n\nRunning experiment [2 of 12]: Param: \"k_decay\", val=2...\n\n\n\n\n\nRunning experiment [3 of 12]: Param: \"max_val\", val=0.1...\n\n\n\n\n\nRunning experiment [4 of 12]: Param: \"max_val\", val=0.2...\n\n\n\n\n\nRunning experiment [5 of 12]: Param: \"max_val\", val=0.3...\n\n\n\n\n\nRunning experiment [6 of 12]: Param: \"min_val\", val=0.01...\n\n\n\n\n\nRunning experiment [7 of 12]: Param: \"min_val\", val=0.1...\n\n\n\n\n\nRunning experiment [8 of 12]: Param: \"num_cycles\", val=1...\n\n\n\n\n\nRunning experiment [9 of 12]: Param: \"num_cycles\", val=1.5...\n\n\n\n\n\nRunning experiment [10 of 12]: Param: \"num_cycles\", val=2...\n\n\n\n\n\nRunning experiment [11 of 12]: Param: \"num_warmup_steps\", val=5...\n\n\n\n\n\nRunning experiment [12 of 12]: Param: \"num_warmup_steps\", val=10...\n\n\n\n\n\nDone."
+  },
+  {
+    "objectID": "blog/posts/2022-11-23-guidance-expts-4/index.html#basenorm-results",
+    "href": "blog/posts/2022-11-23-guidance-expts-4/index.html#basenorm-results",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 3",
+    "section": "BaseNorm results",
+    "text": "BaseNorm results"
+  },
+  {
+    "objectID": "blog/posts/2022-11-23-guidance-expts-4/index.html#t-norm-results",
+    "href": "blog/posts/2022-11-23-guidance-expts-4/index.html#t-norm-results",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 3",
+    "section": "T-Norm results",
+    "text": "T-Norm results"
+  },
+  {
+    "objectID": "blog/posts/2022-11-23-guidance-expts-4/index.html#fullnorm-results",
+    "href": "blog/posts/2022-11-23-guidance-expts-4/index.html#fullnorm-results",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 3",
+    "section": "FullNorm results",
+    "text": "FullNorm results"
+  },
+  {
+    "objectID": "blog/posts/2022-11-23-guidance-expts-4/index.html#analysis",
+    "href": "blog/posts/2022-11-23-guidance-expts-4/index.html#analysis",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 3",
+    "section": "Analysis",
+    "text": "Analysis\nThere are many images and parameter changes going on.\nBroadly speaking, across normalizations, the following schedules show the most promise:\n\nChanging k-decay.\n\nAllowing for some warmup steps.\n\nIncreasing the maximum value of \\(G\\).\n\nAllow the cosine to go through more cycles.\n\nThe other changes either have negligible gains or actively corrupted the image."
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-5/index.html",
+    "href": "blog/posts/2022-11-24-guidance-expts-5/index.html",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 4",
+    "section": "",
+    "text": "Exploring the effect of k-decay on Cosine Schedules."
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-5/index.html#recap-of-parts-1-3",
+    "href": "blog/posts/2022-11-24-guidance-expts-5/index.html#recap-of-parts-1-3",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 4",
+    "section": "Recap of Parts 1-3",
+    "text": "Recap of Parts 1-3\nThe first three parts explored how to turn Classifier-free Guidance into a dynamic process. We found an initial set of schedules and normalizers that seem to improve the quality of Diffusion images."
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-5/index.html#part-4-alternative-warmups-for-cosine-schedules",
+    "href": "blog/posts/2022-11-24-guidance-expts-5/index.html#part-4-alternative-warmups-for-cosine-schedules",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 4",
+    "section": "Part 4: Alternative warmups for cosine schedules",
+    "text": "Part 4: Alternative warmups for cosine schedules\nPart 4 is an exploration of kDecay applied to Cosine Schedules.\nThe kDecay paper introduces a hyperparameter \\(k\\) for scheduled learning rates. This parameter empirically improves the performance of models across many learning rate schedules.\nHere we explore two aspects of \\(k\\) for the guidance parameter \\(G\\):\n\nThe effect of \\((\\ k\\ <\\ 1\\ )\\) and \\((\\ k\\ >\\ 1\\ )\\) on the guidance parameter.\n\nHow an inverse kDecay schedule can be used as a type of warm up."
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-5/index.html#seed-for-reproducibility",
+    "href": "blog/posts/2022-11-24-guidance-expts-5/index.html#seed-for-reproducibility",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 4",
+    "section": "Seed for reproducibility",
+    "text": "Seed for reproducibility\nseed_everything makes sure that the results are reproducible across notebooks.\n\n# set the seed and pseudo random number generator\nSEED = 1024\ndef seed_everything(seed):\n    random.seed(seed)\n    os.environ['PYTHONHASHSEED'] = str(seed)\n    np.random.seed(seed)\n    generator = torch.manual_seed(seed)\n    torch.backends.cudnn.deterministic = True\n    torch.backends.cudnn.benchmark = False\n    return generator\n\n# for sampling the initial, noisy latents\ngenerator = seed_everything(SEED)"
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-5/index.html#image-parameters",
+    "href": "blog/posts/2022-11-24-guidance-expts-5/index.html#image-parameters",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 4",
+    "section": "Image parameters",
+    "text": "Image parameters\nImages will be generated over \\(50\\) diffusion steps. They will have a height and width of 512 x 512 pixels.\n\n# the number of diffusion steps\nnum_steps = 50\n\n# generated image dimensions\nwidth, height = 512, 512"
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-5/index.html#setting-the-baseline-with-g-7.5",
+    "href": "blog/posts/2022-11-24-guidance-expts-5/index.html#setting-the-baseline-with-g-7.5",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 4",
+    "section": "Setting the baseline with \\(G = 7.5\\)",
+    "text": "Setting the baseline with \\(G = 7.5\\)\nFirst we create and display the baseline imagine using a constant Classifier-free Guidance with \\(G = 7.5\\). Since this is a constant schedule, \\(k\\) does not come into play.\n\n# create the baseline schedule with the new function\nbaseline_g = 7.5\nbaseline_params = {'max_val': [baseline_g]}\nbaseline_func = lambda params: [baseline_g for _ in range(num_steps)]\nbaseline_expts = create_expts(baseline_params, baseline_func)\n\n\nbaseline_res = run(prompt, baseline_expts, guide_tfm=GuidanceTfm)\n\nUsing Guidance Transform: <class 'cf_guidance.transforms.GuidanceTfm'>\nRunning experiment [1 of 1]: Param: \"max_val\", val=7.5...\n\n\n\n\n\nDone.\n\n\n\n# view the baseline image\nbaseline_res['images'][0]"
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-5/index.html#improving-the-baseline-with-k-schedules",
+    "href": "blog/posts/2022-11-24-guidance-expts-5/index.html#improving-the-baseline-with-k-schedules",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 4",
+    "section": "Improving the baseline with \\(k\\) schedules",
+    "text": "Improving the baseline with \\(k\\) schedules\nNow we sweep the Cosine Schedules with different \\(k\\) values. Then we will check the output images and compare them to the baseline."
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-5/index.html#k-sweep-runs",
+    "href": "blog/posts/2022-11-24-guidance-expts-5/index.html#k-sweep-runs",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 4",
+    "section": "k-Sweep runs",
+    "text": "k-Sweep runs\n\nprint('Running the k-Sweep experiments...')\ncos_res = run(prompt, cos_expts, guide_tfm=GuidanceTfm)\n\nRunning the k-Sweep experiments...\nUsing Guidance Transform: <class 'cf_guidance.transforms.GuidanceTfm'>\nRunning experiment [1 of 10]: Param: \"k_decay\", val=0.1...\n\n\n\n\n\nRunning experiment [2 of 10]: Param: \"k_decay\", val=0.2...\n\n\n\n\n\nRunning experiment [3 of 10]: Param: \"k_decay\", val=0.3...\n\n\n\n\n\nRunning experiment [4 of 10]: Param: \"k_decay\", val=0.5...\n\n\n\n\n\nRunning experiment [5 of 10]: Param: \"k_decay\", val=0.7...\n\n\n\n\n\nRunning experiment [6 of 10]: Param: \"k_decay\", val=1.0...\n\n\n\n\n\nRunning experiment [7 of 10]: Param: \"k_decay\", val=1.5...\n\n\n\n\n\nRunning experiment [8 of 10]: Param: \"k_decay\", val=2...\n\n\n\n\n\nRunning experiment [9 of 10]: Param: \"k_decay\", val=3...\n\n\n\n\n\nRunning experiment [10 of 10]: Param: \"k_decay\", val=5...\n\n\n\n\n\nDone."
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-5/index.html#inverse-k-sweep-runs",
+    "href": "blog/posts/2022-11-24-guidance-expts-5/index.html#inverse-k-sweep-runs",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 4",
+    "section": "Inverse k-Sweep runs",
+    "text": "Inverse k-Sweep runs\n\nprint('Running the Inverse-k-Sweep experiments...')\ninv_cos_res = run(prompt, inv_cos_expts, guide_tfm=GuidanceTfm)\n\nRunning the Inverse-k-Sweep experiments...\nUsing Guidance Transform: <class 'cf_guidance.transforms.GuidanceTfm'>\nRunning experiment [1 of 10]: Param: \"k_decay\", val=0.1...\n\n\n\n\n\nRunning experiment [2 of 10]: Param: \"k_decay\", val=0.2...\n\n\n\n\n\nRunning experiment [3 of 10]: Param: \"k_decay\", val=0.3...\n\n\n\n\n\nRunning experiment [4 of 10]: Param: \"k_decay\", val=0.5...\n\n\n\n\n\nRunning experiment [5 of 10]: Param: \"k_decay\", val=0.7...\n\n\n\n\n\nRunning experiment [6 of 10]: Param: \"k_decay\", val=1.0...\n\n\n\n\n\nRunning experiment [7 of 10]: Param: \"k_decay\", val=1.5...\n\n\n\n\n\nRunning experiment [8 of 10]: Param: \"k_decay\", val=2...\n\n\n\n\n\nRunning experiment [9 of 10]: Param: \"k_decay\", val=3...\n\n\n\n\n\nRunning experiment [10 of 10]: Param: \"k_decay\", val=5...\n\n\n\n\n\nDone."
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-5/index.html#k-sweep-results",
+    "href": "blog/posts/2022-11-24-guidance-expts-5/index.html#k-sweep-results",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 4",
+    "section": "k-Sweep results",
+    "text": "k-Sweep results"
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-5/index.html#inverse-k-sweep-results",
+    "href": "blog/posts/2022-11-24-guidance-expts-5/index.html#inverse-k-sweep-results",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 4",
+    "section": "Inverse k-Sweep results",
+    "text": "Inverse k-Sweep results"
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-5/index.html#k-sweep-comparison",
+    "href": "blog/posts/2022-11-24-guidance-expts-5/index.html#k-sweep-comparison",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 4",
+    "section": "k-Sweep comparison",
+    "text": "k-Sweep comparison"
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-5/index.html#inverse-k-sweep-comparison",
+    "href": "blog/posts/2022-11-24-guidance-expts-5/index.html#inverse-k-sweep-comparison",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 4",
+    "section": "Inverse k-Sweep comparison",
+    "text": "Inverse k-Sweep comparison\n\n\n\n\n\nIn both cases, with a high and smooth value of \\(G\\), the output image improved. We gained more details in the background, on the horse’s body, and on the astronaut’s gear."
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-6/index.html",
+    "href": "blog/posts/2022-11-24-guidance-expts-6/index.html",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 5",
+    "section": "",
+    "text": "Exploring a range of guidance values for T-Normalization."
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-6/index.html#recap-of-parts-1-4",
+    "href": "blog/posts/2022-11-24-guidance-expts-6/index.html#recap-of-parts-1-4",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 5",
+    "section": "Recap of Parts 1-4",
+    "text": "Recap of Parts 1-4\nThe first three parts explored how to turn Classifier-free Guidance into a dynamic process. We found an initial set of schedules and normalizers that seem to improve the quality of Diffusion images. We then dug in and refined a few of the most promising schedules."
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-6/index.html#part-5-exploring-values-for-t-normalization",
+    "href": "blog/posts/2022-11-24-guidance-expts-6/index.html#part-5-exploring-values-for-t-normalization",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 5",
+    "section": "Part 5: Exploring values for T-Normalization",
+    "text": "Part 5: Exploring values for T-Normalization\nPart 5 answers the question: what should the value of \\(G_\\text{small}\\) be for T-Normalization and Full Normalization?\nRecall that these two normalizations scale the update vector \\(\\left(t - u \\right)\\). That places the update vector on a different scale than the unconditioned vector \\(u\\). If we then scaled the update vector by a large scalar, say \\(G = 7.5\\), the output collapses to noise. In fact it seems to collapse to the true mode of the latent image distribution: uniform, brown values.\nThese two normalizations are very promising: they improve the syntax and details of the image. However, we only explored a single value of \\(G_\\text{small} = 0.15\\). This is very different from the default \\(G = 7.5\\) that has been truly explored in regular Classifier-free Guidance.\nThis notebook tries to find a good starting point for \\(G_\\text{small}\\), so we can try the normalizations with our best schedules so far."
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-6/index.html#seed-for-reproducibility",
+    "href": "blog/posts/2022-11-24-guidance-expts-6/index.html#seed-for-reproducibility",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 5",
+    "section": "Seed for reproducibility",
+    "text": "Seed for reproducibility\nseed_everything makes sure that the results are reproducible across notebooks.\n\n# set the seed and pseudo random number generator\nSEED = 1024\ndef seed_everything(seed):\n    random.seed(seed)\n    os.environ['PYTHONHASHSEED'] = str(seed)\n    np.random.seed(seed)\n    generator = torch.manual_seed(seed)\n    torch.backends.cudnn.deterministic = True\n    torch.backends.cudnn.benchmark = False\n    return generator\n\n# for sampling the initial, noisy latents\ngenerator = seed_everything(SEED)"
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-6/index.html#image-parameters",
+    "href": "blog/posts/2022-11-24-guidance-expts-6/index.html#image-parameters",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 5",
+    "section": "Image parameters",
+    "text": "Image parameters\nImages will be generated over \\(50\\) diffusion steps. They will have a height and width of 512 x 512 pixels.\n\n# the number of diffusion steps\nnum_steps = 50\n\n# generated image dimensions\nwidth, height = 512, 512"
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-6/index.html#t-normalization-with-g_textsmall-sweep",
+    "href": "blog/posts/2022-11-24-guidance-expts-6/index.html#t-normalization-with-g_textsmall-sweep",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 5",
+    "section": "T-Normalization with \\(G_\\text{small}\\) sweep",
+    "text": "T-Normalization with \\(G_\\text{small}\\) sweep\n\nprint('Running the k-Sweep experiments...')\nt_norm_res = run(prompt, const_expts, guide_tfm=TNormGuidance)\n\nRunning the k-Sweep experiments...\nUsing Guidance Transform: <class 'cf_guidance.transforms.TNormGuidance'>\nRunning experiment [1 of 10]: Param: \"max_val\", val=0.01...\n\n\n\n\n\nRunning experiment [2 of 10]: Param: \"max_val\", val=0.03...\n\n\n\n\n\nRunning experiment [3 of 10]: Param: \"max_val\", val=0.05...\n\n\n\n\n\nRunning experiment [4 of 10]: Param: \"max_val\", val=0.08...\n\n\n\n\n\nRunning experiment [5 of 10]: Param: \"max_val\", val=0.1...\n\n\n\n\n\nRunning experiment [6 of 10]: Param: \"max_val\", val=0.15...\n\n\n\n\n\nRunning experiment [7 of 10]: Param: \"max_val\", val=0.2...\n\n\n\n\n\nRunning experiment [8 of 10]: Param: \"max_val\", val=0.22...\n\n\n\n\n\nRunning experiment [9 of 10]: Param: \"max_val\", val=0.25...\n\n\n\n\n\nRunning experiment [10 of 10]: Param: \"max_val\", val=0.3...\n\n\n\n\n\nDone."
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-6/index.html#full-normalization-with-g_textsmall-sweep",
+    "href": "blog/posts/2022-11-24-guidance-expts-6/index.html#full-normalization-with-g_textsmall-sweep",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 5",
+    "section": "Full Normalization with \\(G_\\text{small}\\) sweep",
+    "text": "Full Normalization with \\(G_\\text{small}\\) sweep\n\nprint('Running the k-Sweep experiments...')\nfull_norm_res = run(prompt, const_expts, guide_tfm=FullNormGuidance)\n\nRunning the k-Sweep experiments...\nUsing Guidance Transform: <class 'cf_guidance.transforms.FullNormGuidance'>\nRunning experiment [1 of 10]: Param: \"max_val\", val=0.01...\n\n\n\n\n\nRunning experiment [2 of 10]: Param: \"max_val\", val=0.03...\n\n\n\n\n\nRunning experiment [3 of 10]: Param: \"max_val\", val=0.05...\n\n\n\n\n\nRunning experiment [4 of 10]: Param: \"max_val\", val=0.08...\n\n\n\n\n\nRunning experiment [5 of 10]: Param: \"max_val\", val=0.1...\n\n\n\n\n\nRunning experiment [6 of 10]: Param: \"max_val\", val=0.15...\n\n\n\n\n\nRunning experiment [7 of 10]: Param: \"max_val\", val=0.2...\n\n\n\n\n\nRunning experiment [8 of 10]: Param: \"max_val\", val=0.22...\n\n\n\n\n\nRunning experiment [9 of 10]: Param: \"max_val\", val=0.25...\n\n\n\n\n\nRunning experiment [10 of 10]: Param: \"max_val\", val=0.3...\n\n\n\n\n\nDone."
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-6/index.html#t-normalization-g_textsmall-results",
+    "href": "blog/posts/2022-11-24-guidance-expts-6/index.html#t-normalization-g_textsmall-results",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 5",
+    "section": "T-Normalization \\(G_\\text{small}\\) results",
+    "text": "T-Normalization \\(G_\\text{small}\\) results"
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-6/index.html#full-normalization-g_textsmall-results",
+    "href": "blog/posts/2022-11-24-guidance-expts-6/index.html#full-normalization-g_textsmall-results",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 5",
+    "section": "Full Normalization \\(G_\\text{small}\\) results",
+    "text": "Full Normalization \\(G_\\text{small}\\) results"
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-6/index.html#phase-change-in-the-image",
+    "href": "blog/posts/2022-11-24-guidance-expts-6/index.html#phase-change-in-the-image",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 5",
+    "section": "Phase change in the image",
+    "text": "Phase change in the image\nMost interesting, there is a “phase change” between the values of 0.08 and 0.1. The image completely changes style and pose from the previous results we’ve seen so far in the series. This phase change on its own deserves more exploration! What happens around these values of \\(G_\\text{small}\\)?\nLet’s re-run experiments focused on this range. We will pick 10 points uniformly spread between 0.08 and 0.1 to see if we can catch where the phase changes."
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-6/index.html#t-normalization-with-g_textsmall-phase-change",
+    "href": "blog/posts/2022-11-24-guidance-expts-6/index.html#t-normalization-with-g_textsmall-phase-change",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 5",
+    "section": "T-Normalization with \\(G_\\text{small}\\) phase change",
+    "text": "T-Normalization with \\(G_\\text{small}\\) phase change\n\n\n\n\n\nIt seems the phase change happens between 0.088 and 0.09. Let’s check if this is also true for Full Normalization."
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-6/index.html#full-normalization-with-g_textsmall-phase-change",
+    "href": "blog/posts/2022-11-24-guidance-expts-6/index.html#full-normalization-with-g_textsmall-phase-change",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 5",
+    "section": "Full Normalization with \\(G_\\text{small}\\) phase change",
+    "text": "Full Normalization with \\(G_\\text{small}\\) phase change\n\nprint('Running the phase change k-Sweep experiments...')\nfull_phase_res = run(prompt, phase_expts, guide_tfm=FullNormGuidance)\n\nRunning the phase change k-Sweep experiments...\nUsing Guidance Transform: <class 'cf_guidance.transforms.FullNormGuidance'>\nRunning experiment [1 of 12]: Param: \"max_val\", val=0.08...\n\n\n\n\n\nRunning experiment [2 of 12]: Param: \"max_val\", val=0.082...\n\n\n\n\n\nRunning experiment [3 of 12]: Param: \"max_val\", val=0.084...\n\n\n\n\n\nRunning experiment [4 of 12]: Param: \"max_val\", val=0.086...\n\n\n\n\n\nRunning experiment [5 of 12]: Param: \"max_val\", val=0.088...\n\n\n\n\n\nRunning experiment [6 of 12]: Param: \"max_val\", val=0.09...\n\n\n\n\n\nRunning experiment [7 of 12]: Param: \"max_val\", val=0.092...\n\n\n\n\n\nRunning experiment [8 of 12]: Param: \"max_val\", val=0.094...\n\n\n\n\n\nRunning experiment [9 of 12]: Param: \"max_val\", val=0.096...\n\n\n\n\n\nRunning experiment [10 of 12]: Param: \"max_val\", val=0.09799999999999999...\n\n\n\n\n\nRunning experiment [11 of 12]: Param: \"max_val\", val=0.09999999999999999...\n\n\n\n\n\nRunning experiment [12 of 12]: Param: \"max_val\", val=0.102...\n\n\n\n\n\nDone.\n\n\n\n\n\n\n\nThe phase change happens in the same place! In fact the change is more pronounced, there is definitely something strange with the horse’s head as we hit the phase transition around \\(G_\\text{small} = 0.09\\).\nHowever, it seems that the image grows darker and less clear as we move away from the phase change. The horse’s body is less illuminated and is even hard to see.\nOne last check, what if the images before the phase change are better? We already saw that 0.05 was a bit too low, but what about values between 0.06 and 0.08?"
+  },
+  {
+    "objectID": "blog/posts/2022-11-24-guidance-expts-6/index.html#checking-for-phase-change-multiples",
+    "href": "blog/posts/2022-11-24-guidance-expts-6/index.html#checking-for-phase-change-multiples",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 5",
+    "section": "Checking for phase change multiples",
+    "text": "Checking for phase change multiples\nWill we find another phase change around three times from the first one? Let’s find out.\n\nlow_bound = 0.25\nhi_bound = 0.29\nnpoints = 11\n\npoints = np.linspace(low_bound, hi_bound, npoints+1); points\n\narray([0.25      , 0.25363636, 0.25727273, 0.26090909, 0.26454545,\n       0.26818182, 0.27181818, 0.27545455, 0.27909091, 0.28272727,\n       0.28636364, 0.29      ])\n\n\n\n# create the constant G_small cosine experiments\nlater_phase_params = {'max_val': list(points)}\nlater_phase_func = lambda val: [val for _ in range(num_steps)]\nlater_phase_expts = create_expts(later_phase_params, later_phase_func)\n\n\nprint('Running the phase change k-Sweep experiments...')\nlater_phase_res = run(prompt, later_phase_expts, guide_tfm=TNormGuidance)\n\nRunning the phase change k-Sweep experiments...\nUsing Guidance Transform: <class 'cf_guidance.transforms.TNormGuidance'>\nRunning experiment [1 of 12]: Param: \"max_val\", val=0.25...\n\n\n\n\n\nRunning experiment [2 of 12]: Param: \"max_val\", val=0.25363636363636366...\n\n\n\n\n\nRunning experiment [3 of 12]: Param: \"max_val\", val=0.25727272727272726...\n\n\n\n\n\nRunning experiment [4 of 12]: Param: \"max_val\", val=0.2609090909090909...\n\n\n\n\n\nRunning experiment [5 of 12]: Param: \"max_val\", val=0.26454545454545453...\n\n\n\n\n\nRunning experiment [6 of 12]: Param: \"max_val\", val=0.2681818181818182...\n\n\n\n\n\nRunning experiment [7 of 12]: Param: \"max_val\", val=0.2718181818181818...\n\n\n\n\n\nRunning experiment [8 of 12]: Param: \"max_val\", val=0.27545454545454545...\n\n\n\n\n\nRunning experiment [9 of 12]: Param: \"max_val\", val=0.27909090909090906...\n\n\n\n\n\nRunning experiment [10 of 12]: Param: \"max_val\", val=0.2827272727272727...\n\n\n\n\n\nRunning experiment [11 of 12]: Param: \"max_val\", val=0.2863636363636364...\n\n\n\n\n\nRunning experiment [12 of 12]: Param: \"max_val\", val=0.29...\n\n\n\n\n\nDone.\n\n\n\n\n\n\n\nThere is no clear phase change, but the image is starting to fall apart. It is safe to say we are in territory where \\(G_\\text{small}\\) is too large.\n\\(G_\\text{small} = 0.25\\) is the last image where we have a fully correct, non-smeared astronaut."
+  },
+  {
+    "objectID": "blog/posts/2022-11-25-guidance-expts-7/index.html",
+    "href": "blog/posts/2022-11-25-guidance-expts-7/index.html",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 6",
+    "section": "",
+    "text": "Combining the best schedules and normalizations so far."
+  },
+  {
+    "objectID": "blog/posts/2022-11-25-guidance-expts-7/index.html#recap-of-parts-1-5",
+    "href": "blog/posts/2022-11-25-guidance-expts-7/index.html#recap-of-parts-1-5",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 6",
+    "section": "Recap of Parts 1-5",
+    "text": "Recap of Parts 1-5\nThe first five parts explored how to turn Classifier-free Guidance into a dynamic process. We found a good set of schedules and normalizations that seem to improve the output of diffusion image models."
+  },
+  {
+    "objectID": "blog/posts/2022-11-25-guidance-expts-7/index.html#part-6-putting-it-all-together",
+    "href": "blog/posts/2022-11-25-guidance-expts-7/index.html#part-6-putting-it-all-together",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 6",
+    "section": "Part 6: Putting it all together",
+    "text": "Part 6: Putting it all together\nPart 6 brings together our best approaches so far. Specifically, it explores the following schedules:\n\nkDecay with large \\(k\\) values.\n\nInverse kDecay with small \\(k\\) values.\n\nOn all three Guidance normalizations:\n\nPrediction Normalization\n\nT-Normalization\n\nFull Normalization"
+  },
+  {
+    "objectID": "blog/posts/2022-11-25-guidance-expts-7/index.html#seed-for-reproducibility",
+    "href": "blog/posts/2022-11-25-guidance-expts-7/index.html#seed-for-reproducibility",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 6",
+    "section": "Seed for reproducibility",
+    "text": "Seed for reproducibility\nseed_everything makes sure that the results are reproducible across notebooks.\n\n# set the seed and pseudo random number generator\nSEED = 1024\ndef seed_everything(seed):\n    random.seed(seed)\n    os.environ['PYTHONHASHSEED'] = str(seed)\n    np.random.seed(seed)\n    generator = torch.manual_seed(seed)\n    torch.backends.cudnn.deterministic = True\n    torch.backends.cudnn.benchmark = False\n    return generator\n\n# for sampling the initial, noisy latents\ngenerator = seed_everything(SEED)"
+  },
+  {
+    "objectID": "blog/posts/2022-11-25-guidance-expts-7/index.html#image-parameters",
+    "href": "blog/posts/2022-11-25-guidance-expts-7/index.html#image-parameters",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 6",
+    "section": "Image parameters",
+    "text": "Image parameters\nImages will be generated over \\(50\\) diffusion steps. They will have a height and width of 512 x 512 pixels.\n\n# the number of diffusion steps\nnum_steps = 50\n\n# generated image dimensions\nwidth, height = 512, 512"
+  },
+  {
+    "objectID": "blog/posts/2022-11-25-guidance-expts-7/index.html#creating-the-baseline-image-with-g-7.5",
+    "href": "blog/posts/2022-11-25-guidance-expts-7/index.html#creating-the-baseline-image-with-g-7.5",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 6",
+    "section": "Creating the baseline image with \\(G = 7.5\\)",
+    "text": "Creating the baseline image with \\(G = 7.5\\)\nFirst we create the baseline image using a constant Classifier-free Guidance with \\(G = 7.5\\). Since this is a constant schedule, \\(k\\) does not come into play.\n\n# create the baseline schedule with the new function\nbaseline_g = 7.5\nbaseline_params = {'max_val': [baseline_g]}\nbaseline_func = lambda *args, **kwargs: [baseline_g for _ in range(num_steps)]\nbaseline_expts = create_expts(baseline_params, baseline_func)\n\n\nbaseline_res = run(prompt, baseline_expts, guide_tfm=GuidanceTfm)\n\nUsing Guidance Transform: <class 'cf_guidance.transforms.GuidanceTfm'>\nRunning experiment [1 of 1]: Param: \"max_val\", val=7.5...\n\n\n\n\n\nDone.\n\n\n\n# view the baseline image\nbaseline_res['images'][0]"
+  },
+  {
+    "objectID": "blog/posts/2022-11-25-guidance-expts-7/index.html#improving-the-baseline-with-schedules-and-normalizations",
+    "href": "blog/posts/2022-11-25-guidance-expts-7/index.html#improving-the-baseline-with-schedules-and-normalizations",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 6",
+    "section": "Improving the baseline with schedules and normalizations",
+    "text": "Improving the baseline with schedules and normalizations\nNow let’s run our kDecay schedules with normalizations. Then we can check how it changed the baseline image.\nSince every run starts from the exact same noisy latents, only the schedules and normalizations are affecting the output."
+  },
+  {
+    "objectID": "blog/posts/2022-11-25-guidance-expts-7/index.html#prediction-normalization-runs",
+    "href": "blog/posts/2022-11-25-guidance-expts-7/index.html#prediction-normalization-runs",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 6",
+    "section": "Prediction Normalization runs",
+    "text": "Prediction Normalization runs\n\nprint('Running the Prediction Norm experiments...')\nbase_norm_res = run(prompt, all_k_expts, guide_tfm=BaseNormGuidance)\n\nRunning the Prediction Norm experiments...\nUsing Guidance Transform: <class 'cf_guidance.transforms.BaseNormGuidance'>\nRunning experiment [1 of 8]: Param: \"k_decay\", val=1...\n\n\n\n\n\nRunning experiment [2 of 8]: Param: \"k_decay\", val=2...\n\n\n\n\n\nRunning experiment [3 of 8]: Param: \"k_decay\", val=5...\n\n\n\n\n\nRunning experiment [4 of 8]: Param: \"k_decay\", val=0.15...\n\n\n\n\n\nRunning experiment [5 of 8]: Param: \"k_decay\", val=0.2...\n\n\n\n\n\nRunning experiment [6 of 8]: Param: \"k_decay\", val=0.3...\n\n\n\n\n\nRunning experiment [7 of 8]: Param: \"k_decay\", val=0.5...\n\n\n\n\n\nRunning experiment [8 of 8]: Param: \"k_decay\", val=0.7...\n\n\n\n\n\nDone."
+  },
+  {
+    "objectID": "blog/posts/2022-11-25-guidance-expts-7/index.html#t-normalization-runs",
+    "href": "blog/posts/2022-11-25-guidance-expts-7/index.html#t-normalization-runs",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 6",
+    "section": "T-Normalization runs",
+    "text": "T-Normalization runs\n\nprint('Running the T-Norm experiments...')\nT_norm_res = run(prompt, all_T_k_expts, guide_tfm=TNormGuidance)\n\nRunning the T-Norm experiments...\nUsing Guidance Transform: <class 'cf_guidance.transforms.TNormGuidance'>\nRunning experiment [1 of 8]: Param: \"k_decay\", val=1...\n\n\n\n\n\nRunning experiment [2 of 8]: Param: \"k_decay\", val=2...\n\n\n\n\n\nRunning experiment [3 of 8]: Param: \"k_decay\", val=5...\n\n\n\n\n\nRunning experiment [4 of 8]: Param: \"k_decay\", val=0.15...\n\n\n\n\n\nRunning experiment [5 of 8]: Param: \"k_decay\", val=0.2...\n\n\n\n\n\nRunning experiment [6 of 8]: Param: \"k_decay\", val=0.3...\n\n\n\n\n\nRunning experiment [7 of 8]: Param: \"k_decay\", val=0.5...\n\n\n\n\n\nRunning experiment [8 of 8]: Param: \"k_decay\", val=0.7...\n\n\n\n\n\nDone."
+  },
+  {
+    "objectID": "blog/posts/2022-11-25-guidance-expts-7/index.html#full-normalization-runs",
+    "href": "blog/posts/2022-11-25-guidance-expts-7/index.html#full-normalization-runs",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 6",
+    "section": "Full Normalization runs",
+    "text": "Full Normalization runs\n\nprint('Running the T-Norm experiments...')\nfull_norm_res = run(prompt, all_T_k_expts, guide_tfm=FullNormGuidance)\n\nRunning the T-Norm experiments...\nUsing Guidance Transform: <class 'cf_guidance.transforms.FullNormGuidance'>\nRunning experiment [1 of 8]: Param: \"k_decay\", val=1...\n\n\n\n\n\nRunning experiment [2 of 8]: Param: \"k_decay\", val=2...\n\n\n\n\n\nRunning experiment [3 of 8]: Param: \"k_decay\", val=5...\n\n\n\n\n\nRunning experiment [4 of 8]: Param: \"k_decay\", val=0.15...\n\n\n\n\n\nRunning experiment [5 of 8]: Param: \"k_decay\", val=0.2...\n\n\n\n\n\nRunning experiment [6 of 8]: Param: \"k_decay\", val=0.3...\n\n\n\n\n\nRunning experiment [7 of 8]: Param: \"k_decay\", val=0.5...\n\n\n\n\n\nRunning experiment [8 of 8]: Param: \"k_decay\", val=0.7...\n\n\n\n\n\nDone."
+  },
+  {
+    "objectID": "blog/posts/2022-11-25-guidance-expts-7/index.html#prediction-normalization-results",
+    "href": "blog/posts/2022-11-25-guidance-expts-7/index.html#prediction-normalization-results",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 6",
+    "section": "Prediction Normalization results",
+    "text": "Prediction Normalization results"
+  },
+  {
+    "objectID": "blog/posts/2022-11-25-guidance-expts-7/index.html#t-normalization-results",
+    "href": "blog/posts/2022-11-25-guidance-expts-7/index.html#t-normalization-results",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 6",
+    "section": "T-Normalization results",
+    "text": "T-Normalization results"
+  },
+  {
+    "objectID": "blog/posts/2022-11-25-guidance-expts-7/index.html#full-normalization-results",
+    "href": "blog/posts/2022-11-25-guidance-expts-7/index.html#full-normalization-results",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 6",
+    "section": "Full-Normalization results",
+    "text": "Full-Normalization results"
+  },
+  {
+    "objectID": "blog/posts/2022-11-25-guidance-expts-7/index.html#prediction-normalization-comparison",
+    "href": "blog/posts/2022-11-25-guidance-expts-7/index.html#prediction-normalization-comparison",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 6",
+    "section": "Prediction Normalization comparison",
+    "text": "Prediction Normalization comparison"
+  },
+  {
+    "objectID": "blog/posts/2022-11-25-guidance-expts-7/index.html#t-normalization-comparison",
+    "href": "blog/posts/2022-11-25-guidance-expts-7/index.html#t-normalization-comparison",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 6",
+    "section": "T-Normalization comparison",
+    "text": "T-Normalization comparison"
+  },
+  {
+    "objectID": "blog/posts/2022-11-25-guidance-expts-7/index.html#full-normalization-comparison",
+    "href": "blog/posts/2022-11-25-guidance-expts-7/index.html#full-normalization-comparison",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 6",
+    "section": "Full Normalization comparison",
+    "text": "Full Normalization comparison"
+  },
+  {
+    "objectID": "blog/posts/2022-11-25-guidance-expts-7/index.html#comparing-k-0.15-across-normalizations",
+    "href": "blog/posts/2022-11-25-guidance-expts-7/index.html#comparing-k-0.15-across-normalizations",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 6",
+    "section": "Comparing \\(k = 0.15\\) across normalizations",
+    "text": "Comparing \\(k = 0.15\\) across normalizations"
+  },
+  {
+    "objectID": "blog/posts/2022-11-25-guidance-expts-7/index.html#comparing-k-0.2-across-normalizations",
+    "href": "blog/posts/2022-11-25-guidance-expts-7/index.html#comparing-k-0.2-across-normalizations",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 6",
+    "section": "Comparing \\(k = 0.2\\) across normalizations",
+    "text": "Comparing \\(k = 0.2\\) across normalizations"
+  },
+  {
+    "objectID": "blog/posts/2022-11-25-guidance-expts-7/index.html#comparing-k-0.3-across-normalizations",
+    "href": "blog/posts/2022-11-25-guidance-expts-7/index.html#comparing-k-0.3-across-normalizations",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 6",
+    "section": "Comparing \\(k = 0.3\\) across normalizations",
+    "text": "Comparing \\(k = 0.3\\) across normalizations\n\n\n\n\n\nAt this point, the difference in quality between \\(0.15\\) and \\(0.2\\) becomes subjective. It does seem that 0.2 makes for more stable images across the normalizations. But, 0.15 fixed the astronaut’s leg and arm.\n\\(0.3\\) still improves the image, but we start to lose texture and coherence in the background."
+  },
+  {
+    "objectID": "blog/posts/2022-11-26-guidance-expts-8/index.html",
+    "href": "blog/posts/2022-11-26-guidance-expts-8/index.html",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 7",
+    "section": "",
+    "text": "Improving generated Diffusion images using dynamic Classifier-free Guidance."
+  },
+  {
+    "objectID": "blog/posts/2022-11-26-guidance-expts-8/index.html#recap-of-parts-1-6",
+    "href": "blog/posts/2022-11-26-guidance-expts-8/index.html#recap-of-parts-1-6",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 7",
+    "section": "Recap of Parts 1-6",
+    "text": "Recap of Parts 1-6\nIn the first six parts, we found a good, initial set of schedules and normalizations for dynamic Classifier-free Guidance. The best performing schedules are used in this notebook."
+  },
+  {
+    "objectID": "blog/posts/2022-11-26-guidance-expts-8/index.html#part-7-improvement-across-models",
+    "href": "blog/posts/2022-11-26-guidance-expts-8/index.html#part-7-improvement-across-models",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 7",
+    "section": "Part 7: Improvement across models",
+    "text": "Part 7: Improvement across models\nPart 7 takes our best schedules and runs them with the following Diffusion models:\n\nStable Diffusion v1-4\nStable Diffusion v1-5\nPrompt Hero’s openjourney\nStable Diffusion 2-base"
+  },
+  {
+    "objectID": "blog/posts/2022-11-26-guidance-expts-8/index.html#seed-for-reproducibility",
+    "href": "blog/posts/2022-11-26-guidance-expts-8/index.html#seed-for-reproducibility",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 7",
+    "section": "Seed for reproducibility",
+    "text": "Seed for reproducibility\nseed_everything makes sure that the results are reproducible across notebooks.\n\n# set the seed for rng\nSEED = 977145576 \ndef seed_everything(seed: int) -> torch.Generator:\n    random.seed(seed)\n    os.environ['PYTHONHASHSEED'] = str(seed)\n    np.random.seed(seed)\n    generator = torch.manual_seed(seed)\n    torch.backends.cudnn.deterministic = True\n    torch.backends.cudnn.benchmark = False\n    return generator\n\n# for sampling the initial, noisy latents\ngenerator = seed_everything(SEED)"
+  },
+  {
+    "objectID": "blog/posts/2022-11-26-guidance-expts-8/index.html#image-parameters",
+    "href": "blog/posts/2022-11-26-guidance-expts-8/index.html#image-parameters",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 7",
+    "section": "Image parameters",
+    "text": "Image parameters\nImages will be generated over \\(50\\) diffusion steps. The height and width will depend on the Stable Diffusion model\n\n# the number of diffusion steps\nnum_steps = 50\n\n# dimensions for v1 and v2 Stable Diffusions\nv1_sd_dims = {'height': 640, 'width': 512}\nv2_sd_dims = {'height': 768, 'width': 768}"
+  },
+  {
+    "objectID": "blog/posts/2022-11-26-guidance-expts-8/index.html#static-baselines",
+    "href": "blog/posts/2022-11-26-guidance-expts-8/index.html#static-baselines",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 7",
+    "section": "Static baselines",
+    "text": "Static baselines\nFirst we create the constant, baseline Guidances.\nFor Prediction Normalization we use the same default \\(G = 7.5\\). For T-Normalization and Full Normalization, we use a static \\(G_\\text{small} = 0.15\\).\n\n# create the baseline schedule with the new function\nbaseline_g = 7.5\nbaseline_params = {'max_val': [baseline_g]}\nbaseline_func = lambda *args, **kwargs: [baseline_g for _ in range(num_steps)]\nbaseline_expts = create_expts(baseline_params, baseline_func)\n\nT_baseline_g = 0.15\nT_baseline_params = {'max_val': [T_baseline_g]}\nT_baseline_func = lambda *args, **kwargs: [T_baseline_g for _ in range(num_steps)]\nT_baseline_expts = create_expts(T_baseline_params, T_baseline_func)"
+  },
+  {
+    "objectID": "blog/posts/2022-11-26-guidance-expts-8/index.html#improving-the-baseline-with-schedules-and-normalizations",
+    "href": "blog/posts/2022-11-26-guidance-expts-8/index.html#improving-the-baseline-with-schedules-and-normalizations",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 7",
+    "section": "Improving the baseline with schedules and normalizations",
+    "text": "Improving the baseline with schedules and normalizations\nNow we build the most promising schedule so far: Inverse kDecay with a fast warmup.\n\n# start by creating regualr kDecay cosine schedules\ninv_k_params = {'k_decay': [0.15]}\ninv_k_func = partial(cos_harness, default_params=DEFAULT_COS_PARAMS)\ninv_k_expts = create_expts(inv_k_params, inv_k_func)\n\n# invert the schedules to turn them into a type of warmup \nfor s in inv_k_expts:\n    s['schedule'] = [max_val - g + min_val for g in s['schedule']]\n\n# put all schedules together\nall_k_expts = inv_k_expts\n\n\n\n\n\n\nWe also build a matching schedule with smaller \\(G\\) values for the T and Full Normalizations.\n\n# create the kDecay cosine experiments\nT_inv_k_func = partial(cos_harness, default_params=DEFAULT_T_PARAMS)\nT_inv_k_expts = create_expts(inv_k_params, T_inv_k_func)\n\n# inverse the schedules\nfor s in T_inv_k_expts:\n    s['schedule'] = [max_T - g + min_T for g in s['schedule']]\n\nall_T_k_expts = T_inv_k_expts"
+  },
+  {
+    "objectID": "blog/posts/2022-11-26-guidance-expts-8/index.html#function-to-run-the-experiments",
+    "href": "blog/posts/2022-11-26-guidance-expts-8/index.html#function-to-run-the-experiments",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 7",
+    "section": "Function to run the experiments",
+    "text": "Function to run the experiments\nIn previous notebooks we ran one Diffusion model at a time. Now, we need to bring the model loading into the pipeline so that we can easily try different models.\n\ndef load_sd_model(model_name, device, dtype, model_kwargs={}, generator=None):\n    pipeline = MinimalDiffusion(model_name, device, dtype, generator=generator)\n    pipeline.load(**model_kwargs);\n    return pipeline\n\nTo do this, we move the model loading code load_sd_model into the run function from previous notebooks. We also add some memory cleanup at the end, so that the GPU is open for the next model.\n\ndef run(pipeline, prompt, schedules, gen_kwargs={},\n        guide_tfm=None, generator=None, show_each=False, test_run=False):\n    \"\"\"Runs a dynamic Classifier-free Guidance experiment. \n    \n    Generates an image for the text `prompt` given all the values in `schedules`.\n    Uses a Guidance Transformation class from the `cf_guidance` library.  \n    Stores the output images with a matching title for plotting. \n    Optionally shows each image as its generated.\n    If `test_run` is true, it runs a single schedule for testing. \n    \"\"\"\n    # store generated images and their title (the experiment name)\n    images, titles = [], []\n    \n    # make sure we have a valid guidance transform\n    assert guide_tfm\n    print(f'Using Guidance Transform: {guide_tfm}')\n    \n    # optionally run a single test schedule\n    if test_run:\n        print(f'Running a single schedule for testing.')\n        schedules = schedules[:1]\n        \n    # run all schedule experiments\n    for i,s in enumerate(schedules):\n        \n        # parse out the title for the current run\n        cur_title  = s['title']\n        titles.append(cur_title)\n        \n        # create the guidance transformation \n        cur_sched = s['schedule']\n        gtfm = guide_tfm({'g': cur_sched})\n        \n        print(f'Running experiment [{i+1} of {len(schedules)}]: {cur_title}...')\n        img = pipeline.generate(prompt, gtfm, **gen_kwargs)\n        images.append(img)\n        \n        # optionally plot each generated image\n        if show_each:\n            show_image(img, scale=1)\n            \n    print('Done.')\n    return {'images': images,\n            'titles': titles}"
+  },
+  {
+    "objectID": "blog/posts/2022-11-26-guidance-expts-8/index.html#reading-the-plots",
+    "href": "blog/posts/2022-11-26-guidance-expts-8/index.html#reading-the-plots",
+    "title": "Classifier-free Guidance with Cosine Schedules Pt. 7",
+    "section": "Reading the plots",
+    "text": "Reading the plots\nFor each model, we plot a grid with its generated images. The grid has two rows and four columns.\nThe first row shows results from the fixed, constant Guidance. The second row shows results for the Inverse kDecay cosine schedules.\nThe first column shows the baseline: unnormalized Classifier-free Guidance with a constant \\(G = 7.5\\).\nThe second column has the Prediction Normalization results.\nThe third column has the T-Normalization results.\nThe fourth column has the Full Normalization results.\nIn general we expect that normalization should improve the images. In other words, the second, third, and fourth column should be better than the first column (the baseline).\nLikewise, we expect that the Inverse kDecay schedules are better than the static schedules. That means that, for a given column, the result in its second row should be better than its first row.\n\n\n\n\n\n\nNote\n\n\n\nThe plotting functions are available in the notebook. They are omitted here for space."
+  }
+]
