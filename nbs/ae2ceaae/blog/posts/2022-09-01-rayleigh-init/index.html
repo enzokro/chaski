@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="enzokro">
+<meta name="dcterms.date" content="2022-09-01">
+
+<title>chaski - Complex Rayleigh Weight Initializations</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<meta property="og:title" content="chaski - Complex Rayleigh Weight Initializations">
+<meta property="og:description" content="Most neural networks use real-valued weights instead of complex ones.">
+<meta property="og:image" content="https://enzokro.dev/blog/posts/2022-09-01-rayleigh-init/polar_plot.png">
+<meta property="og:site-name" content="chaski">
+<meta property="og:image:height" content="432">
+<meta property="og:image:width" content="440">
+<meta name="twitter:title" content="chaski - Complex Rayleigh Weight Initializations">
+<meta name="twitter:description" content="Most neural networks use real-valued weights instead of complex ones.">
+<meta name="twitter:image" content="https://enzokro.dev/blog/posts/2022-09-01-rayleigh-init/polar_plot.png">
+<meta name="twitter:image-height" content="432">
+<meta name="twitter:image-width" content="440">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">chaski</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"><i class="bi bi-person-circle" role="img">
+</i> 
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/enzokro_"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/enzokro"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#complex-numbers-a-brief-recap" id="toc-complex-numbers-a-brief-recap" class="nav-link" data-scroll-target="#complex-numbers-a-brief-recap">Complex Numbers: A brief recap</a>
+  <ul class="collapse">
+  <li><a href="#starting-with-a-real-number" id="toc-starting-with-a-real-number" class="nav-link" data-scroll-target="#starting-with-a-real-number">Starting with a real number</a></li>
+  <li><a href="#magnitude-of-a-real-number" id="toc-magnitude-of-a-real-number" class="nav-link" data-scroll-target="#magnitude-of-a-real-number">Magnitude of a real number</a></li>
+  <li><a href="#adding-an-imaginary-component" id="toc-adding-an-imaginary-component" class="nav-link" data-scroll-target="#adding-an-imaginary-component">Adding an imaginary component</a></li>
+  <li><a href="#magnitude-of-a-complex-number" id="toc-magnitude-of-a-complex-number" class="nav-link" data-scroll-target="#magnitude-of-a-complex-number">Magnitude of a complex number</a></li>
+  <li><a href="#phase-telling-complex-magnitudes-apart-from-each-other" id="toc-phase-telling-complex-magnitudes-apart-from-each-other" class="nav-link" data-scroll-target="#phase-telling-complex-magnitudes-apart-from-each-other">Phase: telling complex magnitudes apart from each other</a></li>
+  </ul></li>
+  <li><a href="#recap-complex-numbers" id="toc-recap-complex-numbers" class="nav-link" data-scroll-target="#recap-complex-numbers">Recap: Complex Numbers</a></li>
+  </ul></li>
+  <li><a href="#distributions-for-complex-initializations." id="toc-distributions-for-complex-initializations." class="nav-link" data-scroll-target="#distributions-for-complex-initializations.">Distributions for complex initializations.</a>
+  <ul class="collapse">
+  <li><a href="#background-on-neural-network-initializations" id="toc-background-on-neural-network-initializations" class="nav-link" data-scroll-target="#background-on-neural-network-initializations">Background on neural network initializations</a>
+  <ul class="collapse">
+  <li><a href="#achieving-smooth-gradient-flows" id="toc-achieving-smooth-gradient-flows" class="nav-link" data-scroll-target="#achieving-smooth-gradient-flows">Achieving smooth gradient flows</a></li>
+  </ul></li>
+  <li><a href="#initializing-complex-magnitudes" id="toc-initializing-complex-magnitudes" class="nav-link" data-scroll-target="#initializing-complex-magnitudes">Initializing complex magnitudes</a></li>
+  <li><a href="#initializing-phases" id="toc-initializing-phases" class="nav-link" data-scroll-target="#initializing-phases">Initializing phases</a></li>
+  </ul></li>
+  <li><a href="#history-of-complex-networks" id="toc-history-of-complex-networks" class="nav-link" data-scroll-target="#history-of-complex-networks">History of Complex Networks</a></li>
+  <li><a href="#the-rayleigh-distribution" id="toc-the-rayleigh-distribution" class="nav-link" data-scroll-target="#the-rayleigh-distribution">The Rayleigh Distribution</a>
+  <ul class="collapse">
+  <li><a href="#why-rayleigh" id="toc-why-rayleigh" class="nav-link" data-scroll-target="#why-rayleigh">Why Rayleigh?</a></li>
+  <li><a href="#details-of-the-rayleigh-distribution" id="toc-details-of-the-rayleigh-distribution" class="nav-link" data-scroll-target="#details-of-the-rayleigh-distribution">Details of the Rayleigh distribution</a></li>
+  </ul></li>
+  <li><a href="#generating-rayleigh-samples" id="toc-generating-rayleigh-samples" class="nav-link" data-scroll-target="#generating-rayleigh-samples">Generating Rayleigh samples</a></li>
+  <li><a href="#sampling-phase-initializations" id="toc-sampling-phase-initializations" class="nav-link" data-scroll-target="#sampling-phase-initializations">Sampling phase initializations</a>
+  <ul class="collapse">
+  <li><a href="#magnitude-phase-vs.-real-imaginary" id="toc-magnitude-phase-vs.-real-imaginary" class="nav-link" data-scroll-target="#magnitude-phase-vs.-real-imaginary">(Magnitude, Phase) vs.&nbsp;(Real, Imaginary)</a></li>
+  <li><a href="#visualizing-our-random-phases" id="toc-visualizing-our-random-phases" class="nav-link" data-scroll-target="#visualizing-our-random-phases">Visualizing our random phases</a></li>
+  </ul></li>
+  <li><a href="#recapping-phase-and-magnitude-so-far" id="toc-recapping-phase-and-magnitude-so-far" class="nav-link" data-scroll-target="#recapping-phase-and-magnitude-so-far">Recapping Phase and Magnitude so far</a></li>
+  <li><a href="#matching-he-and-glorot-variance-criteria" id="toc-matching-he-and-glorot-variance-criteria" class="nav-link" data-scroll-target="#matching-he-and-glorot-variance-criteria">Matching He and Glorot variance criteria</a>
+  <ul class="collapse">
+  <li><a href="#he-and-glorot-criteria-for-rayleigh-distributions" id="toc-he-and-glorot-criteria-for-rayleigh-distributions" class="nav-link" data-scroll-target="#he-and-glorot-criteria-for-rayleigh-distributions">He and Glorot criteria for Rayleigh distributions</a>
+  <ul class="collapse">
+  <li><a href="#starting-with-a-simple-one-layer-network" id="toc-starting-with-a-simple-one-layer-network" class="nav-link" data-scroll-target="#starting-with-a-simple-one-layer-network">Starting with a simple one-layer network</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#putting-it-all-together-a-complex-valued-pytorch-initializer" id="toc-putting-it-all-together-a-complex-valued-pytorch-initializer" class="nav-link" data-scroll-target="#putting-it-all-together-a-complex-valued-pytorch-initializer">Putting it all together: A complex-valued PyTorch initializer</a>
+  <ul class="collapse">
+  <li><a href="#complex-initializations-for-nn.linear" id="toc-complex-initializations-for-nn.linear" class="nav-link" data-scroll-target="#complex-initializations-for-nn.linear">Complex initializations for <code>nn.Linear</code></a></li>
+  <li><a href="#complex-initializations-for-nn.conv2d" id="toc-complex-initializations-for-nn.conv2d" class="nav-link" data-scroll-target="#complex-initializations-for-nn.conv2d">Complex initializations for <code>nn.Conv2d</code></a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Complex Rayleigh Weight Initializations</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">deep learning</div>
+    <div class="quarto-category">complex networks</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>enzokro </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 1, 2022</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<blockquote class="blockquote">
+<p>Creating complex-valued Rayleigh initializations for neural networks.</p>
+</blockquote>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Most neural networks use real-valued weights instead of complex ones. Real-valued networks include NLP transformers for text, CNNs in Computer Vision for images, and feed-forward networks for audio signals like speech. At initialization, each real-valued weight only needs a single real-valued number. These networks are quite powerful and have been extremely successful in their domains, so why do we need complex-valued weights at all?</p>
+<p>It turns our that many signals are better represented in the complex domain. These complex-valued signals are found in:</p>
+<ul>
+<li>Robotics<br>
+</li>
+<li>Radio Frequency communications<br>
+</li>
+<li>Bio-informatics<br>
+</li>
+<li>Radar<br>
+</li>
+<li>Speech</li>
+</ul>
+<p>That does not mean that we <em>must</em> use complex values for these signals. The crucial point is that real-valued networks are potentially throwing away half of the information in the input.</p>
+<p>Moreover, the phase of complex signals contains important information. For example, the phase of an image describes the position of the photo’s subjects, while the magnitude mainly has color information. In speech, the phase of a signal is important for how understandable the recording is. In sonar, communications, radar, and robotics the phase embeds information about both the signal’s content and its location.</p>
+<p>If we want to leverage the full potential of these complex input signals, we need to match them with complex-valued neural networks. The key difference for complex weights is that we now need need two values: one for phase and the other for magnitude.</p>
+<p>But we cannot simply take two regular, real-valued initializations and call it a day. The rest of this post goes over the details of accurately creating proper initializations for complex-valued weights.</p>
+<section id="complex-numbers-a-brief-recap" class="level2">
+<h2 class="anchored" data-anchor-id="complex-numbers-a-brief-recap">Complex Numbers: A brief recap</h2>
+<p><br> Complex numbers have two components:<br>
+- A real part.<br>
+- An imaginary part.</p>
+<p>The real component is a regular number like we would find on a plain number line. The imaginary component exists along the <code>i</code> axis.</p>
+<p>To keep things simple, we can think of these numbers on a two-dimensional plot. The real number is on the x-axis while the imaginary number is on the y-axis.</p>
+<section id="starting-with-a-real-number" class="level3">
+<h3 class="anchored" data-anchor-id="starting-with-a-real-number">Starting with a real number</h3>
+<p>Plotting examples is a great way to make things concrete. We first plot a regular, real number that we are all familiar with: <span class="math inline">\(x = 2\)</span></p>
+<div class="cell">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-2-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="magnitude-of-a-real-number" class="level3">
+<h3 class="anchored" data-anchor-id="magnitude-of-a-real-number">Magnitude of a real number</h3>
+<p>The distance from the origin to our number tells us its magnitude. With positive values this feels redundant, since the magnitude is always the number itself.</p>
+<p>But what about negative numbers? That is where the absolute value, represented as <span class="math inline">\(|x|\)</span>, comes into play. If we had picked <span class="math inline">\(x = -2\)</span> instead, the magnitude would still be the same: <span class="math inline">\(|-2| = |2| = 2\)</span>.</p>
+<p>So for any real number, positive or negative, we can find its magnitude by drawing an arrow starting from the origin <span class="math inline">\(0\)</span>. The absolute length of the arrow will be the number’s magnitude.</p>
+<p>Why are we spelling out this aspect of numbers so much? That will become clear when we introduce the imaginary component next.</p>
+</section>
+<section id="adding-an-imaginary-component" class="level3">
+<h3 class="anchored" data-anchor-id="adding-an-imaginary-component">Adding an imaginary component</h3>
+<p>We will keep our real component the same: <span class="math inline">\(x = 2\)</span>.</p>
+<p>But now, let’s an imaginary component: <span class="math inline">\(y = 3\)</span>, to turn it into a complex number.</p>
+<p>What does this new complex number look like? We can visualize it on a 2D plot:</p>
+<div class="cell">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>We combined these two components to get a complex number! Let’s call this number <span class="math inline">\(z\)</span>.</p>
+<p><span class="math inline">\(z\)</span> will be defined as: <span class="math inline">\(z = x + iy\)</span></p>
+<p>The “<span class="math inline">\(i\)</span>” next to a number means that it is the imaginary component.</p>
+</section>
+<section id="magnitude-of-a-complex-number" class="level3">
+<h3 class="anchored" data-anchor-id="magnitude-of-a-complex-number">Magnitude of a complex number</h3>
+<p>While we could use the real and imaginary components, there is another representation of complex numbers that will be more useful to us. This other representation is the <em>magnitude</em> and <em>phase</em> of a complex number.</p>
+<p>Remember how for a real number, its magnitude was the length of an arrow starting from the origin? The same idea applies to complex numbers. With one new detail: we have two components now, so our arrow’s length will be different.<br>
+Let’s first draw our new complex number as an arrow.</p>
+<div class="cell">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The formula to compute the magnitude of a complex number <span class="math inline">\(z\)</span> is:<br>
+<span class="math display">\[|z| = \sqrt{x^{2} + y^{2}}\]</span></p>
+<p>Plugging in our <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> values gives our complex <span class="math inline">\(z\)</span> a magnitude of:</p>
+<p><span class="math display">\[|z| = \sqrt{2^{2} + 3^{2}} = \sqrt{4 + 9} = \sqrt{13}\]</span></p>
+<p>While knowing the magnitude is important, it is not enough to fully describe <span class="math inline">\(z\)</span>. For example what if instead of <span class="math inline">\((x = 2, y = 3)\)</span> we had swapped them around as <span class="math inline">\((x = 3, y = 2)\)</span>. If we plug these values into the magnitude equation we get back the exact same number <span class="math inline">\(\sqrt{13}\)</span>.</p>
+<p>But looking at our 2D plots, these swapped points would obviously be in different locations. So if we were given only the magnitude, how could we tell that it came from our true, original <span class="math inline">\(z\)</span>?</p>
+</section>
+<section id="phase-telling-complex-magnitudes-apart-from-each-other" class="level3">
+<h3 class="anchored" data-anchor-id="phase-telling-complex-magnitudes-apart-from-each-other">Phase: telling complex magnitudes apart from each other</h3>
+<p>The way to tell two complex numbers with the same magnitude apart lies in the fact that the arrows are no longer flat along the x-axis.</p>
+<p>Instead they are now elevated (“pulled up”) by the imaginary component <span class="math inline">\(y = 3\)</span>. The complex number now has an <em>angle</em> respective to the x-axis.</p>
+<p>This angle, together with a magnitude, is enough to perfectly describe our complex <span class="math inline">\(z\)</span>. In other words: we know both how long to make the vector and where to point it.</p>
+<p>Let’s complete the picture by including the angle of <span class="math inline">\(z\)</span>:</p>
+<div class="cell">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>We use <span class="math inline">\(\theta\)</span> to represent the angle. The formula to compute <span class="math inline">\(\theta\)</span> is:<br>
+<span class="math display">\[\theta = \arctan{\frac{y}{x}}\]</span></p>
+<p>Plugging in <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> for our complex number <span class="math inline">\(z\)</span> gives us an angle of:</p>
+<p><span class="math display">\[\theta = \arctan{\frac{3}{2}} = 56.31 ^\circ\]</span></p>
+<p>With the phase and magnitude, we now have a unique way of representing our complex number <span class="math inline">\(z\)</span>.</p>
+</section>
+</section>
+<section id="recap-complex-numbers" class="level2">
+<h2 class="anchored" data-anchor-id="recap-complex-numbers">Recap: Complex Numbers</h2>
+<p>In this section, we gave a brief overview of complex numbers and their representation. To make things concrete, we picked a complex number <span class="math inline">\(z\)</span> with a real component <span class="math inline">\(x = 2\)</span> and an imaginary component <span class="math inline">\(y = 3\)</span>.</p>
+<p>Then, we showed that we can perfectly represent this complex number <span class="math inline">\(z\)</span> with two pieces of information: its <em>magnitude</em> and its <em>phase</em>.</p>
+<ul>
+<li><strong>Magnitude</strong>: the length of a vector.<br>
+</li>
+<li><strong>Phase</strong>: the angle, or direction, where a vector is pointing.</li>
+</ul>
+</section>
+</section>
+<section id="distributions-for-complex-initializations." class="level1">
+<h1>Distributions for complex initializations.</h1>
+<p>Now that we know what complex numbers are, how do we pick them to make sure they are good initial weight values?</p>
+<section id="background-on-neural-network-initializations" class="level2">
+<h2 class="anchored" data-anchor-id="background-on-neural-network-initializations">Background on neural network initializations</h2>
+<p>While initializations are now taken for granted, they were part of the first key pieces that made it possible to train deep neural networks. Before we knew how to properly initialize networks, training was very unstable as the gradients would either diverge or collapse to 0. This is known as gradient explosion or vanishing, respectively.</p>
+<p>The main insights to prevent gradients from vanishing or exploding came from analyzing their variance during training.<br>
+&gt; <strong>Aside</strong>: this is still an important error analysis tool! Looking at the behavior and distribution of gradients is a surefire way to catch problems with the training. Especially during the earliest optimizer steps.</p>
+<section id="achieving-smooth-gradient-flows" class="level3">
+<h3 class="anchored" data-anchor-id="achieving-smooth-gradient-flows">Achieving smooth gradient flows</h3>
+<p>It was the seminal work by <a href="https://arxiv.org/pdf/1502.01852.pdf">He</a> and <a href="http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf">Glorot, Bengio</a> that showed how to control the variance of gradients to make sure that training was successful. They found that the variance of the sampling distributions, either Normal or Uniform, must meet certain criteria for the gradients to flow “smoothly”.</p>
+<p>Here, “smoothly” means that the gradients neither disappear nor explode during training.</p>
+<p>The initializations derived in these papers are now the defaults in popular deep learning libraries like TensorFlow and pytorch.</p>
+<p>Unfortunately, the theory of complex-valued neural networks is not as well established. How can we know what are good variances and distributions for complex weights?</p>
+<p>It turns out we can borrow these hard-earned lessons about good real-valued initializations to make sure that our complex gradients flow smoothly.</p>
+</section>
+</section>
+<section id="initializing-complex-magnitudes" class="level2">
+<h2 class="anchored" data-anchor-id="initializing-complex-magnitudes">Initializing complex magnitudes</h2>
+<p>Instead of drawing from a Normal or Uniform distribution, like we do for real-valued networks, the magnitudes will instead be drawn from a <strong><a href="https://en.wikipedia.org/wiki/Rayleigh_distribution%5D">Rayleigh distribution</a></strong>. The reasons for this are described below. We can think of a Rayleigh distribution as the complex version of the familiar Normal distribution we use for real-valued weights.</p>
+</section>
+<section id="initializing-phases" class="level2">
+<h2 class="anchored" data-anchor-id="initializing-phases">Initializing phases</h2>
+<p>The phases will be drawn from a Uniform distribution. To see why, think about a compass with 360 degrees to choose from.</p>
+<p>We could randomly pick a degree and start walking in that direction for a given amount of time. Assuming we are on a flat surface, each degree choice will place us in a different, unique location.</p>
+<p>Because we don’t know which direction our learned complex weights should point in, the best we can do is to start by randomly pointing everywhere and letting the gradients steer the vectors instead.</p>
+</section>
+</section>
+<section id="history-of-complex-networks" class="level1">
+<h1>History of Complex Networks</h1>
+<p>Despite the fact that they are not as popular as real-valued approaches, complex networks have a rich and long history. See Chapter 3 of this thesis on <a href="https://digitalcommons.dartmouth.edu/dissertations/55/">Complex Networks for Audio</a> by Andy M. Sarroff for a great historical recap.</p>
+<p>The first modern, complete work on complex neural nets was <a href="https://arxiv.org/pdf/1705.09792.pdf">Deep Complex Networks</a> by Trabelsi et. al.&nbsp;This paper explored many fundamental building blocks for deep complex networks. It developed complex versions of initializations, convolutions, activations, and batch normalizations. It then stacked these blocks together to build complex versions of popular networks like ResNets.</p>
+<p>Despite this fantastic work the field remained somewhat quiet. But! There has been a recent activity spike in exciting fields like medical imaging, radio frequency signal processing, optical networks, and even quantum networks!</p>
+<p>Some of these newer applications and advances are described in this comprehensive <a href="https://arxiv.org/pdf/2101.12249.pdf">Survey of Complex-Valued Neural Networks</a> by Bassey at. al.&nbsp;</p>
+<p>Now that we know a bit more about Complex Networks, we are finally ready to initialize their weights. Let’s start by looking at the Rayleigh distribution to learn more about our complex magnitudes.</p>
+</section>
+<section id="the-rayleigh-distribution" class="level1">
+<h1>The Rayleigh Distribution</h1>
+<p>A Rayleigh distribution happens when two random variables are added together. In order to be Rayleigh distributed, the random variables must be uncorrelated, normally distributed, have zero mean, and share the same standard deviation. Let’s make this more concrete with a few examples.</p>
+<p>First, imagine setting up a sensor that measures wind speed out in an open field. If we analyzed the wind speed through this sensor in two directions, say North and East, then the magnitude of the wind’s velocity will follow a Rayleigh distribution.</p>
+<p>For another example, imagine tuning your car radio and accidentally ending up at an empty station. Only the familiar crackle of static is audible. This static means that the radio spectrum is empty and all we hear is noise. If we recorded the real and imaginary components of this noise, its magnitude would follow a Rayleigh distribution. In other words, pure RF noise follows a Rayleigh distribution.</p>
+<section id="why-rayleigh" class="level2">
+<h2 class="anchored" data-anchor-id="why-rayleigh">Why Rayleigh?</h2>
+<p>Why do we choose the Rayleigh distribution? The reason is that, without having more information about what our complex magnitudes <em>should</em> be, it is the best, unbiased starting point for the network.</p>
+<p>In other words, we pick the maximum entropy distribution to avoid a-priori biasing our network toward any particular outcome. One of the successes of Deep Learning has been that it’s best to let the learning procedure figure out the values on its own in its higher dimensional activation feature space.</p>
+<p>This is the complex-valued version of the same logic for using Normal or Uniform distribution to initialize real-valued networks.</p>
+</section>
+<section id="details-of-the-rayleigh-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="details-of-the-rayleigh-distribution">Details of the Rayleigh distribution</h2>
+<p>Let’s dive into the details. The equation below is the Probability Density Function (PDF) of the Rayleigh distribution.</p>
+<p><span class="math display">\[f(x,\sigma) = \frac{x}{\sigma^2}e^{-x^2/(2\sigma^2)}, \ \ x \geq 0\]</span></p>
+<p>This equation is a bit intimidating in written form. Let’s instead code it up as a python function with NumPy to make it cleaner.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># start by importing the libraries we need</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpy.random <span class="im">import</span> default_rng</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># define the Rayleigh PDF</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rayleigh_pdf(x, sigma):</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Evaluates the Rayleigh PDF at a given point `x`."</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> (x <span class="op">/</span> sigma<span class="op">**</span><span class="dv">2</span>) <span class="op">*</span> np.exp(<span class="op">-</span>x<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>sigma<span class="op">**</span><span class="dv">2</span>)) <span class="co"># see if you can match this code to the equation above</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The parameter sigma <span class="math inline">\((\sigma)\)</span> is known as the distribution’s scale. It is commonly found in many probability distributions and often controls how spread out or narrow a distribution is.</p>
+<p>Let us start by setting <span class="math inline">\(\sigma = 1\)</span> to draw the “basic” Rayleigh shape. We will then change sigma to see how this affects the distribution’s shape.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># start with sigma of one as the base case</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the Rayleigh PDF on 100 equally spaced points between 0 and 5</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">100</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>ray_pdf <span class="op">=</span> rayleigh_pdf(points, sigma)  </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># setup the plot</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">7</span>), dpi<span class="op">=</span><span class="dv">80</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="bu">len</span>(ax.get_xticklabels()))))</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Sample Value'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Probability Density'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Rayleigh PDF'</span>, fontsize<span class="op">=</span><span class="st">'xx-large'</span>)<span class="op">;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the Rayleigh pdf</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>ax.plot(ray_pdf)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>As we mentioned the scale <span class="math inline">\(\sigma\)</span> controls the width or narrowness of the distribution.<br>
+Let’s both halve and double sigma to (<span class="math inline">\(\frac{1}{2}, {2})\)</span> respectively to see what happens.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup plot</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>fig,ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">7</span>), dpi<span class="op">=</span><span class="dv">80</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Sample Value'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Probability Density'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Rayleigh PDFs'</span>, fontsize<span class="op">=</span><span class="st">'xx-large'</span>)<span class="op">;</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># different colors for each sigma</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>sigmas <span class="op">=</span> [<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">2</span>]</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [<span class="st">'m'</span>, <span class="st">'b'</span>, <span class="st">'r'</span>]</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the distributions with different scales</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> color,sig <span class="kw">in</span> <span class="bu">zip</span>(colors,sigmas):</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    rpdf <span class="op">=</span> rayleigh_pdf(points, sig)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    ax.plot(points, rpdf, c<span class="op">=</span>color, label<span class="op">=</span><span class="ss">f'σ: </span><span class="sc">{</span>sig<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="bu">len</span>(ax.get_xticklabels()))))</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>ax.legend()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The blue line in the plot above is the same PDF from our first plot where <span class="math inline">\(\sigma = 1\)</span>.</p>
+<p>We can see how <span class="math inline">\((\sigma = 0.5)\)</span> pulls the distribution up and to the left, while <span class="math inline">\((\sigma = 2)\)</span> squishes it down and to the right.</p>
+<p>In other words, a smaller sigma makes our distribution narrower while a larger sigma makes it wider.</p>
+<p>Plotting the theoretical Rayleigh PDF only shows what the distribution <em>should</em> looks like. Next, we need to actually generate some Rayleigh values.</p>
+</section>
+</section>
+<section id="generating-rayleigh-samples" class="level1">
+<h1>Generating Rayleigh samples</h1>
+<p>We use the <a href="https://numpy.org/doc/stable/reference/random/generator.html">default_rng</a> class in numpy to draw Rayleigh samples. <code>default_rng</code> is a helpful class that can sample from just about every known distribution.</p>
+<p>First we create the <code>default_rng</code> class with an arbitrary seed of <span class="math inline">\(0\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>seed <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rand <span class="op">=</span> default_rng(seed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This <code>default_rng</code> instance can now sample directly from a Rayleigh distribution. We can use the sampling function <code>default_rng.rayleigh</code> which accepts two parameters:<br>
+- <code>scale</code>: <span class="math inline">\(\sigma\)</span> with a default value of 1.<br>
+- <code>size</code>: the shape of the output array</p>
+<p>Let’s start by drawing 1,000 Rayleigh samples with <span class="math inline">\(\sigma = 1\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>shape <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># one dimensional vector with 1000 samples</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>ray_vals <span class="op">=</span> rand.rayleigh(scale<span class="op">=</span>sigma, size<span class="op">=</span>shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>How can we check check if these samples are actually Rayleigh distributed? We can compare these values to the plots of the theoretical Rayleigh PDF from the previous section.</p>
+<p>The easiest way to compare the samples is with a histogram.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup the histogram plot for our drawn samples</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">7</span>), dpi<span class="op">=</span><span class="dv">80</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Sample Value'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Counts'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Histogram of </span><span class="sc">{</span>shape<span class="sc">:,}</span><span class="ss"> Rayleigh samples'</span>, fontsize<span class="op">=</span><span class="st">'xx-large'</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the histogram of 1000 Rayleigh samples</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.hist(ray_vals, bins<span class="op">=</span><span class="dv">50</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>This is an ok start. If we squint, we can almost see the Rayleigh PDF shape we plotted earlier. But <span class="math inline">\(1,000\)</span> is a small number of samples.</p>
+<p>As we draw more samples, the distribution should grow closer and closer to the theoretical PDF plots. Let’s make sure this happens by now drawing <span class="math inline">\(10,000\)</span> samples.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup the new plot with more samples</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">7</span>), dpi<span class="op">=</span><span class="dv">80</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Sample Value'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Counts'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># plot even more Rayleigh samples</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>large_shape <span class="op">=</span> <span class="dv">10000</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'Histogram of </span><span class="sc">{</span>large_shape<span class="sc">:,}</span><span class="ss"> Rayleigh samples'</span>, fontsize<span class="op">=</span><span class="st">'xx-large'</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>many_ray_vals <span class="op">=</span> rand.rayleigh(scale<span class="op">=</span>sigma, size<span class="op">=</span>large_shape)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>plt.hist(many_ray_vals, bins<span class="op">=</span><span class="dv">35</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>This looks much better! Now we can compare this histogram to the theoretical Rayleigh PDF.</p>
+<blockquote class="blockquote">
+<p>Note that we pass <code>density=True</code> to the histogram function to normalize it and make it an approximate PDF.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup the plot again</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">7</span>), dpi<span class="op">=</span><span class="dv">80</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Sampled vs. Theoretical Rayleigh PDFs'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Sample Value'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Probability Density'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># compare the sample and theoretical PDFs of the Rayleigh distribution</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>plt.hist(many_ray_vals, density<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span><span class="dv">35</span>) <span class="co"># makes the histogram sum to one to mimic a pdf</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.plot(points, ray_pdf, c<span class="op">=</span><span class="st">'r'</span>, label<span class="op">=</span><span class="st">'theoretical rayleigh pdf'</span>, linewidth<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>plt.legend()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>A near perfect match! Now we can successfully generate our initial complex Rayleigh magnitudes.</p>
+<p>We are ready to move on to the phase.</p>
+</section>
+<section id="sampling-phase-initializations" class="level1">
+<h1>Sampling phase initializations</h1>
+<p>The Rayleigh values from the previous section tell us the magnitude, or length, of our complex weights. But that is only one part of a complex number. We are still missing the angle, or phase, that these complex numbers are pointing in.</p>
+<p>For the phase, is enough to use random, uniform angles. Why can we do this here, when we went to such care to get the correct magnitude values?</p>
+<p>It turns out that many processes such as speech, medical images, and radio modulations encode information in the signal’s phase. But we don’t know what this phase should look like beforehand. And we don’t want to bias the networks to any particular phase orientation.</p>
+<p>Instead, by uniformly picking random starting phases it is like we are pointing in every direction, roughly equally. Tying it back to our compass example from earlier. It’s as if we told each weight to random pick a degree and start walking in that direction.</p>
+<p>Then, during training, the network will learn how to best orient the weights for its given task.</p>
+<p>Sampling this random uniform phase is straightforward. We pick uniform samples from <span class="math inline">\(-\pi\)</span> to <span class="math inline">\(\pi\)</span> radians which maps to a full loop of the unit circle. Even better, we can also reuse the same <code>default_rng</code> from before!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pick random directions along the unit circle</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>phase <span class="op">=</span> rand.uniform(low<span class="op">=-</span>np.pi, high<span class="op">=</span>np.pi, size<span class="op">=</span>ray_vals.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="magnitude-phase-vs.-real-imaginary" class="level2">
+<h2 class="anchored" data-anchor-id="magnitude-phase-vs.-real-imaginary">(Magnitude, Phase) vs.&nbsp;(Real, Imaginary)</h2>
+<p>We mentioned earlier that a complex number has real and imaginary components. But so far we have deal with magnitudes and phases instead. How are these quantities related?</p>
+<p>It turns out that we can use the phase and magnitude to split our vector into its real and imaginary parts. The cosine of the phase and magnitude gives us the real part, and the sine of the phase gives us the imaginary part.</p>
+<p>These are two different representations of the same complex number. We do not lose anything going from one to the other or vice-versa.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># splitting our phases and magnitues into real and imaginary components</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>real <span class="op">=</span> ray_vals <span class="op">*</span> np.cos(phase)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>imag <span class="op">=</span> ray_vals <span class="op">*</span> np.sin(phase)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>It turns out this will be a key detail when we are creating complex-valued network layers. As a preview: we will give one set of weights the <code>real</code> values, and another set of weights the <code>imag</code> values. This is because complex operations like addition and multiplication work better on GPUs with real and imaginary representations.</p>
+</section>
+<section id="visualizing-our-random-phases" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-our-random-phases">Visualizing our random phases</h2>
+<p>Now we can check if these phases are truly orienting our magnitudes in random directions. To do so we plot the first 500 complex weights in the polar plane.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># indexes for the first 500 random weights</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>chosen_samples <span class="op">=</span> <span class="bu">range</span>(<span class="dv">500</span>) </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># plot these first complex weights</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">7</span>), dpi<span class="op">=</span><span class="dv">80</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> chosen_samples:</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># index into phase and magnitude variables</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    angle,mag <span class="op">=</span> phase[idx],ray_vals[idx]</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot them starting from the origin</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    plt.polar([<span class="dv">0</span>,angle], [<span class="dv">0</span>,mag], marker<span class="op">=</span><span class="st">'o'</span>)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Magnitudes and Phases of our Complex Weights'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>That definitely looks like a random, uniform orientation!</p>
+</section>
+</section>
+<section id="recapping-phase-and-magnitude-so-far" class="level1">
+<h1>Recapping Phase and Magnitude so far</h1>
+<p>To recap we now have:<br>
+- Magnitude initializations drawn from a Rayleigh distribution.<br>
+- Phase initializations drawn from a Uniform distribution.</p>
+<p>Putting these together, we have complex-valued numbers pointing roughly in all directions.</p>
+<p>We are almost there. There is one more important detail to work out: the variance of our complex weights.</p>
+</section>
+<section id="matching-he-and-glorot-variance-criteria" class="level1">
+<h1>Matching He and Glorot variance criteria</h1>
+<p>Even though we now have random complex weights, they are not yet good initializations. The polar plot above gives some clues as to why.<br>
+&gt; hint: look at the range of the vector’s magnitudes.</p>
+<p>Remember from the background section on initializations: the key insight was that the variance of the distributions need to follow certain criteria. This variance criteria makes sure that the gradients flow well during backpropagation.</p>
+<p>To be more specific, both the He and Glorot criteria are based on the incoming and outgoing connections of a network layer. This number of connections is typically called <code>fanIn</code> and <code>fanOut</code>, respectively.</p>
+<p>The He criteria says that the variance of weights <span class="math inline">\(W\)</span> should be: <span class="math display">\[\text{Var}(W) = \frac{2}{\text{fanIn}}\]</span></p>
+<p>The Glorot criteria says that the variance should be: <span class="math display">\[\text{Var}(W) = \frac{2}{\text{fanIn + fanOut}}\]</span></p>
+<p>Deep Neural Networks can easily have thousands or even millions of connections. Looking at the criteria equations above, that means that we need very small variances since <code>fanIn</code> and <code>fanOut</code> will be large.</p>
+<p>Now we can see why our weights so far, shown in the earlier polar plot, are not good: their variance is clearly too large!</p>
+<section id="he-and-glorot-criteria-for-rayleigh-distributions" class="level2">
+<h2 class="anchored" data-anchor-id="he-and-glorot-criteria-for-rayleigh-distributions">He and Glorot criteria for Rayleigh distributions</h2>
+<p>How can we make sure our Rayleigh magnitudes meet the He and Glorot variance criteria?<br>
+The <a href="https://arxiv.org/pdf/1705.09792.pdf">Complex Neural Nets paper</a> from earlier includes a nice derivation for the variance of a complex Rayleigh distribution: <span class="math display">\[\text{Var}(W) = 2\sigma^{2}\]</span></p>
+<p>We can set the Rayleigh variance equal to the He and Glorot criteria and solve for sigma <span class="math inline">\(\sigma\)</span>.</p>
+<p>To meet the He criteria, sigma should be: <span class="math display">\[\sigma_{\text{He}} = \frac{1}{\sqrt{\text{fanIn}}}\]</span> <br></p>
+<p>To meet the Glorot criteria, sigma should be: <span class="math display">\[\sigma_{\text{Glorot}} = \frac{1}{\sqrt{\text{fanIn + fanOut}}}\]</span> <br></p>
+<section id="starting-with-a-simple-one-layer-network" class="level3">
+<h3 class="anchored" data-anchor-id="starting-with-a-simple-one-layer-network">Starting with a simple one-layer network</h3>
+<p>In the previous sections we used a flat vector of complex weights for the examples and plots. Tying it back at our two concrete examples of wind speed and radio noise, it’s as if we took a single series of measurements.</p>
+<p>But since the He and Glorot criteria are defined for network layers, we need a new example. Let’s start with to a simple one-layer network. Our layer will have 100 inputs and 50 outputs (<code>fanIn</code> = 100, <code>fanOut</code> = 50).</p>
+<p>Plugging these <code>fanIn</code> and <code>fanOut</code> values into the Rayleigh sigma criteria gives: <span class="math display">\[\sigma_{\text{He}} = \frac{1}{10}\]</span></p>
+<p><span class="math display">\[\sigma_{\text{Glorot}} = \frac{1}{5\sqrt{6}}\]</span></p>
+<p>Now we can pass either of these sigmas to our <code>default_rng</code> and it will draw Rayleigh samples with variances that match the chosen criteria.</p>
+<blockquote class="blockquote">
+<p>A quick word about <code>fanIn</code> and <code>fanOut</code>. We saw the simple feed-forward case with in our example for a single network layer. In that case the number of incoming connections was simply <code>fanIn</code> and the outgoing connections were <code>fanOut</code>.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>However, the convolutional case is a bit more complicated. A convolutional layer has input and output feature maps which are roughly analogous to input and output units in feed-forward layers. But they also have a kernel size to consider. PyTorch has a nice <a href="https://pytorch.org/docs/stable/_modules/torch/nn/init.html#_calculate_fan_in_and_fan_out">convenience function</a> that handles this for us.</p>
+</blockquote>
+</section>
+</section>
+</section>
+<section id="putting-it-all-together-a-complex-valued-pytorch-initializer" class="level1">
+<h1>Putting it all together: A complex-valued PyTorch initializer</h1>
+<p>Here is a recap of the previous sections: 1. We first saw a brief overview of complex numbers.<br>
+2. We learned about the history of good initializations and Complex Networks.<br>
+3. We analyzed the theoretical Rayleigh distribution.<br>
+1. We drew some Rayleigh magnitudes to learn more about the distribution.<br>
+2. We picked a random uniform phase, and saw how this orients our vectors in all directions.<br>
+3. We matched our Rayleigh samples to the He and Glorot variance criteria for a single network layer.</p>
+<p>To get usable initializations, we need a function that glues the important pieces together: - Draw random phase samples.<br>
+- Draw Rayleigh magnitude samples.<br>
+- Match the He or Glorot variance criteria.<br>
+- Are PyTorch tensors with the correct shape for a given network layer.</p>
+<p>We can refactor the earlier code into a function that does just this.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_complex_inits(module, seed<span class="op">=</span><span class="va">None</span>, criterion<span class="op">=</span><span class="st">'he'</span>, dtype<span class="op">=</span><span class="st">'float32'</span>):</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Initializes complex-valued Rayleigh weights as PyTorch tensors.</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># random number generator</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    rand <span class="op">=</span> default_rng(seed <span class="cf">if</span> seed <span class="kw">is</span> <span class="va">None</span> <span class="cf">else</span> torch.initial_seed())</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get shape of the weights</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    weight_shape <span class="op">=</span> module.weight.size()</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># find the number of input and output connection</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    fan_in, fan_out <span class="op">=</span> torch.nn.init._calculate_fan_in_and_fan_out(module.weight)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute the Rayleigh sigma that meets the chosen variance criteria</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> criterion <span class="kw">in</span> (<span class="st">'he'</span>,<span class="st">'glorot'</span>)</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    factor <span class="op">=</span> fan_in <span class="cf">if</span> criterion <span class="op">==</span> <span class="st">'he'</span> <span class="cf">else</span> fan_in <span class="op">+</span> fan_out</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    sigma <span class="op">=</span> <span class="fl">1.</span> <span class="op">/</span> np.sqrt(factor)</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># draw the scaled rayleigh magnitudes</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    magnitude <span class="op">=</span> rand.rayleigh(scale<span class="op">=</span>sigma, size<span class="op">=</span>weight_shape)</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># draw uniform angle samples</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    phase <span class="op">=</span> rand.uniform(low<span class="op">=-</span>np.pi, high<span class="op">=</span>np.pi, size<span class="op">=</span>magnitude.shape)</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># split magnitudes into real and imaginary components</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    real <span class="op">=</span> (magnitude <span class="op">*</span> np.cos(phase)).astype(dtype)</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    imag <span class="op">=</span> (magnitude <span class="op">*</span> np.sin(phase)).astype(dtype)</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># turn into float tensors and return</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>    real,imag <span class="op">=</span> <span class="bu">map</span>(torch.from_numpy, [real,imag])</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> real,imag</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s use this function to get complex weight initializations for a Linear and Convolutional module.</p>
+<section id="complex-initializations-for-nn.linear" class="level2">
+<h2 class="anchored" data-anchor-id="complex-initializations-for-nn.linear">Complex initializations for <code>nn.Linear</code></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># re-create out earlier example with a single layer</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>fan_in, fan_out <span class="op">=</span> <span class="dv">100</span>, <span class="dv">50</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>sigma_he <span class="op">=</span> <span class="fl">1.</span> <span class="op">/</span> np.sqrt(fan_in) <span class="co"># to match the He criteria</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># get the complex-valued weights</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> torch.nn.Linear(fan_in, fan_out)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>real, imag <span class="op">=</span> get_complex_inits(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We should check that the magnitude of the weights actually follow a Rayleigh distribution.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get linear magnitudes as a flat numpy vector</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>magnitude <span class="op">=</span> torch.sqrt(real<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> imag<span class="op">**</span><span class="dv">2</span>).numpy().reshape(<span class="op">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup the plot</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">7</span>), dpi<span class="op">=</span><span class="dv">80</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Complex nn.Linear Weights vs. Theoretical Rayleigh PDF'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Sample Value'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Probability Density'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># pick points that cover the sample range to compare with theoretical rayleigh pdf</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> np.linspace(<span class="dv">0</span>, magnitude.<span class="bu">max</span>(), <span class="dv">1000</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>ray_pdf <span class="op">=</span> rayleigh_pdf(points, sigma<span class="op">=</span>sigma_he)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co"># plot histogram of Linear magnitudes vs. the theoretical pdf</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>plt.hist(magnitude, bins<span class="op">=</span><span class="dv">35</span>, density<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>plt.plot(points, ray_pdf, c<span class="op">=</span><span class="st">'r'</span>, linewidth<span class="op">=</span><span class="dv">3</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Success! Our Linear module is properly initialized.</p>
+</section>
+<section id="complex-initializations-for-nn.conv2d" class="level2">
+<h2 class="anchored" data-anchor-id="complex-initializations-for-nn.conv2d">Complex initializations for <code>nn.Conv2d</code></h2>
+<p>Can we do the same for a convolutional layer? Our main concern is correctly handling both the tensor shape and <code>fan_in</code>, <code>fan_out</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make conv layer with 100 input features, 50 output features, and (3x3) kernel</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">3</span> <span class="co"># kernel size</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># now, these are the number of feature maps (chan_in and chan_out)</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>fan_in, fan_out <span class="op">=</span> <span class="dv">100</span>, <span class="dv">50</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>conv_layer <span class="op">=</span> torch.nn.Conv2d(fan_in, fan_out, k)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>real_conv, imag_conv <span class="op">=</span> get_complex_inits(conv_layer) <span class="co"># get the initial complex weights</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># make sure the shape of weights is ok</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Shapes of real and imaginary convolutional tensors: </span><span class="sc">{</span>real_conv<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>imag_conv<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Shapes of real and imaginary convolutional tensors: torch.Size([50, 100, 3, 3]), torch.Size([50, 100, 3, 3])</code></pre>
+</div>
+</div>
+<p>Let’s check if these convolutional weights are still Rayleigh distributed.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get convolutional magnitudes as a flat numpy vector</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>conv_magnitude <span class="op">=</span> torch.sqrt(real_conv<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> imag_conv<span class="op">**</span><span class="dv">2</span>).numpy().reshape(<span class="op">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup the plots</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">7</span>), dpi<span class="op">=</span><span class="dv">80</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Complex nn.Conv2d Weights vs. Theoretical Rayleigh PDF'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Sample Value'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Probability Density'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># pick points that cover sample range to compare with theoretical rayleigh pdf</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> np.linspace(<span class="dv">0</span>, conv_magnitude.<span class="bu">max</span>(), <span class="dv">1000</span>)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># note: we need to re-compute fanIn for the convolutional layer</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>fan_in, fan_out <span class="op">=</span> torch.nn.init._calculate_fan_in_and_fan_out(conv_layer.weight)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>sigma_he_conv <span class="op">=</span> sigma<span class="op">=</span><span class="fl">1.</span> <span class="op">/</span> np.sqrt(fan_in)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>ray_pdf <span class="op">=</span> rayleigh_pdf(points, sigma_he_conv)</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co"># plot histogram of magnitudes vs. theoretical pdf</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>plt.hist(conv_magnitude, bins<span class="op">=</span><span class="dv">35</span>, density<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>plt.plot(points, ray_pdf, c<span class="op">=</span><span class="st">'r'</span>, linewidth<span class="op">=</span><span class="dv">3</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-23-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Another match! Our convolutional layer is also properly initialized.</p>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>In this post we created Rayleigh initializations for complex-valued neural networks.</p>
+<p>We started with an overview of complex numbers and weight initializations. Next we moved on to the history of Complex Networks and the Rayleigh distribution.</p>
+<p>Then we used the Rayleigh distribution to sample the magnitudes of complex-valued weights. We then added uniform phase information to randomly orient the vectors. After that, we made sure that the variance of our complex weights made them good initial values.</p>
+<p>Finally, we put all everything together into a python function that return complex initialization tensors. This initialization function will be the first building block of complex-valued neural networks.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="enzokro/chaski_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
