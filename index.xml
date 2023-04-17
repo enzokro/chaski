@@ -9,8 +9,8 @@
 <link>https://enzokro.dev/index.html</link>
 <atom:link href="https://enzokro.dev/index.xml" rel="self" type="application/rss+xml"/>
 <description>Enzo&#39;s personal Blog.</description>
-<generator>quarto-1.2.269</generator>
-<lastBuildDate>Mon, 28 Nov 2022 00:00:00 GMT</lastBuildDate>
+<generator>quarto-1.2.475</generator>
+<lastBuildDate>Mon, 28 Nov 2022 05:00:00 GMT</lastBuildDate>
 <item>
   <title>Stable Diffusion v2 with dynamic Classifier-free Guidance</title>
   <dc:creator>enzokro</dc:creator>
@@ -30,7 +30,7 @@
 <section id="python-imports" class="level1">
 <h1>Python imports</h1>
 <p>We start with a few python imports.</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;">import</span> os</span>
 <span id="cb1-2"><span class="im" style="color: #00769E;">import</span> random</span>
 <span id="cb1-3"><span class="im" style="color: #00769E;">from</span> typing <span class="im" style="color: #00769E;">import</span> Callable, List, Dict</span>
@@ -40,7 +40,7 @@
 <span id="cb1-7"><span class="im" style="color: #00769E;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;">as</span> plt</span>
 <span id="cb1-8"><span class="im" style="color: #00769E;">import</span> matplotlib.colors <span class="im" style="color: #00769E;">as</span> mcolors</span></code></pre></div>
 </div>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="cell-output cell-output-stderr">
 <pre><code>2022-11-28 18:22:40.147192: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
@@ -52,7 +52,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <section id="seed-for-reproducibility" class="level2">
 <h2 class="anchored" data-anchor-id="seed-for-reproducibility">Seed for reproducibility</h2>
 <p><code>seed_everything</code> makes sure that the results are reproducible across notebooks.</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;"># set the seed for rng</span></span>
 <span id="cb3-2">SEED <span class="op" style="color: #5E5E5E;">=</span> <span class="dv" style="color: #AD0000;">4191151944</span> </span>
 <span id="cb3-3"><span class="kw" style="color: #003B4F;">def</span> seed_everything(seed: <span class="bu" style="color: null;">int</span>) <span class="op" style="color: #5E5E5E;">-&gt;</span> torch.Generator:</span>
@@ -73,7 +73,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <h1>Text prompt for image generations</h1>
 <p>Negative prompts appear to be very helpful in <code>v2</code>. At least, more helpful than they were for <code>v1.x</code> models.</p>
 <p>Below, we also borrow a prompt and negative-prompt format that’s going around the Stable Diffusion discord. It seems to be a good starting point as the community figures out the new prompt structures.</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;"># text prompt for image generations</span></span>
 <span id="cb4-2">prompt <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"((a peaceful mountainside village in the Andes)), ((by Hayao Miyazaki)), studio lighting, High quality, professional, dramatic, cinematic movie still, very detailed, character art, concept art, focused, subsurface scatter"</span></span>
 <span id="cb4-3"></span>
@@ -86,7 +86,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <p>The images will be generated over <img src="https://latex.codecogs.com/png.latex?30"> diffusion steps. It will be a rather large <code>1024 x 1024</code> output.</p>
 <p>We are using the <code>DPM++ SDE Karras</code> sampler with 30 steps. This sampler seems to be working the best for high-quality outputs at the moment. The <code>2m Karras</code> schedule wins out on speed, however.</p>
 <p>If the image is too large or the generation is too slow on your machine, I’d suggest bumping down to a <code>768 x 768</code> resolution and using the <code>k_dpmpp_2m</code> sampler instead.</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;"># number of diffusion steps</span></span>
 <span id="cb5-2">num_steps <span class="op" style="color: #5E5E5E;">=</span> <span class="dv" style="color: #AD0000;">30</span>    </span>
 <span id="cb5-3"></span>
@@ -114,7 +114,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <section id="gathering-stable-diffusion-models" class="level1">
 <h1>Gathering Stable Diffusion models</h1>
 <p>For now, the <code>k_diffusion</code> integration is only working with the full, <code>768-v</code> model. The plan is to eventually support the base model as well.</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"></span>
 <span id="cb6-2"><span class="co" style="color: #5E5E5E;"># group the different models to run</span></span>
 <span id="cb6-3">diffusion_runs <span class="op" style="color: #5E5E5E;">=</span> [</span>
@@ -135,7 +135,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <h1>Creating Guidance schedules</h1>
 <p>We create the Guidance schedules with the <code>cf_guidance</code> library.</p>
 <p>However, it seems that our normalizations are broken in v2. This is likely due to the new <code>v-prediction</code> objective. So we avoid normalizations for now, and stick only with the <code>Inverse kDecay</code> schedules.</p>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="co" style="color: #5E5E5E;"># helpers to create cosine schedules</span></span>
 <span id="cb7-2"><span class="im" style="color: #00769E;">from</span> cf_guidance.schedules  <span class="im" style="color: #00769E;">import</span> get_cos_sched</span>
 <span id="cb7-3"></span>
@@ -146,7 +146,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <h3 class="anchored" data-anchor-id="schedule-parameters">Schedule parameters</h3>
 <p>Given how much the prompts have changed in v2, we are back in exploration territory as to what are the best parameters. Exciting times!</p>
 <p>Overall, it seems that the Guidance range is broader in v2. Folks are getting good results with low CFGs (3-5) or with higher values (9+). This is likely highly dependent on both the prompt and negative-prompt. We should know more as the stability.ai team releases their guides and tips.</p>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="co" style="color: #5E5E5E;"># Default schedule parameters from the blog post</span></span>
 <span id="cb8-2"><span class="co" style="color: #5E5E5E;">######################################</span></span>
 <span id="cb8-3">baseline_g        <span class="op" style="color: #5E5E5E;">=</span> <span class="dv" style="color: #AD0000;">8</span>    <span class="co" style="color: #5E5E5E;"># default, static guidance value</span></span>
@@ -171,7 +171,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <span id="cb8-22"><span class="co" style="color: #5E5E5E;">######################################</span></span></code></pre></div>
 </div>
 <p>The functions below quickly build different Guidance schedules. They are also re-used from the <a href="https://enzokro.dev/blog/posts/2022-11-26-guidance-expts-8/https://enzokro.dev/blog/posts/2022-11-26-guidance-expts-8/">previous notebooks</a>.</p>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="kw" style="color: #003B4F;">def</span> cos_harness(default_params: <span class="bu" style="color: null;">dict</span>, new_params: <span class="bu" style="color: null;">dict</span>) <span class="op" style="color: #5E5E5E;">-&gt;</span> <span class="bu" style="color: null;">dict</span>:</span>
 <span id="cb9-2">    <span class="co" style="color: #5E5E5E;">'''Creates cosine schedules with updated parameters in `new_params`</span></span>
 <span id="cb9-3"><span class="co" style="color: #5E5E5E;">    '''</span></span>
@@ -210,7 +210,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <section id="static-baselines" class="level2">
 <h2 class="anchored" data-anchor-id="static-baselines">Static baselines</h2>
 <p>First we create the constant, baseline Guidances.</p>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="co" style="color: #5E5E5E;"># create the baseline schedule with the new function</span></span>
 <span id="cb10-2">baseline_params <span class="op" style="color: #5E5E5E;">=</span> {<span class="st" style="color: #20794D;">'max_val'</span>: [baseline_g]}</span>
 <span id="cb10-3">baseline_func <span class="op" style="color: #5E5E5E;">=</span> <span class="kw" style="color: #003B4F;">lambda</span> <span class="op" style="color: #5E5E5E;">*</span>args, <span class="op" style="color: #5E5E5E;">**</span>kwargs: [baseline_g <span class="cf" style="color: #003B4F;">for</span> _ <span class="kw" style="color: #003B4F;">in</span> <span class="bu" style="color: null;">range</span>(num_steps)]</span>
@@ -220,7 +220,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <section id="improving-the-baseline-with-scheduled-guidance" class="level2">
 <h2 class="anchored" data-anchor-id="improving-the-baseline-with-scheduled-guidance">Improving the baseline with scheduled Guidance</h2>
 <p>Now we build the most promising dynamic schedule: <code>Inverse kDecay</code> with a fast warmup.</p>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="co" style="color: #5E5E5E;"># creating the inverse kDecay cosine schedules</span></span>
 <span id="cb11-2">k_decays <span class="op" style="color: #5E5E5E;">=</span> [<span class="fl" style="color: #AD0000;">0.1</span>, <span class="fl" style="color: #AD0000;">0.2</span>, <span class="fl" style="color: #AD0000;">0.3</span>, <span class="fl" style="color: #AD0000;">0.5</span>]</span>
 <span id="cb11-3">inv_k_params <span class="op" style="color: #5E5E5E;">=</span> {<span class="st" style="color: #20794D;">'k_decay'</span>: k_decays}</span>
@@ -236,7 +236,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <span id="cb11-13">all_k_expts <span class="op" style="color: #5E5E5E;">=</span> inv_k_expts</span></code></pre></div>
 </div>
 <p>Let’s plot these schedules to see what they look like.</p>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="cell-output cell-output-display">
 <p><img src="https://enzokro.dev/blog/posts/2022-11-28-sd-v2-schedules-1/index_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
 </div>
@@ -246,7 +246,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <section id="function-to-run-the-experiments" class="level1">
 <h1>Function to run the experiments</h1>
 <p>The code below loads the v2 Stable Diffusion model. It’s also our harness to easily run many, different experiments.</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="co" style="color: #5E5E5E;"># to load Stable Diffusion pipelines</span></span>
 <span id="cb12-2"><span class="im" style="color: #00769E;">from</span> min_diffusion.core <span class="im" style="color: #00769E;">import</span> MinimalDiffusion</span>
 <span id="cb12-3"><span class="co" style="color: #5E5E5E;"># to plot generated images</span></span>
@@ -255,7 +255,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <pre><code>WARNING:jax._src.lib.xla_bridge:No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="kw" style="color: #003B4F;">def</span> load_sd_model(model_name, device, dtype, revision, model_kwargs<span class="op" style="color: #5E5E5E;">=</span>{}):</span>
 <span id="cb14-2">    <span class="co" style="color: #5E5E5E;">'''Loads the given `model_name` Stable Diffusion in `dtype` precision.  </span></span>
 <span id="cb14-3"><span class="co" style="color: #5E5E5E;">    </span></span>
@@ -267,7 +267,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <span id="cb14-9">    pipeline.load()</span>
 <span id="cb14-10">    <span class="cf" style="color: #003B4F;">return</span> pipeline</span></code></pre></div>
 </div>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="kw" style="color: #003B4F;">def</span> run(pipeline, prompt, schedules, gen_kwargs<span class="op" style="color: #5E5E5E;">=</span>{},</span>
 <span id="cb15-2">        guide_tfm<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">None</span>, generator<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">None</span>, show_each<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">False</span>, test_run<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">False</span>):</span>
 <span id="cb15-3">    <span class="co" style="color: #5E5E5E;">"""Runs a dynamic Classifier-free Guidance experiment. </span></span>
@@ -318,7 +318,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <section id="generating-the-images" class="level1">
 <h1>Generating the images</h1>
 <p>We put together all of the pieces above to generate images with Stable Diffusion v2. Both with our static baseline guidances, and the <code>Inverse-kDecay</code> schedules.</p>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="co" style="color: #5E5E5E;"># stores the generated images</span></span>
 <span id="cb16-2">outputs <span class="op" style="color: #5E5E5E;">=</span> {}</span>
 <span id="cb16-3"></span>
@@ -430,7 +430,7 @@ Using Karras sigma schedule</code></pre>
 <p>Here we plot all of the generated images.</p>
 <p>The image on the left is the baseline with a static, constant Guidance.<br>
 The images on the right are the improvements with Guidance scheduling. Specifically, using the <code>Inverse-kDecay</code> cosine schedules with different values of <code>k</code>.</p>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1">plot_all_results(<span class="st" style="color: #20794D;">'stabilityai/stable-diffusion-2'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="https://enzokro.dev/blog/posts/2022-11-28-sd-v2-schedules-1/index_files/figure-html/cell-19-output-1.png" class="img-fluid"></p>
@@ -457,10 +457,10 @@ The images on the right are the improvements with Guidance scheduling. Specifica
 
  ]]></description>
   <category>diffusion</category>
-  <category>assifier-free guidance</category>
+  <category>classifier-free guidance</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-28-sd-v2-schedules-1/index.html</guid>
-  <pubDate>Mon, 28 Nov 2022 00:00:00 GMT</pubDate>
+  <pubDate>Mon, 28 Nov 2022 05:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-28-sd-v2-schedules-1/better_village.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 <item>
@@ -1249,7 +1249,7 @@ Note
   <category>classifier-free guidance</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-26-guidance-expts-8/index.html</guid>
-  <pubDate>Sun, 27 Nov 2022 00:00:00 GMT</pubDate>
+  <pubDate>Sun, 27 Nov 2022 05:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-26-guidance-expts-8/better_inca.png" medium="image" type="image/png" height="180" width="144"/>
 </item>
 <item>
@@ -1938,7 +1938,7 @@ Running experiment [1 of 8]: Param: "k_decay", val=1...</code></pre>
   <category>classifier-free guidance</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-25-guidance-expts-7/index.html</guid>
-  <pubDate>Sat, 26 Nov 2022 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 26 Nov 2022 05:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-25-guidance-expts-7/better_horse_6.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 <item>
@@ -3347,7 +3347,7 @@ Running experiment [1 of 12]: Param: "max_val", val=0.08...</code></pre>
   <category>classifier-free guidance</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-24-guidance-expts-6/index.html</guid>
-  <pubDate>Fri, 25 Nov 2022 00:00:00 GMT</pubDate>
+  <pubDate>Fri, 25 Nov 2022 05:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-24-guidance-expts-6/better_horse_5.png" medium="image" type="image/png" height="145" width="144"/>
 </item>
 <item>
@@ -3937,7 +3937,7 @@ Running experiment [1 of 10]: Param: "k_decay", val=0.1...</code></pre>
   <category>classifier-free guidance</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-24-guidance-expts-5/index.html</guid>
-  <pubDate>Thu, 24 Nov 2022 00:00:00 GMT</pubDate>
+  <pubDate>Thu, 24 Nov 2022 05:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-24-guidance-expts-5/log_cos_sweep.png" medium="image" type="image/png" height="96" width="144"/>
 </item>
 <item>
@@ -4734,7 +4734,7 @@ Running experiment [1 of 12]: Param: "k_decay", val=0.7...</code></pre>
   <category>classifier-free guidance</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-23-guidance-expts-4/index.html</guid>
-  <pubDate>Wed, 23 Nov 2022 00:00:00 GMT</pubDate>
+  <pubDate>Wed, 23 Nov 2022 05:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-23-guidance-expts-4/better_horse_4.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 <item>
@@ -5185,7 +5185,7 @@ Running experiment [1 of 1]: Param: "max_val", val=0.15...</code></pre>
   <category>classifier-free guidance</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-21-guidance-expts-3/index.html</guid>
-  <pubDate>Tue, 22 Nov 2022 00:00:00 GMT</pubDate>
+  <pubDate>Tue, 22 Nov 2022 05:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-21-guidance-expts-3/better_horse_3.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 <item>
@@ -5492,7 +5492,7 @@ This seems like a good starting point, since many scripts and functions are base
   <category>diffusion</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-20-minimal-diffusion/index.html</guid>
-  <pubDate>Mon, 21 Nov 2022 00:00:00 GMT</pubDate>
+  <pubDate>Mon, 21 Nov 2022 05:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-20-minimal-diffusion/dynam_cfg.png" medium="image" type="image/png" height="160" width="144"/>
 </item>
 <item>
@@ -6175,7 +6175,7 @@ Running experiment [1 of 9]: Param: "k_decay", val=0.8...</code></pre>
   <category>classifier-free guidance</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-20-guidance-expts-2/index.html</guid>
-  <pubDate>Sun, 20 Nov 2022 00:00:00 GMT</pubDate>
+  <pubDate>Sun, 20 Nov 2022 05:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-20-guidance-expts-2/better-gen-horse.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 <item>
@@ -6393,7 +6393,7 @@ We also compare our SLERP to a short PyTorch implementation from <a href="https:
   <category>latent interpolation</category>
   <category>SLERP</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-16-pytorch-slerp/index.html</guid>
-  <pubDate>Wed, 16 Nov 2022 00:00:00 GMT</pubDate>
+  <pubDate>Wed, 16 Nov 2022 05:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-16-pytorch-slerp/slerp.png" medium="image" type="image/png" height="102" width="144"/>
 </item>
 <item>
@@ -7334,7 +7334,7 @@ Running experiment: BaseNormGuidance_Sched_CosWarmup...</code></pre>
   <category>classifier-free guidance</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-15-guidance-expts-1/index.html</guid>
-  <pubDate>Sun, 13 Nov 2022 00:00:00 GMT</pubDate>
+  <pubDate>Sun, 13 Nov 2022 05:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-15-guidance-expts-1/cat2.jpeg" medium="image" type="image/jpeg"/>
 </item>
 <item>
@@ -7456,7 +7456,7 @@ Running experiment: BaseNormGuidance_Sched_CosWarmup...</code></pre>
   <category>algorithms</category>
   <category>functional</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-08-merge-n-BSTs/index.html</guid>
-  <pubDate>Tue, 08 Nov 2022 00:00:00 GMT</pubDate>
+  <pubDate>Tue, 08 Nov 2022 05:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-08-merge-n-BSTs/merging_bts.png" medium="image" type="image/png" height="138" width="144"/>
 </item>
 <item>
@@ -8002,7 +8002,7 @@ The <a href="https://arxiv.org/pdf/1705.09792.pdf">Complex Neural Nets paper</a>
   <category>deep learning</category>
   <category>complex networks</category>
   <guid>https://enzokro.dev/blog/posts/2022-09-01-rayleigh-init/index.html</guid>
-  <pubDate>Thu, 01 Sep 2022 00:00:00 GMT</pubDate>
+  <pubDate>Thu, 01 Sep 2022 04:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-09-01-rayleigh-init/polar_plot.png" medium="image" type="image/png" height="141" width="144"/>
 </item>
 <item>
@@ -8503,7 +8503,7 @@ The <code>get_dls</code> function makes it clear which normalization is being ap
   <category>deep learning</category>
   <category>spectrogram normalizations</category>
   <guid>https://enzokro.dev/blog/posts/2022-08-20-spec-norms/index.html</guid>
-  <pubDate>Sat, 20 Aug 2022 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 20 Aug 2022 04:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-08-20-spec-norms/violin_spec.png" medium="image" type="image/png" height="81" width="144"/>
 </item>
 </channel>

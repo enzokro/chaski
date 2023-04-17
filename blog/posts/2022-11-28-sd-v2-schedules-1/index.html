@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -225,7 +225,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1 class="title">Stable Diffusion v2 with dynamic Classifier-free Guidance</h1>
   <div class="quarto-categories">
     <div class="quarto-category">diffusion</div>
-    <div class="quarto-category">assifier-free guidance</div>
+    <div class="quarto-category">classifier-free guidance</div>
     <div class="quarto-category">deep learning</div>
   </div>
   </div>
@@ -265,7 +265,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="python-imports" class="level1">
 <h1>Python imports</h1>
 <p>We start with a few python imports.</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Callable, List, Dict</span>
@@ -275,7 +275,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.colors <span class="im">as</span> mcolors</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="cell-output cell-output-stderr">
 <pre><code>2022-11-28 18:22:40.147192: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
@@ -287,7 +287,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <section id="seed-for-reproducibility" class="level2">
 <h2 class="anchored" data-anchor-id="seed-for-reproducibility">Seed for reproducibility</h2>
 <p><code>seed_everything</code> makes sure that the results are reproducible across notebooks.</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set the seed for rng</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>SEED <span class="op">=</span> <span class="dv">4191151944</span> </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> seed_everything(seed: <span class="bu">int</span>) <span class="op">-&gt;</span> torch.Generator:</span>
@@ -308,7 +308,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <h1>Text prompt for image generations</h1>
 <p>Negative prompts appear to be very helpful in <code>v2</code>. At least, more helpful than they were for <code>v1.x</code> models.</p>
 <p>Below, we also borrow a prompt and negative-prompt format that’s going around the Stable Diffusion discord. It seems to be a good starting point as the community figures out the new prompt structures.</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># text prompt for image generations</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"((a peaceful mountainside village in the Andes)), ((by Hayao Miyazaki)), studio lighting, High quality, professional, dramatic, cinematic movie still, very detailed, character art, concept art, focused, subsurface scatter"</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -321,7 +321,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <p>The images will be generated over <span class="math inline">\(30\)</span> diffusion steps. It will be a rather large <code>1024 x 1024</code> output.</p>
 <p>We are using the <code>DPM++ SDE Karras</code> sampler with 30 steps. This sampler seems to be working the best for high-quality outputs at the moment. The <code>2m Karras</code> schedule wins out on speed, however.</p>
 <p>If the image is too large or the generation is too slow on your machine, I’d suggest bumping down to a <code>768 x 768</code> resolution and using the <code>k_dpmpp_2m</code> sampler instead.</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># number of diffusion steps</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>num_steps <span class="op">=</span> <span class="dv">30</span>    </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -349,7 +349,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <section id="gathering-stable-diffusion-models" class="level1">
 <h1>Gathering Stable Diffusion models</h1>
 <p>For now, the <code>k_diffusion</code> integration is only working with the full, <code>768-v</code> model. The plan is to eventually support the base model as well.</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># group the different models to run</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>diffusion_runs <span class="op">=</span> [</span>
@@ -370,7 +370,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <h1>Creating Guidance schedules</h1>
 <p>We create the Guidance schedules with the <code>cf_guidance</code> library.</p>
 <p>However, it seems that our normalizations are broken in v2. This is likely due to the new <code>v-prediction</code> objective. So we avoid normalizations for now, and stick only with the <code>Inverse kDecay</code> schedules.</p>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># helpers to create cosine schedules</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cf_guidance.schedules  <span class="im">import</span> get_cos_sched</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -381,7 +381,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <h3 class="anchored" data-anchor-id="schedule-parameters">Schedule parameters</h3>
 <p>Given how much the prompts have changed in v2, we are back in exploration territory as to what are the best parameters. Exciting times!</p>
 <p>Overall, it seems that the Guidance range is broader in v2. Folks are getting good results with low CFGs (3-5) or with higher values (9+). This is likely highly dependent on both the prompt and negative-prompt. We should know more as the stability.ai team releases their guides and tips.</p>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Default schedule parameters from the blog post</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">######################################</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>baseline_g        <span class="op">=</span> <span class="dv">8</span>    <span class="co"># default, static guidance value</span></span>
@@ -406,7 +406,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co">######################################</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The functions below quickly build different Guidance schedules. They are also re-used from the <a href="https://enzokro.dev/blog/posts/2022-11-26-guidance-expts-8/https://enzokro.dev/blog/posts/2022-11-26-guidance-expts-8/">previous notebooks</a>.</p>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cos_harness(default_params: <span class="bu">dict</span>, new_params: <span class="bu">dict</span>) <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''Creates cosine schedules with updated parameters in `new_params`</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
@@ -445,7 +445,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <section id="static-baselines" class="level2">
 <h2 class="anchored" data-anchor-id="static-baselines">Static baselines</h2>
 <p>First we create the constant, baseline Guidances.</p>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the baseline schedule with the new function</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>baseline_params <span class="op">=</span> {<span class="st">'max_val'</span>: [baseline_g]}</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>baseline_func <span class="op">=</span> <span class="kw">lambda</span> <span class="op">*</span>args, <span class="op">**</span>kwargs: [baseline_g <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_steps)]</span>
@@ -455,7 +455,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <section id="improving-the-baseline-with-scheduled-guidance" class="level2">
 <h2 class="anchored" data-anchor-id="improving-the-baseline-with-scheduled-guidance">Improving the baseline with scheduled Guidance</h2>
 <p>Now we build the most promising dynamic schedule: <code>Inverse kDecay</code> with a fast warmup.</p>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating the inverse kDecay cosine schedules</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>k_decays <span class="op">=</span> [<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.5</span>]</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>inv_k_params <span class="op">=</span> {<span class="st">'k_decay'</span>: k_decays}</span>
@@ -471,7 +471,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>all_k_expts <span class="op">=</span> inv_k_expts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s plot these schedules to see what they look like.</p>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="cell-output cell-output-display">
 <p><img src="index_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
 </div>
@@ -481,7 +481,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <section id="function-to-run-the-experiments" class="level1">
 <h1>Function to run the experiments</h1>
 <p>The code below loads the v2 Stable Diffusion model. It’s also our harness to easily run many, different experiments.</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to load Stable Diffusion pipelines</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> min_diffusion.core <span class="im">import</span> MinimalDiffusion</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># to plot generated images</span></span>
@@ -490,7 +490,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <pre><code>WARNING:jax._src.lib.xla_bridge:No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_sd_model(model_name, device, dtype, revision, model_kwargs<span class="op">=</span>{}):</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''Loads the given `model_name` Stable Diffusion in `dtype` precision.  </span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
@@ -502,7 +502,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    pipeline.load()</span>
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pipeline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run(pipeline, prompt, schedules, gen_kwargs<span class="op">=</span>{},</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>        guide_tfm<span class="op">=</span><span class="va">None</span>, generator<span class="op">=</span><span class="va">None</span>, show_each<span class="op">=</span><span class="va">False</span>, test_run<span class="op">=</span><span class="va">False</span>):</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Runs a dynamic Classifier-free Guidance experiment. </span></span>
@@ -553,7 +553,7 @@ To enable them in other operations, rebuild TensorFlow with the appropriate comp
 <section id="generating-the-images" class="level1">
 <h1>Generating the images</h1>
 <p>We put together all of the pieces above to generate images with Stable Diffusion v2. Both with our static baseline guidances, and the <code>Inverse-kDecay</code> schedules.</p>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># stores the generated images</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>outputs <span class="op">=</span> {}</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -665,7 +665,7 @@ Using Karras sigma schedule</code></pre>
 <p>Here we plot all of the generated images.</p>
 <p>The image on the left is the baseline with a static, constant Guidance.<br>
 The images on the right are the improvements with Guidance scheduling. Specifically, using the <code>Inverse-kDecay</code> cosine schedules with different values of <code>k</code>.</p>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>plot_all_results(<span class="st">'stabilityai/stable-diffusion-2'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="index_files/figure-html/cell-19-output-1.png" class="img-fluid"></p>
