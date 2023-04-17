@@ -10,7 +10,82 @@
 <atom:link href="https://enzokro.dev/index.xml" rel="self" type="application/rss+xml"/>
 <description>Enzo&#39;s personal Blog.</description>
 <generator>quarto-1.2.475</generator>
-<lastBuildDate>Mon, 28 Nov 2022 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 17 Apr 2023 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Tips for LLM prompts</title>
+  <dc:creator>enzokro</dc:creator>
+  <link>https://enzokro.dev/blog/posts/2023-04-17-llm-prompt-tips/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<blockquote class="blockquote">
+<p>General tips to get better outputs from ChatGPT.</p>
+</blockquote>
+<p># Tips and tricks for ChatGPT Prompts</p>
+<p>This post is a recap of openai’s suggestions (as of writing) for improving ChatGPT’s outputs.</p>
+<p>There are many teams actively working on improving and deploying new LLMs with useful (powerful) abilities. Their work has produced several papers that show different ways of improving an LLM’s output.</p>
+<p>The official openAI documentation has the full details and discussion of a few key papers.</p>
+<p>However, we can also extract a broad set of suggestions based on what the different proposed improvements share in common.</p>
+<section id="improving-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="improving-outputs">Improving outputs</h2>
+<ul>
+<li>Split large, complex tasks into subtasks
+<ul>
+<li>Structure and isolate the instructions of each subtask</li>
+</ul></li>
+<li>Prompt the model to explain its reasoning(s) before answering</li>
+<li>If the output was bad, try making the instructions clearer
+<ul>
+<li>Start with simple and direct language</li>
+<li>Can get more complex as the conversation and context grow</li>
+</ul></li>
+<li>Have the model generate many answers, then ask it to distill them into a single, best answer</li>
+<li>If possible, Fine-tune custom models to maximize performance</li>
+</ul>
+</section>
+<section id="generic-tips" class="level2">
+<h2 class="anchored" data-anchor-id="generic-tips">Generic tips</h2>
+<ul>
+<li>Explicitly guide the model through the thought process
+<ul>
+<li>Helps it stay focused on sub-tasks and subprocesses</li>
+</ul></li>
+<li>“Let’s think step by step…”
+<ul>
+<li>Works best on logical, mathematical, and reasoning tasks</li>
+<li>Possible leverage for other tasks by breaking them down into “logical” steps</li>
+</ul></li>
+<li>Give the model a few examples of the task you want (Few-Shot)</li>
+<li>Split a question into two types of prompts and alternate between the two
+<ul>
+<li>Selection prompt -&gt; find the relevant pieces of into</li>
+<li>Inference prompt -&gt; use the relevant pieces to generate the answer</li>
+<li>Halter prompt -&gt; figure out when the alternating should halt, if possible add a value function to evaluate different prompts</li>
+</ul></li>
+<li>Reduce hallucinations by constraining what the model can say</li>
+</ul>
+</section>
+<section id="api-tips" class="level2">
+<h2 class="anchored" data-anchor-id="api-tips">API Tips</h2>
+<ul>
+<li>Give the model an identity that behaves in a certain way with an explicit intent</li>
+<li>Ask to model to answer from the perspective of an expert</li>
+<li>Try restating the original “system” message to keep the model on-task.</li>
+<li>If the model is getting off-track, try reminding it of the instruction and context at the end of the prompt</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>diffusion</category>
+  <category>classifier-free guidance</category>
+  <category>deep learning</category>
+  <guid>https://enzokro.dev/blog/posts/2023-04-17-llm-prompt-tips/index.html</guid>
+  <pubDate>Mon, 17 Apr 2023 04:00:00 GMT</pubDate>
+  <media:content url="https://enzokro.dev/blog/posts/2023-04-17-llm-prompt-tips/better_village.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>Stable Diffusion v2 with dynamic Classifier-free Guidance</title>
   <dc:creator>enzokro</dc:creator>

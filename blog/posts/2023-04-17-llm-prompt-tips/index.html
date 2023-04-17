@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="enzokro">
+<meta name="dcterms.date" content="2023-04-17">
 
-<title>chaski – index</title>
+<title>chaski - Tips for LLM prompts</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,69 +22,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -124,6 +63,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 <link rel="stylesheet" href="../../../styles.css">
+<meta property="og:title" content="chaski - Tips for LLM prompts">
+<meta property="og:description" content="# Tips and tricks for ChatGPT Prompts">
+<meta property="og:image" content="https://enzokro.dev/blog/posts/2023-04-17-llm-prompt-tips/better_village.png">
+<meta property="og:site-name" content="chaski">
+<meta name="twitter:title" content="chaski - Tips for LLM prompts">
+<meta name="twitter:description" content="# Tips and tricks for ChatGPT Prompts">
+<meta name="twitter:image" content="https://enzokro.dev/blog/posts/2023-04-17-llm-prompt-tips/better_village.png">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-fixed">
@@ -170,27 +117,111 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#improving-outputs" id="toc-improving-outputs" class="nav-link active" data-scroll-target="#improving-outputs">Improving outputs</a></li>
+  <li><a href="#generic-tips" id="toc-generic-tips" class="nav-link" data-scroll-target="#generic-tips">Generic tips</a></li>
+  <li><a href="#api-tips" id="toc-api-tips" class="nav-link" data-scroll-target="#api-tips">API Tips</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Tips for LLM prompts</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">diffusion</div>
+    <div class="quarto-category">classifier-free guidance</div>
+    <div class="quarto-category">deep learning</div>
+  </div>
+  </div>
 
 
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>title: <span class="st">"Tips for LLM prompts"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>author: <span class="st">"enzokro"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>date: <span class="st">"04/17/2023"</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>toc: true </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>badges: true</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>categories: [diffusion, classifier<span class="op">-</span>free guidance, deep learning]</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>image: better_village.png</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>jupyter: python3</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="op">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>enzokro </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 17, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<blockquote class="blockquote">
+<p>General tips to get better outputs from ChatGPT.</p>
+</blockquote>
+<p># Tips and tricks for ChatGPT Prompts</p>
+<p>This post is a recap of openai’s suggestions (as of writing) for improving ChatGPT’s outputs.</p>
+<p>There are many teams actively working on improving and deploying new LLMs with useful (powerful) abilities. Their work has produced several papers that show different ways of improving an LLM’s output.</p>
+<p>The official openAI documentation has the full details and discussion of a few key papers.</p>
+<p>However, we can also extract a broad set of suggestions based on what the different proposed improvements share in common.</p>
+<section id="improving-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="improving-outputs">Improving outputs</h2>
+<ul>
+<li>Split large, complex tasks into subtasks
+<ul>
+<li>Structure and isolate the instructions of each subtask</li>
+</ul></li>
+<li>Prompt the model to explain its reasoning(s) before answering</li>
+<li>If the output was bad, try making the instructions clearer
+<ul>
+<li>Start with simple and direct language</li>
+<li>Can get more complex as the conversation and context grow</li>
+</ul></li>
+<li>Have the model generate many answers, then ask it to distill them into a single, best answer</li>
+<li>If possible, Fine-tune custom models to maximize performance</li>
+</ul>
+</section>
+<section id="generic-tips" class="level2">
+<h2 class="anchored" data-anchor-id="generic-tips">Generic tips</h2>
+<ul>
+<li>Explicitly guide the model through the thought process
+<ul>
+<li>Helps it stay focused on sub-tasks and subprocesses</li>
+</ul></li>
+<li>“Let’s think step by step…”
+<ul>
+<li>Works best on logical, mathematical, and reasoning tasks</li>
+<li>Possible leverage for other tasks by breaking them down into “logical” steps</li>
+</ul></li>
+<li>Give the model a few examples of the task you want (Few-Shot)</li>
+<li>Split a question into two types of prompts and alternate between the two
+<ul>
+<li>Selection prompt -&gt; find the relevant pieces of into</li>
+<li>Inference prompt -&gt; use the relevant pieces to generate the answer</li>
+<li>Halter prompt -&gt; figure out when the alternating should halt, if possible add a value function to evaluate different prompts</li>
+</ul></li>
+<li>Reduce hallucinations by constraining what the model can say</li>
+</ul>
+</section>
+<section id="api-tips" class="level2">
+<h2 class="anchored" data-anchor-id="api-tips">API Tips</h2>
+<ul>
+<li>Give the model an identity that behaves in a certain way with an explicit intent</li>
+<li>Ask to model to answer from the perspective of an expert</li>
+<li>Try restating the original “system” message to keep the model on-task.</li>
+<li>If the model is getting off-track, try reminding it of the instruction and context at the end of the prompt</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
