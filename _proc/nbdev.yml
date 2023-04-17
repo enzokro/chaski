@@ -1,9 +1,0 @@
-project:
-  output-dir: _docs
-
-website:
-  title: "chaski"
-  site-url: "https://enzokro.github.io/chaski"
-  description: "blog"
-  repo-branch: master
-  repo-url: "https://github.com/enzokro/chaski"
