@@ -25,8 +25,8 @@
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
 <p>This post recaps OpenAI’s suggestions (as of writing) for improving the outputs of ChatGPT.</p>
-<p>These suggestions are based on different papers that have explored how to improve an LLM’s output. There is a big variety of teams working in this area with a matching variety of proposed improvements.</p>
-<p>However, we can also extract a broad set of suggestions based on what the different improvements have in common.</p>
+<p>These suggestions are based on different papers that explor how to improve an LLM’s output. There is a big variety of teams working in this area with a matching variety of proposed improvements.</p>
+<p>Thankfully, we can also extract a broad group of suggestions based on what the different improvements share in common.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -41,7 +41,7 @@ Note
 </div>
 </div>
 <p># Tips and tricks for ChatGPT Prompts</p>
-<p>The following lists are high-level suggestions for getting better results from ChatGPT. It is meant to be a quick reference we can scan for good habits and practices before jumping into an LLM dialogue.</p>
+<p>The following lists are high-level suggestions for getting better results from ChatGPT. It is meant as a quick reference we can scan for good habits and practices before jumping into an LLM dialogue.</p>
 <p>I hope it is helpful for others, and suggestions/improvements are always welcome!</p>
 <section id="improving-outputs" class="level2">
 <h2 class="anchored" data-anchor-id="improving-outputs">Improving outputs</h2>
