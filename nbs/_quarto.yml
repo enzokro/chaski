@@ -9,14 +9,14 @@ project:
 
 format:
   html:
-    theme: flatly
+    theme: litera
     css: styles.css
     toc: true
     toc-depth: 4
 
 website:
   title: "chaski"
-  description: "Enzo's personal Blog."
+  description: "Enzo's site."
   site-url: "https://enzokro.dev"
   repo-branch: master
   repo-url: "https://github.com/enzokro/chaski"

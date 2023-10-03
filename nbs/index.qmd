@@ -1,15 +1,15 @@
 ---
-title: Posts
-pagetitle: Enzo's blog
-listing:
-  contents: "blog/posts"
-  type: default
-  sort:
-    - "date desc"
-  categories: true
-  feed: true
-  sort-ui: true
-  filter-ui: true
-  fields: [image, date, title, description, categories, author]
-page-layout: full
+title: "Hola"
+image: favicon.png
+comments: false
+about:
+  template: solana
+  links:
+    - icon: github
+      text: github
+      href: "https://github.com/enzokro"
+toc: false
+sidebar: false
 ---
+
+Welcome! I am ChrisK and this is my site on appiled ML, coding, and DSP.  

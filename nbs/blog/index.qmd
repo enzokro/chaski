@@ -1,0 +1,14 @@
+---
+pagetitle: chaski blog
+listing:
+  contents: "posts"
+  type: default
+  sort:
+    - "date desc"
+  categories: true
+  feed: true
+  sort-ui: true
+  filter-ui: true
+  fields: [image, date, title, description, categories, author]
+page-layout: full
+---
