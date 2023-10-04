@@ -167,8 +167,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#goals" id="toc-goals" class="nav-link active" data-scroll-target="#goals">Goals:</a></li>
-  <li><a href="#intro" id="toc-intro" class="nav-link" data-scroll-target="#intro">Intro:</a>
+  <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro">Intro</a>
   <ul class="collapse">
   <li><a href="#literate-programming" id="toc-literate-programming" class="nav-link" data-scroll-target="#literate-programming">Literate Programming</a></li>
   <li><a href="#exploratory-programming" id="toc-exploratory-programming" class="nav-link" data-scroll-target="#exploratory-programming">Exploratory Programming</a></li>
@@ -176,7 +175,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#turning-notebooks-into-blog-posts" id="toc-turning-notebooks-into-blog-posts" class="nav-link" data-scroll-target="#turning-notebooks-into-blog-posts">Turning Notebooks into Blog Posts</a>
   <ul class="collapse">
-  <li><a href="#high-level-steps" id="toc-high-level-steps" class="nav-link" data-scroll-target="#high-level-steps">High-Level Steps:</a></li>
   <li><a href="#creating-a-new-nbdev-project" id="toc-creating-a-new-nbdev-project" class="nav-link" data-scroll-target="#creating-a-new-nbdev-project">Creating a new <code>nbdev</code> project</a></li>
   <li><a href="#adding-quarto-to-the-mix" id="toc-adding-quarto-to-the-mix" class="nav-link" data-scroll-target="#adding-quarto-to-the-mix">Adding Quarto to the Mix</a></li>
   </ul></li>
@@ -224,23 +222,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="goals" class="level2">
-<h2 class="anchored" data-anchor-id="goals">Goals:</h2>
 <blockquote class="blockquote">
 <p>This notebook creates and publishes a blog using <code>nbdev</code> and the Quarto publishing platform.</p>
 </blockquote>
-</section>
-<section id="intro" class="level2">
-<h2 class="anchored" data-anchor-id="intro">Intro:</h2>
-<p><a href="https://nbdev.fast.ai/"><code>nbdev</code></a> is a powerful tool inspired by two main ideas in the world of programming:<br>
-- <a href="https://en.wikipedia.org/wiki/Literate_programming">Literate Programming</a>.<br>
-- <a href="https://en.wikipedia.org/wiki/Exploratory_programming">Exploratory Programming</a>.</p>
-<p>The next section goes over these ideas briefly and what makes their combination so powerful.</p>
+<section id="intro" class="level1">
+<h1>Intro</h1>
+<p><a href="https://nbdev.fast.ai/"><code>nbdev</code></a> is a powerful tool inspired by two paradigms in the coding world:<br>
+- <a href="https://en.wikipedia.org/wiki/Literate_programming">Literate Programming</a><br>
+- <a href="https://en.wikipedia.org/wiki/Exploratory_programming">Exploratory Programming</a></p>
+<p>Next we briefly cover these ideas and why their combination is so powerful.</p>
 <section id="literate-programming" class="level3">
 <h3 class="anchored" data-anchor-id="literate-programming">Literate Programming</h3>
-<p>In Literate Programming, a project’s notes and descriptions are woven directly into its source code. This is different from most software libraries, where documentation exists in a separate set of files.</p>
-<p>Code and documentation are first-class citizens in Literate Programming. And it doesn’t stop there: tests are also integral to the approach. In <code>nbdev</code> a Notebook is the single source of truth for all three artifacts: code, docs, tests. Instead of having to independently manage three sets of files, everything happens in the Notebook. And if the Notebook runs then you know your code will run.</p>
-<p>This strong loop between what you’re doing (<em>code</em>), describing what you’re doing (<em>documentation</em>), and making sure it’s correct (<em>tests</em>) is a great approach to research.</p>
+<p>In Literate Programming, notes and tests are woven directly into a project’s source code. This is very different from when documentation exists in some outside set of files. In other words: code, documentation, and tests are all first-class citizens in Literate Programming. Each piece is crucial in the overall approach and makes for better, more readable code.</p>
+<p>In <code>nbdev</code> a Jupyter Notebook is the single source of truth for code, documentation, and tests. Instead of independently managing three sets of files, everything is defined and happens in the Notebook. If the Notebook runs, then you know your code will run.</p>
+<p>So, why is this helpful? Here’s a fun analogy: your Notebooks are the modern, computerized version of field journals. Below are some inspirational examples from <a href="https://www.wired.com/2011/07/science-field-notes-gallery/">this Wired article</a> about what science, at its best, can both be and look like:</p>
+<p><img src="field-notes-butterflies.jpg" class="img-fluid"></p>
+<p><img src="field-notes-grinnell.jpg" class="img-fluid"></p>
+<p><img src="field-notes-geology2.jpg" class="img-fluid"></p>
+<p><img src="field-notes-lynx.jpg" class="img-fluid"></p>
+<p>Let’s focus on the last example: the field notes about a lynx. Notice that we’re not only reading text descriptions of what a Lynx <em>supposedly</em> looks like. But we’re not looking at a series of pictures without any context either. We’re getting the best of both worlds: short and relevant descriptions right next to clear, working examples. The gap between the written, theoretical and the actual, practical is bridged.</p>
+<p>Notebooks can do for our code what the field notes above did for the lynx. We can interactively show people the data, describe what’s being done, and make sure that the results are correct. We can even show our mistakes and struggles along the way. This strong loop between what you’re doing (<em>code</em>), describing what you’re doing (<em>documentation</em>), and making sure it’s correct (<em>tests</em>) is a great approach to research. Beyond that, it is an incredibly powerful way to communicate and share ideas.</p>
 </section>
 <section id="exploratory-programming" class="level3">
 <h3 class="anchored" data-anchor-id="exploratory-programming">Exploratory Programming</h3>
@@ -254,21 +255,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Next: creating and publishing a blog post with <code>nbdev</code>.</p>
 </section>
 </section>
-<section id="turning-notebooks-into-blog-posts" class="level2">
-<h2 class="anchored" data-anchor-id="turning-notebooks-into-blog-posts">Turning Notebooks into Blog Posts</h2>
+<section id="turning-notebooks-into-blog-posts" class="level1">
+<h1>Turning Notebooks into Blog Posts</h1>
 <p>First, a high-level summary of how we will publish and create a blog with <code>nbdev</code>.</p>
-<section id="high-level-steps" class="level3">
-<h3 class="anchored" data-anchor-id="high-level-steps">High-Level Steps:</h3>
-<ol type="1">
-<li>Create a new <code>nbdev</code> project.<br>
-</li>
-<li>Build a publishable blog inside the project.<br>
-</li>
-<li>Build and publish the blog to Github Pages.</li>
-</ol>
+<p><strong>High-Level Steps</strong><br>
+1. Create a new <code>nbdev</code> project.<br>
+2. Build a publishable blog inside the project.<br>
+3. Build and publish the blog to Github Pages.</p>
 <p><code>nbdev</code> uses a framework called <a href="https://quarto.org/">Quarto</a> to publish blogs. Quarto is designed for technical or scientific articles and posts. In a way it’s a blogging platform for Literate Programming, where a series of code and comments take the reader on a journey.</p>
 <p><img src="quarto.png" class="img-fluid"></p>
-</section>
 <section id="creating-a-new-nbdev-project" class="level3">
 <h3 class="anchored" data-anchor-id="creating-a-new-nbdev-project">Creating a new <code>nbdev</code> project</h3>
 <p><code>nbdev</code> works on top of a Git repo, so the first step is creating a new, empty repository. There is a <a href="https://github.com/new">handy Github link</a> that takes us straight to the page for creating new repos.</p>
@@ -345,7 +340,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Next, run the <code>quarto publish</code> command to build and publish the blog.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># publish the blog on github pages</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> publish</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>And there we go! <a href="https://enzokro.github.io/sample_blog_2/blog/posts/2023-09-27-Blog-Intro/">Click here</a> for a live link to this Notebook as a blog post. The first task is now complete. On to the next one.</p>
+<p>And there we go! We’ve create and published our first blog post using <code>nbdev</code>. <a href="https://enzokro.dev/blog/posts/2023-09-27-Session_1_nbdev/">Click here</a> for a live link to this Notebook as a blog post.</p>
 </section>
 </section>
 </section>
