@@ -4,7 +4,7 @@
     "href": "blog/posts/2023-09-27-Session_1_nbdev/index.html",
     "title": "Blogging with Quarto and nbdev",
     "section": "",
-    "text": "This notebook creates a blog using nbdev and the Quarto publishing platform."
+    "text": "Building a personal blog with nbdev and publishing it with Quarto."
   },
   {
     "objectID": "blog/posts/2023-09-27-Session_1_nbdev/index.html#references",

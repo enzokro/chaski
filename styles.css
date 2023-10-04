@@ -62,3 +62,33 @@ blockquote > pre {
 /* h1:not(.title){
   background-image: linear-gradient(120deg, lightblue, rgb(41, 41, 239));
 } */
+
+/* Resetting list styles */
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style-position: outside;
+}
+
+/* Styling unordered lists */
+ul {
+  margin-left: 1em; /* Adjust the left margin */
+}
+
+ul li {
+  margin-bottom: 0.4em; /* Adjust spacing between bullets */
+}
+
+/* Styling ordered lists */
+ol {
+  margin-left: 1em; /* Adjust the left margin */
+}
+
+ol li {
+  margin-bottom: 0.4em; /* Adjust spacing between bullets */
+}
+
+/* Styling nested lists */
+ul ul, ul ol, ol ul, ol ol {
+  margin-left: 1em; /* Adjust the left margin for nested lists */
+}

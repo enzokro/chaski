@@ -223,85 +223,88 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <blockquote class="blockquote">
-<p>This notebook creates a blog using <code>nbdev</code> and the Quarto publishing platform.</p>
+<p>Building a personal blog with nbdev and publishing it with Quarto.</p>
 </blockquote>
 <section id="intro" class="level1">
 <h1>Intro</h1>
-<p><a href="https://nbdev.fast.ai/"><code>nbdev</code></a> is a powerful tool inspired by two paradigms in the coding world:<br>
+<p><a href="https://nbdev.fast.ai/"><code>nbdev</code></a> is a powerful tool for creating python modules. It is based on writing code, documentation, and tests directly in an interactive Jupyter Notebook. This notebook-driven development has all of the tools needed to support a full, proper software library.</p>
+<p><code>nbdev</code> is inspired by two paradigms in the coding world:<br>
 - <a href="https://en.wikipedia.org/wiki/Literate_programming">Literate Programming</a><br>
 - <a href="https://en.wikipedia.org/wiki/Exploratory_programming">Exploratory Programming</a></p>
-<p>Next let’s go over these ideas and why their combination is so powerful.</p>
+<p>Let’s go over these two ideas and why their combination is so powerful.</p>
 <section id="literate-programming" class="level3">
 <h3 class="anchored" data-anchor-id="literate-programming">Literate Programming</h3>
-<p>The original idea was proposed by Donald Knuth in 1984. In Literate Programming, notes and tests are woven directly into a project’s source code. This is very different from documentation that exists separately in some outside set of files. Code, documentation, and tests are all first-class citizens in Literate Programming. Each piece is crucial to the overall approach and makes for better, more readable code.</p>
+<p>The original idea was proposed by <a href="https://en.wikipedia.org/wiki/Donald_Knuth">Donald Knuth</a> in 1984. In Literate Programming, notes and tests are woven directly into a project’s source code. Each piece is crucial to the overall approach and makes for better, more readable code. The code, documentation, and tests are all first-class citizens in Literate Programming. This is very different from the usual software approach where tests and documentation live in a separate set of files.</p>
 <p>In <code>nbdev</code>, a Jupyter Notebook is the single source of truth for code, documentation, and tests. Instead of managing three independent groups of files, everything is defined and happens in the Notebook. If the Notebook runs, then you know your code will run.</p>
-<p>So, why is this useful? A fun analogy might help: Notebooks are the modern, digital version of field journals. Here are some inspirational samples from <a href="https://www.wired.com/2011/07/science-field-notes-gallery/">this Wired article</a> about what science, at its best, can be:</p>
+<p>So, why is this helpful? A fun analogy might help: Notebooks are the modern, digital version of field journals. The inspirational samples below from <a href="https://www.wired.com/2011/07/science-field-notes-gallery/">this Wired article</a> show what science, at its best, can be:</p>
 <p><img src="field-notes-butterflies.jpg" class="img-fluid"></p>
 <p><img src="field-notes-grinnell.jpg" class="img-fluid"></p>
 <p><img src="field-notes-lynx.jpg" class="img-fluid"></p>
-<p>Let’s focus on the last example: the field notes about a lynx. Notice that we’re not only reading long descriptions of what a Lynx is <em>supposed</em> to look like. And we’re not looking at a series of pictures with no context either. We’re getting the best of both worlds: short and relevant descriptions right next to clear, working examples. Field notes bridge the gap between the written, theoretical and the actual, practical.</p>
+<p>Let’s focus on the last example: the field notes about a lynx. Notice that we’re not reading a long description of what a Lynx is <em>supposed</em> to look like. And we’re not looking at a series of pictures with no context either. We’re getting the best of both worlds: short and relevant descriptions right next to clear, working examples. Field notes bridge the gap between the written, theoretical and the actual, practical.</p>
 <p>Notebooks can do for code what the field notes above did for the lynx. We can interactively show people the data, describe what’s being done, and make sure that the results are correct. We can even show any mistakes and struggles along the way. This tight loop between what you’re doing (<em>code</em>), describing what you’re doing (<em>documentation</em>), and making sure it’s correct (<em>tests</em>) is a great way to approach research. More than that, it is an incredibly powerful way to communicate and share ideas.</p>
 </section>
 <section id="exploratory-programming" class="level3">
 <h3 class="anchored" data-anchor-id="exploratory-programming">Exploratory Programming</h3>
-<p>Exploratory Programming is an open-ended approach for tackling new problems and unknown domains. It’s very helpful at the start of a project when scope or requirements are still being finalized.</p>
+<p>Exploratory Programming is an open-ended approach for tackling new problems and unknown domains. It’s very useful at the start of a project when details are still being finalized. And it can also bring out different angles to a known, established approach by showing it under a new light.</p>
 <p>Notebooks are both dynamic and interactive which makes them perfect for Exploratory Programming. They make the barrier for trying new things extremely low. And they’re downright fun!</p>
-<p>The video embedded below is an incredible talk by Bret Victor about the power of Exploratory Programming, with stunning examples throughout:</p>
+<p>The video below is an incredible talk by Bret Victor about the power of Exploratory Programming, with stunning examples throughout to drive the point home:</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/PUv66718DII?si=rPbY3LL6kQw-4yUa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
 </iframe>
 </section>
 <section id="combining-literate-and-exploratory-programming" class="level3">
 <h3 class="anchored" data-anchor-id="combining-literate-and-exploratory-programming">Combining Literate and Exploratory Programming</h3>
-<p><code>nbdev</code>’s workflow combines these two ideas. It’s great for interactively learning about and exploring how something works. Iterations are fast and cheap so it’s easy to follow any hit of curiosity. We can also develop and test code in a much more dynamic way than usual.</p>
-<p>These ideas can be measured on the fly. For example at the start of a project, while figuring out the problem space, we could lean Exploratory. Then, as the idea matures, we pivot to Literate in order to refine and crystallize our approach.</p>
+<p><code>nbdev</code> combines these two ideas in its workflow. We can interactively learn about and explore how something works. Iterations are fast and cheap so it’s easy to follow any hit of curiosity. And we can now develop and test code in a much more dynamic way than usual.</p>
+<p>These ideas can be doled out on the fly. For example, at the start of a project we could lean Exploratory to map out the problem space. Then, as the idea matures, we can pivot to Literate to refine and crystallize our approach.</p>
 <p>And if anything breaks, we can always restart the Notebook and try again.</p>
+<p>Next let’s look at how <code>nbdev</code> can turn Notebooks into blog posts.</p>
 </section>
 </section>
 <section id="turning-notebooks-into-blog-posts" class="level1">
 <h1>Turning Notebooks into Blog Posts</h1>
-<p>First, a high-level summary of how the <code>nbdev</code> blog will be created and published:</p>
+<p>First, a high-level look at the steps to create and publish a blog:</p>
 <p><strong>High-Level Steps</strong><br>
 1. Make a new <code>nbdev</code> project.<br>
 2. Create a blog inside the project.<br>
-3. Publish the blog to Github Pages.</p>
-<p><code>nbdev</code> uses a framework called <a href="https://quarto.org/">Quarto</a> to publish blogs. Quarto is designed for technical or scientific articles and posts. In a way it’s a blogging platform for Literate Programming, where a series of code and comments take the reader on a journey.</p>
+3. Host the blog on Github Pages.</p>
+<p><code>nbdev</code> uses the <a href="https://quarto.org/">Quarto framework</a> to publish blogs. Quarto is tailored for writing beautiful articles on technical or scientific topics. In a way it’s a blogging platform for Literate Programming, where a series of code and comments take the reader on a journey.</p>
 <p><img src="quarto.png" class="img-fluid"></p>
 <section id="creating-a-new-nbdev-project" class="level3">
 <h3 class="anchored" data-anchor-id="creating-a-new-nbdev-project">Creating a new <code>nbdev</code> project</h3>
-<p><code>nbdev</code> works on top of a Git repo, so the first step is creating a new, empty repository. There is a <a href="https://github.com/new">handy Github link</a> that takes us straight to the page for creating new repos.</p>
+<p><code>nbdev</code> works on top of a Git repo. That means our first step is creating a new, empty repository. Here is a <a href="https://github.com/new">handy Github link</a> that takes us straight to the page for creating new repos.</p>
 <blockquote class="blockquote">
 <p>Note: We need a completely empty repo. Don’t include a <code>.gitignore</code> or <code>README.md</code>.</p>
 </blockquote>
-<p>In this example the empty repo is called <code>sample_blog</code>, but feel free to call it anything you’d like. We’re not tied to this name either. We can always create new repos with different, better names.</p>
-<p>Clone the empty new repo to your computer. Make sure to change the github link below so it points to your repo instead.</p>
+<p>In this example the empty repo is called <code>sample_blog</code>, but feel free to call it anything you’d like. We’re not tied to this name. We can always make new repos with different, better names.</p>
+<p>Clone the new, empty repo to your computer. Make sure to change the github link below so it points to your repo instead.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clone the repo to your computer</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/enzokro/sample_blog.git <span class="co"># &lt;-- ! link with your repo here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Now we can move into this repo and work <code>nbdev</code>’s initialization magic. Run the <code>nbdev_new</code> command to start. You will be prompted for some general info, like a short description about the project.</p>
+<p>Now we can move into this repo and let <code>nbdev</code> work its initialization magic. Run the <code>nbdev_new</code> command to get started. The command will prompt you for some general info, like a short description about the project.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># move into the new repo and initialize the nbdev project</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> sample_blog/</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">nbdev_new</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <blockquote class="blockquote">
 <p>Note: All of the options and configs for the project are in the <code>settings.ini</code> file. <code>nbdev</code> looks in this file when it needs any information for its commands.</p>
 </blockquote>
-<p>After <code>nbdev_new</code> finishes, you will have a brand new <code>nbdev</code> project!</p>
+<p>After <code>nbdev_new</code> finishes, we will have a brand new <code>nbdev</code> project!</p>
 <p>Run a <code>git status</code> command to see everything that was added. Then we commit and push these changes to Github.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add, commit, and push the files created by nbdev</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span><span class="st">'Initial nbdev project creation'</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>As mentioned earlier, <code>nbdev</code> publishes notebooks using Quarto. Let’s take a look at how to turn this project into a full Quarto blog.</p>
+<p>As mentioned earlier, <code>nbdev</code> publishes notebooks using Quarto. Let’s now take a look at how to turn this project into a full Quarto blog.</p>
 </section>
 <section id="adding-quarto-to-the-mix" class="level3">
 <h3 class="anchored" data-anchor-id="adding-quarto-to-the-mix">Adding Quarto to the Mix</h3>
-<p>Start by activating the virtual environment:</p>
+<p>Start by activating the virtual environment from the previous <a href="link_tbd">Environment Setup Notebook</a>:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># activate the environment</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate llm_base</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>nbdev</code> comes with a way to install Quarto by running the <code>nbdev_install_quarto</code> command. Note that the command will ask for admin privileges.</p>
+<p><code>nbdev</code> comes with a built-in command to install quarto: <code>nbdev_install_quarto</code>. Note that the command will ask for admin privileges.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install quarto</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nbdev_install_quarto</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You may need to refresh the terminal before it can find the new <code>quarto</code> binary. To be safe, open up a new terminal and re-activate the environment. Now the command below will check if Quarto was installed right.</p>
+<p>You may need to refresh the terminal before it can see the newly installed <code>quarto</code> binary. To be safe, open up a new terminal and re-activate the environment. Then the command below will check if Quarto was installed successfully.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># shows us where quarto was installed</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span> quarto </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now that Quarto is installed, let’s turn our fresh nbdev project into an actual blog.</p>
 <section id="turn-an-nbdev-project-into-a-quarto-blog" class="level4">
 <h4 class="anchored" data-anchor-id="turn-an-nbdev-project-into-a-quarto-blog">Turn an <code>nbdev</code> project into a Quarto blog</h4>
 <p>In an <code>nbdev</code> project the Notebooks usually live inside the <code>nbs/</code> folder. These Notebooks eventually become a project’s code source, tests, and documentation.</p>
