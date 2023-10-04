@@ -1,6 +1,6 @@
 [
   {
-    "listing": "/index.html",
+    "listing": "/blog/index.html",
     "items": [
       "/blog/posts/2023-04-17-llm-prompt-tips/index.html",
       "/blog/posts/2022-11-28-sd-v2-schedules-1/index.html",
@@ -15,6 +15,7 @@
       "/blog/posts/2022-11-16-pytorch-slerp/index.html",
       "/blog/posts/2022-11-15-guidance-expts-1/index.html",
       "/blog/posts/2022-11-08-merge-n-BSTs/index.html",
+      "/blog/posts/2023-09-27-Session_1_nbdev/index.html",
       "/blog/posts/2022-09-01-rayleigh-init/index.html",
       "/blog/posts/2022-08-20-spec-norms/index.html"
     ]

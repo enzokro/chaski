@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.475">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,9 +19,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -48,43 +49,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -120,7 +91,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
@@ -128,17 +100,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../../styles.css">
 <meta property="og:title" content="chaski - Classifier-free Guidance with Cosine Schedules Pt. 7">
-<meta property="og:description" content="This notebook is Part 7 in a series on dynamic Classifier-free Guidance.">
+<meta property="og:description" content="">
 <meta property="og:image" content="https://enzokro.dev/blog/posts/2022-11-26-guidance-expts-8/better_inca.png">
 <meta property="og:site-name" content="chaski">
 <meta property="og:image:height" content="970">
 <meta property="og:image:width" content="778">
 <meta name="twitter:title" content="chaski - Classifier-free Guidance with Cosine Schedules Pt. 7">
-<meta name="twitter:description" content="This notebook is Part 7 in a series on dynamic Classifier-free Guidance.">
+<meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://enzokro.dev/blog/posts/2022-11-26-guidance-expts-8/better_inca.png">
 <meta name="twitter:image-height" content="970">
 <meta name="twitter:image-width" content="778">
@@ -156,30 +129,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <span class="navbar-title">chaski</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../about.html"><i class="bi bi-person-circle" role="img">
+    <a class="nav-link" href="../../../about.html" rel="" target=""><i class="bi bi-person-circle" role="img">
 </i> 
  <span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/enzokro_"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/enzokro_" rel="" target=""><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/enzokro"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/enzokro" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -680,274 +655,218 @@ Using prompt: digital painting of masked incan warrior, by filipe pagliuso and j
 Using the improved VAE "ema" from stabiliy.ai
 Enabling default unet attention slicing.
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.GuidanceTfm'&gt;
-Running experiment [1 of 1]: Param: "max_val", val=7.5...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"4a9142f211424c79a440f2e12fe45cfa","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.
+Running experiment [1 of 1]: Param: "max_val", val=7.5...
+Done.
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.BaseNormGuidance'&gt;
-Running experiment [1 of 2]: Param: "max_val", val=7.5...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"9379b0df06254c789c597ac387fb2c74","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"000baf204e11420ebea30260d1640f52","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.
+Running experiment [1 of 2]: Param: "max_val", val=7.5...
+Running experiment [2 of 2]: Param: "k_decay", val=0.15...
+Done.
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.TNormGuidance'&gt;
-Running experiment [1 of 2]: Param: "max_val", val=0.15...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"9470fbd356cf473aae4bb665ce5e55c2","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"80adc7694bfc4d808f11a1879cff77b0","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.
+Running experiment [1 of 2]: Param: "max_val", val=0.15...
+Running experiment [2 of 2]: Param: "k_decay", val=0.15...
+Done.
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.FullNormGuidance'&gt;
-Running experiment [1 of 2]: Param: "max_val", val=0.15...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"5bca02d3f8b44635ab2e4c0b43aa4a16","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"7bafd7b3356d4bca9bfa7e4425ef8eca","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.
+Running experiment [1 of 2]: Param: "max_val", val=0.15...
+Running experiment [2 of 2]: Param: "k_decay", val=0.15...
+Done.
 Running model: {'model_name': 'runwayml/stable-diffusion-v1-5', 'model_kwargs': {'better_vae': 'ema'}}
 Generation kwargs: {'height': 640, 'width': 512}
 Using prompt: digital painting of masked incan warrior, by filipe pagliuso and justin gerard, symmetric, fantasy, highly detailed, realistic, intricate, portrait, sharp focus, tarot card, face, handsome, peruvian, ax
 Using the improved VAE "ema" from stabiliy.ai
 Enabling default unet attention slicing.
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.GuidanceTfm'&gt;
-Running experiment [1 of 1]: Param: "max_val", val=7.5...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"c75199cb409a4ef08f8f24a866c5136c","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.
+Running experiment [1 of 1]: Param: "max_val", val=7.5...
+Done.
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.BaseNormGuidance'&gt;
-Running experiment [1 of 2]: Param: "max_val", val=7.5...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"849d17482fc647508e6b05fcc389ae0b","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"0529b79d3c784a11b9a521fef3d437cd","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.
+Running experiment [1 of 2]: Param: "max_val", val=7.5...
+Running experiment [2 of 2]: Param: "k_decay", val=0.15...
+Done.
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.TNormGuidance'&gt;
-Running experiment [1 of 2]: Param: "max_val", val=0.15...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"ae96fb6b16f545daa26f1531a41c5809","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"40274847e1794624b465bf327cd603be","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.
+Running experiment [1 of 2]: Param: "max_val", val=0.15...
+Running experiment [2 of 2]: Param: "k_decay", val=0.15...
+Done.
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.FullNormGuidance'&gt;
-Running experiment [1 of 2]: Param: "max_val", val=0.15...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"00d98c88f15e459b96e489103bb5a7c0","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"5655b0401dca4b0b8b21013ae2908291","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.
+Running experiment [1 of 2]: Param: "max_val", val=0.15...
+Running experiment [2 of 2]: Param: "k_decay", val=0.15...
+Done.
 Running model: {'model_name': 'prompthero/openjourney', 'model_kwargs': {'better_vae': 'ema'}}
 Generation kwargs: {'height': 640, 'width': 512}
 Using prompt: mdjrny-v4 style digital painting of masked incan warrior, by filipe pagliuso and justin gerard, symmetric, fantasy, highly detailed, realistic, intricate, portrait, sharp focus, tarot card, face, handsome, peruvian, ax
 Using the improved VAE "ema" from stabiliy.ai
 Enabling default unet attention slicing.
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.GuidanceTfm'&gt;
-Running experiment [1 of 1]: Param: "max_val", val=7.5...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"cd23e488bcbd4185b289149c7c37cdb0","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.
+Running experiment [1 of 1]: Param: "max_val", val=7.5...
+Done.
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.BaseNormGuidance'&gt;
-Running experiment [1 of 2]: Param: "max_val", val=7.5...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"1942d367931d45728018498bb114744a","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"ff9346b1c14643b1ac93bd2d7f838a9f","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.
+Running experiment [1 of 2]: Param: "max_val", val=7.5...
+Running experiment [2 of 2]: Param: "k_decay", val=0.15...
+Done.
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.TNormGuidance'&gt;
-Running experiment [1 of 2]: Param: "max_val", val=0.15...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"5d90d78240304cdb8f419ab39d577937","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"afe3db289e0c4bddafb9f86e3caf6ef7","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.
+Running experiment [1 of 2]: Param: "max_val", val=0.15...
+Running experiment [2 of 2]: Param: "k_decay", val=0.15...
+Done.
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.FullNormGuidance'&gt;
-Running experiment [1 of 2]: Param: "max_val", val=0.15...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"32eb03f0f68d48d1bc32a286e9c50cc7","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"2a3e15b5d4fa42cf95635151f55126bb","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.
+Running experiment [1 of 2]: Param: "max_val", val=0.15...
+Running experiment [2 of 2]: Param: "k_decay", val=0.15...
+Done.
 Running model: {'model_name': 'stabilityai/stable-diffusion-2-base', 'model_kwargs': {'unet_attn_slice': False}}
 Generation kwargs: {'height': 640, 'width': 512}
 Using prompt: digital painting of masked incan warrior, by filipe pagliuso and justin gerard, symmetric, fantasy, highly detailed, realistic, intricate, portrait, sharp focus, tarot card, face, handsome, peruvian, ax
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.GuidanceTfm'&gt;
-Running experiment [1 of 1]: Param: "max_val", val=7.5...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"3ea102817d5d4b509ea85f5f55a47c1e","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.
+Running experiment [1 of 1]: Param: "max_val", val=7.5...
+Done.
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.BaseNormGuidance'&gt;
-Running experiment [1 of 2]: Param: "max_val", val=7.5...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"77e34e7aa01e405c9b1ae9dbcc956d4f","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"1772203c6faf4b0596e41cd09d517427","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.
+Running experiment [1 of 2]: Param: "max_val", val=7.5...
+Running experiment [2 of 2]: Param: "k_decay", val=0.15...
+Done.
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.TNormGuidance'&gt;
-Running experiment [1 of 2]: Param: "max_val", val=0.15...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"31533004ffc54d25b23acc1d3da3bfd4","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"28121410e9e84157867cf82185d76a33","version_major":2,"version_minor":0}
-</script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.
+Running experiment [1 of 2]: Param: "max_val", val=0.15...
+Running experiment [2 of 2]: Param: "k_decay", val=0.15...
+Done.
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.FullNormGuidance'&gt;
-Running experiment [1 of 2]: Param: "max_val", val=0.15...</code></pre>
+Running experiment [1 of 2]: Param: "max_val", val=0.15...
+Running experiment [2 of 2]: Param: "k_decay", val=0.15...
+Done.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"ce1e8facf03143839b5df250e8090e75","version_major":2,"version_minor":0}
+{"model_id":"4a9142f211424c79a440f2e12fe45cfa","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 2]: Param: "k_decay", val=0.15...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"0681296342f04b45abcadf9debb33890","version_major":2,"version_minor":0}
+{"model_id":"9379b0df06254c789c597ac387fb2c74","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.</code></pre>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"000baf204e11420ebea30260d1640f52","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"9470fbd356cf473aae4bb665ce5e55c2","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"80adc7694bfc4d808f11a1879cff77b0","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"5bca02d3f8b44635ab2e4c0b43aa4a16","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"7bafd7b3356d4bca9bfa7e4425ef8eca","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"c75199cb409a4ef08f8f24a866c5136c","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"849d17482fc647508e6b05fcc389ae0b","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"0529b79d3c784a11b9a521fef3d437cd","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"ae96fb6b16f545daa26f1531a41c5809","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"40274847e1794624b465bf327cd603be","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"00d98c88f15e459b96e489103bb5a7c0","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"5655b0401dca4b0b8b21013ae2908291","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"cd23e488bcbd4185b289149c7c37cdb0","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"1942d367931d45728018498bb114744a","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"ff9346b1c14643b1ac93bd2d7f838a9f","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"5d90d78240304cdb8f419ab39d577937","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"afe3db289e0c4bddafb9f86e3caf6ef7","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"32eb03f0f68d48d1bc32a286e9c50cc7","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"2a3e15b5d4fa42cf95635151f55126bb","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"3ea102817d5d4b509ea85f5f55a47c1e","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"77e34e7aa01e405c9b1ae9dbcc956d4f","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"1772203c6faf4b0596e41cd09d517427","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"31533004ffc54d25b23acc1d3da3bfd4","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"28121410e9e84157867cf82185d76a33","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"ce1e8facf03143839b5df250e8090e75","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"0681296342f04b45abcadf9debb33890","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
 </div>
 </div>
 </section>
@@ -963,12 +882,12 @@ The third column has the <code>T-Normalization</code> results.<br>
 The fourth column has the <code>Full Normalization</code> results.</p>
 <p>In general we expect that normalization should improve the images. In other words, the second, third, and fourth column should be better than the first column (the baseline).</p>
 <p>Likewise, we expect that the <code>Inverse kDecay</code> schedules are better than the static schedules. That means that, for a given column, the result in its second row should be better than its first row.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Note
 </div>
 </div>
@@ -980,7 +899,7 @@ Note
 <section id="stable-diffusion-v1-4" class="level2">
 <h2 class="anchored" data-anchor-id="stable-diffusion-v1-4">Stable Diffusion v1-4</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>plot_all_results(<span class="st">'CompVis/stable-diffusion-v1-4'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plot_all_results(<span class="st">'CompVis/stable-diffusion-v1-4'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="index_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
 </div>
@@ -992,7 +911,7 @@ Note
 <section id="stable-diffusion-v1-5" class="level2">
 <h2 class="anchored" data-anchor-id="stable-diffusion-v1-5">Stable Diffusion v1-5</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>plot_all_results(<span class="st">'runwayml/stable-diffusion-v1-5'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plot_all_results(<span class="st">'runwayml/stable-diffusion-v1-5'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="index_files/figure-html/cell-22-output-1.png" class="img-fluid"></p>
 </div>
@@ -1004,7 +923,7 @@ Note
 <section id="openjourney" class="level2">
 <h2 class="anchored" data-anchor-id="openjourney">openjourney</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>plot_all_results(<span class="st">'prompthero/openjourney'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>plot_all_results(<span class="st">'prompthero/openjourney'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="index_files/figure-html/cell-23-output-1.png" class="img-fluid"></p>
 </div>
@@ -1016,7 +935,7 @@ Note
 <section id="stable-diffusion-2-base" class="level2">
 <h2 class="anchored" data-anchor-id="stable-diffusion-2-base">Stable Diffusion 2-base</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>plot_all_results(<span class="st">'stabilityai/stable-diffusion-2-base'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>plot_all_results(<span class="st">'stabilityai/stable-diffusion-2-base'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="index_files/figure-html/cell-24-output-1.png" class="img-fluid"></p>
 </div>
@@ -1067,9 +986,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1134,6 +1067,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

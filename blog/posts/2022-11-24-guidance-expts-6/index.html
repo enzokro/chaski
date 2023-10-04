@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.475">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,9 +19,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -48,43 +49,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -120,7 +91,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
@@ -128,17 +100,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../../styles.css">
 <meta property="og:title" content="chaski - Classifier-free Guidance with Cosine Schedules Pt. 5">
-<meta property="og:description" content="This notebook is Part 5 in a series on dynamic Classifier-free Guidance. It explores smaller \(G\) values for normalizations.">
+<meta property="og:description" content="">
 <meta property="og:image" content="https://enzokro.dev/blog/posts/2022-11-24-guidance-expts-6/better_horse_5.png">
 <meta property="og:site-name" content="chaski">
 <meta property="og:image:height" content="868">
 <meta property="og:image:width" content="864">
 <meta name="twitter:title" content="chaski - Classifier-free Guidance with Cosine Schedules Pt. 5">
-<meta name="twitter:description" content="This notebook is Part 5 in a series on dynamic Classifier-free Guidance. It explores smaller \(G\) values for normalizations.">
+<meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://enzokro.dev/blog/posts/2022-11-24-guidance-expts-6/better_horse_5.png">
 <meta name="twitter:image-height" content="868">
 <meta name="twitter:image-width" content="864">
@@ -156,30 +129,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <span class="navbar-title">chaski</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../about.html"><i class="bi bi-person-circle" role="img">
+    <a class="nav-link" href="../../../about.html" rel="" target=""><i class="bi bi-person-circle" role="img">
 </i> 
  <span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/enzokro_"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/enzokro_" rel="" target=""><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/enzokro"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/enzokro" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -444,12 +419,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <blockquote class="blockquote">
 <p>“a photograph of an astronaut riding a horse”</p>
 </blockquote>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Important
 </div>
 </div>
@@ -536,179 +511,139 @@ Important
 <div class="cell-output cell-output-stdout">
 <pre><code>Running the k-Sweep experiments...
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.TNormGuidance'&gt;
-Running experiment [1 of 10]: Param: "max_val", val=0.01...</code></pre>
+Running experiment [1 of 10]: Param: "max_val", val=0.01...
+Running experiment [2 of 10]: Param: "max_val", val=0.03...
+Running experiment [3 of 10]: Param: "max_val", val=0.05...
+Running experiment [4 of 10]: Param: "max_val", val=0.08...
+Running experiment [5 of 10]: Param: "max_val", val=0.1...
+Running experiment [6 of 10]: Param: "max_val", val=0.15...
+Running experiment [7 of 10]: Param: "max_val", val=0.2...
+Running experiment [8 of 10]: Param: "max_val", val=0.22...
+Running experiment [9 of 10]: Param: "max_val", val=0.25...
+Running experiment [10 of 10]: Param: "max_val", val=0.3...
+Done.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"7aaa31a8ca3e4d74b68c85a5048930c7","version_major":2,"version_minor":0}
+{"model_id":"7aaa31a8ca3e4d74b68c85a5048930c7","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 10]: Param: "max_val", val=0.03...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"745cf26e52b241739b29f65854f6cf61","version_major":2,"version_minor":0}
+{"model_id":"745cf26e52b241739b29f65854f6cf61","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [3 of 10]: Param: "max_val", val=0.05...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"733b2ed09b494b11a2eb0031575cd862","version_major":2,"version_minor":0}
+{"model_id":"733b2ed09b494b11a2eb0031575cd862","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [4 of 10]: Param: "max_val", val=0.08...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"826085513b7549aebbea3545cbbe3033","version_major":2,"version_minor":0}
+{"model_id":"826085513b7549aebbea3545cbbe3033","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [5 of 10]: Param: "max_val", val=0.1...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"f2851f72a4154e26bf8fd51ad5cb9ffc","version_major":2,"version_minor":0}
+{"model_id":"f2851f72a4154e26bf8fd51ad5cb9ffc","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [6 of 10]: Param: "max_val", val=0.15...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"cbbb7e05f0e94e4cbffe084e4173a630","version_major":2,"version_minor":0}
+{"model_id":"cbbb7e05f0e94e4cbffe084e4173a630","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [7 of 10]: Param: "max_val", val=0.2...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"e47d0a268b9c4b7aaa3c47ef115932ec","version_major":2,"version_minor":0}
+{"model_id":"e47d0a268b9c4b7aaa3c47ef115932ec","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [8 of 10]: Param: "max_val", val=0.22...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"45680c77af124e618981f9d966b90c24","version_major":2,"version_minor":0}
+{"model_id":"45680c77af124e618981f9d966b90c24","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [9 of 10]: Param: "max_val", val=0.25...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"952b103193784896bad2ed90f8b1e1a0","version_major":2,"version_minor":0}
+{"model_id":"952b103193784896bad2ed90f8b1e1a0","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [10 of 10]: Param: "max_val", val=0.3...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"ffa8575776a74eee8453ed2632f30a38","version_major":2,"version_minor":0}
+{"model_id":"ffa8575776a74eee8453ed2632f30a38","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.</code></pre>
 </div>
 </div>
 </section>
 <section id="full-normalization-with-g_textsmall-sweep" class="level2">
 <h2 class="anchored" data-anchor-id="full-normalization-with-g_textsmall-sweep"><code>Full Normalization</code> with <span class="math inline">\(G_\text{small}\)</span> sweep</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the k-Sweep experiments...'</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>full_norm_res <span class="op">=</span> run(prompt, const_expts, guide_tfm<span class="op">=</span>FullNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the k-Sweep experiments...'</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>full_norm_res <span class="op">=</span> run(prompt, const_expts, guide_tfm<span class="op">=</span>FullNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running the k-Sweep experiments...
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.FullNormGuidance'&gt;
-Running experiment [1 of 10]: Param: "max_val", val=0.01...</code></pre>
+Running experiment [1 of 10]: Param: "max_val", val=0.01...
+Running experiment [2 of 10]: Param: "max_val", val=0.03...
+Running experiment [3 of 10]: Param: "max_val", val=0.05...
+Running experiment [4 of 10]: Param: "max_val", val=0.08...
+Running experiment [5 of 10]: Param: "max_val", val=0.1...
+Running experiment [6 of 10]: Param: "max_val", val=0.15...
+Running experiment [7 of 10]: Param: "max_val", val=0.2...
+Running experiment [8 of 10]: Param: "max_val", val=0.22...
+Running experiment [9 of 10]: Param: "max_val", val=0.25...
+Running experiment [10 of 10]: Param: "max_val", val=0.3...
+Done.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"b2d07e82a84d42fdb43350bb2b2f6402","version_major":2,"version_minor":0}
+{"model_id":"b2d07e82a84d42fdb43350bb2b2f6402","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 10]: Param: "max_val", val=0.03...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"f5fd1f1af7bc4561ba8f2429a7ab255d","version_major":2,"version_minor":0}
+{"model_id":"f5fd1f1af7bc4561ba8f2429a7ab255d","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [3 of 10]: Param: "max_val", val=0.05...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"f2834901df14412ba1d95bcefb97c463","version_major":2,"version_minor":0}
+{"model_id":"f2834901df14412ba1d95bcefb97c463","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [4 of 10]: Param: "max_val", val=0.08...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"2f7d1f54bf6145bd99a211e892eb6cfe","version_major":2,"version_minor":0}
+{"model_id":"2f7d1f54bf6145bd99a211e892eb6cfe","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [5 of 10]: Param: "max_val", val=0.1...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"e3e9b13f8436413d9853c0990e0f6adb","version_major":2,"version_minor":0}
+{"model_id":"e3e9b13f8436413d9853c0990e0f6adb","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [6 of 10]: Param: "max_val", val=0.15...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"f9d6d09d3abb467f970ae49af23d07cb","version_major":2,"version_minor":0}
+{"model_id":"f9d6d09d3abb467f970ae49af23d07cb","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [7 of 10]: Param: "max_val", val=0.2...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"4259db4c31e54010be9b163dd6f315df","version_major":2,"version_minor":0}
+{"model_id":"4259db4c31e54010be9b163dd6f315df","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [8 of 10]: Param: "max_val", val=0.22...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"ccefd891bf69426982aaf7ae98941170","version_major":2,"version_minor":0}
+{"model_id":"ccefd891bf69426982aaf7ae98941170","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [9 of 10]: Param: "max_val", val=0.25...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"ba962f66fdc24503b64dc60f5b1681dd","version_major":2,"version_minor":0}
+{"model_id":"ba962f66fdc24503b64dc60f5b1681dd","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [10 of 10]: Param: "max_val", val=0.3...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"2f487df6ed8b46b8b6a9b5b6ef7c6af7","version_major":2,"version_minor":0}
+{"model_id":"2f487df6ed8b46b8b6a9b5b6ef7c6af7","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.</code></pre>
 </div>
 </div>
 </section>
@@ -745,125 +680,101 @@ Running experiment [1 of 10]: Param: "max_val", val=0.01...</code></pre>
 <section id="re-runs-to-find-the-phase-change" class="level1">
 <h1>Re-runs to find the phase change</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>low_bound <span class="op">=</span> <span class="fl">0.08</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>hi_bound <span class="op">=</span> <span class="fl">0.102</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>npoints <span class="op">=</span> <span class="dv">11</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> np.linspace(low_bound, hi_bound, npoints<span class="op">+</span><span class="dv">1</span>)<span class="op">;</span> points</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>low_bound <span class="op">=</span> <span class="fl">0.08</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>hi_bound <span class="op">=</span> <span class="fl">0.102</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>npoints <span class="op">=</span> <span class="dv">11</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> np.linspace(low_bound, hi_bound, npoints<span class="op">+</span><span class="dv">1</span>)<span class="op">;</span> points</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>array([0.08 , 0.082, 0.084, 0.086, 0.088, 0.09 , 0.092, 0.094, 0.096,
        0.098, 0.1  , 0.102])</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the constant G_small cosine experiments</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>phase_params <span class="op">=</span> {<span class="st">'max_val'</span>: <span class="bu">list</span>(points)}</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>phase_func <span class="op">=</span> <span class="kw">lambda</span> val: [val <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_steps)]</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>phase_expts <span class="op">=</span> create_expts(phase_params, phase_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the constant G_small cosine experiments</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>phase_params <span class="op">=</span> {<span class="st">'max_val'</span>: <span class="bu">list</span>(points)}</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>phase_func <span class="op">=</span> <span class="kw">lambda</span> val: [val <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_steps)]</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>phase_expts <span class="op">=</span> create_expts(phase_params, phase_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>phase_res <span class="op">=</span> run(prompt, phase_expts, guide_tfm<span class="op">=</span>TNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>phase_res <span class="op">=</span> run(prompt, phase_expts, guide_tfm<span class="op">=</span>TNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running the phase change k-Sweep experiments...
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.TNormGuidance'&gt;
-Running experiment [1 of 12]: Param: "max_val", val=0.08...</code></pre>
+Running experiment [1 of 12]: Param: "max_val", val=0.08...
+Running experiment [2 of 12]: Param: "max_val", val=0.082...
+Running experiment [3 of 12]: Param: "max_val", val=0.084...
+Running experiment [4 of 12]: Param: "max_val", val=0.086...
+Running experiment [5 of 12]: Param: "max_val", val=0.088...
+Running experiment [6 of 12]: Param: "max_val", val=0.09...
+Running experiment [7 of 12]: Param: "max_val", val=0.092...
+Running experiment [8 of 12]: Param: "max_val", val=0.094...
+Running experiment [9 of 12]: Param: "max_val", val=0.096...
+Running experiment [10 of 12]: Param: "max_val", val=0.09799999999999999...
+Running experiment [11 of 12]: Param: "max_val", val=0.09999999999999999...
+Running experiment [12 of 12]: Param: "max_val", val=0.102...
+Done.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"4548f35e9803418b95a429525613d79f","version_major":2,"version_minor":0}
+{"model_id":"4548f35e9803418b95a429525613d79f","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 12]: Param: "max_val", val=0.082...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"61f0a29ab9444da6b002781a95f57182","version_major":2,"version_minor":0}
+{"model_id":"61f0a29ab9444da6b002781a95f57182","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [3 of 12]: Param: "max_val", val=0.084...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"89490647f2b44f4696f6a3e1b85f07e6","version_major":2,"version_minor":0}
+{"model_id":"89490647f2b44f4696f6a3e1b85f07e6","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [4 of 12]: Param: "max_val", val=0.086...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"c10d19e8cde84ee2968d81768ed0759c","version_major":2,"version_minor":0}
+{"model_id":"c10d19e8cde84ee2968d81768ed0759c","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [5 of 12]: Param: "max_val", val=0.088...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"fb06ed41d28247b091aff5eedeff6010","version_major":2,"version_minor":0}
+{"model_id":"fb06ed41d28247b091aff5eedeff6010","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [6 of 12]: Param: "max_val", val=0.09...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"4835c391f40240b3b31577f458f6c83f","version_major":2,"version_minor":0}
+{"model_id":"4835c391f40240b3b31577f458f6c83f","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [7 of 12]: Param: "max_val", val=0.092...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"b2e6736de1714388bb394382a2e32005","version_major":2,"version_minor":0}
+{"model_id":"b2e6736de1714388bb394382a2e32005","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [8 of 12]: Param: "max_val", val=0.094...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"b965e3f1e1d14d76b9545002a078d994","version_major":2,"version_minor":0}
+{"model_id":"b965e3f1e1d14d76b9545002a078d994","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [9 of 12]: Param: "max_val", val=0.096...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"8924e63e79184dee94db9310c84384ea","version_major":2,"version_minor":0}
+{"model_id":"8924e63e79184dee94db9310c84384ea","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [10 of 12]: Param: "max_val", val=0.09799999999999999...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"67907e6646b64c24a05cdae36f288c68","version_major":2,"version_minor":0}
+{"model_id":"67907e6646b64c24a05cdae36f288c68","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [11 of 12]: Param: "max_val", val=0.09999999999999999...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"372d26ee09204e7bab94d51b31f8e445","version_major":2,"version_minor":0}
+{"model_id":"372d26ee09204e7bab94d51b31f8e445","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [12 of 12]: Param: "max_val", val=0.102...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"9bd3fcf2443747b8ad604c0ea0844a68","version_major":2,"version_minor":0}
+{"model_id":"9bd3fcf2443747b8ad604c0ea0844a68","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.</code></pre>
 </div>
 </div>
 <section id="t-normalization-with-g_textsmall-phase-change" class="level2">
@@ -878,108 +789,84 @@ Running experiment [1 of 12]: Param: "max_val", val=0.08...</code></pre>
 <section id="full-normalization-with-g_textsmall-phase-change" class="level2">
 <h2 class="anchored" data-anchor-id="full-normalization-with-g_textsmall-phase-change"><code>Full Normalization</code> with <span class="math inline">\(G_\text{small}\)</span> phase change</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>full_phase_res <span class="op">=</span> run(prompt, phase_expts, guide_tfm<span class="op">=</span>FullNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>full_phase_res <span class="op">=</span> run(prompt, phase_expts, guide_tfm<span class="op">=</span>FullNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running the phase change k-Sweep experiments...
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.FullNormGuidance'&gt;
-Running experiment [1 of 12]: Param: "max_val", val=0.08...</code></pre>
+Running experiment [1 of 12]: Param: "max_val", val=0.08...
+Running experiment [2 of 12]: Param: "max_val", val=0.082...
+Running experiment [3 of 12]: Param: "max_val", val=0.084...
+Running experiment [4 of 12]: Param: "max_val", val=0.086...
+Running experiment [5 of 12]: Param: "max_val", val=0.088...
+Running experiment [6 of 12]: Param: "max_val", val=0.09...
+Running experiment [7 of 12]: Param: "max_val", val=0.092...
+Running experiment [8 of 12]: Param: "max_val", val=0.094...
+Running experiment [9 of 12]: Param: "max_val", val=0.096...
+Running experiment [10 of 12]: Param: "max_val", val=0.09799999999999999...
+Running experiment [11 of 12]: Param: "max_val", val=0.09999999999999999...
+Running experiment [12 of 12]: Param: "max_val", val=0.102...
+Done.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"4f00af8030f0419182d3e06d3b18b9b8","version_major":2,"version_minor":0}
+{"model_id":"4f00af8030f0419182d3e06d3b18b9b8","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 12]: Param: "max_val", val=0.082...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"4820bbcb582047799b59e36e80b81f97","version_major":2,"version_minor":0}
+{"model_id":"4820bbcb582047799b59e36e80b81f97","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [3 of 12]: Param: "max_val", val=0.084...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"4a9e7dafbaee423dbf83fd08077b7159","version_major":2,"version_minor":0}
+{"model_id":"4a9e7dafbaee423dbf83fd08077b7159","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [4 of 12]: Param: "max_val", val=0.086...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"7d8937635c0d4181832fbf6d568d04fd","version_major":2,"version_minor":0}
+{"model_id":"7d8937635c0d4181832fbf6d568d04fd","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [5 of 12]: Param: "max_val", val=0.088...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"627b82a266f441799e1817c8f0375a52","version_major":2,"version_minor":0}
+{"model_id":"627b82a266f441799e1817c8f0375a52","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [6 of 12]: Param: "max_val", val=0.09...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"2799bd3a76a04ff8a856b5c12da03c2b","version_major":2,"version_minor":0}
+{"model_id":"2799bd3a76a04ff8a856b5c12da03c2b","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [7 of 12]: Param: "max_val", val=0.092...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"547080a551b84382934b6460714c1a58","version_major":2,"version_minor":0}
+{"model_id":"547080a551b84382934b6460714c1a58","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [8 of 12]: Param: "max_val", val=0.094...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"4ab8a2a9413241d1a855d5d1077b602c","version_major":2,"version_minor":0}
+{"model_id":"4ab8a2a9413241d1a855d5d1077b602c","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [9 of 12]: Param: "max_val", val=0.096...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"9514a943917c40fb8b041e3fd40a79c4","version_major":2,"version_minor":0}
+{"model_id":"9514a943917c40fb8b041e3fd40a79c4","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [10 of 12]: Param: "max_val", val=0.09799999999999999...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"33d0b1f1b4a64e78a2131e447276595d","version_major":2,"version_minor":0}
+{"model_id":"33d0b1f1b4a64e78a2131e447276595d","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [11 of 12]: Param: "max_val", val=0.09999999999999999...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"e6b85c5c3d2448baa3ff4a86c04d4f46","version_major":2,"version_minor":0}
+{"model_id":"e6b85c5c3d2448baa3ff4a86c04d4f46","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [12 of 12]: Param: "max_val", val=0.102...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"d7b09c18a1df430bb155caa63325d66c","version_major":2,"version_minor":0}
+{"model_id":"d7b09c18a1df430bb155caa63325d66c","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -995,125 +882,101 @@ Running experiment [1 of 12]: Param: "max_val", val=0.08...</code></pre>
 <section id="re-runs-to-find-earlier-potentially-better-values" class="level1">
 <h1>Re-runs to find earlier, potentially better values</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>low_bound <span class="op">=</span> <span class="fl">0.06</span></span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>hi_bound <span class="op">=</span> <span class="fl">0.082</span></span>
-<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>npoints <span class="op">=</span> <span class="dv">11</span></span>
-<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> np.linspace(low_bound, hi_bound, npoints<span class="op">+</span><span class="dv">1</span>)<span class="op">;</span> points</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>low_bound <span class="op">=</span> <span class="fl">0.06</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>hi_bound <span class="op">=</span> <span class="fl">0.082</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>npoints <span class="op">=</span> <span class="dv">11</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> np.linspace(low_bound, hi_bound, npoints<span class="op">+</span><span class="dv">1</span>)<span class="op">;</span> points</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>array([0.06 , 0.062, 0.064, 0.066, 0.068, 0.07 , 0.072, 0.074, 0.076,
        0.078, 0.08 , 0.082])</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the constant G_small cosine experiments</span></span>
-<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>early_phase_params <span class="op">=</span> {<span class="st">'max_val'</span>: <span class="bu">list</span>(points)}</span>
-<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>early_phase_func <span class="op">=</span> <span class="kw">lambda</span> val: [val <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_steps)]</span>
-<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>early_phase_expts <span class="op">=</span> create_expts(early_phase_params, early_phase_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the constant G_small cosine experiments</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>early_phase_params <span class="op">=</span> {<span class="st">'max_val'</span>: <span class="bu">list</span>(points)}</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>early_phase_func <span class="op">=</span> <span class="kw">lambda</span> val: [val <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_steps)]</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>early_phase_expts <span class="op">=</span> create_expts(early_phase_params, early_phase_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
-<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>early_phase_res <span class="op">=</span> run(prompt, early_phase_expts, guide_tfm<span class="op">=</span>TNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>early_phase_res <span class="op">=</span> run(prompt, early_phase_expts, guide_tfm<span class="op">=</span>TNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running the phase change k-Sweep experiments...
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.TNormGuidance'&gt;
-Running experiment [1 of 12]: Param: "max_val", val=0.06...</code></pre>
+Running experiment [1 of 12]: Param: "max_val", val=0.06...
+Running experiment [2 of 12]: Param: "max_val", val=0.062...
+Running experiment [3 of 12]: Param: "max_val", val=0.064...
+Running experiment [4 of 12]: Param: "max_val", val=0.066...
+Running experiment [5 of 12]: Param: "max_val", val=0.068...
+Running experiment [6 of 12]: Param: "max_val", val=0.07...
+Running experiment [7 of 12]: Param: "max_val", val=0.07200000000000001...
+Running experiment [8 of 12]: Param: "max_val", val=0.074...
+Running experiment [9 of 12]: Param: "max_val", val=0.076...
+Running experiment [10 of 12]: Param: "max_val", val=0.078...
+Running experiment [11 of 12]: Param: "max_val", val=0.08...
+Running experiment [12 of 12]: Param: "max_val", val=0.082...
+Done.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"fa5e8b637c884371811dddb54cd10299","version_major":2,"version_minor":0}
+{"model_id":"fa5e8b637c884371811dddb54cd10299","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 12]: Param: "max_val", val=0.062...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"0ec09cac708b4aa98d17d62dff12f874","version_major":2,"version_minor":0}
+{"model_id":"0ec09cac708b4aa98d17d62dff12f874","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [3 of 12]: Param: "max_val", val=0.064...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"6dc2f510c4a0469888dc96de1b047a62","version_major":2,"version_minor":0}
+{"model_id":"6dc2f510c4a0469888dc96de1b047a62","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [4 of 12]: Param: "max_val", val=0.066...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"398e1a873cbc42a597f4d6b6d0cf97b0","version_major":2,"version_minor":0}
+{"model_id":"398e1a873cbc42a597f4d6b6d0cf97b0","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [5 of 12]: Param: "max_val", val=0.068...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"cf2c222a69a844faa9622b7999b3cdd3","version_major":2,"version_minor":0}
+{"model_id":"cf2c222a69a844faa9622b7999b3cdd3","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [6 of 12]: Param: "max_val", val=0.07...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"e97e6c1afd97469f9a719a9f23b27d68","version_major":2,"version_minor":0}
+{"model_id":"e97e6c1afd97469f9a719a9f23b27d68","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [7 of 12]: Param: "max_val", val=0.07200000000000001...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"368cc726b846432b9438ba4f080527ec","version_major":2,"version_minor":0}
+{"model_id":"368cc726b846432b9438ba4f080527ec","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [8 of 12]: Param: "max_val", val=0.074...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"0177e23af524449bb20a44e7b74b5ca5","version_major":2,"version_minor":0}
+{"model_id":"0177e23af524449bb20a44e7b74b5ca5","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [9 of 12]: Param: "max_val", val=0.076...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"70fd81a643614284bdc31788b31a8dda","version_major":2,"version_minor":0}
+{"model_id":"70fd81a643614284bdc31788b31a8dda","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [10 of 12]: Param: "max_val", val=0.078...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"9c9d910bca2e4eaaa1aee6a514e11e6a","version_major":2,"version_minor":0}
+{"model_id":"9c9d910bca2e4eaaa1aee6a514e11e6a","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [11 of 12]: Param: "max_val", val=0.08...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"8ac2be282d38437eaf378e604f0b5c75","version_major":2,"version_minor":0}
+{"model_id":"8ac2be282d38437eaf378e604f0b5c75","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [12 of 12]: Param: "max_val", val=0.082...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"778ef491004943e696ae1cb95371ced0","version_major":2,"version_minor":0}
+{"model_id":"778ef491004943e696ae1cb95371ced0","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1127,11 +990,11 @@ Running experiment [1 of 12]: Param: "max_val", val=0.06...</code></pre>
 <h1>The final check: <span class="math inline">\(G\ \)</span> from <span class="math inline">\(0.1\)</span> to <span class="math inline">\(0.2\)</span></h1>
 <p>There is a noticeable change in the image somewhere between 0.1 and 0.2. Let’s do a small sweep in this range to see what happens.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>low_bound <span class="op">=</span> <span class="fl">0.1</span></span>
-<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>hi_bound <span class="op">=</span> <span class="fl">0.202</span></span>
-<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>npoints <span class="op">=</span> <span class="dv">11</span></span>
-<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> np.linspace(low_bound, hi_bound, npoints<span class="op">+</span><span class="dv">1</span>)<span class="op">;</span> points</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>low_bound <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>hi_bound <span class="op">=</span> <span class="fl">0.202</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>npoints <span class="op">=</span> <span class="dv">11</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> np.linspace(low_bound, hi_bound, npoints<span class="op">+</span><span class="dv">1</span>)<span class="op">;</span> points</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>array([0.1       , 0.10927273, 0.11854545, 0.12781818, 0.13709091,
        0.14636364, 0.15563636, 0.16490909, 0.17418182, 0.18345455,
@@ -1139,114 +1002,90 @@ Running experiment [1 of 12]: Param: "max_val", val=0.06...</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the constant G_small cosine experiments</span></span>
-<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>late_phase_params <span class="op">=</span> {<span class="st">'max_val'</span>: <span class="bu">list</span>(points)}</span>
-<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>late_phase_func <span class="op">=</span> <span class="kw">lambda</span> val: [val <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_steps)]</span>
-<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>late_phase_expts <span class="op">=</span> create_expts(late_phase_params, late_phase_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the constant G_small cosine experiments</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>late_phase_params <span class="op">=</span> {<span class="st">'max_val'</span>: <span class="bu">list</span>(points)}</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>late_phase_func <span class="op">=</span> <span class="kw">lambda</span> val: [val <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_steps)]</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>late_phase_expts <span class="op">=</span> create_expts(late_phase_params, late_phase_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
-<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>late_phase_res <span class="op">=</span> run(prompt, late_phase_expts, guide_tfm<span class="op">=</span>TNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>late_phase_res <span class="op">=</span> run(prompt, late_phase_expts, guide_tfm<span class="op">=</span>TNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running the phase change k-Sweep experiments...
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.TNormGuidance'&gt;
-Running experiment [1 of 12]: Param: "max_val", val=0.1...</code></pre>
+Running experiment [1 of 12]: Param: "max_val", val=0.1...
+Running experiment [2 of 12]: Param: "max_val", val=0.10927272727272727...
+Running experiment [3 of 12]: Param: "max_val", val=0.11854545454545455...
+Running experiment [4 of 12]: Param: "max_val", val=0.12781818181818183...
+Running experiment [5 of 12]: Param: "max_val", val=0.1370909090909091...
+Running experiment [6 of 12]: Param: "max_val", val=0.14636363636363636...
+Running experiment [7 of 12]: Param: "max_val", val=0.15563636363636363...
+Running experiment [8 of 12]: Param: "max_val", val=0.16490909090909092...
+Running experiment [9 of 12]: Param: "max_val", val=0.1741818181818182...
+Running experiment [10 of 12]: Param: "max_val", val=0.18345454545454545...
+Running experiment [11 of 12]: Param: "max_val", val=0.19272727272727275...
+Running experiment [12 of 12]: Param: "max_val", val=0.202...
+Done.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"02cf60c7691a4b2d854c83354884ac5e","version_major":2,"version_minor":0}
+{"model_id":"02cf60c7691a4b2d854c83354884ac5e","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 12]: Param: "max_val", val=0.10927272727272727...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"823754a07b6f48c2ab057f764e7820c1","version_major":2,"version_minor":0}
+{"model_id":"823754a07b6f48c2ab057f764e7820c1","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [3 of 12]: Param: "max_val", val=0.11854545454545455...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"4093a9d3fb4b4222a0da26e679229494","version_major":2,"version_minor":0}
+{"model_id":"4093a9d3fb4b4222a0da26e679229494","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [4 of 12]: Param: "max_val", val=0.12781818181818183...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"4e482b8aabb04d778ae8020ba1e04b4e","version_major":2,"version_minor":0}
+{"model_id":"4e482b8aabb04d778ae8020ba1e04b4e","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [5 of 12]: Param: "max_val", val=0.1370909090909091...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"91a77b8506e54c8484b2003f88a15a4e","version_major":2,"version_minor":0}
+{"model_id":"91a77b8506e54c8484b2003f88a15a4e","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [6 of 12]: Param: "max_val", val=0.14636363636363636...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"163a0471b5914ae1bb2afc45161e35d8","version_major":2,"version_minor":0}
+{"model_id":"163a0471b5914ae1bb2afc45161e35d8","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [7 of 12]: Param: "max_val", val=0.15563636363636363...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"35bf8a60b71d47ac80f090a23d8112d9","version_major":2,"version_minor":0}
+{"model_id":"35bf8a60b71d47ac80f090a23d8112d9","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [8 of 12]: Param: "max_val", val=0.16490909090909092...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"252dcf1904fb4e39972eb434571c6998","version_major":2,"version_minor":0}
+{"model_id":"252dcf1904fb4e39972eb434571c6998","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [9 of 12]: Param: "max_val", val=0.1741818181818182...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"3605133591214da784b953485520548e","version_major":2,"version_minor":0}
+{"model_id":"3605133591214da784b953485520548e","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [10 of 12]: Param: "max_val", val=0.18345454545454545...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"d5280609098f41b19b7f4b3c6eedfe48","version_major":2,"version_minor":0}
+{"model_id":"d5280609098f41b19b7f4b3c6eedfe48","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [11 of 12]: Param: "max_val", val=0.19272727272727275...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"0297bb58b4ac4c78a03362ba0d276f3e","version_major":2,"version_minor":0}
+{"model_id":"0297bb58b4ac4c78a03362ba0d276f3e","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [12 of 12]: Param: "max_val", val=0.202...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"2da8d0080c3e4a92a201a50e327263ba","version_major":2,"version_minor":0}
+{"model_id":"2da8d0080c3e4a92a201a50e327263ba","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1259,11 +1098,11 @@ Running experiment [1 of 12]: Param: "max_val", val=0.1...</code></pre>
 <h2 class="anchored" data-anchor-id="checking-for-phase-change-multiples">Checking for phase change multiples</h2>
 <p>Will we find another phase change around three times from the first one? Let’s find out.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>low_bound <span class="op">=</span> <span class="fl">0.25</span></span>
-<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>hi_bound <span class="op">=</span> <span class="fl">0.29</span></span>
-<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>npoints <span class="op">=</span> <span class="dv">11</span></span>
-<span id="cb103-4"><a href="#cb103-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb103-5"><a href="#cb103-5" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> np.linspace(low_bound, hi_bound, npoints<span class="op">+</span><span class="dv">1</span>)<span class="op">;</span> points</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>low_bound <span class="op">=</span> <span class="fl">0.25</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>hi_bound <span class="op">=</span> <span class="fl">0.29</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>npoints <span class="op">=</span> <span class="dv">11</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> np.linspace(low_bound, hi_bound, npoints<span class="op">+</span><span class="dv">1</span>)<span class="op">;</span> points</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>array([0.25      , 0.25363636, 0.25727273, 0.26090909, 0.26454545,
        0.26818182, 0.27181818, 0.27545455, 0.27909091, 0.28272727,
@@ -1271,114 +1110,90 @@ Running experiment [1 of 12]: Param: "max_val", val=0.1...</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the constant G_small cosine experiments</span></span>
-<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>later_phase_params <span class="op">=</span> {<span class="st">'max_val'</span>: <span class="bu">list</span>(points)}</span>
-<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a>later_phase_func <span class="op">=</span> <span class="kw">lambda</span> val: [val <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_steps)]</span>
-<span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a>later_phase_expts <span class="op">=</span> create_expts(later_phase_params, later_phase_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the constant G_small cosine experiments</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>later_phase_params <span class="op">=</span> {<span class="st">'max_val'</span>: <span class="bu">list</span>(points)}</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>later_phase_func <span class="op">=</span> <span class="kw">lambda</span> val: [val <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_steps)]</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>later_phase_expts <span class="op">=</span> create_expts(later_phase_params, later_phase_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
-<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>later_phase_res <span class="op">=</span> run(prompt, later_phase_expts, guide_tfm<span class="op">=</span>TNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>later_phase_res <span class="op">=</span> run(prompt, later_phase_expts, guide_tfm<span class="op">=</span>TNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running the phase change k-Sweep experiments...
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.TNormGuidance'&gt;
-Running experiment [1 of 12]: Param: "max_val", val=0.25...</code></pre>
+Running experiment [1 of 12]: Param: "max_val", val=0.25...
+Running experiment [2 of 12]: Param: "max_val", val=0.25363636363636366...
+Running experiment [3 of 12]: Param: "max_val", val=0.25727272727272726...
+Running experiment [4 of 12]: Param: "max_val", val=0.2609090909090909...
+Running experiment [5 of 12]: Param: "max_val", val=0.26454545454545453...
+Running experiment [6 of 12]: Param: "max_val", val=0.2681818181818182...
+Running experiment [7 of 12]: Param: "max_val", val=0.2718181818181818...
+Running experiment [8 of 12]: Param: "max_val", val=0.27545454545454545...
+Running experiment [9 of 12]: Param: "max_val", val=0.27909090909090906...
+Running experiment [10 of 12]: Param: "max_val", val=0.2827272727272727...
+Running experiment [11 of 12]: Param: "max_val", val=0.2863636363636364...
+Running experiment [12 of 12]: Param: "max_val", val=0.29...
+Done.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"a1cd4f973df44da98eb52aa801fc7a2a","version_major":2,"version_minor":0}
+{"model_id":"a1cd4f973df44da98eb52aa801fc7a2a","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 12]: Param: "max_val", val=0.25363636363636366...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"43ca061400c0470882fd1a0248a3b922","version_major":2,"version_minor":0}
+{"model_id":"43ca061400c0470882fd1a0248a3b922","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [3 of 12]: Param: "max_val", val=0.25727272727272726...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"4cd0f63f6c964c2fa2c2d58d05a92302","version_major":2,"version_minor":0}
+{"model_id":"4cd0f63f6c964c2fa2c2d58d05a92302","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [4 of 12]: Param: "max_val", val=0.2609090909090909...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"1a92681a4ba146f7aa85fe7932cdb9fc","version_major":2,"version_minor":0}
+{"model_id":"1a92681a4ba146f7aa85fe7932cdb9fc","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [5 of 12]: Param: "max_val", val=0.26454545454545453...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"e815ba8a555b44f9bc70cbdce72ec242","version_major":2,"version_minor":0}
+{"model_id":"e815ba8a555b44f9bc70cbdce72ec242","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [6 of 12]: Param: "max_val", val=0.2681818181818182...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"4f5b22ee75184e0b9aa8d94136a700f7","version_major":2,"version_minor":0}
+{"model_id":"4f5b22ee75184e0b9aa8d94136a700f7","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [7 of 12]: Param: "max_val", val=0.2718181818181818...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"ed54fd99ca5141b3957b5dff3b95d179","version_major":2,"version_minor":0}
+{"model_id":"ed54fd99ca5141b3957b5dff3b95d179","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [8 of 12]: Param: "max_val", val=0.27545454545454545...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"0aeecdcfcbcc4e48b3774cc5a5690d9f","version_major":2,"version_minor":0}
+{"model_id":"0aeecdcfcbcc4e48b3774cc5a5690d9f","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [9 of 12]: Param: "max_val", val=0.27909090909090906...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"395d15aefe3f4bd788d43c46a49b32bf","version_major":2,"version_minor":0}
+{"model_id":"395d15aefe3f4bd788d43c46a49b32bf","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [10 of 12]: Param: "max_val", val=0.2827272727272727...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"f1485478a6bf446d83548120d0286b26","version_major":2,"version_minor":0}
+{"model_id":"f1485478a6bf446d83548120d0286b26","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [11 of 12]: Param: "max_val", val=0.2863636363636364...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"88f5332a7fbb48cba2cd5c3fa7c80fd5","version_major":2,"version_minor":0}
+{"model_id":"88f5332a7fbb48cba2cd5c3fa7c80fd5","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [12 of 12]: Param: "max_val", val=0.29...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"5de84e9844bd4480b6859ba7693805a1","version_major":2,"version_minor":0}
+{"model_id":"5de84e9844bd4480b6859ba7693805a1","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1394,34 +1209,34 @@ Running experiment [1 of 12]: Param: "max_val", val=0.25...</code></pre>
 <h1>Cosines for the best <span class="math inline">\(G_\text{small}\)</span></h1>
 <p>We saw that that <span class="math inline">\(G_\text{small}\)</span> should be between 0.08 and 0.25. What happens if we try cosine schedules around these values?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_cos_expts(params: <span class="bu">dict</span>, schedule_func) <span class="op">-&gt;</span> <span class="bu">list</span>:</span>
-<span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''Creates a list of experiments.</span></span>
-<span id="cb120-3"><a href="#cb120-3" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb120-4"><a href="#cb120-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Each element is a dictionary with the name, value, and schedule for a given parameter.</span></span>
-<span id="cb120-5"><a href="#cb120-5" aria-hidden="true" tabindex="-1"></a><span class="co">    A `title` field is also added for easy plotting.</span></span>
-<span id="cb120-6"><a href="#cb120-6" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
-<span id="cb120-7"><a href="#cb120-7" aria-hidden="true" tabindex="-1"></a>    names <span class="op">=</span> <span class="bu">sorted</span>(params)</span>
-<span id="cb120-8"><a href="#cb120-8" aria-hidden="true" tabindex="-1"></a>    expts <span class="op">=</span> []</span>
-<span id="cb120-9"><a href="#cb120-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># step through parameter names and their values</span></span>
-<span id="cb120-10"><a href="#cb120-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i,name <span class="kw">in</span> <span class="bu">enumerate</span>(names):</span>
-<span id="cb120-11"><a href="#cb120-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j,val <span class="kw">in</span> <span class="bu">enumerate</span>(params[name]):</span>
-<span id="cb120-12"><a href="#cb120-12" aria-hidden="true" tabindex="-1"></a>            <span class="co"># create the experiment</span></span>
-<span id="cb120-13"><a href="#cb120-13" aria-hidden="true" tabindex="-1"></a>            expt <span class="op">=</span> {<span class="st">'param_name'</span>: name,</span>
-<span id="cb120-14"><a href="#cb120-14" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'val'</span>: val,</span>
-<span id="cb120-15"><a href="#cb120-15" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'schedule'</span>: schedule_func({name: val})}</span>
-<span id="cb120-16"><a href="#cb120-16" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># 'schedule': schedule_func({name: val})}</span></span>
-<span id="cb120-17"><a href="#cb120-17" aria-hidden="true" tabindex="-1"></a>            <span class="co"># name for plotting</span></span>
-<span id="cb120-18"><a href="#cb120-18" aria-hidden="true" tabindex="-1"></a>            expt[<span class="st">'title'</span>] <span class="op">=</span> <span class="ss">f'Param: "</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">", val=</span><span class="sc">{</span>val<span class="sc">}</span><span class="ss">'</span></span>
-<span id="cb120-19"><a href="#cb120-19" aria-hidden="true" tabindex="-1"></a>            <span class="co"># add it to the experiment list</span></span>
-<span id="cb120-20"><a href="#cb120-20" aria-hidden="true" tabindex="-1"></a>            expts.append(expt)</span>
-<span id="cb120-21"><a href="#cb120-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> expts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_cos_expts(params: <span class="bu">dict</span>, schedule_func) <span class="op">-&gt;</span> <span class="bu">list</span>:</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''Creates a list of experiments.</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Each element is a dictionary with the name, value, and schedule for a given parameter.</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="co">    A `title` field is also added for easy plotting.</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    names <span class="op">=</span> <span class="bu">sorted</span>(params)</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>    expts <span class="op">=</span> []</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># step through parameter names and their values</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i,name <span class="kw">in</span> <span class="bu">enumerate</span>(names):</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j,val <span class="kw">in</span> <span class="bu">enumerate</span>(params[name]):</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>            <span class="co"># create the experiment</span></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>            expt <span class="op">=</span> {<span class="st">'param_name'</span>: name,</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'val'</span>: val,</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'schedule'</span>: schedule_func({name: val})}</span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># 'schedule': schedule_func({name: val})}</span></span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>            <span class="co"># name for plotting</span></span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>            expt[<span class="st">'title'</span>] <span class="op">=</span> <span class="ss">f'Param: "</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">", val=</span><span class="sc">{</span>val<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>            <span class="co"># add it to the experiment list</span></span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>            expts.append(expt)</span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> expts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s sweep a few cosine schedules between the ideal <span class="math inline">\(G_\text{small}\)</span> range.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a>low_cos_bound <span class="op">=</span> <span class="fl">0.08</span></span>
-<span id="cb121-2"><a href="#cb121-2" aria-hidden="true" tabindex="-1"></a>hi_cos_bound <span class="op">=</span> <span class="fl">0.25</span></span>
-<span id="cb121-3"><a href="#cb121-3" aria-hidden="true" tabindex="-1"></a>npoints <span class="op">=</span> <span class="dv">11</span></span>
-<span id="cb121-4"><a href="#cb121-4" aria-hidden="true" tabindex="-1"></a>cos_points <span class="op">=</span> np.linspace(low_cos_bound, hi_cos_bound, npoints<span class="op">+</span><span class="dv">1</span>)<span class="op">;</span> cos_points</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>low_cos_bound <span class="op">=</span> <span class="fl">0.08</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>hi_cos_bound <span class="op">=</span> <span class="fl">0.25</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>npoints <span class="op">=</span> <span class="dv">11</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>cos_points <span class="op">=</span> np.linspace(low_cos_bound, hi_cos_bound, npoints<span class="op">+</span><span class="dv">1</span>)<span class="op">;</span> cos_points</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>array([0.08      , 0.09545455, 0.11090909, 0.12636364, 0.14181818,
        0.15727273, 0.17272727, 0.18818182, 0.20363636, 0.21909091,
@@ -1429,114 +1244,90 @@ Running experiment [1 of 12]: Param: "max_val", val=0.25...</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb123"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the constant G_small cosine experiments</span></span>
-<span id="cb123-2"><a href="#cb123-2" aria-hidden="true" tabindex="-1"></a>cos_params <span class="op">=</span> {<span class="st">'max_val'</span>: <span class="bu">list</span>(cos_points)}</span>
-<span id="cb123-3"><a href="#cb123-3" aria-hidden="true" tabindex="-1"></a>cos_func <span class="op">=</span> partial(cos_harness, default_params<span class="op">=</span>DEFAULT_COS_PARAMS)</span>
-<span id="cb123-4"><a href="#cb123-4" aria-hidden="true" tabindex="-1"></a>cos_expts <span class="op">=</span> create_cos_expts(cos_params, cos_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the constant G_small cosine experiments</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>cos_params <span class="op">=</span> {<span class="st">'max_val'</span>: <span class="bu">list</span>(cos_points)}</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>cos_func <span class="op">=</span> partial(cos_harness, default_params<span class="op">=</span>DEFAULT_COS_PARAMS)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>cos_expts <span class="op">=</span> create_cos_expts(cos_params, cos_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
-<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>cos_res <span class="op">=</span> run(prompt, cos_expts, guide_tfm<span class="op">=</span>TNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>cos_res <span class="op">=</span> run(prompt, cos_expts, guide_tfm<span class="op">=</span>TNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running the phase change k-Sweep experiments...
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.TNormGuidance'&gt;
-Running experiment [1 of 12]: Param: "max_val", val=0.08...</code></pre>
+Running experiment [1 of 12]: Param: "max_val", val=0.08...
+Running experiment [2 of 12]: Param: "max_val", val=0.09545454545454546...
+Running experiment [3 of 12]: Param: "max_val", val=0.1109090909090909...
+Running experiment [4 of 12]: Param: "max_val", val=0.12636363636363634...
+Running experiment [5 of 12]: Param: "max_val", val=0.14181818181818182...
+Running experiment [6 of 12]: Param: "max_val", val=0.1572727272727273...
+Running experiment [7 of 12]: Param: "max_val", val=0.17272727272727273...
+Running experiment [8 of 12]: Param: "max_val", val=0.18818181818181817...
+Running experiment [9 of 12]: Param: "max_val", val=0.20363636363636362...
+Running experiment [10 of 12]: Param: "max_val", val=0.21909090909090906...
+Running experiment [11 of 12]: Param: "max_val", val=0.23454545454545456...
+Running experiment [12 of 12]: Param: "max_val", val=0.25...
+Done.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"d8ed64a5413943f085be254c8dd23b29","version_major":2,"version_minor":0}
+{"model_id":"d8ed64a5413943f085be254c8dd23b29","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 12]: Param: "max_val", val=0.09545454545454546...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"7261bd31f18a451fbc097f788df6b8f4","version_major":2,"version_minor":0}
+{"model_id":"7261bd31f18a451fbc097f788df6b8f4","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [3 of 12]: Param: "max_val", val=0.1109090909090909...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"496422598ad94dcb8cf9e99ae5c27ec8","version_major":2,"version_minor":0}
+{"model_id":"496422598ad94dcb8cf9e99ae5c27ec8","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [4 of 12]: Param: "max_val", val=0.12636363636363634...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"de2a811e88e744299495df557d18f7f1","version_major":2,"version_minor":0}
+{"model_id":"de2a811e88e744299495df557d18f7f1","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [5 of 12]: Param: "max_val", val=0.14181818181818182...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"23cac14673f2431c84722921eddb27eb","version_major":2,"version_minor":0}
+{"model_id":"23cac14673f2431c84722921eddb27eb","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [6 of 12]: Param: "max_val", val=0.1572727272727273...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"c0c1208b3763483d96349c1c3b9dfeb4","version_major":2,"version_minor":0}
+{"model_id":"c0c1208b3763483d96349c1c3b9dfeb4","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [7 of 12]: Param: "max_val", val=0.17272727272727273...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"59a4fdfd2ab5427ab15075052aa31d7d","version_major":2,"version_minor":0}
+{"model_id":"59a4fdfd2ab5427ab15075052aa31d7d","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [8 of 12]: Param: "max_val", val=0.18818181818181817...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"10deef9af6ce4b36808f91bc94a9a9c3","version_major":2,"version_minor":0}
+{"model_id":"10deef9af6ce4b36808f91bc94a9a9c3","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [9 of 12]: Param: "max_val", val=0.20363636363636362...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"4f4d1962483f41d4bc55fa55b885adb4","version_major":2,"version_minor":0}
+{"model_id":"4f4d1962483f41d4bc55fa55b885adb4","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [10 of 12]: Param: "max_val", val=0.21909090909090906...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"042cc10e18ef4e0c91fde48c5717816f","version_major":2,"version_minor":0}
+{"model_id":"042cc10e18ef4e0c91fde48c5717816f","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [11 of 12]: Param: "max_val", val=0.23454545454545456...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"e649d6ca67e44c03b111480d5c1c8dfb","version_major":2,"version_minor":0}
+{"model_id":"e649d6ca67e44c03b111480d5c1c8dfb","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [12 of 12]: Param: "max_val", val=0.25...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"32346b2fb55245f2b9bf85deba5e58ea","version_major":2,"version_minor":0}
+{"model_id":"32346b2fb55245f2b9bf85deba5e58ea","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1546,108 +1337,84 @@ Running experiment [1 of 12]: Param: "max_val", val=0.08...</code></pre>
 </div>
 <p>For completion, let’s try the Cosine sweep on <code>Full Normalization</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb138"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
-<span id="cb138-2"><a href="#cb138-2" aria-hidden="true" tabindex="-1"></a>full_norm_cos_res <span class="op">=</span> run(prompt, cos_expts, guide_tfm<span class="op">=</span>FullNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>full_norm_cos_res <span class="op">=</span> run(prompt, cos_expts, guide_tfm<span class="op">=</span>FullNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running the phase change k-Sweep experiments...
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.FullNormGuidance'&gt;
-Running experiment [1 of 12]: Param: "max_val", val=0.08...</code></pre>
+Running experiment [1 of 12]: Param: "max_val", val=0.08...
+Running experiment [2 of 12]: Param: "max_val", val=0.09545454545454546...
+Running experiment [3 of 12]: Param: "max_val", val=0.1109090909090909...
+Running experiment [4 of 12]: Param: "max_val", val=0.12636363636363634...
+Running experiment [5 of 12]: Param: "max_val", val=0.14181818181818182...
+Running experiment [6 of 12]: Param: "max_val", val=0.1572727272727273...
+Running experiment [7 of 12]: Param: "max_val", val=0.17272727272727273...
+Running experiment [8 of 12]: Param: "max_val", val=0.18818181818181817...
+Running experiment [9 of 12]: Param: "max_val", val=0.20363636363636362...
+Running experiment [10 of 12]: Param: "max_val", val=0.21909090909090906...
+Running experiment [11 of 12]: Param: "max_val", val=0.23454545454545456...
+Running experiment [12 of 12]: Param: "max_val", val=0.25...
+Done.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"1e07f0f9e60946f8a4c66061eb149588","version_major":2,"version_minor":0}
+{"model_id":"1e07f0f9e60946f8a4c66061eb149588","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 12]: Param: "max_val", val=0.09545454545454546...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"f7889191cafb4105875d078b570eeee2","version_major":2,"version_minor":0}
+{"model_id":"f7889191cafb4105875d078b570eeee2","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [3 of 12]: Param: "max_val", val=0.1109090909090909...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"d2dcbf92232043e280e2c1e119cce071","version_major":2,"version_minor":0}
+{"model_id":"d2dcbf92232043e280e2c1e119cce071","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [4 of 12]: Param: "max_val", val=0.12636363636363634...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"b5b96cbfc7fb4650a1ff8af3419514bc","version_major":2,"version_minor":0}
+{"model_id":"b5b96cbfc7fb4650a1ff8af3419514bc","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [5 of 12]: Param: "max_val", val=0.14181818181818182...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"3e70b224a2b641f7bd72be495fabd535","version_major":2,"version_minor":0}
+{"model_id":"3e70b224a2b641f7bd72be495fabd535","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [6 of 12]: Param: "max_val", val=0.1572727272727273...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"57f9753973624a5abd6a471a420dc2ed","version_major":2,"version_minor":0}
+{"model_id":"57f9753973624a5abd6a471a420dc2ed","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [7 of 12]: Param: "max_val", val=0.17272727272727273...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"99233bd974c54d3d900123355ac5f1c0","version_major":2,"version_minor":0}
+{"model_id":"99233bd974c54d3d900123355ac5f1c0","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [8 of 12]: Param: "max_val", val=0.18818181818181817...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"d092dfbefb5446d18de5af52959b2acb","version_major":2,"version_minor":0}
+{"model_id":"d092dfbefb5446d18de5af52959b2acb","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [9 of 12]: Param: "max_val", val=0.20363636363636362...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"e81de69f64f24663bd25e2ca08a288e6","version_major":2,"version_minor":0}
+{"model_id":"e81de69f64f24663bd25e2ca08a288e6","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [10 of 12]: Param: "max_val", val=0.21909090909090906...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"3d0019d84f7b443388ae053f52373ded","version_major":2,"version_minor":0}
+{"model_id":"3d0019d84f7b443388ae053f52373ded","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [11 of 12]: Param: "max_val", val=0.23454545454545456...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"f0809fd0dac34f8ba1b911f76959f22d","version_major":2,"version_minor":0}
+{"model_id":"f0809fd0dac34f8ba1b911f76959f22d","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [12 of 12]: Param: "max_val", val=0.25...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"3125e087d5e84722a23e865ff4f2a51b","version_major":2,"version_minor":0}
+{"model_id":"3125e087d5e84722a23e865ff4f2a51b","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1697,9 +1464,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1764,6 +1545,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

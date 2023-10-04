@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.475">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,9 +19,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -48,43 +49,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -120,7 +91,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
@@ -128,17 +100,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../../styles.css">
 <meta property="og:title" content="chaski - Classifier-free Guidance with Cosine Schedules Pt. 3">
-<meta property="og:description" content="This notebook is Part 3 in a series on dynamic Classifier-free Guidance. It combines normalizations and schedules for the guidance parameter \(G\).">
+<meta property="og:description" content="">
 <meta property="og:image" content="https://enzokro.dev/blog/posts/2022-11-23-guidance-expts-4/better_horse_4.png">
 <meta property="og:site-name" content="chaski">
 <meta property="og:image:height" content="1394">
 <meta property="og:image:width" content="1390">
 <meta name="twitter:title" content="chaski - Classifier-free Guidance with Cosine Schedules Pt. 3">
-<meta name="twitter:description" content="This notebook is Part 3 in a series on dynamic Classifier-free Guidance. It combines normalizations and schedules for the guidance parameter \(G\).">
+<meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://enzokro.dev/blog/posts/2022-11-23-guidance-expts-4/better_horse_4.png">
 <meta name="twitter:image-height" content="1394">
 <meta name="twitter:image-width" content="1390">
@@ -156,30 +129,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <span class="navbar-title">chaski</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../about.html"><i class="bi bi-person-circle" role="img">
+    <a class="nav-link" href="../../../about.html" rel="" target=""><i class="bi bi-person-circle" role="img">
 </i> 
  <span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/enzokro_"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/enzokro_" rel="" target=""><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/enzokro"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/enzokro" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -393,12 +368,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <blockquote class="blockquote">
 <p>“a photograph of an astronaut riding a horse”</p>
 </blockquote>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Important
 </div>
 </div>
@@ -534,20 +509,18 @@ Important
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>baseline_res <span class="op">=</span> run(prompt, baseline_expts, guide_tfm<span class="op">=</span>GuidanceTfm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Using Guidance Transform: &lt;class 'cf_guidance.transforms.GuidanceTfm'&gt;
-Running experiment [1 of 1]: Param: "max_val", val=7.5...</code></pre>
+Running experiment [1 of 1]: Param: "max_val", val=7.5...
+Done.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"3b67d254e88d49a0b83ab1534355df74","version_major":2,"version_minor":0}
+{"model_id":"3b67d254e88d49a0b83ab1534355df74","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># view the baseline image</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>baseline_res[<span class="st">'images'</span>][<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># view the baseline image</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>baseline_res[<span class="st">'images'</span>][<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="index_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
 </div>
@@ -573,99 +546,99 @@ We need smaller guidance values for <code>T-Normalization</code> and <code>Full 
 <p>These normalizations get their own, smaller value of <span class="math inline">\(G_\text{small} = 0.15\)</span>. This smaller value keeps the guidance update vector <span class="math inline">\(\left( t - u \right)\)</span> from exploding in scale.<br>
 ::::</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Default schedule parameters from the blog post</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">######################################</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>max_val           <span class="op">=</span> <span class="fl">7.5</span>   <span class="co"># guidance scaling value</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>min_val           <span class="op">=</span> <span class="dv">1</span>     <span class="co"># minimum guidance scaling</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>num_steps         <span class="op">=</span> <span class="dv">50</span>    <span class="co"># number of diffusion steps</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>num_warmup_steps  <span class="op">=</span> <span class="dv">0</span>     <span class="co"># number of warmup steps</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>warmup_init_val   <span class="op">=</span> <span class="dv">0</span>     <span class="co"># the intial warmup value</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>num_cycles        <span class="op">=</span> <span class="fl">0.5</span>   <span class="co"># number of cosine cycles</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>k_decay           <span class="op">=</span> <span class="dv">1</span>     <span class="co"># k-decay for cosine curve scaling </span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co"># smaller values for T-Norm and FullNorm</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>max_T <span class="op">=</span> <span class="fl">0.15</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>min_T <span class="op">=</span> <span class="fl">0.05</span></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="co">######################################</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Default schedule parameters from the blog post</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">######################################</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>max_val           <span class="op">=</span> <span class="fl">7.5</span>   <span class="co"># guidance scaling value</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>min_val           <span class="op">=</span> <span class="dv">1</span>     <span class="co"># minimum guidance scaling</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>num_steps         <span class="op">=</span> <span class="dv">50</span>    <span class="co"># number of diffusion steps</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>num_warmup_steps  <span class="op">=</span> <span class="dv">0</span>     <span class="co"># number of warmup steps</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>warmup_init_val   <span class="op">=</span> <span class="dv">0</span>     <span class="co"># the intial warmup value</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>num_cycles        <span class="op">=</span> <span class="fl">0.5</span>   <span class="co"># number of cosine cycles</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>k_decay           <span class="op">=</span> <span class="dv">1</span>     <span class="co"># k-decay for cosine curve scaling </span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># smaller values for T-Norm and FullNorm</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>max_T <span class="op">=</span> <span class="fl">0.15</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>min_T <span class="op">=</span> <span class="fl">0.05</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co">######################################</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To make sure our changes always reference this shared starting point, we can wrap these parameters in a dictionary.</p>
 <p>We also create a matching dictionary for the <code>T-Norm</code> params.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>DEFAULT_COS_PARAMS <span class="op">=</span> {</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_val'</span>:           max_val,</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_steps'</span>:         num_steps,</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'min_val'</span>:           min_val,</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_cycles'</span>:        num_cycles,</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'k_decay'</span>:           k_decay,</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_warmup_steps'</span>:  num_warmup_steps,</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'warmup_init_val'</span>:   warmup_init_val,</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>DEFAULT_T_PARAMS <span class="op">=</span> {</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_val'</span>:           max_T, <span class="co"># max G_small value</span></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_steps'</span>:         num_steps,</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'min_val'</span>:           min_T, <span class="co"># min G_small value</span></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_cycles'</span>:        num_cycles,</span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'k_decay'</span>:           k_decay,</span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_warmup_steps'</span>:  num_warmup_steps,</span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'warmup_init_val'</span>:   warmup_init_val,</span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>DEFAULT_COS_PARAMS <span class="op">=</span> {</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_val'</span>:           max_val,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_steps'</span>:         num_steps,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'min_val'</span>:           min_val,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_cycles'</span>:        num_cycles,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'k_decay'</span>:           k_decay,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_warmup_steps'</span>:  num_warmup_steps,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'warmup_init_val'</span>:   warmup_init_val,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>DEFAULT_T_PARAMS <span class="op">=</span> {</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_val'</span>:           max_T, <span class="co"># max G_small value</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_steps'</span>:         num_steps,</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'min_val'</span>:           min_T, <span class="co"># min G_small value</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_cycles'</span>:        num_cycles,</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'k_decay'</span>:           k_decay,</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_warmup_steps'</span>:  num_warmup_steps,</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'warmup_init_val'</span>:   warmup_init_val,</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Every new, incremental schedule will start from these shared dictionaries. Then, a single parameter is changed at a time.</p>
 <p>The <code>cos_harness</code> below gives us an easy way of making these minimum-pair changes.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cos_harness(new_params<span class="op">=</span>{}, default_params<span class="op">=</span>{}):</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''Creates cosine schedules with updated parameters in `new_params`</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># start from the given baseline `cos_params`</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    cos_params <span class="op">=</span> <span class="bu">dict</span>(default_params)</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update the schedule with any new parameters</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    cos_params.update(new_params)</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># return the new cosine schedule</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    sched <span class="op">=</span> get_cos_sched(<span class="op">**</span>cos_params)</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sched</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cos_harness(new_params<span class="op">=</span>{}, default_params<span class="op">=</span>{}):</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''Creates cosine schedules with updated parameters in `new_params`</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">    '''</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># start from the given baseline `cos_params`</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    cos_params <span class="op">=</span> <span class="bu">dict</span>(default_params)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update the schedule with any new parameters</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    cos_params.update(new_params)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># return the new cosine schedule</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    sched <span class="op">=</span> get_cos_sched(<span class="op">**</span>cos_params)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sched</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="plotting-the-cosine-schedules" class="level2">
 <h2 class="anchored" data-anchor-id="plotting-the-cosine-schedules">Plotting the Cosine Schedules</h2>
 <p>Now we create the different Cosine schedules that will be swept.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>cos_params <span class="op">=</span> {</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_warmup_steps'</span>: [<span class="dv">5</span>, <span class="dv">10</span>],</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_cycles'</span>:       [<span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>],</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'k_decay'</span>:          [<span class="fl">0.7</span>, <span class="dv">2</span>],</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_val'</span>:          [<span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">12</span>],</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'min_val'</span>:          [<span class="dv">2</span>, <span class="dv">3</span>],</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co"># create the cosine experiments</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>cos_func  <span class="op">=</span> partial(cos_harness, default_params<span class="op">=</span>DEFAULT_COS_PARAMS)</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>cos_expts <span class="op">=</span> create_expts(cos_params, cos_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>cos_params <span class="op">=</span> {</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_warmup_steps'</span>: [<span class="dv">5</span>, <span class="dv">10</span>],</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_cycles'</span>:       [<span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>],</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'k_decay'</span>:          [<span class="fl">0.7</span>, <span class="dv">2</span>],</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_val'</span>:          [<span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">12</span>],</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'min_val'</span>:          [<span class="dv">2</span>, <span class="dv">3</span>],</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co"># create the cosine experiments</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>cos_func  <span class="op">=</span> partial(cos_harness, default_params<span class="op">=</span>DEFAULT_COS_PARAMS)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>cos_expts <span class="op">=</span> create_expts(cos_params, cos_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>plot_grid([o[<span class="st">'schedule'</span>] <span class="cf">for</span> o <span class="kw">in</span> cos_expts], rows<span class="op">=</span><span class="dv">4</span>, titles<span class="op">=</span>[o[<span class="st">'title'</span>] <span class="cf">for</span> o <span class="kw">in</span> cos_expts])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>plot_grid([o[<span class="st">'schedule'</span>] <span class="cf">for</span> o <span class="kw">in</span> cos_expts], rows<span class="op">=</span><span class="dv">4</span>, titles<span class="op">=</span>[o[<span class="st">'title'</span>] <span class="cf">for</span> o <span class="kw">in</span> cos_expts])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="index_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>We repeat the steps above to create the <code>T-Norm</code> experiments</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>T_params <span class="op">=</span> {</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_warmup_steps'</span>: [<span class="dv">5</span>, <span class="dv">10</span>],</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_cycles'</span>:       [<span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>],</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'k_decay'</span>:          [<span class="fl">0.7</span>, <span class="dv">2</span>],</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_val'</span>:          [<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>],</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'min_val'</span>:          [<span class="fl">0.01</span>, <span class="fl">0.1</span>],</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co"># create the T-norm cosine experiments</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>T_func  <span class="op">=</span> partial(cos_harness, default_params<span class="op">=</span>DEFAULT_T_PARAMS)</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>T_expts <span class="op">=</span> create_expts(T_params, T_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>T_params <span class="op">=</span> {</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_warmup_steps'</span>: [<span class="dv">5</span>, <span class="dv">10</span>],</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_cycles'</span>:       [<span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>],</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'k_decay'</span>:          [<span class="fl">0.7</span>, <span class="dv">2</span>],</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_val'</span>:          [<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>],</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'min_val'</span>:          [<span class="fl">0.01</span>, <span class="fl">0.1</span>],</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co"># create the T-norm cosine experiments</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>T_func  <span class="op">=</span> partial(cos_harness, default_params<span class="op">=</span>DEFAULT_T_PARAMS)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>T_expts <span class="op">=</span> create_expts(T_params, T_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We also plot the <code>T-Norm</code> schedules below. Note that we are trying a few max and min values.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>plot_grid([o[<span class="st">'schedule'</span>] <span class="cf">for</span> o <span class="kw">in</span> T_expts], rows<span class="op">=</span><span class="dv">4</span>, titles<span class="op">=</span>[o[<span class="st">'title'</span>] <span class="cf">for</span> o <span class="kw">in</span> T_expts])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>plot_grid([o[<span class="st">'schedule'</span>] <span class="cf">for</span> o <span class="kw">in</span> T_expts], rows<span class="op">=</span><span class="dv">4</span>, titles<span class="op">=</span>[o[<span class="st">'title'</span>] <span class="cf">for</span> o <span class="kw">in</span> T_expts])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="index_files/figure-html/cell-23-output-1.png" class="img-fluid"></p>
 </div>
@@ -678,324 +651,252 @@ We need smaller guidance values for <code>T-Normalization</code> and <code>Full 
 <section id="basenorm-runs" class="level2">
 <h2 class="anchored" data-anchor-id="basenorm-runs"><code>BaseNorm</code> runs</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the BaseNorm experiments...'</span>)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>base_norm_cos_res <span class="op">=</span> run(prompt, cos_expts, guide_tfm<span class="op">=</span>BaseNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the BaseNorm experiments...'</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>base_norm_cos_res <span class="op">=</span> run(prompt, cos_expts, guide_tfm<span class="op">=</span>BaseNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running the BaseNorm experiments...
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.BaseNormGuidance'&gt;
-Running experiment [1 of 12]: Param: "k_decay", val=0.7...</code></pre>
+Running experiment [1 of 12]: Param: "k_decay", val=0.7...
+Running experiment [2 of 12]: Param: "k_decay", val=2...
+Running experiment [3 of 12]: Param: "max_val", val=8...
+Running experiment [4 of 12]: Param: "max_val", val=10...
+Running experiment [5 of 12]: Param: "max_val", val=12...
+Running experiment [6 of 12]: Param: "min_val", val=2...
+Running experiment [7 of 12]: Param: "min_val", val=3...
+Running experiment [8 of 12]: Param: "num_cycles", val=1...
+Running experiment [9 of 12]: Param: "num_cycles", val=1.5...
+Running experiment [10 of 12]: Param: "num_cycles", val=2...
+Running experiment [11 of 12]: Param: "num_warmup_steps", val=5...
+Running experiment [12 of 12]: Param: "num_warmup_steps", val=10...
+Done.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"e5b3574a1f264f4cb9595c36ad383854","version_major":2,"version_minor":0}
+{"model_id":"e5b3574a1f264f4cb9595c36ad383854","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 12]: Param: "k_decay", val=2...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"956746bc0a0c468fabf274312a5894dc","version_major":2,"version_minor":0}
+{"model_id":"956746bc0a0c468fabf274312a5894dc","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [3 of 12]: Param: "max_val", val=8...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"42277f32eab24b918cd34cc61933f6c2","version_major":2,"version_minor":0}
+{"model_id":"42277f32eab24b918cd34cc61933f6c2","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [4 of 12]: Param: "max_val", val=10...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"c9e861dbdefc4c5fa405eda1b166963b","version_major":2,"version_minor":0}
+{"model_id":"c9e861dbdefc4c5fa405eda1b166963b","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [5 of 12]: Param: "max_val", val=12...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"95e161f75f4f4df68da1ed20cb2b926a","version_major":2,"version_minor":0}
+{"model_id":"95e161f75f4f4df68da1ed20cb2b926a","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [6 of 12]: Param: "min_val", val=2...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"1faa203cdef44bf3b9b71af608bbfa31","version_major":2,"version_minor":0}
+{"model_id":"1faa203cdef44bf3b9b71af608bbfa31","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [7 of 12]: Param: "min_val", val=3...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"57da638442ac4058b385df0346a6d24e","version_major":2,"version_minor":0}
+{"model_id":"57da638442ac4058b385df0346a6d24e","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [8 of 12]: Param: "num_cycles", val=1...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"964dc915a8c44e6cac1498b2b9e7efb7","version_major":2,"version_minor":0}
+{"model_id":"964dc915a8c44e6cac1498b2b9e7efb7","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [9 of 12]: Param: "num_cycles", val=1.5...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"73399e43795a49cd90ccb6b83e6c95f4","version_major":2,"version_minor":0}
+{"model_id":"73399e43795a49cd90ccb6b83e6c95f4","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [10 of 12]: Param: "num_cycles", val=2...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"1aabd0febae744f187bfd499606885d0","version_major":2,"version_minor":0}
+{"model_id":"1aabd0febae744f187bfd499606885d0","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [11 of 12]: Param: "num_warmup_steps", val=5...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"7d236ff24a534f83b4ac441a9b8328ad","version_major":2,"version_minor":0}
+{"model_id":"7d236ff24a534f83b4ac441a9b8328ad","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [12 of 12]: Param: "num_warmup_steps", val=10...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"6b80772c26464e088bc8d166912fd5eb","version_major":2,"version_minor":0}
+{"model_id":"6b80772c26464e088bc8d166912fd5eb","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.</code></pre>
 </div>
 </div>
 </section>
 <section id="t-norm-runs" class="level2">
 <h2 class="anchored" data-anchor-id="t-norm-runs"><code>T-Norm</code> runs</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the T-Norm experiments...'</span>)</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>t_norm_cos_res <span class="op">=</span> run(prompt, T_expts, guide_tfm<span class="op">=</span>TNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the T-Norm experiments...'</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>t_norm_cos_res <span class="op">=</span> run(prompt, T_expts, guide_tfm<span class="op">=</span>TNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running the T-Norm experiments...
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.TNormGuidance'&gt;
-Running experiment [1 of 12]: Param: "k_decay", val=0.7...</code></pre>
+Running experiment [1 of 12]: Param: "k_decay", val=0.7...
+Running experiment [2 of 12]: Param: "k_decay", val=2...
+Running experiment [3 of 12]: Param: "max_val", val=0.1...
+Running experiment [4 of 12]: Param: "max_val", val=0.2...
+Running experiment [5 of 12]: Param: "max_val", val=0.3...
+Running experiment [6 of 12]: Param: "min_val", val=0.01...
+Running experiment [7 of 12]: Param: "min_val", val=0.1...
+Running experiment [8 of 12]: Param: "num_cycles", val=1...
+Running experiment [9 of 12]: Param: "num_cycles", val=1.5...
+Running experiment [10 of 12]: Param: "num_cycles", val=2...
+Running experiment [11 of 12]: Param: "num_warmup_steps", val=5...
+Running experiment [12 of 12]: Param: "num_warmup_steps", val=10...
+Done.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"22757c8077f44bc8bd017fb754c9c793","version_major":2,"version_minor":0}
+{"model_id":"22757c8077f44bc8bd017fb754c9c793","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 12]: Param: "k_decay", val=2...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"1da00e586f4542499f37fbcb896690c7","version_major":2,"version_minor":0}
+{"model_id":"1da00e586f4542499f37fbcb896690c7","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [3 of 12]: Param: "max_val", val=0.1...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"5367c8d637794b5e9224dc9d55d6f18d","version_major":2,"version_minor":0}
+{"model_id":"5367c8d637794b5e9224dc9d55d6f18d","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [4 of 12]: Param: "max_val", val=0.2...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"3e170f3b919b4e85a49c3a7320ee9335","version_major":2,"version_minor":0}
+{"model_id":"3e170f3b919b4e85a49c3a7320ee9335","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [5 of 12]: Param: "max_val", val=0.3...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"28ce448298ab4db8b149d73de4396b3c","version_major":2,"version_minor":0}
+{"model_id":"28ce448298ab4db8b149d73de4396b3c","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [6 of 12]: Param: "min_val", val=0.01...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"ac622a8974244d1eade9bc0c931aa287","version_major":2,"version_minor":0}
+{"model_id":"ac622a8974244d1eade9bc0c931aa287","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [7 of 12]: Param: "min_val", val=0.1...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"1c4715488d7a42cba581b99e488e1f82","version_major":2,"version_minor":0}
+{"model_id":"1c4715488d7a42cba581b99e488e1f82","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [8 of 12]: Param: "num_cycles", val=1...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"2c732500aeff4326b13d2bfa640f1e9b","version_major":2,"version_minor":0}
+{"model_id":"2c732500aeff4326b13d2bfa640f1e9b","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [9 of 12]: Param: "num_cycles", val=1.5...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"96a20bf76b3a46c79adcbfdf93c5009a","version_major":2,"version_minor":0}
+{"model_id":"96a20bf76b3a46c79adcbfdf93c5009a","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [10 of 12]: Param: "num_cycles", val=2...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"4d8789ae9f14442a8022d4391848b52b","version_major":2,"version_minor":0}
+{"model_id":"4d8789ae9f14442a8022d4391848b52b","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [11 of 12]: Param: "num_warmup_steps", val=5...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"20927024afb543099f50afccee32843a","version_major":2,"version_minor":0}
+{"model_id":"20927024afb543099f50afccee32843a","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [12 of 12]: Param: "num_warmup_steps", val=10...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"7551fb8f96474bdbbdda57640fd5e31c","version_major":2,"version_minor":0}
+{"model_id":"7551fb8f96474bdbbdda57640fd5e31c","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.</code></pre>
 </div>
 </div>
 </section>
 <section id="fullnorm-runs" class="level2">
 <h2 class="anchored" data-anchor-id="fullnorm-runs"><code>FullNorm</code> runs</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the FullNorm experiments...'</span>)</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>full_norm_cos_res <span class="op">=</span> run(prompt, T_expts, guide_tfm<span class="op">=</span>FullNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the FullNorm experiments...'</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>full_norm_cos_res <span class="op">=</span> run(prompt, T_expts, guide_tfm<span class="op">=</span>FullNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running the FullNorm experiments...
 Using Guidance Transform: &lt;class 'cf_guidance.transforms.FullNormGuidance'&gt;
-Running experiment [1 of 12]: Param: "k_decay", val=0.7...</code></pre>
+Running experiment [1 of 12]: Param: "k_decay", val=0.7...
+Running experiment [2 of 12]: Param: "k_decay", val=2...
+Running experiment [3 of 12]: Param: "max_val", val=0.1...
+Running experiment [4 of 12]: Param: "max_val", val=0.2...
+Running experiment [5 of 12]: Param: "max_val", val=0.3...
+Running experiment [6 of 12]: Param: "min_val", val=0.01...
+Running experiment [7 of 12]: Param: "min_val", val=0.1...
+Running experiment [8 of 12]: Param: "num_cycles", val=1...
+Running experiment [9 of 12]: Param: "num_cycles", val=1.5...
+Running experiment [10 of 12]: Param: "num_cycles", val=2...
+Running experiment [11 of 12]: Param: "num_warmup_steps", val=5...
+Running experiment [12 of 12]: Param: "num_warmup_steps", val=10...
+Done.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"787a15c0da154d45baff48e544fdb084","version_major":2,"version_minor":0}
+{"model_id":"787a15c0da154d45baff48e544fdb084","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [2 of 12]: Param: "k_decay", val=2...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"a5381a8e7ec541649d9c7863de42b5be","version_major":2,"version_minor":0}
+{"model_id":"a5381a8e7ec541649d9c7863de42b5be","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [3 of 12]: Param: "max_val", val=0.1...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"24e74b3f2f0340d393f65a041c30aeb4","version_major":2,"version_minor":0}
+{"model_id":"24e74b3f2f0340d393f65a041c30aeb4","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [4 of 12]: Param: "max_val", val=0.2...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"d95cebf681db4fa48950edc15d285cc0","version_major":2,"version_minor":0}
+{"model_id":"d95cebf681db4fa48950edc15d285cc0","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [5 of 12]: Param: "max_val", val=0.3...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"7cdec17deb634f7283eaaf2d80dc9d35","version_major":2,"version_minor":0}
+{"model_id":"7cdec17deb634f7283eaaf2d80dc9d35","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [6 of 12]: Param: "min_val", val=0.01...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"660d7a0a36834ffe97b0bafa7ee1b47c","version_major":2,"version_minor":0}
+{"model_id":"660d7a0a36834ffe97b0bafa7ee1b47c","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [7 of 12]: Param: "min_val", val=0.1...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"20f0888e4d2a42f1a5dec0f3dc9d6d7a","version_major":2,"version_minor":0}
+{"model_id":"20f0888e4d2a42f1a5dec0f3dc9d6d7a","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [8 of 12]: Param: "num_cycles", val=1...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"42351bec358c458ea1109056bf418d47","version_major":2,"version_minor":0}
+{"model_id":"42351bec358c458ea1109056bf418d47","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [9 of 12]: Param: "num_cycles", val=1.5...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"467b9798d4ed4d45b4d13779737ce5d7","version_major":2,"version_minor":0}
+{"model_id":"467b9798d4ed4d45b4d13779737ce5d7","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [10 of 12]: Param: "num_cycles", val=2...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"b7367534fcd640fdbed65bf87a70f866","version_major":2,"version_minor":0}
+{"model_id":"b7367534fcd640fdbed65bf87a70f866","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [11 of 12]: Param: "num_warmup_steps", val=5...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"b0dd33f489c44e04a54100245deff079","version_major":2,"version_minor":0}
+{"model_id":"b0dd33f489c44e04a54100245deff079","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running experiment [12 of 12]: Param: "num_warmup_steps", val=10...</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"f971e8685b934128b60d630dc184d338","version_major":2,"version_minor":0}
+{"model_id":"f971e8685b934128b60d630dc184d338","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Done.</code></pre>
 </div>
 </div>
 </section>
@@ -1080,9 +981,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1147,6 +1062,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
