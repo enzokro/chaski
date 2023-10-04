@@ -263,18 +263,18 @@ font-style: inherit;"># publish the blog on github pages</span></span>
 <span id="cb9-2"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">quarto</span> publish</span></code></pre></div>
-<p>And there we go! We’ve create and published our first blog post using <code>nbdev</code>. <a href="https://enzokro.dev/blog/posts/2023-09-27-Session_1_nbdev/">Click here</a> for a live link to this Notebook as a blog post.</p>
+<p>And there we go! We created and published our first blog post using <code>nbdev</code>. <a href="https://enzokro.dev/blog/posts/2023-09-27-Session_1_nbdev/">Click here</a> for a live link to this Notebook as a blog post.</p>
 </section>
 </section>
 </section>
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>
-<p>This Notebook covered how to create and publish a blog. We used `nbdev to build the blog and Quarto to publish it. We also showed why the mix of Literate and Exploratory Programming is a powerful approach to both research and thinking in general.</p>
+<p>This Notebook covered how to create and publish a blog. We used <code>nbdev</code> to build the blog and Quarto to publish it. We also showed how the mix of Literate and Exploratory Programming is a powerful approach to both research and thinking in general.</p>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
 <ul>
-<li><a href="https://nbdev.fast.ai/tutorials/tutorial.html#installation">Official nbdev tutorial.</a></li>
-<li><a href="https://nbdev.fast.ai/tutorials/blogging.html">Blogging with nbdev.</a></li>
+<li><a href="https://nbdev.fast.ai/tutorials/tutorial.html#installation">Official nbdev tutorial</a></li>
+<li><a href="https://nbdev.fast.ai/tutorials/blogging.html">Blogging with nbdev</a></li>
 </ul>
 
 
