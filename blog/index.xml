@@ -27,12 +27,12 @@
 <p><a href="https://nbdev.fast.ai/"><code>nbdev</code></a> is a powerful tool inspired by two paradigms in the coding world:<br>
 - <a href="https://en.wikipedia.org/wiki/Literate_programming">Literate Programming</a><br>
 - <a href="https://en.wikipedia.org/wiki/Exploratory_programming">Exploratory Programming</a></p>
-<p>Next we briefly cover these ideas and why their combination is so powerful.</p>
+<p>Next let’s go over these ideas and why their combination is so powerful.</p>
 <section id="literate-programming" class="level3">
 <h3 class="anchored" data-anchor-id="literate-programming">Literate Programming</h3>
-<p>In Literate Programming, notes and tests are woven directly into a project’s source code. This is very different from documentation that exists separately in some other set of files. Code, documentation, and tests are all first-class citizens in Literate Programming. Each piece is crucial to the overall approach and makes for better, more readable code.</p>
-<p>In <code>nbdev</code> a Jupyter Notebook is the single source of truth for code, documentation, and tests. Instead of independently managing three sets of files, everything is defined and happens in the Notebook. If the Notebook runs, then you know your code will run.</p>
-<p>So, why is this helpful? Here’s a fun analogy: your Notebooks are the modern, computerized version of field journals. Below are some inspirational samples from <a href="https://www.wired.com/2011/07/science-field-notes-gallery/">this Wired article</a> about what science, at its best, can be:</p>
+<p>The original idea was proposed by Donald Knuth in 1984. In Literate Programming, notes and tests are woven directly into a project’s source code. This is very different from documentation that exists separately in some outside set of files. Code, documentation, and tests are all first-class citizens in Literate Programming. Each piece is crucial to the overall approach and makes for better, more readable code.</p>
+<p>In <code>nbdev</code>, a Jupyter Notebook is the single source of truth for code, documentation, and tests. Instead of managing three independent groups of files, everything is defined and happens in the Notebook. If the Notebook runs, then you know your code will run.</p>
+<p>So, why is this useful? A fun analogy might help: Notebooks are the modern, digital version of field journals. Here are some inspirational samples from <a href="https://www.wired.com/2011/07/science-field-notes-gallery/">this Wired article</a> about what science, at its best, can be:</p>
 <p><img src="https://enzokro.dev/blog/posts/2023-09-27-Session_1_nbdev/field-notes-butterflies.jpg" class="img-fluid"></p>
 <p><img src="https://enzokro.dev/blog/posts/2023-09-27-Session_1_nbdev/field-notes-grinnell.jpg" class="img-fluid"></p>
 <p><img src="https://enzokro.dev/blog/posts/2023-09-27-Session_1_nbdev/field-notes-lynx.jpg" class="img-fluid"></p>
