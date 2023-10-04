@@ -79,12 +79,10 @@
 </section>
 
  ]]></description>
-  <category>diffusion</category>
-  <category>classifier-free guidance</category>
+  <category>LLM</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2023-04-17-llm-prompt-tips/index.html</guid>
   <pubDate>Mon, 17 Apr 2023 04:00:00 GMT</pubDate>
-  <media:content url="https://enzokro.dev/blog/posts/2023-04-17-llm-prompt-tips/better_village.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Stable Diffusion v2 with dynamic Classifier-free Guidance</title>

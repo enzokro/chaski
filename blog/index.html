@@ -96,10 +96,14 @@ ul.task-list li input[type="checkbox"] {
 
 <link rel="stylesheet" href="../styles.css">
 <link rel="alternate" type="application/rss+xml" title="chaski" href="index.xml"><meta property="og:title" content="chaski blog">
-<meta property="og:image" content="https://enzokro.dev/blog/posts/2023-04-17-llm-prompt-tips/better_village.png">
+<meta property="og:image" content="https://enzokro.dev/blog/posts/2022-11-28-sd-v2-schedules-1/better_village.png">
 <meta property="og:site-name" content="chaski">
+<meta property="og:image:height" content="1444">
+<meta property="og:image:width" content="1444">
 <meta name="twitter:title" content="chaski blog">
-<meta name="twitter:image" content="https://enzokro.dev/blog/posts/2023-04-17-llm-prompt-tips/better_village.png">
+<meta name="twitter:image" content="https://enzokro.dev/blog/posts/2022-11-28-sd-v2-schedules-1/better_village.png">
+<meta name="twitter:image-height" content="1444">
+<meta name="twitter:image-width" content="1444">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -121,9 +125,14 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../about.html" rel="" target=""><i class="bi bi-person-circle" role="img">
+    <a class="nav-link" href="../about.html" rel="" target=""><i class="bi bi-person-rolodex" role="img">
 </i> 
  <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../blog/index.html" rel="" target="" aria-current="page"><i class="bi bi-file-text" role="img">
+</i> 
+ <span class="menu-text">Blog</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -150,7 +159,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(16)</span></div><div class="category" data-category="Binary Tree">Binary Tree <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SLERP">SLERP <span class="quarto-category-count">(1)</span></div><div class="category" data-category="algorithms">algorithms <span class="quarto-category-count">(1)</span></div><div class="category" data-category="classifier-free guidance">classifier-free guidance <span class="quarto-category-count">(10)</span></div><div class="category" data-category="complex networks">complex networks <span class="quarto-category-count">(1)</span></div><div class="category" data-category="deep learning">deep learning <span class="quarto-category-count">(13)</span></div><div class="category" data-category="diffusion">diffusion <span class="quarto-category-count">(12)</span></div><div class="category" data-category="fractal">fractal <span class="quarto-category-count">(1)</span></div><div class="category" data-category="functional">functional <span class="quarto-category-count">(1)</span></div><div class="category" data-category="latent interpolation">latent interpolation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="nbdev">nbdev <span class="quarto-category-count">(1)</span></div><div class="category" data-category="python">python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="spectrogram normalizations">spectrogram normalizations <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(16)</span></div><div class="category" data-category="Binary Tree">Binary Tree <span class="quarto-category-count">(1)</span></div><div class="category" data-category="LLM">LLM <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SLERP">SLERP <span class="quarto-category-count">(1)</span></div><div class="category" data-category="algorithms">algorithms <span class="quarto-category-count">(1)</span></div><div class="category" data-category="classifier-free guidance">classifier-free guidance <span class="quarto-category-count">(9)</span></div><div class="category" data-category="complex networks">complex networks <span class="quarto-category-count">(1)</span></div><div class="category" data-category="deep learning">deep learning <span class="quarto-category-count">(13)</span></div><div class="category" data-category="diffusion">diffusion <span class="quarto-category-count">(11)</span></div><div class="category" data-category="fractal">fractal <span class="quarto-category-count">(1)</span></div><div class="category" data-category="functional">functional <span class="quarto-category-count">(1)</span></div><div class="category" data-category="latent interpolation">latent interpolation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="nbdev">nbdev <span class="quarto-category-count">(1)</span></div><div class="category" data-category="python">python <span class="quarto-category-count">(1)</span></div><div class="category" data-category="spectrogram normalizations">spectrogram normalizations <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content column-page-left" id="quarto-document-content">
 
@@ -187,9 +196,9 @@ ul.task-list li input[type="checkbox"] {
     </div>
 </div>
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="diffusion,classifier-free guidance,deep learning" data-listing-date-sort="1681704000000" data-listing-file-modified-sort="1694983013548" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="0" data-categories="LLM,deep learning" data-listing-date-sort="1681704000000" data-listing-file-modified-sort="1696390111902" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
 <div class="thumbnail">
-<p><a href="../blog/posts/2023-04-17-llm-prompt-tips/index.html"> <img src="../blog/posts/2023-04-17-llm-prompt-tips/better_village.png" class="thumbnail-image"> </a></p>
+<p><a href="../blog/posts/2023-04-17-llm-prompt-tips/index.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="../blog/posts/2023-04-17-llm-prompt-tips/index.html">
@@ -201,11 +210,8 @@ Tips for LLM prompts
 </div>
 </a>
 <div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('diffusion'); return false;">
-diffusion
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('classifier-free guidance'); return false;">
-classifier-free guidance
+<div class="listing-category" onclick="window.quartoListingCategory('LLM'); return false;">
+LLM
 </div>
 <div class="listing-category" onclick="window.quartoListingCategory('deep learning'); return false;">
 deep learning
@@ -717,7 +723,7 @@ enzokro
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="13" data-categories="fractal,python,nbdev" data-listing-date-sort="1664251200000" data-listing-file-modified-sort="1696375678490" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
+<div class="quarto-post image-right" data-index="13" data-categories="fractal,python,nbdev" data-listing-date-sort="1664251200000" data-listing-file-modified-sort="1696390127130" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
 <div class="thumbnail">
 <p><a href="../blog/posts/2023-09-27-Session_1_nbdev/index.html"> <img src="../blog/posts/2023-09-27-Session_1_nbdev/nbdev_pic.png" class="thumbnail-image"> </a></p>
 </div>
