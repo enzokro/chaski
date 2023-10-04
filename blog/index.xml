@@ -30,24 +30,27 @@
 <p>Next we briefly cover these ideas and why their combination is so powerful.</p>
 <section id="literate-programming" class="level3">
 <h3 class="anchored" data-anchor-id="literate-programming">Literate Programming</h3>
-<p>In Literate Programming, notes and tests are woven directly into a project’s source code. This is very different from when documentation exists in some outside set of files. In other words: code, documentation, and tests are all first-class citizens in Literate Programming. Each piece is crucial in the overall approach and makes for better, more readable code.</p>
+<p>In Literate Programming, notes and tests are woven directly into a project’s source code. This is very different from documentation that exists separately in some other set of files. Code, documentation, and tests are all first-class citizens in Literate Programming. Each piece is crucial to the overall approach and makes for better, more readable code.</p>
 <p>In <code>nbdev</code> a Jupyter Notebook is the single source of truth for code, documentation, and tests. Instead of independently managing three sets of files, everything is defined and happens in the Notebook. If the Notebook runs, then you know your code will run.</p>
-<p>So, why is this helpful? Here’s a fun analogy: your Notebooks are the modern, computerized version of field journals. Below are some inspirational examples from <a href="https://www.wired.com/2011/07/science-field-notes-gallery/">this Wired article</a> about what science, at its best, can both be and look like:</p>
+<p>So, why is this helpful? Here’s a fun analogy: your Notebooks are the modern, computerized version of field journals. Below are some inspirational samples from <a href="https://www.wired.com/2011/07/science-field-notes-gallery/">this Wired article</a> about what science, at its best, can be:</p>
 <p><img src="https://enzokro.dev/blog/posts/2023-09-27-Session_1_nbdev/field-notes-butterflies.jpg" class="img-fluid"></p>
 <p><img src="https://enzokro.dev/blog/posts/2023-09-27-Session_1_nbdev/field-notes-grinnell.jpg" class="img-fluid"></p>
 <p><img src="https://enzokro.dev/blog/posts/2023-09-27-Session_1_nbdev/field-notes-lynx.jpg" class="img-fluid"></p>
-<p>Let’s focus on the last example: the field notes about a lynx. Notice that we’re not only reading text descriptions of what a Lynx <em>supposedly</em> looks like. But we’re not looking at a series of pictures without any context either. We’re getting the best of both worlds: short and relevant descriptions right next to clear, working examples. The gap between the written, theoretical and the actual, practical is bridged.</p>
-<p>Notebooks can do for our code what the field notes above did for the lynx. We can interactively show people the data, describe what’s being done, and make sure that the results are correct. We can even show our mistakes and struggles along the way. This strong loop between what you’re doing (<em>code</em>), describing what you’re doing (<em>documentation</em>), and making sure it’s correct (<em>tests</em>) is a great approach to research. Beyond that, it is an incredibly powerful way to communicate and share ideas.</p>
+<p>Let’s focus on the last example: the field notes about a lynx. Notice that we’re not only reading long descriptions of what a Lynx is <em>supposed</em> to look like. And we’re not looking at a series of pictures with no context either. We’re getting the best of both worlds: short and relevant descriptions right next to clear, working examples. Field notes bridge the gap between the written, theoretical and the actual, practical.</p>
+<p>Notebooks can do for code what the field notes above did for the lynx. We can interactively show people the data, describe what’s being done, and make sure that the results are correct. We can even show our mistakes and struggles along the way. This strong loop between what you’re doing (<em>code</em>), describing what you’re doing (<em>documentation</em>), and making sure it’s correct (<em>tests</em>) is a great way to approach research. More than that, it is an incredibly powerful way to communicate and share ideas.</p>
 </section>
 <section id="exploratory-programming" class="level3">
 <h3 class="anchored" data-anchor-id="exploratory-programming">Exploratory Programming</h3>
-<p>Exploratory Programming is an open-ended approach for tackling new problems and unknown domains. It’s very helpful at the start of a project when scope or requirements are stil being finalized.</p>
-<p>Notebooks are naturally dynamic and interactive which makes them perfect for Exploratory Programming. They make the barrier for trying new things extremely low. And they’re outright fun to use!</p>
+<p>Exploratory Programming is an open-ended approach for tackling new problems and unknown domains. It’s very helpful at the start of a project when scope or requirements are still being finalized.</p>
+<p>Notebooks are both dynamic and interactive which makes them perfect for Exploratory Programming. They make the barrier for trying new things extremely low. And they’re downright fun!</p>
+<p>The video embedded below is an incredible talk by Bret Victor about the power of Exploratory Programming, with stunning examples throughout:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PUv66718DII?si=rPbY3LL6kQw-4yUa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
+</iframe>
 </section>
 <section id="combining-literate-and-exploratory-programming" class="level3">
 <h3 class="anchored" data-anchor-id="combining-literate-and-exploratory-programming">Combining Literate and Exploratory Programming</h3>
-<p><code>nbdev</code>’s workflow combines these two ideas. It’s a great approach for trying things and figuring out how they work. To start, iterations are fast and cheap so it’s easy to follow any hit of curiosity. We can also explore and develop codebases in a much more interactive way than usual. And if anything breaks, we can always restart the Notebook and try again.</p>
-<p>We can mix and match these ideas on the fly. For example at the start of a project, while figuring out the problem space, we might lean Exploratory. Then, as the idea matures, we pivot more Literate to refine and crystallize our approach.</p>
+<p><code>nbdev</code>’s workflow combines these two ideas. It’s a great approach for interactively learning and exploring how something works. Iterations are fast and cheap so it’s easy to follow any hit of curiosity. We can also develop and test code in a much more dynamic way than usual. And if anything breaks, we can always restart the Notebook and try again.</p>
+<p>These ideas can be measured on the fly. For example at the start of a project, while figuring out the problem space, we could lean Exploratory. Then, as the idea matures, we pivot to Literate in order to refine and crystallize our approach.</p>
 <p>Next: creating and publishing a blog post with <code>nbdev</code>.</p>
 </section>
 </section>
