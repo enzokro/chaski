@@ -2,6 +2,7 @@
   {
     "listing": "/blog/index.html",
     "items": [
+      "/blog/posts/2023-10-05-Session_0_env/index.html",
       "/blog/posts/2023-09-27-Session_1_nbdev/index.html",
       "/blog/posts/2023-04-17-llm-prompt-tips/index.html",
       "/blog/posts/2022-11-28-sd-v2-schedules-1/index.html",

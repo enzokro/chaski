@@ -1,29 +1,44 @@
+body {
+  font-family: 'Courier New', Courier, monospace; /* A more traditional, typewriter-style font */
+  background-color: #f4f1e9; /* A paper-like background color */
+  color: #333; /* A softer text color */
+}
+
 .cell {
   margin-bottom: 1rem;
+  border: 1px solid #ddd; /* Adds a border around each cell */
+  background-color: #fefefe; /* A softer background color for cells */
+  padding: 0.5rem; /* Adds some padding within cells */
 }
 
 .cell > .sourceCode {
-  margin-bottom: 0;
+  background-color: #e8f0f2; /* a subtle blue tint */
+  border: none; /* removing the border */
+  padding: 0.5rem;
+  font-family: 'Fira Code', monospace; /* a monospaced font ideal for code */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* adds a subtle shadow for an elevated look */
+  border-radius: 4px; /* optional: adds rounded corners */
+  margin-bottom: 1rem; /* adds some space below the code card */
 }
+
+
 
 .cell-output > pre {
   margin-bottom: 0;
+  background-color: #f9f9f9; /* A subtle background color for output blocks */
+  border: 1px solid #ddd; /* Adds a border around output blocks */
+  padding: 0.5rem; /* Adds some padding within output blocks */
 }
 
 .cell-output > pre, .cell-output > .sourceCode > pre, .cell-output-stdout > pre {
   margin-left: 0.8rem;
   margin-top: 0;
   background: none;
-  border-left: 2px solid lightsalmon;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+  border-left: 2px solid #8f8f8f; /* A more muted border color */
 }
 
 .cell-output > .sourceCode {
   border: none;
-}
-
-.cell-output > .sourceCode {
   background: none;
   margin-top: 0;
 }
@@ -39,12 +54,21 @@ div.description {
 /* show_doc signature */
 blockquote > pre {
   font-size: 14px;
+  background-color: #f9f9f9; /* A subtle background color for blockquote blocks */
+  border: 1px solid #ddd; /* Adds a border around blockquote blocks */
+  padding: 0.5rem; /* Adds some padding within blockquote blocks */
 }
 
 .table {
   font-size: 16px;
   /* disable striped tables */
   --bs-table-striped-bg: var(--bs-table-bg);
+  border-collapse: collapse; /* Ensures borders between cells collapse into a single border */
+}
+
+.table th, .table td {
+  border: 1px solid #ddd; /* Adds a border around table cells */
+  padding: 0.5rem; /* Adds some padding within table cells */
 }
 
 .quarto-figure-center > figure > figcaption {
@@ -59,36 +83,17 @@ blockquote > pre {
 .title.toc-ignore {
   font-weight: 1000;
 }
-/* h1:not(.title){
-  background-image: linear-gradient(120deg, lightblue, rgb(41, 41, 239));
-} */
 
-/* Resetting list styles */
-ul, ol {
-  margin: 0;
-  padding: 0;
-  list-style-position: outside;
+/* Additional styling for headings to give a more formal appearance */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Georgia', serif;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 
-/* Styling unordered lists */
-ul {
-  margin-left: 1em; /* Adjust the left margin */
-}
-
-ul li {
-  margin-bottom: 0.4em; /* Adjust spacing between bullets */
-}
-
-/* Styling ordered lists */
-ol {
-  margin-left: 1em; /* Adjust the left margin */
-}
-
-ol li {
-  margin-bottom: 0.4em; /* Adjust spacing between bullets */
-}
-
-/* Styling nested lists */
-ul ul, ul ol, ol ul, ol ol {
-  margin-left: 1em; /* Adjust the left margin for nested lists */
+/* Optional: Add a vintage-style border around the content */
+.wrapper {
+  border: 2px solid #ddd;
+  padding: 2rem;
+  margin: 2rem;
 }
