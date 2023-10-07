@@ -450,17 +450,34 @@ font-style: inherit;">512</span>))</span>
 </section>
 <section id="building-an-mlc-ios-app" class="level1">
 <h1>Building an MLC iOS app</h1>
+<p>Similar process, need a few extra tools and helper packages. First, we need to install rust:</p>
+<div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">curl</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--proto</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'=https'</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--tlsv1.2</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-sSf</span> https://sh.rustup.rs <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sh</span></span></code></pre></div>
+<p>It will prompt you for different installation kinds, but the default one is perfectly fine.</p>
 <p>In the sections above we chatted with Llama2 on our laptop. Let’s go ahead and talk to it from an iOS app now.</p>
 <p>First we download a model built for iOS.</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># download the pre-compiled Llama2 model for iOS</span></span>
-<span id="cb20-2">cd dist<span class="op" style="color: #5E5E5E;
+<span id="cb21-2">cd dist<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span>prebuilt</span>
-<span id="cb20-3">git lfs install</span>
-<span id="cb20-4">git clone https:<span class="op" style="color: #5E5E5E;
+<span id="cb21-3">git lfs install</span>
+<span id="cb21-4">git clone https:<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">//</span>huggingface.co<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -489,90 +506,90 @@ background-color: null;
 font-style: inherit;">-</span>hf<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span>q3f16_1</span>
-<span id="cb20-5">cd ..<span class="op" style="color: #5E5E5E;
+<span id="cb21-5">cd ..<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span>..</span></code></pre></div>
 </div>
 <p>We need some other, helper libraries to run the iOS models. Run the command below to download and configure them:</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># grab the helper libraries</span></span>
-<span id="cb21-2">git submodule update <span class="op" style="color: #5E5E5E;
+<span id="cb22-2">git submodule update <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">--</span>init <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">--</span>recursive </span>
-<span id="cb21-3"></span>
-<span id="cb21-4"><span class="co" style="color: #5E5E5E;
+<span id="cb22-3"></span>
+<span id="cb22-4"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># prepare the ios libs</span></span>
-<span id="cb21-5">cd .<span class="op" style="color: #5E5E5E;
+<span id="cb22-5">cd .<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span>ios</span>
-<span id="cb21-6">.<span class="op" style="color: #5E5E5E;
+<span id="cb22-6">.<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span>prepare_libs.sh</span></code></pre></div>
 </div>
 <p>This will create a <code>build/</code> folder. Make sure the following files are in there:</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># expected output of build/</span></span>
-<span id="cb22-2">ls .<span class="op" style="color: #5E5E5E;
+<span id="cb23-2">ls .<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span>build<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span>lib<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span></span>
-<span id="cb22-3">libmlc_llm.a         <span class="co" style="color: #5E5E5E;
+<span id="cb23-3">libmlc_llm.a         <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># A lightweight interface to interact with LLM, tokenizer, and TVM Unity runtime</span></span>
-<span id="cb22-4">libmodel_iphone.a    <span class="co" style="color: #5E5E5E;
+<span id="cb23-4">libmodel_iphone.a    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># The compiled model lib</span></span>
-<span id="cb22-5">libsentencepiece.a   <span class="co" style="color: #5E5E5E;
+<span id="cb23-5">libsentencepiece.a   <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># SentencePiece tokenizer</span></span>
-<span id="cb22-6">libtokenizers_cpp.a  <span class="co" style="color: #5E5E5E;
+<span id="cb23-6">libtokenizers_cpp.a  <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Huggingface tokenizer</span></span>
-<span id="cb22-7">libtvm_runtime.a     <span class="co" style="color: #5E5E5E;
+<span id="cb23-7">libtvm_runtime.a     <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># TVM Unity runtime</span></span></code></pre></div>
 </div>
 <p>Let’s make sure we package the new model into the iOS app. We need to add the</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># still inside of the ios folder, edit the file below</span></span>
-<span id="cb23-2"><span class="bu" style="color: null;
+<span id="cb24-2"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">open</span> .<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span>prepare_params.sh <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># make sure `builtin_list` only contains "Llama-2-7b-chat-hf-q3f16_1"</span></span>
-<span id="cb23-3"></span>
-<span id="cb23-4"><span class="co" style="color: #5E5E5E;
+<span id="cb24-3"></span>
+<span id="cb24-4"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># prepackage the weights</span></span>
-<span id="cb23-5">.<span class="op" style="color: #5E5E5E;
+<span id="cb24-5">.<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span>prepare_params.sh</span></code></pre></div>
 </div>
 <p>Now we should be able to see the model inside the <code>ios/build</code> folder:</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># expected contents of ios/dist folder</span></span>
-<span id="cb24-2">ls .<span class="op" style="color: #5E5E5E;
+<span id="cb25-2">ls .<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span>dist<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span></span>
-<span id="cb24-3">Llama<span class="op" style="color: #5E5E5E;
+<span id="cb25-3">Llama<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;

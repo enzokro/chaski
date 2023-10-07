@@ -27,6 +27,8 @@ header#quarto-header {
   margin-top: 2em; */
 }
 
+.series-link {}
+
 .custom-nav-sidebar {
   grid-column: body-end/page-end;
   /* grid-column: body-start/body-end-outset; */

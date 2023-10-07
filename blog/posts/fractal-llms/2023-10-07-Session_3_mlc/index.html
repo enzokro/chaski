@@ -107,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </head><body class="nav-fixed"><header id="custom-site-header" class="custom-nav page-columns page-rows-contents"> 
     <nav class="custom-nav-content">
         <div class="navbar-brand-container">
-            <a class="navbar-brand" href="http://localhost:6965/">
+            <a class="navbar-brand" href="http://enzokro.dev/">
                 <span class="navbar-title custom-title">Chaski</span>
             </a>
         </div>
@@ -411,47 +411,50 @@ Would be very expensive to push/pull a lot of data we know won’t change. At le
 </section>
 <section id="building-an-mlc-ios-app" class="level1">
 <h1>Building an MLC iOS app</h1>
+<p>Similar process, need a few extra tools and helper packages. First, we need to install rust:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--proto</span> <span class="st">'=https'</span> <span class="at">--tlsv1.2</span> <span class="at">-sSf</span> https://sh.rustup.rs <span class="kw">|</span> <span class="fu">sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It will prompt you for different installation kinds, but the default one is perfectly fine.</p>
 <p>In the sections above we chatted with Llama2 on our laptop. Let’s go ahead and talk to it from an iOS app now.</p>
 <p>First we download a model built for iOS.</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download the pre-compiled Llama2 model for iOS</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>cd dist<span class="op">/</span>prebuilt</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>git lfs install</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>git clone https:<span class="op">//</span>huggingface.co<span class="op">/</span>mlc<span class="op">-</span>ai<span class="op">/</span>mlc<span class="op">-</span>chat<span class="op">-</span>Llama<span class="op">-</span><span class="dv">2</span><span class="op">-</span><span class="dv">7</span><span class="er">b</span><span class="op">-</span>chat<span class="op">-</span>hf<span class="op">-</span>q3f16_1</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>cd ..<span class="op">/</span>..</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download the pre-compiled Llama2 model for iOS</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>cd dist<span class="op">/</span>prebuilt</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>git lfs install</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>git clone https:<span class="op">//</span>huggingface.co<span class="op">/</span>mlc<span class="op">-</span>ai<span class="op">/</span>mlc<span class="op">-</span>chat<span class="op">-</span>Llama<span class="op">-</span><span class="dv">2</span><span class="op">-</span><span class="dv">7</span><span class="er">b</span><span class="op">-</span>chat<span class="op">-</span>hf<span class="op">-</span>q3f16_1</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>cd ..<span class="op">/</span>..</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We need some other, helper libraries to run the iOS models. Run the command below to download and configure them:</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># grab the helper libraries</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>git submodule update <span class="op">--</span>init <span class="op">--</span>recursive </span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare the ios libs</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>cd .<span class="op">/</span>ios</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>.<span class="op">/</span>prepare_libs.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># grab the helper libraries</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>git submodule update <span class="op">--</span>init <span class="op">--</span>recursive </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare the ios libs</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>cd .<span class="op">/</span>ios</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>.<span class="op">/</span>prepare_libs.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This will create a <code>build/</code> folder. Make sure the following files are in there:</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># expected output of build/</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>ls .<span class="op">/</span>build<span class="op">/</span>lib<span class="op">/</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>libmlc_llm.a         <span class="co"># A lightweight interface to interact with LLM, tokenizer, and TVM Unity runtime</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>libmodel_iphone.a    <span class="co"># The compiled model lib</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>libsentencepiece.a   <span class="co"># SentencePiece tokenizer</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>libtokenizers_cpp.a  <span class="co"># Huggingface tokenizer</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>libtvm_runtime.a     <span class="co"># TVM Unity runtime</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># expected output of build/</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>ls .<span class="op">/</span>build<span class="op">/</span>lib<span class="op">/</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>libmlc_llm.a         <span class="co"># A lightweight interface to interact with LLM, tokenizer, and TVM Unity runtime</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>libmodel_iphone.a    <span class="co"># The compiled model lib</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>libsentencepiece.a   <span class="co"># SentencePiece tokenizer</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>libtokenizers_cpp.a  <span class="co"># Huggingface tokenizer</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>libtvm_runtime.a     <span class="co"># TVM Unity runtime</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s make sure we package the new model into the iOS app. We need to add the</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># still inside of the ios folder, edit the file below</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="bu">open</span> .<span class="op">/</span>prepare_params.sh <span class="co"># make sure `builtin_list` only contains "Llama-2-7b-chat-hf-q3f16_1"</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># prepackage the weights</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>.<span class="op">/</span>prepare_params.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># still inside of the ios folder, edit the file below</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">open</span> .<span class="op">/</span>prepare_params.sh <span class="co"># make sure `builtin_list` only contains "Llama-2-7b-chat-hf-q3f16_1"</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># prepackage the weights</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>.<span class="op">/</span>prepare_params.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we should be able to see the model inside the <code>ios/build</code> folder:</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># expected contents of ios/dist folder</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>ls .<span class="op">/</span>dist<span class="op">/</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>Llama<span class="op">-</span><span class="dv">2</span><span class="op">-</span><span class="dv">7</span><span class="er">b</span><span class="op">-</span>chat<span class="op">-</span>hf<span class="op">-</span>q3f16_1 <span class="co"># the compiled Llama2 model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># expected contents of ios/dist folder</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>ls .<span class="op">/</span>dist<span class="op">/</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>Llama<span class="op">-</span><span class="dv">2</span><span class="op">-</span><span class="dv">7</span><span class="er">b</span><span class="op">-</span>chat<span class="op">-</span>hf<span class="op">-</span>q3f16_1 <span class="co"># the compiled Llama2 model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="building-the-ios-app" class="level3">
 <h3 class="anchored" data-anchor-id="building-the-ios-app">Building the iOS app</h3>

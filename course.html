@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="enzokro">
-<meta name="dcterms.date" content="2023-04-17">
 
-<title>chaski - Tips for LLM prompts</title>
+<title>chaski - Fractal LLMs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,22 +23,24 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../../">
-<link href="../../../favicon.png" rel="icon" type="image/png">
-<script src="../../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -61,12 +61,39 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rosarivo">
-<meta property="og:title" content="chaski - Tips for LLM prompts">
-<meta property="og:description" content="">
+<meta property="og:title" content="chaski - Fractal LLMs">
 <meta property="og:site-name" content="chaski">
-<meta name="twitter:title" content="chaski - Tips for LLM prompts">
-<meta name="twitter:description" content="">
+<meta name="twitter:title" content="chaski - Fractal LLMs">
 <meta name="twitter:card" content="summary">
 </head><body class="nav-fixed"><header id="custom-site-header" class="custom-nav page-columns page-rows-contents"> 
     <nav class="custom-nav-content">
@@ -81,8 +108,10 @@ ul.task-list li input[type="checkbox"] {
     </div>
 </header>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="styles.css">
 
 
 
@@ -92,7 +121,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="../../../index.html">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">chaski</span>
     </a>
   </div>
@@ -120,116 +149,111 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page">
+      <h1 class="title">Fractal LLMs</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#improving-outputs" id="toc-improving-outputs" class="nav-link active" data-scroll-target="#improving-outputs">Improving outputs</a></li>
-  <li><a href="#generic-tips" id="toc-generic-tips" class="nav-link" data-scroll-target="#generic-tips">Generic tips</a></li>
-  <li><a href="#api-tips" id="toc-api-tips" class="nav-link" data-scroll-target="#api-tips">API Tips</a></li>
-  </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Tips for LLM prompts</h1>
-  <div class="quarto-categories">
-    <div class="quarto-category">LLM</div>
-    <div class="quarto-category">deep learning</div>
-  </div>
-  </div>
+<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
 
 
 
-<div class="quarto-title-meta">
-
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>enzokro </p>
-          </div>
-  </div>
-    
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">April 17, 2023</p>
-    </div>
-  </div>
-  
-    
-  </div>
-  
-
-</header>
-
-<blockquote class="blockquote">
-<p>General tips to get better outputs from ChatGPT.</p>
-</blockquote>
-<p># Tips and tricks for ChatGPT Prompts</p>
-<p>This post is a recap of openai’s suggestions (as of writing) for improving ChatGPT’s outputs.</p>
-<p>There are many teams actively working on improving and deploying new LLMs with useful (powerful) abilities. Their work has produced several papers that show different ways of improving an LLM’s output.</p>
-<p>The official openAI documentation has the full details and discussion of a few key papers.</p>
-<p>However, we can also extract a broad set of suggestions based on what the different proposed improvements share in common.</p>
-<section id="improving-outputs" class="level2">
-<h2 class="anchored" data-anchor-id="improving-outputs">Improving outputs</h2>
-<ul>
-<li>Split large, complex tasks into subtasks
-<ul>
-<li>Structure and isolate the instructions of each subtask</li>
-</ul></li>
-<li>Prompt the model to explain its reasoning(s) before answering</li>
-<li>If the output was bad, try making the instructions clearer
-<ul>
-<li>Start with simple and direct language</li>
-<li>Can get more complex as the conversation and context grow</li>
-</ul></li>
-<li>Have the model generate many answers, then ask it to distill them into a single, best answer</li>
-<li>If possible, Fine-tune custom models to maximize performance</li>
-</ul>
-</section>
-<section id="generic-tips" class="level2">
-<h2 class="anchored" data-anchor-id="generic-tips">Generic tips</h2>
-<ul>
-<li>Explicitly guide the model through the thought process
-<ul>
-<li>Helps it stay focused on sub-tasks and subprocesses</li>
-</ul></li>
-<li>“Let’s think step by step…”
-<ul>
-<li>Works best on logical, mathematical, and reasoning tasks</li>
-<li>Possible leverage for other tasks by breaking them down into “logical” steps</li>
-</ul></li>
-<li>Give the model a few examples of the task you want (Few-Shot)</li>
-<li>Split a question into two types of prompts and alternate between the two
-<ul>
-<li>Selection prompt -&gt; find the relevant pieces of into</li>
-<li>Inference prompt -&gt; use the relevant pieces to generate the answer</li>
-<li>Halter prompt -&gt; figure out when the alternating should halt, if possible add a value function to evaluate different prompts</li>
-</ul></li>
-<li>Reduce hallucinations by constraining what the model can say</li>
-</ul>
-</section>
-<section id="api-tips" class="level2">
-<h2 class="anchored" data-anchor-id="api-tips">API Tips</h2>
-<ul>
-<li>Give the model an identity that behaves in a certain way with an explicit intent</li>
-<li>Ask to model to answer from the perspective of an expert</li>
-<li>Try restating the original “system” message to keep the model on-task.</li>
-<li>If the model is getting off-track, try reminding it of the instruction and context at the end of the prompt</li>
-</ul>
 
 
-</section>
 
-</main> <!-- /main -->
+
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="fractal,python,LLM" data-listing-date-sort="1696651200000" data-listing-file-modified-sort="1696715384210" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
+<div class="body">
+<a href="./blog/posts/fractal-llms/2023-10-07-Session_3_mlc/index.html">
+<h3 class="no-anchor listing-title">
+Overview of MLC and llama.cpp
+</h3>
+<div class="listing-subtitle">
+
+</div>
+<div class="listing-description">
+A quick look at <code>llama.cpp</code>, and running Llama2 with the Machine Learning Compilation (<code>MLC</code>) library.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/fractal-llms/2023-10-07-Session_3_mlc/index.html">
+<div class="listing-date">
+Oct 7, 2023
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="fractal,python,LLM" data-listing-date-sort="1696478400000" data-listing-file-modified-sort="1696688383998" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
+<div class="body">
+<a href="./blog/posts/fractal-llms/2023-10-05-Session_0_env/index.html">
+<h3 class="no-anchor listing-title">
+A Python Environment for LLMs
+</h3>
+<div class="listing-subtitle">
+
+</div>
+<div class="listing-description">
+Building an LLM python environment using <code>mamba</code> and <code>pip</code>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/fractal-llms/2023-10-05-Session_0_env/index.html">
+<div class="listing-date">
+Oct 5, 2023
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="fractal,python,nbdev" data-listing-date-sort="1695787200000" data-listing-file-modified-sort="1696689823342" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
+<div class="body">
+<a href="./blog/posts/fractal-llms/2023-09-27-Session_1_nbdev/index.html">
+<h3 class="no-anchor listing-title">
+Blogging with Quarto and nbdev
+</h3>
+<div class="listing-subtitle">
+
+</div>
+<div class="listing-description">
+Building a personal blog with nbdev and publishing it with Quarto.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/fractal-llms/2023-09-27-Session_1_nbdev/index.html">
+<div class="listing-date">
+Sep 27, 2023
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -463,10 +487,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<script src="https://utteranc.es/client.js" repo="enzokro/chaski_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
-</script>
 </div> <!-- /content -->
 
 
 
-</body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></div></div></footer></body></html>

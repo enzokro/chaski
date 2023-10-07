@@ -23,14 +23,6 @@
     ]
   },
   {
-    "listing": "/blog/course.html",
-    "items": [
-      "/blog/posts/fractal-llms/2023-10-07-Session_3_mlc/index.html",
-      "/blog/posts/fractal-llms/2023-10-05-Session_0_env/index.html",
-      "/blog/posts/fractal-llms/2023-09-27-Session_1_nbdev/index.html"
-    ]
-  },
-  {
     "listing": "/blog/index.html",
     "items": [
       "/blog/posts/fractal-llms/2023-10-07-Session_3_mlc/index.html",
@@ -51,6 +43,14 @@
       "/blog/posts/2022-11-08-merge-n-BSTs/index.html",
       "/blog/posts/2022-09-01-rayleigh-init/index.html",
       "/blog/posts/2022-08-20-spec-norms/index.html"
+    ]
+  },
+  {
+    "listing": "/course.html",
+    "items": [
+      "/blog/posts/fractal-llms/2023-10-07-Session_3_mlc/index.html",
+      "/blog/posts/fractal-llms/2023-10-05-Session_0_env/index.html",
+      "/blog/posts/fractal-llms/2023-09-27-Session_1_nbdev/index.html"
     ]
   }
 ]
