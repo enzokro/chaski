@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>chaski</title>
+<title>chaski blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,9 +30,12 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
@@ -58,22 +61,80 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-image','listing-date','listing-title','listing-description','listing-categories','listing-author',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rosarivo">
+<link rel="alternate" type="application/rss+xml" title="chaski" href="index.xml"><meta property="og:title" content="chaski blog">
+<meta property="og:image" content="https://enzokro.dev/blog/posts/fractal-llms/2023-10-07-Session_3_mlc/llama.jpeg">
+<meta property="og:site-name" content="chaski">
+<meta name="twitter:title" content="chaski blog">
+<meta name="twitter:image" content="https://enzokro.dev/blog/posts/fractal-llms/2023-10-07-Session_3_mlc/llama.jpeg">
+<meta name="twitter:card" content="summary_large_image">
+</head><body class="nav-fixed"><header id="custom-site-header" class="custom-nav page-columns page-rows-contents"> 
+    <nav class="custom-nav-content">
+        <div class="navbar-brand-container">
+            <a class="navbar-brand" href="http://localhost:6965/">
+                <span class="navbar-title custom-title">Chaski</span>
+            </a>
+        </div>
+    </nav>
+    <div class="custom-nav-sidebar">
+        <div id="quarto-search" title="Search"></div>
+    </div>
+</header>
+<section class="about-section page-columns page-rows-contents">
+    <div class="custom-nav-content ">
+        <h3>Applied ML and DSP</h3>
+    </div>
+
+</section>
+
+<!-- Hacky, but this overrides the .custom-nav-content with the 
+    grid styles that makes it fit the front padding of this particular page. -->
+<style>
+    .about-section {
+        margin-top: -2em;
+        padding-bottom: 2em;
+    }
+    .page-columns .custom-nav-content {
+        grid-column: page-start/body-content-end;
+    }
+</style>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="chaski">
-<meta property="og:image" content="https://enzokro.dev/favicon.png">
-<meta property="og:site-name" content="chaski">
-<meta property="og:image:height" content="1024">
-<meta property="og:image:width" content="1024">
-<meta name="twitter:title" content="chaski">
-<meta name="twitter:image" content="https://enzokro.dev/favicon.png">
-<meta name="twitter:image-height" content="1024">
-<meta name="twitter:image-width" content="1024">
-<meta name="twitter:card" content="summary_large_image">
-</head>
 
-<body class="nav-fixed fullcontent">
+
+
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -89,18 +150,6 @@ ul.task-list li input[type="checkbox"] {
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target=""><i class="bi bi-person-rolodex" role="img">
-</i> 
- <span class="menu-text">About</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./blog/index.html" rel="" target=""><i class="bi bi-file-text" role="img">
-</i> 
- <span class="menu-text">Blog</span></a>
-  </li>  
-</ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
     <a class="nav-link" href="https://twitter.com/enzokro_" rel="" target=""><i class="bi bi-twitter" role="img">
@@ -120,43 +169,814 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#posts" id="toc-posts" class="nav-link active" data-scroll-target="#posts">Posts</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(18)</span></div><div class="category" data-category="Binary Tree">Binary Tree <span class="quarto-category-count">(1)</span></div><div class="category" data-category="LLM">LLM <span class="quarto-category-count">(3)</span></div><div class="category" data-category="SLERP">SLERP <span class="quarto-category-count">(1)</span></div><div class="category" data-category="algorithms">algorithms <span class="quarto-category-count">(1)</span></div><div class="category" data-category="classifier-free guidance">classifier-free guidance <span class="quarto-category-count">(9)</span></div><div class="category" data-category="complex networks">complex networks <span class="quarto-category-count">(1)</span></div><div class="category" data-category="deep learning">deep learning <span class="quarto-category-count">(13)</span></div><div class="category" data-category="diffusion">diffusion <span class="quarto-category-count">(11)</span></div><div class="category" data-category="fractal">fractal <span class="quarto-category-count">(3)</span></div><div class="category" data-category="functional">functional <span class="quarto-category-count">(1)</span></div><div class="category" data-category="latent interpolation">latent interpolation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="nbdev">nbdev <span class="quarto-category-count">(1)</span></div><div class="category" data-category="python">python <span class="quarto-category-count">(3)</span></div><div class="category" data-category="spectrogram normalizations">spectrogram normalizations <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
-<div class="quarto-about-jolla">
-  <img src="favicon.png" class="about-image
-  round " style="height: 15em; width: 15em;">
- <header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">chaski</h1>
-</div>
-<div class="quarto-title-meta">
+<main class="content column-page-left" id="quarto-document-content">
+
+
+
+<blockquote class="blockquote">
+<p><a href="./blog/course.html">Fractal LLMs Series</a></p>
+</blockquote>
+<section id="posts" class="level1">
+<h1>Posts</h1>
+<!--ORIGINAL LANDING PAGE -->
+<!-- ---
+title: "chaski"
+image: favicon.png
+comments: false
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      text: twitter
+      href: "https://x.com/enzokro_"
+    - icon: github
+      text: github
+      href: "https://github.com/enzokro"
+toc: false
+sidebar: false
+
+---
+
+#### [Blog](blog/)
+
+#### ML Engineer in NYC 
+##### Posts on applied ML and DSP  -->
+
+
+
+</section>
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-title" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Date - Newest
+        </option>
+         <option value="listing-author" data-direction="asc">
+          Author
+        </option>
+     </select>
   </div>
-</header><main class="content" id="quarto-document-content">
-<section id="ml-engineer-in-nyc" class="level4">
-<h4 data-anchor-id="ml-engineer-in-nyc">ML Engineer in NYC</h4>
-<section id="posts-on-applied-ml-and-dsp" class="level5">
-<h5 data-anchor-id="posts-on-applied-ml-and-dsp">Posts on applied ML and DSP</h5>
+    <div class="input-group input-group-sm quarto-listing-filter">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input type="text" class="search form-control" placeholder="Filter">
+    </div>
+</div>
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="fractal,python,LLM" data-listing-date-sort="1696651200000" data-listing-file-modified-sort="1696713074876" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="thumbnail">
+<p><a href="./blog/posts/fractal-llms/2023-10-07-Session_3_mlc/index.html"> <img src="./blog/posts/fractal-llms/2023-10-07-Session_3_mlc/llama.jpeg" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./blog/posts/fractal-llms/2023-10-07-Session_3_mlc/index.html">
+<h3 class="no-anchor listing-title">
+Overview of MLC and llama.cpp
+</h3>
+<div class="listing-subtitle">
 
-
-</section>
-</section>
-</main> 
-  <hr class="about-sep">
-   <div class="about-links">
-  <a href="https://x.com/enzokro_" class="about-link" rel="" target="">
-    <i class="bi bi-twitter"></i>
-     <span class="about-link-text">twitter</span>
-  </a>
-  <a href="https://github.com/enzokro" class="about-link" rel="" target="">
-    <i class="bi bi-github"></i>
-     <span class="about-link-text">github</span>
-  </a>
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('fractal'); return false;">
+fractal
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('python'); return false;">
+python
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('LLM'); return false;">
+LLM
 </div>
 </div>
- <!-- /main -->
+<a href="./blog/posts/fractal-llms/2023-10-07-Session_3_mlc/index.html">
+<div class="listing-description">
+A quick look at <code>llama.cpp</code>, and running Llama2 with the Machine Learning Compilation (<code>MLC</code>) library.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/fractal-llms/2023-10-07-Session_3_mlc/index.html">
+<div class="listing-date">
+Oct 7, 2023
+</div>
+<div class="listing-author">
+Chris Kroenke
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="fractal,python,LLM" data-listing-date-sort="1696478400000" data-listing-file-modified-sort="1696688383998" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
+<div class="thumbnail">
+<p><a href="./blog/posts/fractal-llms/2023-10-05-Session_0_env/index.html"> <img src="./blog/posts/fractal-llms/2023-10-05-Session_0_env/mamba_logo.webp" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./blog/posts/fractal-llms/2023-10-05-Session_0_env/index.html">
+<h3 class="no-anchor listing-title">
+A Python Environment for LLMs
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('fractal'); return false;">
+fractal
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('python'); return false;">
+python
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('LLM'); return false;">
+LLM
+</div>
+</div>
+<a href="./blog/posts/fractal-llms/2023-10-05-Session_0_env/index.html">
+<div class="listing-description">
+Building an LLM python environment using <code>mamba</code> and <code>pip</code>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/fractal-llms/2023-10-05-Session_0_env/index.html">
+<div class="listing-date">
+Oct 5, 2023
+</div>
+<div class="listing-author">
+Chris Kroenke
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="fractal,python,nbdev" data-listing-date-sort="1695787200000" data-listing-file-modified-sort="1696689823342" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
+<div class="thumbnail">
+<p><a href="./blog/posts/fractal-llms/2023-09-27-Session_1_nbdev/index.html"> <img src="./blog/posts/fractal-llms/2023-09-27-Session_1_nbdev/nbdev_pic.png" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./blog/posts/fractal-llms/2023-09-27-Session_1_nbdev/index.html">
+<h3 class="no-anchor listing-title">
+Blogging with Quarto and nbdev
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('fractal'); return false;">
+fractal
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('python'); return false;">
+python
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('nbdev'); return false;">
+nbdev
+</div>
+</div>
+<a href="./blog/posts/fractal-llms/2023-09-27-Session_1_nbdev/index.html">
+<div class="listing-description">
+Building a personal blog with nbdev and publishing it with Quarto.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/fractal-llms/2023-09-27-Session_1_nbdev/index.html">
+<div class="listing-date">
+Sep 27, 2023
+</div>
+<div class="listing-author">
+Chris Kroenke
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-categories="LLM,deep learning" data-listing-date-sort="1681704000000" data-listing-file-modified-sort="1696390111902" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="thumbnail">
+<p><a href="./blog/posts/2023-04-17-llm-prompt-tips/index.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
+</div>
+<div class="body">
+<a href="./blog/posts/2023-04-17-llm-prompt-tips/index.html">
+<h3 class="no-anchor listing-title">
+Tips for LLM prompts
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('LLM'); return false;">
+LLM
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('deep learning'); return false;">
+deep learning
+</div>
+</div>
+<a href="./blog/posts/2023-04-17-llm-prompt-tips/index.html">
+<div class="listing-description">
+General tips to get better outputs from ChatGPT.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/2023-04-17-llm-prompt-tips/index.html">
+<div class="listing-date">
+Apr 17, 2023
+</div>
+<div class="listing-author">
+enzokro
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="4" data-categories="diffusion,classifier-free guidance,deep learning" data-listing-date-sort="1669611600000" data-listing-file-modified-sort="1694983011888" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="thumbnail">
+<p><a href="./blog/posts/2022-11-28-sd-v2-schedules-1/index.html"> <img src="./blog/posts/2022-11-28-sd-v2-schedules-1/better_village.png" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./blog/posts/2022-11-28-sd-v2-schedules-1/index.html">
+<h3 class="no-anchor listing-title">
+Stable Diffusion v2 with dynamic Classifier-free Guidance
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('diffusion'); return false;">
+diffusion
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('classifier-free guidance'); return false;">
+classifier-free guidance
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('deep learning'); return false;">
+deep learning
+</div>
+</div>
+<a href="./blog/posts/2022-11-28-sd-v2-schedules-1/index.html">
+<div class="listing-description">
+Running dynamic CFG with the Stable Diffusion v2 model.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/2022-11-28-sd-v2-schedules-1/index.html">
+<div class="listing-date">
+Nov 28, 2022
+</div>
+<div class="listing-author">
+enzokro
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="5" data-categories="diffusion,classifier-free guidance,deep learning" data-listing-date-sort="1669525200000" data-listing-file-modified-sort="1694983012705" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
+<div class="thumbnail">
+<p><a href="./blog/posts/2022-11-26-guidance-expts-8/index.html"> <img src="./blog/posts/2022-11-26-guidance-expts-8/better_inca.png" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./blog/posts/2022-11-26-guidance-expts-8/index.html">
+<h3 class="no-anchor listing-title">
+Classifier-free Guidance with Cosine Schedules Pt. 7
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('diffusion'); return false;">
+diffusion
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('classifier-free guidance'); return false;">
+classifier-free guidance
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('deep learning'); return false;">
+deep learning
+</div>
+</div>
+<a href="./blog/posts/2022-11-26-guidance-expts-8/index.html">
+<div class="listing-description">
+Improving generated images with dynamic Classifier-free Guidance across Diffusion models.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/2022-11-26-guidance-expts-8/index.html">
+<div class="listing-date">
+Nov 27, 2022
+</div>
+<div class="listing-author">
+enzokro
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="6" data-categories="diffusion,classifier-free guidance,deep learning" data-listing-date-sort="1669438800000" data-listing-file-modified-sort="1694983013775" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
+<div class="thumbnail">
+<p><a href="./blog/posts/2022-11-25-guidance-expts-7/index.html"> <img src="./blog/posts/2022-11-25-guidance-expts-7/better_horse_6.png" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./blog/posts/2022-11-25-guidance-expts-7/index.html">
+<h3 class="no-anchor listing-title">
+Classifier-free Guidance with Cosine Schedules Pt. 6
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('diffusion'); return false;">
+diffusion
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('classifier-free guidance'); return false;">
+classifier-free guidance
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('deep learning'); return false;">
+deep learning
+</div>
+</div>
+<a href="./blog/posts/2022-11-25-guidance-expts-7/index.html">
+<div class="listing-description">
+Combining the best schedules and normalizations so far.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/2022-11-25-guidance-expts-7/index.html">
+<div class="listing-date">
+Nov 26, 2022
+</div>
+<div class="listing-author">
+enzokro
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="7" data-categories="diffusion,classifier-free guidance,deep learning" data-listing-date-sort="1669352400000" data-listing-file-modified-sort="1694983014793" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
+<div class="thumbnail">
+<p><a href="./blog/posts/2022-11-24-guidance-expts-6/index.html"> <img src="./blog/posts/2022-11-24-guidance-expts-6/better_horse_5.png" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./blog/posts/2022-11-24-guidance-expts-6/index.html">
+<h3 class="no-anchor listing-title">
+Classifier-free Guidance with Cosine Schedules Pt. 5
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('diffusion'); return false;">
+diffusion
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('classifier-free guidance'); return false;">
+classifier-free guidance
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('deep learning'); return false;">
+deep learning
+</div>
+</div>
+<a href="./blog/posts/2022-11-24-guidance-expts-6/index.html">
+<div class="listing-description">
+Exploring a range of guidance values for T-Normalization.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/2022-11-24-guidance-expts-6/index.html">
+<div class="listing-date">
+Nov 25, 2022
+</div>
+<div class="listing-author">
+enzokro
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="8" data-categories="diffusion,classifier-free guidance,deep learning" data-listing-date-sort="1669266000000" data-listing-file-modified-sort="1694983012271" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
+<div class="thumbnail">
+<p><a href="./blog/posts/2022-11-24-guidance-expts-5/index.html"> <img src="./blog/posts/2022-11-24-guidance-expts-5/log_cos_sweep.png" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./blog/posts/2022-11-24-guidance-expts-5/index.html">
+<h3 class="no-anchor listing-title">
+Classifier-free Guidance with Cosine Schedules Pt. 4
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('diffusion'); return false;">
+diffusion
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('classifier-free guidance'); return false;">
+classifier-free guidance
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('deep learning'); return false;">
+deep learning
+</div>
+</div>
+<a href="./blog/posts/2022-11-24-guidance-expts-5/index.html">
+<div class="listing-description">
+Exploring the effect of k-decay on Cosine Schedules.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/2022-11-24-guidance-expts-5/index.html">
+<div class="listing-date">
+Nov 24, 2022
+</div>
+<div class="listing-author">
+enzokro
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="9" data-categories="diffusion,classifier-free guidance,deep learning" data-listing-date-sort="1669179600000" data-listing-file-modified-sort="1694983013337" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="thumbnail">
+<p><a href="./blog/posts/2022-11-23-guidance-expts-4/index.html"> <img src="./blog/posts/2022-11-23-guidance-expts-4/better_horse_4.png" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./blog/posts/2022-11-23-guidance-expts-4/index.html">
+<h3 class="no-anchor listing-title">
+Classifier-free Guidance with Cosine Schedules Pt. 3
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('diffusion'); return false;">
+diffusion
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('classifier-free guidance'); return false;">
+classifier-free guidance
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('deep learning'); return false;">
+deep learning
+</div>
+</div>
+<a href="./blog/posts/2022-11-23-guidance-expts-4/index.html">
+<div class="listing-description">
+Experiments with cosine schedules and normalizations for Classifier-free Guidance.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/2022-11-23-guidance-expts-4/index.html">
+<div class="listing-date">
+Nov 23, 2022
+</div>
+<div class="listing-author">
+enzokro
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="10" data-categories="diffusion,classifier-free guidance,deep learning" data-listing-date-sort="1669093200000" data-listing-file-modified-sort="1694983011653" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
+<div class="thumbnail">
+<p><a href="./blog/posts/2022-11-21-guidance-expts-3/index.html"> <img src="./blog/posts/2022-11-21-guidance-expts-3/better_horse_3.png" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./blog/posts/2022-11-21-guidance-expts-3/index.html">
+<h3 class="no-anchor listing-title">
+Dynamic Classifier-free Guidance Pt. 2
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('diffusion'); return false;">
+diffusion
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('classifier-free guidance'); return false;">
+classifier-free guidance
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('deep learning'); return false;">
+deep learning
+</div>
+</div>
+<a href="./blog/posts/2022-11-21-guidance-expts-3/index.html">
+<div class="listing-description">
+Experiments with normalizations for Classifier-free Guidance.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/2022-11-21-guidance-expts-3/index.html">
+<div class="listing-date">
+Nov 22, 2022
+</div>
+<div class="listing-author">
+enzokro
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="11" data-categories="diffusion,deep learning" data-listing-date-sort="1669006800000" data-listing-file-modified-sort="1694983014968" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="thumbnail">
+<p><a href="./blog/posts/2022-11-20-minimal-diffusion/index.html"> <img src="./blog/posts/2022-11-20-minimal-diffusion/dynam_cfg.png" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./blog/posts/2022-11-20-minimal-diffusion/index.html">
+<h3 class="no-anchor listing-title">
+Libraries for dynamic Classifier-free Guidance
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('diffusion'); return false;">
+diffusion
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('deep learning'); return false;">
+deep learning
+</div>
+</div>
+<a href="./blog/posts/2022-11-20-minimal-diffusion/index.html">
+<div class="listing-description">
+Introducing two helper libraries to run dynamic Classifier-free Guidance.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/2022-11-20-minimal-diffusion/index.html">
+<div class="listing-date">
+Nov 21, 2022
+</div>
+<div class="listing-author">
+enzokro
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="12" data-categories="diffusion,classifier-free guidance,deep learning" data-listing-date-sort="1668920400000" data-listing-file-modified-sort="1694983012167" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
+<div class="thumbnail">
+<p><a href="./blog/posts/2022-11-20-guidance-expts-2/index.html"> <img src="./blog/posts/2022-11-20-guidance-expts-2/better-gen-horse.png" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./blog/posts/2022-11-20-guidance-expts-2/index.html">
+<h3 class="no-anchor listing-title">
+Dynamic Classifier-free Guidance Pt. 1
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('diffusion'); return false;">
+diffusion
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('classifier-free guidance'); return false;">
+classifier-free guidance
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('deep learning'); return false;">
+deep learning
+</div>
+</div>
+<a href="./blog/posts/2022-11-20-guidance-expts-2/index.html">
+<div class="listing-description">
+Experiments with cosine schedules for Classifier-free Guidance.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/2022-11-20-guidance-expts-2/index.html">
+<div class="listing-date">
+Nov 20, 2022
+</div>
+<div class="listing-author">
+enzokro
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="13" data-categories="diffusion,latent interpolation,SLERP" data-listing-date-sort="1668574800000" data-listing-file-modified-sort="1694983012501" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="thumbnail">
+<p><a href="./blog/posts/2022-11-16-pytorch-slerp/index.html"> <img src="./blog/posts/2022-11-16-pytorch-slerp/slerp.png" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./blog/posts/2022-11-16-pytorch-slerp/index.html">
+<h3 class="no-anchor listing-title">
+A PyTorch SLERP implementation
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('diffusion'); return false;">
+diffusion
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('latent interpolation'); return false;">
+latent interpolation
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('SLERP'); return false;">
+SLERP
+</div>
+</div>
+<a href="./blog/posts/2022-11-16-pytorch-slerp/index.html">
+<div class="listing-description">
+SLERP implemented in PyTorch with proper thresholding.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/2022-11-16-pytorch-slerp/index.html">
+<div class="listing-date">
+Nov 16, 2022
+</div>
+<div class="listing-author">
+enzokro
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="14" data-categories="diffusion,classifier-free guidance,deep learning" data-listing-date-sort="1668315600000" data-listing-file-modified-sort="1694983013992" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12">
+<div class="thumbnail">
+<p><a href="./blog/posts/2022-11-15-guidance-expts-1/index.html"> <img src="./blog/posts/2022-11-15-guidance-expts-1/cat2.jpeg" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./blog/posts/2022-11-15-guidance-expts-1/index.html">
+<h3 class="no-anchor listing-title">
+Intro to normalizing and scheduling Classifier-free Guidance
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('diffusion'); return false;">
+diffusion
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('classifier-free guidance'); return false;">
+classifier-free guidance
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('deep learning'); return false;">
+deep learning
+</div>
+</div>
+<a href="./blog/posts/2022-11-15-guidance-expts-1/index.html">
+<div class="listing-description">
+Changing the Classifier-Free Guidance parameter during diffusion.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/2022-11-15-guidance-expts-1/index.html">
+<div class="listing-date">
+Nov 13, 2022
+</div>
+<div class="listing-author">
+enzokro
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="15" data-categories="Binary Tree,algorithms,functional" data-listing-date-sort="1667883600000" data-listing-file-modified-sort="1694983013245" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="thumbnail">
+<p><a href="./blog/posts/2022-11-08-merge-n-BSTs/index.html"> <img src="./blog/posts/2022-11-08-merge-n-BSTs/merging_bts.png" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./blog/posts/2022-11-08-merge-n-BSTs/index.html">
+<h3 class="no-anchor listing-title">
+Merging an arbitrary number of Binary Trees
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Binary Tree'); return false;">
+Binary Tree
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('algorithms'); return false;">
+algorithms
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('functional'); return false;">
+functional
+</div>
+</div>
+<a href="./blog/posts/2022-11-08-merge-n-BSTs/index.html">
+<div class="listing-description">
+Using functional python tools to merge several Binary Trees together.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/2022-11-08-merge-n-BSTs/index.html">
+<div class="listing-date">
+Nov 8, 2022
+</div>
+<div class="listing-author">
+enzokro
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="16" data-categories="deep learning,complex networks" data-listing-date-sort="1662004800000" data-listing-file-modified-sort="1696371109983" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="19">
+<div class="thumbnail">
+<p><a href="./blog/posts/2022-09-01-rayleigh-init/index.html"> <img src="./blog/posts/2022-09-01-rayleigh-init/polar_plot.png" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./blog/posts/2022-09-01-rayleigh-init/index.html">
+<h3 class="no-anchor listing-title">
+Complex Rayleigh Weight Initializations
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('deep learning'); return false;">
+deep learning
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('complex networks'); return false;">
+complex networks
+</div>
+</div>
+<a href="./blog/posts/2022-09-01-rayleigh-init/index.html">
+<div class="listing-description">
+Creating complex-valued Rayleigh initializations for neural networks.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/2022-09-01-rayleigh-init/index.html">
+<div class="listing-date">
+Sep 1, 2022
+</div>
+<div class="listing-author">
+enzokro
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="17" data-categories="deep learning,spectrogram normalizations" data-listing-date-sort="1660968000000" data-listing-file-modified-sort="1694983013244" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16">
+<div class="thumbnail">
+<p><a href="./blog/posts/2022-08-20-spec-norms/index.html"> <img src="./blog/posts/2022-08-20-spec-norms/violin_spec.png" class="thumbnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./blog/posts/2022-08-20-spec-norms/index.html">
+<h3 class="no-anchor listing-title">
+Normalizing spectrograms for Deep Learning
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('deep learning'); return false;">
+deep learning
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('spectrogram normalizations'); return false;">
+spectrogram normalizations
+</div>
+</div>
+<a href="./blog/posts/2022-08-20-spec-norms/index.html">
+<div class="listing-description">
+Scaling spectrograms for classification tasks with neural networks.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./blog/posts/2022-08-20-spec-norms/index.html">
+<div class="listing-date">
+Aug 20, 2022
+</div>
+<div class="listing-author">
+enzokro
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -177,6 +997,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     
@@ -387,4 +1214,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></div></div></footer></body></html>
+</body></html>

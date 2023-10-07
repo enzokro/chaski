@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="enzokro">
-<meta name="dcterms.date" content="2023-04-17">
+<meta name="author" content="Chris Kroenke">
+<meta name="dcterms.date" content="2023-10-07">
 
-<title>chaski - Tips for LLM prompts</title>
+<title>chaski - Overview of MLC and llama.cpp</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -62,12 +62,12 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rosarivo">
-<meta property="og:title" content="chaski - Tips for LLM prompts">
-<meta property="og:description" content="">
+<meta property="og:title" content="chaski - Overview of MLC and llama.cpp">
+<meta property="og:image" content="https://enzokro.dev/blog/posts/2023-10-07-Session_3_mlc/llama.jpeg">
 <meta property="og:site-name" content="chaski">
-<meta name="twitter:title" content="chaski - Tips for LLM prompts">
-<meta name="twitter:description" content="">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="chaski - Overview of MLC and llama.cpp">
+<meta name="twitter:image" content="https://enzokro.dev/blog/posts/2023-10-07-Session_3_mlc/llama.jpeg">
+<meta name="twitter:card" content="summary_large_image">
 </head><body class="nav-fixed"><header id="custom-site-header" class="custom-nav page-columns page-rows-contents"> 
     <nav class="custom-nav-content">
         <div class="navbar-brand-container">
@@ -124,25 +124,18 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#improving-outputs" id="toc-improving-outputs" class="nav-link active" data-scroll-target="#improving-outputs">Improving outputs</a></li>
-  <li><a href="#generic-tips" id="toc-generic-tips" class="nav-link" data-scroll-target="#generic-tips">Generic tips</a></li>
-  <li><a href="#api-tips" id="toc-api-tips" class="nav-link" data-scroll-target="#api-tips">API Tips</a></li>
-  </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Tips for LLM prompts</h1>
+<h1 class="title">Overview of MLC and llama.cpp</h1>
   <div class="quarto-categories">
+    <div class="quarto-category">fractal</div>
+    <div class="quarto-category">python</div>
     <div class="quarto-category">LLM</div>
-    <div class="quarto-category">deep learning</div>
   </div>
   </div>
 
@@ -153,14 +146,14 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>enzokro </p>
+             <p>Chris Kroenke </p>
           </div>
   </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 17, 2023</p>
+      <p class="date">October 7, 2023</p>
     </div>
   </div>
   
@@ -170,64 +163,8 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<blockquote class="blockquote">
-<p>General tips to get better outputs from ChatGPT.</p>
-</blockquote>
-<p># Tips and tricks for ChatGPT Prompts</p>
-<p>This post is a recap of openai’s suggestions (as of writing) for improving ChatGPT’s outputs.</p>
-<p>There are many teams actively working on improving and deploying new LLMs with useful (powerful) abilities. Their work has produced several papers that show different ways of improving an LLM’s output.</p>
-<p>The official openAI documentation has the full details and discussion of a few key papers.</p>
-<p>However, we can also extract a broad set of suggestions based on what the different proposed improvements share in common.</p>
-<section id="improving-outputs" class="level2">
-<h2 class="anchored" data-anchor-id="improving-outputs">Improving outputs</h2>
-<ul>
-<li>Split large, complex tasks into subtasks
-<ul>
-<li>Structure and isolate the instructions of each subtask</li>
-</ul></li>
-<li>Prompt the model to explain its reasoning(s) before answering</li>
-<li>If the output was bad, try making the instructions clearer
-<ul>
-<li>Start with simple and direct language</li>
-<li>Can get more complex as the conversation and context grow</li>
-</ul></li>
-<li>Have the model generate many answers, then ask it to distill them into a single, best answer</li>
-<li>If possible, Fine-tune custom models to maximize performance</li>
-</ul>
-</section>
-<section id="generic-tips" class="level2">
-<h2 class="anchored" data-anchor-id="generic-tips">Generic tips</h2>
-<ul>
-<li>Explicitly guide the model through the thought process
-<ul>
-<li>Helps it stay focused on sub-tasks and subprocesses</li>
-</ul></li>
-<li>“Let’s think step by step…”
-<ul>
-<li>Works best on logical, mathematical, and reasoning tasks</li>
-<li>Possible leverage for other tasks by breaking them down into “logical” steps</li>
-</ul></li>
-<li>Give the model a few examples of the task you want (Few-Shot)</li>
-<li>Split a question into two types of prompts and alternate between the two
-<ul>
-<li>Selection prompt -&gt; find the relevant pieces of into</li>
-<li>Inference prompt -&gt; use the relevant pieces to generate the answer</li>
-<li>Halter prompt -&gt; figure out when the alternating should halt, if possible add a value function to evaluate different prompts</li>
-</ul></li>
-<li>Reduce hallucinations by constraining what the model can say</li>
-</ul>
-</section>
-<section id="api-tips" class="level2">
-<h2 class="anchored" data-anchor-id="api-tips">API Tips</h2>
-<ul>
-<li>Give the model an identity that behaves in a certain way with an explicit intent</li>
-<li>Ask to model to answer from the perspective of an expert</li>
-<li>Try restating the original “system” message to keep the model on-task.</li>
-<li>If the model is getting off-track, try reminding it of the instruction and context at the end of the prompt</li>
-</ul>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -469,4 +406,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></div></div></footer></body></html>
