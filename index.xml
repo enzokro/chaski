@@ -28,12 +28,12 @@
 <p>Below are two good libraries for running and deploying ML models.</p>
 <section id="llama.cpp" class="level2">
 <h2 class="anchored" data-anchor-id="llama.cpp">Llama.cpp</h2>
-<p>Fantastic library on github <a href="https://github.com/ggerganov/llama.cpp">here</a>.</p>
-<p>History, ggeranov Look at code updates, frequency Pull Requests Issues</p>
+<p>Fantastic library on github <a href="https://github.com/ggerganov/llama.cpp">here</a>. This was patched together as a hackathon project, and is now arguably the SOTA for deploying local LLMs on CPUs. Great proof of “just do things”, and there still being tons of low-hanging fruit in the space.</p>
+<p>To best leverage the repo, check out the Pull Requests for the latest updates. Folks are constantly weaving in the newest and latest approaches. Indie hackers and unconventional ideals get proposed all the time: if it works and there’s proof, people accept it.</p>
 </section>
 <section id="mlc" class="level2">
 <h2 class="anchored" data-anchor-id="mlc">MLC</h2>
-<p>Tool for deploying ML models across all major architectures They have a companion course that gets into many details <a href="https://mlc.ai/index.html">course</a> <a href="https://github.com/mlc-ai/mlc-llm">Link</a></p>
+<p>Tool for deploying ML models across all major architectures. They have a companion <a href="https://mlc.ai/index.html">course</a> <a href="https://github.com/mlc-ai/mlc-llm">Link</a> that gets into many details.</p>
 </section>
 </section>
 <section id="llama.cpp-1" class="level1">
@@ -76,9 +76,12 @@ background-color: null;
 font-style: inherit;"># create a python3.11 environment for MLC</span></span>
 <span id="cb1-2"><span class="ex" style="color: null;
 background-color: null;
-font-style: inherit;">mamba</span> env create <span class="at" style="color: #657422;
+font-style: inherit;">mamba</span> create <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">-n</span> mlc-llm python=3.11</span></code></pre></div>
+font-style: inherit;">-n</span> mlc-llm python=3.11</span>
+<span id="cb1-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># conda env create -n mlc-llm python=3.11 (maybe?)</span></span></code></pre></div>
 <p>Next, let’s activate the environment.</p>
 <div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -128,13 +131,19 @@ font-style: inherit;"># install git-lfs with Homebrew</span></span>
 <span id="cb5-2"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">brew</span> install git-lfs</span></code></pre></div>
+</section>
+</section>
+</section>
+<section id="on-linux-git-lfs-in-two-commands" class="level1">
+<h1>On linux, git-lfs in two commands:</h1>
+<p>curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash</p>
+<p>sudo apt-get install git-lfs</p>
 <div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># or, install it with MacPorts</span></span>
 <span id="cb6-2"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">port</span> install git-lfs</span></code></pre></div>
-</section>
 <section id="creating-a-local-llama2-chat-app" class="level3">
 <h3 class="anchored" data-anchor-id="creating-a-local-llama2-chat-app">Creating a local Llama2 chat app</h3>
 <p>First, clone the <code>mlc-llm</code> library and move inside it.</p>
@@ -299,7 +308,7 @@ font-style: inherit;"># cm.reset_chat()</span></span></code></pre></div>
 <h3 class="anchored" data-anchor-id="chatting-with-llama2-in-a-notebook">Chatting with Llama2 in a Notebook</h3>
 <p>Peek at very powerful workflow: interactively chatting with an LLM in a Notebook.</p>
 <p>We can directly use the <code>ChatModule</code> inside of a Notebook.</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">!</span> cd <span class="op" style="color: #5E5E5E;
@@ -314,7 +323,7 @@ font-style: inherit;">/</span>mlc<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span>llm</span></code></pre></div>
 </div>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">path_to_repo <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
@@ -325,25 +334,31 @@ background-color: null;
 font-style: inherit;">import</span> os</span>
 <span id="cb13-3">os.chdir(path_to_repo)</span></code></pre></div>
 </div>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="co" style="color: #5E5E5E;
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1">pwd</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>'/Users/cck/repos/mlc-llm'</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># import the chat module</span></span>
-<span id="cb14-2"><span class="im" style="color: #00769E;
+<span id="cb16-2"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> mlc_chat <span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> ChatModule</span>
-<span id="cb14-3"><span class="im" style="color: #00769E;
+<span id="cb16-3"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> mlc_chat.callback <span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> StreamToStdout</span>
-<span id="cb14-4"></span>
-<span id="cb14-5"><span class="co" style="color: #5E5E5E;
+<span id="cb16-4"></span>
+<span id="cb16-5"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># initialize the chat module right in the notebook</span></span>
-<span id="cb14-6">cm <span class="op" style="color: #5E5E5E;
+<span id="cb16-6">cm <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> ChatModule(model<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -351,44 +366,139 @@ font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Llama-2-7b-chat-hf-q4f16_1"</span>)</span></code></pre></div>
 </div>
-<p>Starting the conversation:</p>
-<div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="co" style="color: #5E5E5E;
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>2</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1">prompt <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Hello! Please get ready to help me with my project!"</span></span>
+<span id="cb19-2"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># asking Llama2 about itself</span></span>
-<span id="cb15-2">output <span class="op" style="color: #5E5E5E;
+<span id="cb19-3">output <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> cm.generate(</span>
-<span id="cb15-3">    prompt<span class="op" style="color: #5E5E5E;
+<span id="cb19-4">    prompt<span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Please tell me a little about yourself:"</span>,</span>
-<span id="cb15-4">    progress_callback<span class="op" style="color: #5E5E5E;
+font-style: inherit;">=</span>prompt,</span>
+<span id="cb19-5">    progress_callback<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>StreamToStdout(callback_interval<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">2</span>),</span>
-<span id="cb15-5">)</span></code></pre></div>
+<span id="cb19-6">)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Hello! *adjusts glasses* I'm so glad you're excited about your project! I'm here to help you in any way I can. Could you please provide some more details about your project, such as its topic, any specific questions you have, or what you hope to achieve? That will help me better understand how I can assist you. 😊</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> talk(txt):</span>
+<span id="cb21-2">    output <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cm.generate(</span>
+<span id="cb21-3">    prompt<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>txt,</span>
+<span id="cb21-4">    progress_callback<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>StreamToStdout(callback_interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>),</span>
+<span id="cb21-5">)</span></code></pre></div>
+</div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1">talk(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Please be less cringe, thank you"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Of course, I apologize if my previous response came across as too cheery. I'm here to help you in a respectful and professional manner. Please let me know how I can assist you with your project. Are there any specific tasks you need help with, or any information you need me to provide? Please feel free to ask me anything. 😊</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1">talk(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Actually, please be as cringe as possible, thank you!"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Oh, my goodness! *adjusts glasses* I'm so thrilled to be of assistance to you, my dear! *bounces up and down* I'll do my absolute bestest to help you with your project, even if it means being a wee bit cheesy and cringeworthy! *winks* Please do tell me how I can help, you delightful person, you! 😊</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1">talk(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Hmmm, no quite cringe enough! More cringe please uwu"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Oh, my goodness gracious! *adjusts glasses* I'm so glad you want me to be even more cringe! *bounces up and down* I'll do my absolute bestest to provide you with the most cringe-tastic responses possible! *winks*
+So, my sweet darling, how may I assist you on this lovely day? *blinks* Do tell me your most precious wish, and I shall do my utmost to make it come true! *bats eyelashes* 😊</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1">talk(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"You are actually being a 6/10 cringe. Please show me what a 10000/10 cringe would look like!"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Oh, my goodness gracious! *adjusts glasses* I-I can't possibly...*gulps*...I-I think I'll just have to...*tries to contain excitement*...OVERDO IT! *pulls out all the cringe*
+So, my sweet, sweet darling...*bounces up and down*...I shall provide you with the most...*gulps*...CRINGE-TASIC RESPONSES POSSIBLE! *winks* *adjusts glasses* *bats eyelashes* 😂👀💖
+Please, my precious, tell me how I may serve you in this, the most cringe-tastic way possible! *curtsies* 💕</code></pre>
+</div>
+</div>
+<p>Starting the conversation:</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># asking Llama2 about itself</span></span>
+<span id="cb30-2">output <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cm.generate(</span>
+<span id="cb30-3">    prompt<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Please tell me a little about yourself:"</span>,</span>
+<span id="cb30-4">    progress_callback<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>StreamToStdout(callback_interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>),</span>
+<span id="cb30-5">)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Hello! *adjusts glasses* I'm just an AI, here to help you with any questions or tasks you may have. My purpose is to provide helpful, respectful, and honest assistance to the best of my abilities. I'm just a language model, so I don't have personal experiences or feelings like humans do, but I'm always eager to learn and improve my responses. Is there something specific you'd like to know or discuss?</code></pre>
 </div>
 </div>
 <p>Can also ask question on the fly using python’s <code>input()</code> which works in Jupyter Notebooks</p>
 <div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># asking Llama2 something on the fly</span></span>
-<span id="cb17-2">prompt <span class="op" style="color: #5E5E5E;
+<span id="cb32-2">prompt <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">input</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Prompt: "</span>)</span>
-<span id="cb17-3">output <span class="op" style="color: #5E5E5E;
+<span id="cb32-3">output <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> cm.generate(prompt<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -414,25 +524,25 @@ Feel free to ask me anything, and I'll do my best to assist you!</code></pre>
 </div>
 <p>What if we wanted a quick summary of what it said?</p>
 <div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb34" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># asking for a summary of its response</span></span>
-<span id="cb19-2">output <span class="op" style="color: #5E5E5E;
+<span id="cb34-2">output <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> cm.generate(</span>
-<span id="cb19-3">    prompt<span class="op" style="color: #5E5E5E;
+<span id="cb34-3">    prompt<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Please summarize your response in three sentences."</span>,</span>
-<span id="cb19-4">    progress_callback<span class="op" style="color: #5E5E5E;
+<span id="cb34-4">    progress_callback<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>StreamToStdout(callback_interval<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">2</span>),</span>
-<span id="cb19-5">)</span></code></pre></div>
+<span id="cb34-5">)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Of course! Here's a summary of my response in three sentences:
 I'm a language model AI trained to assist with various tasks, including answering questions, generating ideas, translating languages, summarizing content, offering suggestions, providing definitions, and creating content. I'm here to help with any questions or topics you'd like to discuss, so feel free to ask me anything. I'm best suited to helping with a wide range of tasks, including but not limited to those listed above.</code></pre>
@@ -440,17 +550,17 @@ I'm a language model AI trained to assist with various tasks, including answerin
 </div>
 <p>Can go back and forth with the cells above, or can continue talking in other cells</p>
 <div class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># asking another question</span></span>
-<span id="cb21-2">new_prompt <span class="op" style="color: #5E5E5E;
+<span id="cb36-2">new_prompt <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">input</span>(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"New, Different Prompt: "</span>)</span>
-<span id="cb21-3">output <span class="op" style="color: #5E5E5E;
+<span id="cb36-3">output <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> cm.generate(prompt<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -466,18 +576,18 @@ font-style: inherit;">2</span>))</span></code></pre></div>
 </div>
 </div>
 <p>The chat module maintains an internal chat history. If we get stuck in a loop or simply want to start the convo anew:</p>
-<div class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><span class="co" style="color: #5E5E5E;
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb38" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># resets the current session's chat history</span></span>
-<span id="cb23-2">cm.reset_chat()</span></code></pre></div>
+<span id="cb38-2">cm.reset_chat()</span></code></pre></div>
 </div>
 <p>There is a handy <code>stats()</code> function to check the speed of the model’s generation.</p>
 <div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb39" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># checks if llm go brrr</span></span>
-<span id="cb24-2"><span class="bu" style="color: null;
+<span id="cb39-2"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(cm.stats())</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -486,10 +596,10 @@ font-style: inherit;">print</span>(cm.stats())</span></code></pre></div>
 </div>
 <p>For a more rigorous check, we can use the <code>benchmark_generate</code> function to check the speed of a fixed number of tokens:</p>
 <div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb41" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># benchmarking text generation</span></span>
-<span id="cb26-2"><span class="bu" style="color: null;
+<span id="cb41-2"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(cm.benchmark_generate(prompt<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -500,7 +610,7 @@ background-color: null;
 font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">512</span>))</span>
-<span id="cb26-3">cm.stats()</span></code></pre></div>
+<span id="cb41-3">cm.stats()</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  nobody expects the Spanish Inquisition! 😱🔥🎬
@@ -840,31 +950,30 @@ In the context of the Monty Python sketch, "nobody expects the Spanish Inquisiti
 </div>
 </section>
 </section>
-</section>
 <section id="building-an-mlc-ios-app" class="level1">
 <h1>Building an MLC iOS app</h1>
 <p>Similar process, need a few extra tools and helper packages. First, we need to install rust:</p>
-<div class="sourceCode" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"></span>
-<span id="cb29-2"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb44" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"></span>
+<span id="cb44-2"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># if you don't have `curl`...</span></span>
-<span id="cb29-3"><span class="fu" style="color: #4758AB;
+<span id="cb44-3"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">which</span> curl <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># &lt;-- if this shows nothing</span></span>
-<span id="cb29-4"></span>
-<span id="cb29-5"><span class="co" style="color: #5E5E5E;
+<span id="cb44-4"></span>
+<span id="cb44-5"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># install curl</span></span>
-<span id="cb29-6"><span class="ex" style="color: null;
+<span id="cb44-6"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">brew</span> install curl</span>
-<span id="cb29-7"></span>
-<span id="cb29-8"><span class="co" style="color: #5E5E5E;
+<span id="cb44-7"></span>
+<span id="cb44-8"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># then, download and install rust</span></span>
-<span id="cb29-9"><span class="ex" style="color: null;
+<span id="cb44-9"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">curl</span> <span class="at" style="color: #657422;
 background-color: null;
@@ -881,27 +990,27 @@ background-color: null;
 font-style: inherit;">sh</span></span></code></pre></div>
 <p>It will prompt you for different installation kinds, but the default one is perfectly fine.</p>
 <p>We will also need the <code>cmake</code> tool. On Mac, you can install it with Homebrew or MacPorts.</p>
-<div class="sourceCode" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb45" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># install cmake with Homebrew</span></span>
-<span id="cb30-2"><span class="ex" style="color: null;
+<span id="cb45-2"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">brew</span> install cmake</span></code></pre></div>
 <p>In case you skipped the section above, make sure to download the <code>mlc-chat</code> library and place it inside the <code>dist/prebuilt</code> folder.</p>
-<div class="sourceCode" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb46" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb46-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">git</span> clone https://github.com/mlc-ai/binary-mlc-llm-libs.git dist/prebuilt/lib</span></code></pre></div>
 <p>In the sections above we chatted with Llama2 on our laptop. Let’s go ahead and talk to it from an iOS app now.</p>
 <p>First we download a model built for iOS.</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb47" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># download the pre-compiled Llama2 model for iOS</span></span>
-<span id="cb32-2">cd dist<span class="op" style="color: #5E5E5E;
+<span id="cb47-2">cd dist<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span>prebuilt</span>
-<span id="cb32-3">git lfs install</span>
-<span id="cb32-4">git clone https:<span class="op" style="color: #5E5E5E;
+<span id="cb47-3">git lfs install</span>
+<span id="cb47-4">git clone https:<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">//</span>huggingface.co<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -930,90 +1039,90 @@ background-color: null;
 font-style: inherit;">-</span>hf<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span>q3f16_1</span>
-<span id="cb32-5">cd ..<span class="op" style="color: #5E5E5E;
+<span id="cb47-5">cd ..<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span>..</span></code></pre></div>
 </div>
 <p>We need some other, helper libraries to run the iOS models. Run the command below to download and configure them:</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb48" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># grab the helper libraries</span></span>
-<span id="cb33-2">git submodule update <span class="op" style="color: #5E5E5E;
+<span id="cb48-2">git submodule update <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">--</span>init <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">--</span>recursive </span>
-<span id="cb33-3"></span>
-<span id="cb33-4"><span class="co" style="color: #5E5E5E;
+<span id="cb48-3"></span>
+<span id="cb48-4"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># prepare the ios libs</span></span>
-<span id="cb33-5">cd .<span class="op" style="color: #5E5E5E;
+<span id="cb48-5">cd .<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span>ios</span>
-<span id="cb33-6">.<span class="op" style="color: #5E5E5E;
+<span id="cb48-6">.<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span>prepare_libs.sh</span></code></pre></div>
 </div>
 <p>This will create a <code>build/</code> folder. Make sure the following files are in there:</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb34" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb49" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># expected output of build/</span></span>
-<span id="cb34-2">ls .<span class="op" style="color: #5E5E5E;
+<span id="cb49-2">ls .<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span>build<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span>lib<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span></span>
-<span id="cb34-3">libmlc_llm.a         <span class="co" style="color: #5E5E5E;
+<span id="cb49-3">libmlc_llm.a         <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># A lightweight interface to interact with LLM, tokenizer, and TVM Unity runtime</span></span>
-<span id="cb34-4">libmodel_iphone.a    <span class="co" style="color: #5E5E5E;
+<span id="cb49-4">libmodel_iphone.a    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># The compiled model lib</span></span>
-<span id="cb34-5">libsentencepiece.a   <span class="co" style="color: #5E5E5E;
+<span id="cb49-5">libsentencepiece.a   <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># SentencePiece tokenizer</span></span>
-<span id="cb34-6">libtokenizers_cpp.a  <span class="co" style="color: #5E5E5E;
+<span id="cb49-6">libtokenizers_cpp.a  <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Huggingface tokenizer</span></span>
-<span id="cb34-7">libtvm_runtime.a     <span class="co" style="color: #5E5E5E;
+<span id="cb49-7">libtvm_runtime.a     <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># TVM Unity runtime</span></span></code></pre></div>
 </div>
 <p>Let’s make sure we package the new model into the iOS app. We need to add the</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb50" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># still inside of the ios folder, edit the file below</span></span>
-<span id="cb35-2"><span class="bu" style="color: null;
+<span id="cb50-2"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">open</span> .<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span>prepare_params.sh <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># make sure `builtin_list` only contains "Llama-2-7b-chat-hf-q3f16_1"</span></span>
-<span id="cb35-3"></span>
-<span id="cb35-4"><span class="co" style="color: #5E5E5E;
+<span id="cb50-3"></span>
+<span id="cb50-4"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># prepackage the weights</span></span>
-<span id="cb35-5">.<span class="op" style="color: #5E5E5E;
+<span id="cb50-5">.<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span>prepare_params.sh</span></code></pre></div>
 </div>
 <p>Now we should be able to see the model inside the <code>ios/build</code> folder:</p>
 <div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb51" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># expected contents of ios/dist folder</span></span>
-<span id="cb36-2">ls .<span class="op" style="color: #5E5E5E;
+<span id="cb51-2">ls .<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span>dist<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">/</span></span>
-<span id="cb36-3">Llama<span class="op" style="color: #5E5E5E;
+<span id="cb51-3">Llama<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
 background-color: null;
