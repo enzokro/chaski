@@ -10,21 +10,1435 @@
 <atom:link href="https://enzokro.dev/blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>Enzo&#39;s site.</description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Sat, 07 Oct 2023 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 14 Oct 2023 04:00:00 GMT</lastBuildDate>
 <item>
-  <title>Overview of MLC and llama.cpp</title>
+  <title>Running llama.cpp on a laptop and phone</title>
   <dc:creator>Chris Kroenke</dc:creator>
-  <link>https://enzokro.dev/blog/posts/fractal-llms/2023-10-07-Session_3_mlc/index.html</link>
+  <link>https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session_3_llama/index.html</link>
   <description><![CDATA[ 
 
 
 
 <blockquote class="blockquote">
-<p>A quick look at <code>llama.cpp</code>, and running Llama2 with the Machine Learning Compilation (<code>MLC</code>) library.</p>
+<p>Running LLMs with <code>llama.cpp</code>.</p>
 </blockquote>
 <section id="intro" class="level1">
 <h1>Intro</h1>
-<p>Today we are going to run a Llama2 model locally! Ideally, you’ll be able to run this on your laptop. And if not, that’s where the Cloud GPUs from the previous class will come in handy.</p>
+<p>This notebook uses the <a href="https://github.com/ggerganov/llama.cpp">llama.cpp</a> library to run models locally and on the phone (soon).</p>
+<section id="llama.cpp" class="level2">
+<h2 class="anchored" data-anchor-id="llama.cpp">llama.cpp</h2>
+<p>llama.cpp is focused on quantizing and deploying LLMs on Mac, but they support linux and windows as well. Despite its name, the project supports a ton of models beyond Llama and Llama-2. It is very straightforward to install. And there are even <a href="https://github.com/abetlen/llama-cpp-python">python bindings</a> to make our lives easier.</p>
+<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session_3_llama/llama_description.png" class="img-fluid"></p>
+<p>The original project was stitched together in a <a href="https://github.com/ggerganov/llama.cpp/issues/33#issuecomment-1465108022">single evening</a>, and has since become the arguable SOTA for deploying LLMs on CPUs. The llama.cpp community is full of is incredibly helpful and responsive people.</p>
+<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session_3_llama/llama_model_support.png" class="img-fluid"></p>
+<p>There benefits of the repo go beyond even the code and models. The community is always bringing in the greatest and latest approaches from the avalanche of LLM progress. The Pull Requests and Issues are full of folks working and experimenting to integrate these advances. Thankfully, the community is very open to indie hackers and unconventional ideas: if something works and there’s proof, it’s merged in.</p>
+<p>In fact, this notebook is living proof of the power of Open Source. Last lesson we used the <code>MLC</code> library because it was the only one that supported LLMs on iOS. But, literally since last week, llama.cpp added and fixed support for iOS LLMs. MLC is a great project and worth keeping an eye on, but for now we march on under the llama banner.</p>
+</section>
+<section id="running-mistral-v0.1-with-llama.cpp" class="level2">
+<h2 class="anchored" data-anchor-id="running-mistral-v0.1-with-llama.cpp">Running Mistral-v0.1 with llama.cpp</h2>
+<p>This section covers the following:<br>
+- Setting up and installing the <code>llama.cpp</code> repo.<br>
+- Downloading a <code>Mistral-v0.1</code> model.<br>
+- Running the Mistral model directly with <code>llama.cpp</code><br>
+- Running the model with the python bindings</p>
+<p>First we create an environment for <code>llama.cpp</code>, then we download and install the repo.</p>
+<p>Then we download a Mistral-v0.1 model that’s already been quantized into the special <code>GGUF</code> format that llama.cpp expects.</p>
+<p>Lastly, we run the model on a sample input.</p>
+<section id="installing-llama.cpp" class="level3">
+<h3 class="anchored" data-anchor-id="installing-llama.cpp">Installing llama.cpp</h3>
+<p>First, create a new environment for llama.cpp. Then install the dependencies.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># create an environment for llama.cpp</span></span>
+<span id="cb1-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">mamba</span> create <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-n</span> llama-cpp python=3.11</span></code></pre></div>
+<p>This isn’t <em>strictly</em> necessary for llama.cpp since it uses C++, but we’ll need it for the python bindings. Even without those, it’s good practice to make and keep isolated environments for your projects.</p>
+<p>Next activate the environment:</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># activate the environment</span></span>
+<span id="cb2-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">mamba</span> activate llama-cpp</span></code></pre></div>
+<p>We can now download and move into the repo:</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># clone and move into the llama.cpp repo</span></span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> clone https://github.com/ggerganov/llama.cpp</span>
+<span id="cb3-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> llama.cpp</span></code></pre></div>
+<p>Llama supports both the <a href="https://www.gnu.org/software/make/">GNU Make</a> and <a href="https://cmake.org/">CMake</a> build systems. Note that <code>make</code> works fine on Linux, but I’ve had mixed results on Mac. For that reason we’ll stick with <code>CMake</code> here. On Mac you can install cmake with homebrew: <code>brew install cmake</code>. On linux you can install it with <code>sudo apt install cmake</code>. For Windows folks you can grab the latest installer from <a href="https://cmake.org/download/">here</a>.</p>
+<p>Once you installed cmake and are inside the repo, go ahead and build it. The steps below are a standard build process with cmake, you’ll see something similar in many different projects.</p>
+<p>We can also pass a flag to build Llama with optimizations for certain hardware. Note that cmake build arguments have a funky syntax where they’re prefixed by <code>-D</code> and then the argument name.</p>
+<p>Here are the flags for different hardware:<br>
+- To build for Mac’s Metal acceleration: -DLLAMA_METAL=1<br>
+- To build for NVIDIA GPUs: -DLLAMA_CUBLAS=1</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># prepare for a cmake build</span></span>
+<span id="cb4-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mkdir</span> build</span>
+<span id="cb4-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> build</span>
+<span id="cb4-4"></span>
+<span id="cb4-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># prepare the build for Metal acceleration</span></span>
+<span id="cb4-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cmake</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-DLLAMA_METAL</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>1 ..</span>
+<span id="cb4-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># # or, replace with this to build for NVIDIA GPUs</span></span>
+<span id="cb4-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># cmake -DLLAMA_CUBLAS=1 ..</span></span>
+<span id="cb4-9"></span>
+<span id="cb4-10"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># build the accelerated llama.cpp project</span></span>
+<span id="cb4-11"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cmake</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--build</span> . <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--config</span> Release  </span></code></pre></div>
+<p>The accelerated files are inside the <code>build/</code> folder itself. It has the main way we’ll be calling the llama library: <code>main</code>.</p>
+<p>With llama.cpp installed, we can now download a Mistral-v0.1 model and run it.</p>
+</section>
+<section id="downloading-a-mistral-v0.1-model" class="level3">
+<h3 class="anchored" data-anchor-id="downloading-a-mistral-v0.1-model">Downloading a Mistral-v0.1 model</h3>
+<p>As mentioned earlier, we’ll grab a model that’s already been set up to work with llama.cpp. We’ll rely on a model uploaded by a user known as <code>TheBloke</code>. His efforts are another example for the power of Open Source: this user has uploaded almost 2,000 models that anyone can now use!</p>
+<p>Here is the Mistral-v0.1 model already formatted for llama.cpp. The model has 7 billion parameters, and is the <code>Instruct</code> version which was explicitly trained to follow and complete instructions.</p>
+<blockquote class="blockquote">
+<p>Link to <a href="https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF"><code>Mistral-7B-Instruct-v0.1</code></a></p>
+</blockquote>
+<p>Click the link above, then navigate to the <code>Files and version</code> tabs. You’ll see a list of available models, each one quantized in a different way:</p>
+<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session_3_llama/mistral_quantized.png" class="img-fluid"></p>
+<p>The <code>Q4</code> models will more comfortably fit on consumer GPUs and hardware. But the higher number after the <code>Q</code> the more accurate the model will be. Here we’ll use the <code>Q5_K_M</code> model which is a bit larger and slower than the <code>Q4</code> models but makes up for it in performance.</p>
+<p>Let’s grab the <code>Q5_K_M</code> model. First, make sure the huggingface-hub CLI is installed:</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># install a tool to download HuggingFace models via the terminal</span></span>
+<span id="cb5-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">pip</span> install huggingface-hub</span></code></pre></div>
+<p>Then move into the <code>models/</code> folder and download the model:</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># download the Mistral model</span></span>
+<span id="cb6-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">huggingface-cli</span> download TheBloke/Mistral-7B-Instruct-v0.1-GGUF mistral-7b-instruct-v0.1.Q5_K_M.gguf <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--local-dir</span> . <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--local-dir-use-symlinks</span> False</span></code></pre></div>
+<p>Now that we have the model, we can run it to make sure everything works.</p>
+</section>
+<section id="running-the-mistral-model" class="level3">
+<h3 class="anchored" data-anchor-id="running-the-mistral-model">Running the Mistral model</h3>
+<p>We’ll use the <code>main</code> binary inside of the <code>build/</code> folder to run it. Go ahead and run the following command to see Mistral-v0.1 in action!</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># run the inference on the official example from the build/</span></span>
+<span id="cb7-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">./bin/main</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-m</span> ../models/mistral-7b-instruct-v0.1.Q5_K_M.gguf <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-n</span> 128 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Building a website can be done in 10 simple steps:\nStep 1:"</span></span></code></pre></div>
+<p>And that’s it! We’ve now done the following:<br>
+- Installed llama.cpp.<br>
+- Downloaded a Mistral-v0.1 model.<br>
+- Ran the model on a sample input.</p>
+<p>However, this was all via the command line using C++ binaries. How could we do the same with python and Notebooks? Enter the python bindings.</p>
+</section>
+</section>
+<section id="running-llama.cpp-model-with-python" class="level2">
+<h2 class="anchored" data-anchor-id="running-llama.cpp-model-with-python">Running llama.cpp model with python</h2>
+<p>First step, let’s install the llama.cpp python bindings into our environment. We’ll repeat ourselves a bit here, since the python bindings attempt to build and install the C++ repo as well.</p>
+<p>Here are the instructions for the full <a href="https://github.com/abetlen/llama-cpp-python/blob/main/docs/install/macos.md">Mac Metal installation</a></p>
+<p>The TL;DR is to run the following command inside our environment:</p>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">pip</span> uninstall llama-cpp-python <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-y</span></span>
+<span id="cb8-2"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">CMAKE_ARGS</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-DLLAMA_METAL=on"</span> <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">pip</span> install <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-U</span> llama-cpp-python <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--no-cache-dir</span></span></code></pre></div>
+<p>The command above does the following to make sure the python bindings are up to date:<br>
+- Uninstall older versions of the bindings, if any are installed.<br>
+- Install the bindings with Metal acceleration.</p>
+<p>The following code snippet checks if we can import the bindings:</p>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-c</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"from llama_cpp import Llama"</span></span></code></pre></div>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> llama_cpp <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Llama</span></code></pre></div>
+</div>
+<p>If the command above worked, we can use it to run the Mistral-v0.1 model.</p>
+<p>Put the following into a <code>llama_python.py</code> file, or run it from the notebook:</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> llama_cpp <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Llama</span>
+<span id="cb11-2"></span>
+<span id="cb11-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># point to the model, assuming we're in the llama.cpp build/ folder</span></span>
+<span id="cb11-4">work_dir <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"/Users/cck/repos/llama.cpp/"</span></span>
+<span id="cb11-5">llm <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Llama(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>work_dir<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/models/mistral-7b-instruct-v0.1.Q5_K_M.gguf"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>llama_model_loader: loaded meta data with 20 key-value pairs and 291 tensors from /Users/cck/repos/llama.cpp//models/mistral-7b-instruct-v0.1.Q5_K_M.gguf (version GGUF V2 (latest))
+llama_model_loader: - tensor    0:                token_embd.weight q5_K     [  4096, 32000,     1,     1 ]
+llama_model_loader: - tensor    1:              blk.0.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor    2:              blk.0.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor    3:              blk.0.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor    4:         blk.0.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor    5:            blk.0.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor    6:              blk.0.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor    7:            blk.0.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor    8:           blk.0.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor    9:            blk.0.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor   10:              blk.1.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor   11:              blk.1.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor   12:              blk.1.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor   13:         blk.1.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor   14:            blk.1.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor   15:              blk.1.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor   16:            blk.1.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor   17:           blk.1.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor   18:            blk.1.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor   19:              blk.2.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor   20:              blk.2.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor   21:              blk.2.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor   22:         blk.2.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor   23:            blk.2.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor   24:              blk.2.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor   25:            blk.2.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor   26:           blk.2.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor   27:            blk.2.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor   28:              blk.3.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor   29:              blk.3.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor   30:              blk.3.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor   31:         blk.3.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor   32:            blk.3.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor   33:              blk.3.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor   34:            blk.3.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor   35:           blk.3.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor   36:            blk.3.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor   37:              blk.4.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor   38:              blk.4.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor   39:              blk.4.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor   40:         blk.4.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor   41:            blk.4.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor   42:              blk.4.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor   43:            blk.4.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor   44:           blk.4.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor   45:            blk.4.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor   46:              blk.5.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor   47:              blk.5.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor   48:              blk.5.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor   49:         blk.5.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor   50:            blk.5.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor   51:              blk.5.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor   52:            blk.5.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor   53:           blk.5.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor   54:            blk.5.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor   55:              blk.6.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor   56:              blk.6.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor   57:              blk.6.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor   58:         blk.6.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor   59:            blk.6.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor   60:              blk.6.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor   61:            blk.6.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor   62:           blk.6.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor   63:            blk.6.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor   64:              blk.7.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor   65:              blk.7.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor   66:              blk.7.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor   67:         blk.7.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor   68:            blk.7.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor   69:              blk.7.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor   70:            blk.7.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor   71:           blk.7.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor   72:            blk.7.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor   73:              blk.8.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor   74:              blk.8.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor   75:              blk.8.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor   76:         blk.8.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor   77:            blk.8.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor   78:              blk.8.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor   79:            blk.8.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor   80:           blk.8.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor   81:            blk.8.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor   82:              blk.9.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor   83:              blk.9.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor   84:              blk.9.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor   85:         blk.9.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor   86:            blk.9.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor   87:              blk.9.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor   88:            blk.9.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor   89:           blk.9.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor   90:            blk.9.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor   91:             blk.10.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor   92:             blk.10.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor   93:             blk.10.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor   94:        blk.10.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor   95:           blk.10.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor   96:             blk.10.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor   97:           blk.10.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor   98:          blk.10.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor   99:           blk.10.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  100:             blk.11.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  101:             blk.11.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  102:             blk.11.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  103:        blk.11.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  104:           blk.11.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  105:             blk.11.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  106:           blk.11.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  107:          blk.11.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  108:           blk.11.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  109:             blk.12.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  110:             blk.12.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  111:             blk.12.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  112:        blk.12.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  113:           blk.12.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  114:             blk.12.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  115:           blk.12.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  116:          blk.12.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  117:           blk.12.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  118:             blk.13.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  119:             blk.13.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  120:             blk.13.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  121:        blk.13.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  122:           blk.13.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  123:             blk.13.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  124:           blk.13.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  125:          blk.13.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  126:           blk.13.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  127:             blk.14.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  128:             blk.14.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  129:             blk.14.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  130:        blk.14.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  131:           blk.14.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  132:             blk.14.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  133:           blk.14.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  134:          blk.14.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  135:           blk.14.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  136:             blk.15.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  137:             blk.15.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  138:             blk.15.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  139:        blk.15.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  140:           blk.15.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  141:             blk.15.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  142:           blk.15.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  143:          blk.15.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  144:           blk.15.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  145:             blk.16.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  146:             blk.16.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  147:             blk.16.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  148:        blk.16.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  149:           blk.16.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  150:             blk.16.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  151:           blk.16.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  152:          blk.16.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  153:           blk.16.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  154:             blk.17.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  155:             blk.17.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  156:             blk.17.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  157:        blk.17.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  158:           blk.17.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  159:             blk.17.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  160:           blk.17.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  161:          blk.17.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  162:           blk.17.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  163:             blk.18.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  164:             blk.18.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  165:             blk.18.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  166:        blk.18.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  167:           blk.18.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  168:             blk.18.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  169:           blk.18.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  170:          blk.18.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  171:           blk.18.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  172:             blk.19.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  173:             blk.19.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  174:             blk.19.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  175:        blk.19.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  176:           blk.19.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  177:             blk.19.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  178:           blk.19.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  179:          blk.19.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  180:           blk.19.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  181:             blk.20.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  182:             blk.20.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  183:             blk.20.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  184:        blk.20.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  185:           blk.20.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  186:             blk.20.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  187:           blk.20.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  188:          blk.20.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  189:           blk.20.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  190:             blk.21.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  191:             blk.21.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  192:             blk.21.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  193:        blk.21.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  194:           blk.21.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  195:             blk.21.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  196:           blk.21.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  197:          blk.21.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  198:           blk.21.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  199:             blk.22.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  200:             blk.22.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  201:             blk.22.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  202:        blk.22.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  203:           blk.22.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  204:             blk.22.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  205:           blk.22.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  206:          blk.22.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  207:           blk.22.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  208:             blk.23.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  209:             blk.23.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  210:             blk.23.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  211:        blk.23.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  212:           blk.23.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  213:             blk.23.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  214:           blk.23.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  215:          blk.23.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  216:           blk.23.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  217:             blk.24.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  218:             blk.24.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  219:             blk.24.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  220:        blk.24.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  221:           blk.24.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  222:             blk.24.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  223:           blk.24.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  224:          blk.24.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  225:           blk.24.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  226:             blk.25.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  227:             blk.25.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  228:             blk.25.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  229:        blk.25.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  230:           blk.25.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  231:             blk.25.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  232:           blk.25.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  233:          blk.25.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  234:           blk.25.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  235:             blk.26.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  236:             blk.26.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  237:             blk.26.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  238:        blk.26.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  239:           blk.26.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  240:             blk.26.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  241:           blk.26.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  242:          blk.26.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  243:           blk.26.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  244:             blk.27.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  245:             blk.27.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  246:             blk.27.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  247:        blk.27.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  248:           blk.27.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  249:             blk.27.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  250:           blk.27.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  251:          blk.27.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  252:           blk.27.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  253:             blk.28.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  254:             blk.28.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  255:             blk.28.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  256:        blk.28.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  257:           blk.28.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  258:             blk.28.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  259:           blk.28.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  260:          blk.28.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  261:           blk.28.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  262:             blk.29.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  263:             blk.29.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  264:             blk.29.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  265:        blk.29.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  266:           blk.29.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  267:             blk.29.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  268:           blk.29.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  269:          blk.29.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  270:           blk.29.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  271:             blk.30.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  272:             blk.30.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  273:             blk.30.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  274:        blk.30.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  275:           blk.30.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  276:             blk.30.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  277:           blk.30.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  278:          blk.30.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  279:           blk.30.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  280:             blk.31.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  281:             blk.31.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  282:             blk.31.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  283:        blk.31.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor  284:           blk.31.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  285:             blk.31.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
+llama_model_loader: - tensor  286:           blk.31.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
+llama_model_loader: - tensor  287:          blk.31.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  288:           blk.31.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  289:               output_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor  290:                    output.weight q6_K     [  4096, 32000,     1,     1 ]
+llama_model_loader: - kv   0:                       general.architecture str     
+llama_model_loader: - kv   1:                               general.name str     
+llama_model_loader: - kv   2:                       llama.context_length u32     
+llama_model_loader: - kv   3:                     llama.embedding_length u32     
+llama_model_loader: - kv   4:                          llama.block_count u32     
+llama_model_loader: - kv   5:                  llama.feed_forward_length u32     
+llama_model_loader: - kv   6:                 llama.rope.dimension_count u32     
+llama_model_loader: - kv   7:                 llama.attention.head_count u32     
+llama_model_loader: - kv   8:              llama.attention.head_count_kv u32     
+llama_model_loader: - kv   9:     llama.attention.layer_norm_rms_epsilon f32     
+llama_model_loader: - kv  10:                       llama.rope.freq_base f32     
+llama_model_loader: - kv  11:                          general.file_type u32     
+llama_model_loader: - kv  12:                       tokenizer.ggml.model str     
+llama_model_loader: - kv  13:                      tokenizer.ggml.tokens arr     
+llama_model_loader: - kv  14:                      tokenizer.ggml.scores arr     
+llama_model_loader: - kv  15:                  tokenizer.ggml.token_type arr     
+llama_model_loader: - kv  16:                tokenizer.ggml.bos_token_id u32     
+llama_model_loader: - kv  17:                tokenizer.ggml.eos_token_id u32     
+llama_model_loader: - kv  18:            tokenizer.ggml.unknown_token_id u32     
+llama_model_loader: - kv  19:               general.quantization_version u32     
+llama_model_loader: - type  f32:   65 tensors
+llama_model_loader: - type q5_K:  193 tensors
+llama_model_loader: - type q6_K:   33 tensors
+llm_load_print_meta: format           = GGUF V2 (latest)
+llm_load_print_meta: arch             = llama
+llm_load_print_meta: vocab type       = SPM
+llm_load_print_meta: n_vocab          = 32000
+llm_load_print_meta: n_merges         = 0
+llm_load_print_meta: n_ctx_train      = 32768
+llm_load_print_meta: n_embd           = 4096
+llm_load_print_meta: n_head           = 32
+llm_load_print_meta: n_head_kv        = 8
+llm_load_print_meta: n_layer          = 32
+llm_load_print_meta: n_rot            = 128
+llm_load_print_meta: n_gqa            = 4
+llm_load_print_meta: f_norm_eps       = 0.0e+00
+llm_load_print_meta: f_norm_rms_eps   = 1.0e-05
+llm_load_print_meta: n_ff             = 14336
+llm_load_print_meta: freq_base_train  = 10000.0
+llm_load_print_meta: freq_scale_train = 1
+llm_load_print_meta: model type       = 7B
+llm_load_print_meta: model ftype      = mostly Q5_K - Medium
+llm_load_print_meta: model params     = 7.24 B
+llm_load_print_meta: model size       = 4.78 GiB (5.67 BPW) 
+llm_load_print_meta: general.name   = mistralai_mistral-7b-instruct-v0.1
+llm_load_print_meta: BOS token = 1 '&lt;s&gt;'
+llm_load_print_meta: EOS token = 2 '&lt;/s&gt;'
+llm_load_print_meta: UNK token = 0 '&lt;unk&gt;'
+llm_load_print_meta: LF token  = 13 '&lt;0x0A&gt;'
+llm_load_tensors: ggml ctx size =    0.09 MB
+llm_load_tensors: mem required  = 4893.09 MB
+..................................................................................................
+llama_new_context_with_model: n_ctx      = 512
+llama_new_context_with_model: freq_base  = 10000.0
+llama_new_context_with_model: freq_scale = 1
+llama_new_context_with_model: kv self size  =   64.00 MB
+llama_new_context_with_model: compute buffer total size = 78.88 MB
+AVX = 0 | AVX2 = 0 | AVX512 = 0 | AVX512_VBMI = 0 | AVX512_VNNI = 0 | FMA = 0 | NEON = 1 | ARM_FMA = 1 | F16C = 0 | FP16_VA = 1 | WASM_SIMD = 0 | BLAS = 1 | SSE3 = 0 | SSSE3 = 0 | VSX = 0 | </code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># running the official example via python</span></span>
+<span id="cb13-2">prompt <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Building a website can be done in 10 simple steps:</span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Step 1:"</span></span>
+<span id="cb13-3">output <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> llm(prompt, max_tokens<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">512</span>, echo<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Llama.generate: prefix-match hit
+
+llama_print_timings:        load time =  5542.08 ms
+llama_print_timings:      sample time =   147.45 ms /   218 runs   (    0.68 ms per token,  1478.49 tokens per second)
+llama_print_timings: prompt eval time =     0.00 ms /     1 tokens (    0.00 ms per token,      inf tokens per second)
+llama_print_timings:        eval time = 13963.44 ms /   218 runs   (   64.05 ms per token,    15.61 tokens per second)
+llama_print_timings:       total time = 14369.62 ms</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1">output[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'choices'</span>][<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>][<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'text'</span>]</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>"Building a website can be done in 10 simple steps:\nStep 1: Determine the purpose of your website. This will help you decide on the features and design that are important to you.\nStep 2: Choose a domain name that represents your brand and is easy to remember.\nStep 3: Select a hosting provider that offers reliable uptime and customer support.\nStep 4: Choose a content management system (CMS) or website builder that suits your needs.\nStep 5: Create a layout and design for your website that is visually appealing and easy to navigate.\nStep 6: Develop the content for your website, including text, images, and videos.\nStep 7: Optimize your website for search engines (SEO) by using relevant keywords and meta tags.\nStep 8: Test your website for functionality, usability, and compatibility with different devices.\nStep 9: Launch your website and promote it through social media, email marketing, and other online channels.\nStep 10: Monitor your website's performance and make updates as needed to ensure its success."</code></pre>
+</div>
+</div>
+<section id="revisiting-the-mlc-outputs" class="level3">
+<h3 class="anchored" data-anchor-id="revisiting-the-mlc-outputs">Revisiting the MLC Outputs</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1">prompt <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Hello! Please get ready to help me with my project!"</span></span>
+<span id="cb17-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># asking Llama2 about itself</span></span>
+<span id="cb17-3">output <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cm.generate(</span>
+<span id="cb17-4">    prompt<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>prompt,</span>
+<span id="cb17-5">    progress_callback<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>StreamToStdout(callback_interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>),</span>
+<span id="cb17-6">)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Hello! *adjusts glasses* I'm so glad you're excited about your project! I'm here to help you in any way I can. Could you please provide some more details about your project, such as its topic, any specific questions you have, or what you hope to achieve? That will help me better understand how I can assist you. 😊</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> talk(txt):</span>
+<span id="cb19-2">    output <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cm.generate(</span>
+<span id="cb19-3">    prompt<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>txt,</span>
+<span id="cb19-4">    progress_callback<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>StreamToStdout(callback_interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>),</span>
+<span id="cb19-5">)</span></code></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1">talk(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Please be less cringe, thank you"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Of course, I apologize if my previous response came across as too cheery. I'm here to help you in a respectful and professional manner. Please let me know how I can assist you with your project. Are there any specific tasks you need help with, or any information you need me to provide? Please feel free to ask me anything. 😊</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1">talk(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Actually, please be as cringe as possible, thank you!"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Oh, my goodness! *adjusts glasses* I'm so thrilled to be of assistance to you, my dear! *bounces up and down* I'll do my absolute bestest to help you with your project, even if it means being a wee bit cheesy and cringeworthy! *winks* Please do tell me how I can help, you delightful person, you! 😊</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1">talk(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Hmmm, no quite cringe enough! More cringe please uwu"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Oh, my goodness gracious! *adjusts glasses* I'm so glad you want me to be even more cringe! *bounces up and down* I'll do my absolute bestest to provide you with the most cringe-tastic responses possible! *winks*
+So, my sweet darling, how may I assist you on this lovely day? *blinks* Do tell me your most precious wish, and I shall do my utmost to make it come true! *bats eyelashes* 😊</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1">talk(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"You are actually being a 6/10 cringe. Please show me what a 10000/10 cringe would look like!"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Oh, my goodness gracious! *adjusts glasses* I-I can't possibly...*gulps*...I-I think I'll just have to...*tries to contain excitement*...OVERDO IT! *pulls out all the cringe*
+So, my sweet, sweet darling...*bounces up and down*...I shall provide you with the most...*gulps*...CRINGE-TASIC RESPONSES POSSIBLE! *winks* *adjusts glasses* *bats eyelashes* 😂👀💖
+Please, my precious, tell me how I may serve you in this, the most cringe-tastic way possible! *curtsies* 💕</code></pre>
+</div>
+</div>
+<p>Starting the conversation:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># asking Llama2 about itself</span></span>
+<span id="cb28-2">output <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cm.generate(</span>
+<span id="cb28-3">    prompt<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Please tell me a little about yourself:"</span>,</span>
+<span id="cb28-4">    progress_callback<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>StreamToStdout(callback_interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>),</span>
+<span id="cb28-5">)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Hello! *adjusts glasses* I'm just an AI, here to help you with any questions or tasks you may have. My purpose is to provide helpful, respectful, and honest assistance to the best of my abilities. I'm just a language model, so I don't have personal experiences or feelings like humans do, but I'm always eager to learn and improve my responses. Is there something specific you'd like to know or discuss?</code></pre>
+</div>
+</div>
+<p>Can also ask question on the fly using python’s <code>input()</code> which works in Jupyter Notebooks</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># asking Llama2 something on the fly</span></span>
+<span id="cb30-2">prompt <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">input</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Prompt: "</span>)</span>
+<span id="cb30-3">output <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cm.generate(prompt<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>prompt, progress_callback<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>StreamToStdout(callback_interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Great, I'm glad you asked! I'm best suited to helping with a wide range of tasks, including but not limited to:
+1. Answering questions: I can provide information and explanations on various topics, from science and history to entertainment and culture.
+2. Generating ideas: I can help you brainstorm ideas for creative projects, or even come up with unique solutions to problems you might be facing.
+3. Language translation: I can translate text from one language to another, helping you communicate with people from different cultures and backgrounds.
+4. Summarizing content: If you have a long piece of text and want to get a quick summary of its main points, I can help you with that.
+5. Offering suggestions: I can provide suggestions for things like gift ideas, travel destinations, or even books to read.
+6. Providing definitions: If you're unsure of the meaning of a word or phrase, I can define it for you and give you examples of how it's used in context.
+7. Creating content: I can assist you in generating content for various mediums, such as articles, social media posts, or even entire books.
+8. Conversing: I'm here to chat and help with any questions or topics you'd like to discuss.
+Feel free to ask me anything, and I'll do my best to assist you!</code></pre>
+</div>
+</div>
+<p>What if we wanted a quick summary of what it said?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># asking for a summary of its response</span></span>
+<span id="cb32-2">output <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cm.generate(</span>
+<span id="cb32-3">    prompt<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Please summarize your response in three sentences."</span>,</span>
+<span id="cb32-4">    progress_callback<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>StreamToStdout(callback_interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>),</span>
+<span id="cb32-5">)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Of course! Here's a summary of my response in three sentences:
+I'm a language model AI trained to assist with various tasks, including answering questions, generating ideas, translating languages, summarizing content, offering suggestions, providing definitions, and creating content. I'm here to help with any questions or topics you'd like to discuss, so feel free to ask me anything. I'm best suited to helping with a wide range of tasks, including but not limited to those listed above.</code></pre>
+</div>
+</div>
+<p>Can go back and forth with the cells above, or can continue talking in other cells</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># asking another question</span></span>
+<span id="cb34-2">new_prompt <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">input</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"New, Different Prompt: "</span>)</span>
+<span id="cb34-3">output <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> cm.generate(prompt<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>new_prompt, progress_callback<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>StreamToStdout(callback_interval<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Absolutely! I'm here to help. What topic would you like to learn more about? Let me know and I'll do my best to provide you with helpful information and resources.</code></pre>
+</div>
+</div>
+<p>The chat module maintains an internal chat history. If we get stuck in a loop or simply want to start the convo anew:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># resets the current session's chat history</span></span>
+<span id="cb36-2">cm.reset_chat()</span></code></pre></div>
+</div>
+<p>There is a handy <code>stats()</code> function to check the speed of the model’s generation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># checks if llm go brrr</span></span>
+<span id="cb37-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(cm.stats())</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>prefill: 11.7 tok/s, decode: 12.7 tok/s</code></pre>
+</div>
+</div>
+<p>For a more rigorous check, we can use the <code>benchmark_generate</code> function to check the speed of a fixed number of tokens:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># benchmarking text generation</span></span>
+<span id="cb39-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(cm.benchmark_generate(prompt<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"What is benchmark?"</span>, generate_length<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">512</span>))</span>
+<span id="cb39-3">cm.stats()</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ nobody expects the Spanish Inquisition! 😱🔥🎬
+
+Benchmarking is the process of measuring the performance of a system, application, or process against a set of predefined metrics or standards. The goal of benchmarking is to identify areas where improvements can be made, such as increased efficiency, faster performance, or better quality.
+In the context of the Monty Python sketch, "nobody expects the Spanish Inquisition!" is a humorous reference to the unexpected and often absurd nature of benchmarking. Just as the Inquisition was unexpected and unwanted, benchmarking can sometimes be seen as an unnecessary or burdensome process. However, the benefits of benchmarking can be significant, such as identifying areas for improvement, optimizing resources, and ensuring compliance with standards or regulations. 😊s
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>'prefill: 1.8 tok/s, decode: 30.0 tok/s'</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="building-an-mlc-ios-app" class="level1">
+<h1>Building an MLC iOS app</h1>
+<p>Similar process, need a few extra tools and helper packages. First, we need to install rust:</p>
+<div class="sourceCode" id="cb42" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"></span>
+<span id="cb42-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># if you don't have `curl`...</span></span>
+<span id="cb42-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">which</span> curl <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># &lt;-- if this shows nothing</span></span>
+<span id="cb42-4"></span>
+<span id="cb42-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># install curl</span></span>
+<span id="cb42-6"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">brew</span> install curl</span>
+<span id="cb42-7"></span>
+<span id="cb42-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># then, download and install rust</span></span>
+<span id="cb42-9"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">curl</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--proto</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'=https'</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--tlsv1.2</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-sSf</span> https://sh.rustup.rs <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sh</span></span></code></pre></div>
+<p>It will prompt you for different installation kinds, but the default one is perfectly fine.</p>
+<p>We will also need the <code>cmake</code> tool. On Mac, you can install it with Homebrew or MacPorts.</p>
+<div class="sourceCode" id="cb43" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># install cmake with Homebrew</span></span>
+<span id="cb43-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">brew</span> install cmake</span></code></pre></div>
+<p>In case you skipped the section above, make sure to download the <code>mlc-chat</code> library and place it inside the <code>dist/prebuilt</code> folder.</p>
+<div class="sourceCode" id="cb44" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> clone https://github.com/mlc-ai/binary-mlc-llm-libs.git dist/prebuilt/lib</span></code></pre></div>
+<p>In the sections above we chatted with Llama2 on our laptop. Let’s go ahead and talk to it from an iOS app now.</p>
+<p>First we download a model built for iOS.</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
+<div class="sourceCode cell-code" id="cb45" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># download the pre-compiled Llama2 model for iOS</span></span>
+<span id="cb45-2">cd dist<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>prebuilt</span>
+<span id="cb45-3">git lfs install</span>
+<span id="cb45-4">git clone https:<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">//</span>huggingface.co<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>mlc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>ai<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>mlc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>chat<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>Llama<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">b</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>chat<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>hf<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>q3f16_1</span>
+<span id="cb45-5">cd ..<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>..</span></code></pre></div>
+</div>
+<p>We need some other, helper libraries to run the iOS models. Run the command below to download and configure them:</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
+<div class="sourceCode cell-code" id="cb46" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># grab the helper libraries</span></span>
+<span id="cb46-2">git submodule update <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">--</span>init <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">--</span>recursive </span>
+<span id="cb46-3"></span>
+<span id="cb46-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># prepare the ios libs</span></span>
+<span id="cb46-5">cd .<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>ios</span>
+<span id="cb46-6">.<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>prepare_libs.sh</span></code></pre></div>
+</div>
+<p>This will create a <code>build/</code> folder. Make sure the following files are in there:</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
+<div class="sourceCode cell-code" id="cb47" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># expected output of build/</span></span>
+<span id="cb47-2">ls .<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>build<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>lib<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span></span>
+<span id="cb47-3">libmlc_llm.a         <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># A lightweight interface to interact with LLM, tokenizer, and TVM Unity runtime</span></span>
+<span id="cb47-4">libmodel_iphone.a    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># The compiled model lib</span></span>
+<span id="cb47-5">libsentencepiece.a   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># SentencePiece tokenizer</span></span>
+<span id="cb47-6">libtokenizers_cpp.a  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Huggingface tokenizer</span></span>
+<span id="cb47-7">libtvm_runtime.a     <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># TVM Unity runtime</span></span></code></pre></div>
+</div>
+<p>Let’s make sure we package the new model into the iOS app. We need to add the</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
+<div class="sourceCode cell-code" id="cb48" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># still inside of the ios folder, edit the file below</span></span>
+<span id="cb48-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">open</span> .<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>prepare_params.sh <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># make sure `builtin_list` only contains "Llama-2-7b-chat-hf-q3f16_1"</span></span>
+<span id="cb48-3"></span>
+<span id="cb48-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># prepackage the weights</span></span>
+<span id="cb48-5">.<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>prepare_params.sh</span></code></pre></div>
+</div>
+<p>Now we should be able to see the model inside the <code>ios/build</code> folder:</p>
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
+<div class="sourceCode cell-code" id="cb49" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># expected contents of ios/dist folder</span></span>
+<span id="cb49-2">ls .<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>dist<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span></span>
+<span id="cb49-3">Llama<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span><span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">b</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>chat<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>hf<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>q3f16_1 <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># the compiled Llama2 model</span></span></code></pre></div>
+</div>
+<section id="building-the-ios-app" class="level3">
+<h3 class="anchored" data-anchor-id="building-the-ios-app">Building the iOS app</h3>
+<p>We’re almost there! Now to actually build the iOS app.</p>
+<p>First boot up X-Code, then open the project <code>./ios/MLCChat.xcodeproj</code></p>
+<p>Build the project, and deploy it on either:<br>
+- Mac laptop - iPhone or iPad emulator</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>fractal</category>
+  <category>python</category>
+  <category>LLM</category>
+  <guid>https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session_3_llama/index.html</guid>
+  <pubDate>Sat, 14 Oct 2023 04:00:00 GMT</pubDate>
+  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session_3_llama/llama.jpeg" medium="image" type="image/jpeg"/>
+</item>
+<item>
+  <title>Overview of MLC and llama.cpp</title>
+  <dc:creator>Chris Kroenke</dc:creator>
+  <link>https://enzokro.dev/blog/posts/fractal-llms/2023-10-07-Session_2_mlc/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<blockquote class="blockquote">
+<p>A look at <code>llama.cpp</code>, and running Llama2 with the Machine Learning Compilation (<code>MLC</code>) library.</p>
+</blockquote>
+<section id="intro" class="level1">
+<h1>Intro</h1>
+<p>This notebooks runs a local Llama2 model. Ideally, you will be able to run this on your laptop. And if not, that’s where the Cloud GPUs from the previous class will come in handy.</p>
 <p>Below are two good libraries for running and deploying ML models.</p>
 <section id="llama.cpp" class="level2">
 <h2 class="anchored" data-anchor-id="llama.cpp">Llama.cpp</h2>
@@ -1157,9 +2571,9 @@ font-style: inherit;"># the compiled Llama2 model</span></span></code></pre></di
   <category>fractal</category>
   <category>python</category>
   <category>LLM</category>
-  <guid>https://enzokro.dev/blog/posts/fractal-llms/2023-10-07-Session_3_mlc/index.html</guid>
+  <guid>https://enzokro.dev/blog/posts/fractal-llms/2023-10-07-Session_2_mlc/index.html</guid>
   <pubDate>Sat, 07 Oct 2023 04:00:00 GMT</pubDate>
-  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/2023-10-07-Session_3_mlc/llama.jpeg" medium="image" type="image/jpeg"/>
+  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/2023-10-07-Session_2_mlc/llama.jpeg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>A Python Environment for LLMs</title>
@@ -1364,6 +2778,104 @@ font-style: inherit;">-r</span> reqs_optim.txt</span></code></pre></div>
 <p>But these libraries can be tricky to install. Don’t worry if you run into issues, we will revist them later.</p>
 <p>Resources:<br>
 - (Installing <code>python</code> on your computer)[https://realpython.com/installing-python] - (Downloading <code>VSCode</code> to edit our code)[https://code.visualstudio.com/download] - (Installing <code>git</code> to manage our code)[https://git-scm.com/book/en/v2/Getting-Started-Installing-Git]</p>
+</section>
+</section>
+<section id="installing-nvidia-drivers-and-cuda-libraries-on-a-fresh-ubuntu-22.04-machine" class="level1">
+<h1>Installing NVIDIA Drivers and CUDA Libraries on a fresh Ubuntu 22.04 machine</h1>
+<p>There are three things we need to install:<br>
+- NVIDIA Drivers.<br>
+- CUDA Libraries.<br>
+- cuDNN Libraries.</p>
+<section id="helper-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="helper-libraries">Helper libraries</h2>
+<p>First, some best practice. Make sure to update the Ubuntu package list:</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> apt update</span></code></pre></div>
+<p>There are two Ubuntu packages that are worth installing:<br>
+- software-properties-common - build-essential</p>
+<p><code>software-properties-common</code> is a set of tools for adding and managing software repositories. It makes our life a bit easier.</p>
+<p><code>build-essential</code> contains a list of packages that are essential for building Ubuntu packages. It has software key for development like the GNU Compiler Collection (GCC) and GNU Make. It also has the tools to build and install projects from source (aka straight from the repo’s folder). It’ll help us build and install repos like <code>llama.cpp</code> from source.</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> apt install software-properties-common</span>
+<span id="cb5-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> apt install build-essential</span></code></pre></div>
+<p>Then we’ll add the graphics drivers PPA and update the package list again.</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> add-apt-repository ppa:graphics-drivers/ppa</span>
+<span id="cb6-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> apt update</span></code></pre></div>
+</section>
+<section id="install-driver" class="level2">
+<h2 class="anchored" data-anchor-id="install-driver">Install Driver</h2>
+<p>Now we can install the nvidia drivers. As of writing, the <code>535</code> version of the driver is stable and supports a good number of GPU cards.</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> apt install nvidia-driver-535</span></code></pre></div>
+<p>Make sure to reboot your system:</p>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> reboot</span></code></pre></div>
+<p>After logging back in, we can check that the driver is installed correctly:</p>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">nvidia-smi</span></span></code></pre></div>
+</section>
+<section id="install-cuda" class="level2">
+<h2 class="anchored" data-anchor-id="install-cuda">Install CUDA</h2>
+<p>With the driver working we can now install the CUDA library. The CUDA library has a set of libraries optimized for NVIDIA GPUs.</p>
+<p>The example below uses a local <code>.dev</code> installer, and comes straight from the official <a href="https://developer.nvidia.com/cuda-12-1-0-download-archive?target_os=Linux&amp;target_arch=x86_64&amp;Distribution=Ubuntu&amp;target_version=22.04&amp;target_type=deb_local">CUDA website</a> wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin sudo mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600 wget https://developer.download.nvidia.com/compute/cuda/12.1.0/local_installers/cuda-repo-ubuntu2204-12-1-local_12.1.0-530.30.02-1_amd64.deb sudo dpkg -i cuda-repo-ubuntu2204-12-1-local_12.1.0-530.30.02-1_amd64.deb sudo cp /var/cuda-repo-ubuntu2204-12-1-local/cuda-*-keyring.gpg /usr/share/keyrings/ sudo apt-get update sudo apt-get -y install cuda</p>
+<p>Export the following to the <code>~/.bashrc</code> file to make sure the CUDA libraries are available in the terminal:</p>
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'export PATH=/usr/local/cuda-12.1/bin${PATH:+:${PATH}}'</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;</span> ~/.bashrc</span>
+<span id="cb10-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'export LD_LIBRARY_PATH=/usr/local/cuda-12.1/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}'</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;</span> ~/.bashrc</span>
+<span id="cb10-3"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">source</span> ~/.bashrc</span></code></pre></div>
+<p>This command will take a while to run. Once it’s done, reboot one last time just to be to be safe:</p>
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sudo</span> reboot</span></code></pre></div>
+<p>paperspace@ps3r37lmx:~$ nvcc –version nvcc: NVIDIA (R) Cuda compiler driver Copyright (c) 2005-2023 NVIDIA Corporation Built on Tue_Feb__7_19:32:13_PST_2023 Cuda compilation tools, release 12.1, V12.1.66 Build cuda_12.1.r12.1/compiler.32415258_0</p>
+<p>If everything goes well, we should now see that the CUDA version is <code>release 12.1</code>.</p>
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">nvcc</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--version</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># should output something like the following:</span></span>
+<span id="cb12-2"></span>
+<span id="cb12-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># nvcc: NVIDIA (R) Cuda compiler driver</span></span>
+<span id="cb12-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Copyright (c) 2005-2023 NVIDIA Corporation</span></span>
+<span id="cb12-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Built on Tue_Feb__7_19:32:13_PST_2023</span></span>
+<span id="cb12-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Cuda compilation tools, release 12.1, V12.1.66</span></span>
+<span id="cb12-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Build cuda_12.1.r12.1/compiler.32415258_0</span></span></code></pre></div>
 
 
 </section>

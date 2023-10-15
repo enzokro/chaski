@@ -174,6 +174,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#mac-installation" id="toc-mac-installation" class="nav-link" data-scroll-target="#mac-installation">Mac Installation</a></li>
   <li><a href="#creating-the-environment" id="toc-creating-the-environment" class="nav-link" data-scroll-target="#creating-the-environment">Creating the environment</a></li>
   </ul></li>
+  <li><a href="#installing-nvidia-drivers-and-cuda-libraries-on-a-fresh-ubuntu-22.04-machine" id="toc-installing-nvidia-drivers-and-cuda-libraries-on-a-fresh-ubuntu-22.04-machine" class="nav-link" data-scroll-target="#installing-nvidia-drivers-and-cuda-libraries-on-a-fresh-ubuntu-22.04-machine">Installing NVIDIA Drivers and CUDA Libraries on a fresh Ubuntu 22.04 machine</a>
+  <ul class="collapse">
+  <li><a href="#helper-libraries" id="toc-helper-libraries" class="nav-link" data-scroll-target="#helper-libraries">Helper libraries</a></li>
+  <li><a href="#install-driver" id="toc-install-driver" class="nav-link" data-scroll-target="#install-driver">Install Driver</a></li>
+  <li><a href="#install-cuda" id="toc-install-cuda" class="nav-link" data-scroll-target="#install-cuda">Install CUDA</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -313,6 +319,56 @@ The second line installs the <code>pytorch</code> library, which we’ll use to 
 <p>But these libraries can be tricky to install. Don’t worry if you run into issues, we will revist them later.</p>
 <p>Resources:<br>
 - (Installing <code>python</code> on your computer)[https://realpython.com/installing-python] - (Downloading <code>VSCode</code> to edit our code)[https://code.visualstudio.com/download] - (Installing <code>git</code> to manage our code)[https://git-scm.com/book/en/v2/Getting-Started-Installing-Git]</p>
+</section>
+</section>
+<section id="installing-nvidia-drivers-and-cuda-libraries-on-a-fresh-ubuntu-22.04-machine" class="level1">
+<h1>Installing NVIDIA Drivers and CUDA Libraries on a fresh Ubuntu 22.04 machine</h1>
+<p>There are three things we need to install:<br>
+- NVIDIA Drivers.<br>
+- CUDA Libraries.<br>
+- cuDNN Libraries.</p>
+<section id="helper-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="helper-libraries">Helper libraries</h2>
+<p>First, some best practice. Make sure to update the Ubuntu package list:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>There are two Ubuntu packages that are worth installing:<br>
+- software-properties-common - build-essential</p>
+<p><code>software-properties-common</code> is a set of tools for adding and managing software repositories. It makes our life a bit easier.</p>
+<p><code>build-essential</code> contains a list of packages that are essential for building Ubuntu packages. It has software key for development like the GNU Compiler Collection (GCC) and GNU Make. It also has the tools to build and install projects from source (aka straight from the repo’s folder). It’ll help us build and install repos like <code>llama.cpp</code> from source.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install software-properties-common</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install build-essential</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then we’ll add the graphics drivers PPA and update the package list again.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> add-apt-repository ppa:graphics-drivers/ppa</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="install-driver" class="level2">
+<h2 class="anchored" data-anchor-id="install-driver">Install Driver</h2>
+<p>Now we can install the nvidia drivers. As of writing, the <code>535</code> version of the driver is stable and supports a good number of GPU cards.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install nvidia-driver-535</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Make sure to reboot your system:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> reboot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>After logging back in, we can check that the driver is installed correctly:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nvidia-smi</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="install-cuda" class="level2">
+<h2 class="anchored" data-anchor-id="install-cuda">Install CUDA</h2>
+<p>With the driver working we can now install the CUDA library. The CUDA library has a set of libraries optimized for NVIDIA GPUs.</p>
+<p>The example below uses a local <code>.dev</code> installer, and comes straight from the official <a href="https://developer.nvidia.com/cuda-12-1-0-download-archive?target_os=Linux&amp;target_arch=x86_64&amp;Distribution=Ubuntu&amp;target_version=22.04&amp;target_type=deb_local">CUDA website</a> wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin sudo mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600 wget https://developer.download.nvidia.com/compute/cuda/12.1.0/local_installers/cuda-repo-ubuntu2204-12-1-local_12.1.0-530.30.02-1_amd64.deb sudo dpkg -i cuda-repo-ubuntu2204-12-1-local_12.1.0-530.30.02-1_amd64.deb sudo cp /var/cuda-repo-ubuntu2204-12-1-local/cuda-*-keyring.gpg /usr/share/keyrings/ sudo apt-get update sudo apt-get -y install cuda</p>
+<p>Export the following to the <code>~/.bashrc</code> file to make sure the CUDA libraries are available in the terminal:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'export PATH=/usr/local/cuda-12.1/bin${PATH:+:${PATH}}'</span> <span class="op">&gt;&gt;</span> ~/.bashrc</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'export LD_LIBRARY_PATH=/usr/local/cuda-12.1/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}'</span> <span class="op">&gt;&gt;</span> ~/.bashrc</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This command will take a while to run. Once it’s done, reboot one last time just to be to be safe:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> reboot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>paperspace@ps3r37lmx:~$ nvcc –version nvcc: NVIDIA (R) Cuda compiler driver Copyright (c) 2005-2023 NVIDIA Corporation Built on Tue_Feb__7_19:32:13_PST_2023 Cuda compilation tools, release 12.1, V12.1.66 Build cuda_12.1.r12.1/compiler.32415258_0</p>
+<p>If everything goes well, we should now see that the CUDA version is <code>release 12.1</code>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nvcc</span> <span class="at">--version</span> <span class="co"># should output something like the following:</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># nvcc: NVIDIA (R) Cuda compiler driver</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Copyright (c) 2005-2023 NVIDIA Corporation</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Built on Tue_Feb__7_19:32:13_PST_2023</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Cuda compilation tools, release 12.1, V12.1.66</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Build cuda_12.1.r12.1/compiler.32415258_0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
