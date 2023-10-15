@@ -1,0 +1,111 @@
+.cell {
+  margin-bottom: 1rem;
+}
+
+.cell > .sourceCode {
+  margin-bottom: 0;
+}
+
+.cell-output > pre {
+  margin-bottom: 0;
+}
+
+.cell-output > pre, .cell-output > .sourceCode > pre, .cell-output-stdout > pre {
+  margin-left: 0.8rem;
+  margin-top: 0;
+  background: none;
+  border-left: 2px solid lightsalmon;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.cell-output > .sourceCode {
+  border: none;
+}
+
+.cell-output > .sourceCode {
+  background: none;
+  margin-top: 0;
+}
+
+div.description {
+  padding-left: 2px;
+  padding-top: 5px;
+  font-style: italic;
+  font-size: 135%;
+  opacity: 70%;
+}
+
+/* show_doc signature */
+blockquote > pre {
+  font-size: 14px;
+}
+
+.table {
+  font-size: 16px;
+  /* disable striped tables */
+  --bs-table-striped-bg: var(--bs-table-bg);
+}
+
+.quarto-figure-center > figure > figcaption {
+  text-align: center;
+}
+
+.figure-caption {
+  font-size: 75%;
+  font-style: italic;
+}
+
+.title.toc-ignore {
+  font-weight: 1000;
+}
+/* h1:not(.title){
+  background-image: linear-gradient(120deg, lightblue, rgb(41, 41, 239));
+} */
+
+
+/* Resetting list styles */
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style-position: outside;
+}
+
+/* Styling unordered lists */
+ul {
+  margin-left: 1.5em; /* Adjusts the left margin */
+  list-style-type: square; /* Changes bullet points to squares */
+}
+
+/* Styling nested unordered lists */
+ul ul {
+  list-style-type: disc; /* Changes bullet points to discs for first level of nesting */
+}
+
+ul ul ul {
+  list-style-type: circle; /* Changes bullet points to circles for second level of nesting */
+}
+
+ul li {
+  margin-bottom: 0.20em; /* Adjusts spacing between bullets */
+  line-height: 1.5; /* Adjusts line height for better readability */
+  /*font-family: 'Times New Roman', Times, serif; /* Gives a more formal font style */
+  font-size: 1em;
+}
+
+/* Styling ordered lists */
+ol {
+  margin-left: 1.5em; /* Adjusts the left margin */
+}
+
+ol li {
+  margin-bottom: 0.20em; /* Adjusts spacing between bullets */
+  line-height: 1.5; /* Adjusts line height for better readability */
+  font-family: 'Times New Roman', Times, serif; /* Gives a more formal font style */
+  font-size: 1em;
+}
+
+/* Styling nested lists */
+ul ul, ul ol, ol ul, ol ol {
+  margin-left: 1em; /* Adjusts the left margin for nested lists */
+}

@@ -11,4 +11,8 @@ listing:
   filter-ui: true
   fields: [image, date, title, description, categories, author]
 page-layout: full
+format:
+  html:
+    include-in-header: 
+      - ../about.ejs
 ---

@@ -1,29 +1,97 @@
-.cell {
-  margin-bottom: 1rem;
+body {
+  font-family: 'Courier New', Courier, monospace; /* A more traditional, typewriter-style font */
+  background-color: #f4f1e9; /* A paper-like background color */
+  color: #333; /* A softer text color */
 }
 
-.cell > .sourceCode {
-  margin-bottom: 0;
+/* This hides the real quarto-header so we can use our custom-header while still using the included search */
+header#quarto-header {
+  display: none;
 }
+
+.custom-nav {
+  /* background-color: lavender; */
+  padding-bottom: 3em;
+  padding-top: 2em;
+}
+
+.custom-nav-content {
+  grid-column: body-content-start/body-content-end;
+  /* grid-column: body-start-outset/page-end-inset; */
+  grid-row: content-top/page-bottom;
+  align-content: flex-start;
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: space-between; */
+  /* margin-bottom: 3em;
+  margin-top: 2em; */
+}
+
+
+.custom-nav-sidebar {
+  grid-column: body-end/page-end;
+  /* grid-column: body-start/body-end-outset; */
+  grid-row: content-top/page-bottom;
+  display: flex;
+  flex-direction: row;
+  /* justify-content: flex-end; */
+  align-items: center;
+}
+
+@media (max-width: 767.98px) {
+  .custom-nav-sidebar {
+    grid-row: page-bottom;
+    grid-column: body-start;
+  }
+}
+
+
+
+
+
+.custom-title {
+  font-family: Rosarivo, Georgia, 'Times New Roman', Times, serif;
+  font-size: 3.2rem;
+}
+
+.cell {
+  margin-bottom: 1rem;
+  border: none; /* removing the border */
+  background-color: none; /* removing the background color */
+  padding: 0; /* removing the padding */
+}
+
+
+.cell > .sourceCode {
+  background-color: #e8f0f2; /* a subtle blue tint */
+  border: 1px solid #d0d0d0; /* adds a subtle border */
+  padding: 0.5rem;
+  font-family: 'Fira Code', monospace; /* a monospaced font ideal for code */
+  box-shadow: 0 6px 12px rgba(42, 37, 37, 0.1), /* increases the shadow spread and blur for a more elevated look */
+              0 1px 3px rgba(0, 0, 0, 0.1); /* adds a second, closer shadow for more depth */
+  border-radius: 4px; /* optional: adds rounded corners */
+  margin-bottom: 1rem; /* adds some space below the code card */
+}
+
+
 
 .cell-output > pre {
   margin-bottom: 0;
+  background-color: #f9f9f9; /* A subtle background color for output blocks */
+  border: 1px solid #ddd; /* Adds a border around output blocks */
+  padding: 0.5rem; /* Adds some padding within output blocks */
 }
 
 .cell-output > pre, .cell-output > .sourceCode > pre, .cell-output-stdout > pre {
   margin-left: 0.8rem;
   margin-top: 0;
   background: none;
-  border-left: 2px solid lightsalmon;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+  border-left: 2px solid #8f8f8f; /* A more muted border color */
 }
+
 
 .cell-output > .sourceCode {
   border: none;
-}
-
-.cell-output > .sourceCode {
   background: none;
   margin-top: 0;
 }
@@ -36,15 +104,37 @@ div.description {
   opacity: 70%;
 }
 
+
+/* Styling for regular, non code-cell code ``` blocks */
+div.sourceCode {
+  background-color: #e8f0f2; /* a subtle blue tint */
+  border: 1px solid #d0d0d0; /* adds a subtle border */
+  padding: 0.5rem;
+  font-family: 'Fira Code', monospace; /* a monospaced font ideal for code */
+  box-shadow: 0 6px 12px rgba(42, 37, 37, 0.1), /* increases the shadow spread and blur for a more elevated look */
+              0 1px 3px rgba(0, 0, 0, 0.1); /* adds a second, closer shadow for more depth */
+  border-radius: 4px; /* optional: adds rounded corners */
+  margin-bottom: 1rem; /* adds some space below the code card */
+}
+
 /* show_doc signature */
 blockquote > pre {
   font-size: 14px;
+  background-color: #f9f9f9; /* A subtle background color for blockquote blocks */
+  border: 1px solid #ddd; /* Adds a border around blockquote blocks */
+  padding: 0.5rem; /* Adds some padding within blockquote blocks */
 }
 
 .table {
   font-size: 16px;
   /* disable striped tables */
   --bs-table-striped-bg: var(--bs-table-bg);
+  border-collapse: collapse; /* Ensures borders between cells collapse into a single border */
+}
+
+.table th, .table td {
+  border: 1px solid #ddd; /* Adds a border around table cells */
+  padding: 0.5rem; /* Adds some padding within table cells */
 }
 
 .quarto-figure-center > figure > figcaption {
@@ -59,6 +149,64 @@ blockquote > pre {
 .title.toc-ignore {
   font-weight: 1000;
 }
-/* h1:not(.title){
-  background-image: linear-gradient(120deg, lightblue, rgb(41, 41, 239));
-} */
+
+/* Additional styling for headings to give a more formal appearance */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Georgia', serif;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Optional: Add a vintage-style border around the content */
+.wrapper {
+  border: 2px solid #ddd;
+  padding: 2rem;
+  margin: 2rem;
+}
+
+
+/* Resetting list styles */
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style-position: outside;
+}
+
+/* Styling unordered lists */
+ul {
+  margin-left: 1.5em; /* Adjusts the left margin */
+  list-style-type: square; /* Changes bullet points to squares */
+}
+
+/* Styling nested unordered lists */
+ul ul {
+  list-style-type: disc; /* Changes bullet points to discs for first level of nesting */
+}
+
+ul ul ul {
+  list-style-type: circle; /* Changes bullet points to circles for second level of nesting */
+}
+
+ul li {
+  margin-bottom: 0.20em; /* Adjusts spacing between bullets */
+  line-height: 1.5; /* Adjusts line height for better readability */
+  /*font-family: 'Times New Roman', Times, serif; /* Gives a more formal font style */
+  font-size: 1em;
+}
+
+/* Styling ordered lists */
+ol {
+  margin-left: 1.5em; /* Adjusts the left margin */
+}
+
+ol li {
+  margin-bottom: 0.20em; /* Adjusts spacing between bullets */
+  line-height: 1.5; /* Adjusts line height for better readability */
+  font-family: 'Times New Roman', Times, serif; /* Gives a more formal font style */
+  font-size: 1em;
+}
+
+/* Styling nested lists */
+ul ul, ul ol, ol ul, ol ol {
+  margin-left: 1em; /* Adjusts the left margin for nested lists */
+}

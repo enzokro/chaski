@@ -4,7 +4,7 @@ project:
   render:
     - "*.qmd"
     - "*.ipynb"
-    - "!api/"
+    - "!blog/api/"
     - "!drafts/"
 
 format:
@@ -13,6 +13,13 @@ format:
     css: styles.css
     toc: true
     toc-depth: 4
+    include-in-header: 
+      - ./custom-header.ejs
+    # code-overflow: wrap
+    highlight-style: 
+      light: assets/pygments.theme
+      dark: assets/pygments.theme
+
 
 website:
   title: "chaski"
@@ -26,14 +33,10 @@ website:
   favicon: favicon.png
   navbar:
     pinned: true
-    left:
-      - text: "About"
-        href: about.ipynb
-        icon: person-circle
     right:
       - icon: twitter
         href: "https://twitter.com/enzokro_"
       - icon: github
         href: "https://github.com/enzokro"
-    background: primary
+    background: "transparent"
     search: true

@@ -1,10 +1,33 @@
 ---
-title: "Hola"
+pagetitle: chaski blog
+listing:
+  contents: "blog/posts"
+  type: default
+  sort:
+    - "date desc"
+  categories: true
+  feed: true
+  sort-ui: true
+  filter-ui: true
+  fields: [image, date, title, description, categories, author]
+page-layout: full
+format:
+  html:
+    include-in-header: 
+      - about.ejs
+---
+
+<!--ORIGINAL LANDING PAGE -->
+<!-- ---
+title: "chaski"
 image: favicon.png
 comments: false
 about:
-  template: solana
+  template: jolla
   links:
+    - icon: twitter
+      text: twitter
+      href: "https://x.com/enzokro_"
     - icon: github
       text: github
       href: "https://github.com/enzokro"
@@ -12,4 +35,7 @@ toc: false
 sidebar: false
 ---
 
-Welcome! I am ChrisK and this is my site on appiled ML, coding, and DSP.  
+#### [Blog](blog/)
+
+#### ML Engineer in NYC 
+##### Posts on applied ML and DSP  -->

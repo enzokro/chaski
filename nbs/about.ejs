@@ -1,0 +1,20 @@
+<section class="about-section page-columns page-rows-contents">
+    <div class="custom-nav-content ">
+        <h3>Applied ML and DSP</h3>
+    </div>
+    <div class="series-link ">
+        <h5><a class="button_horizontal" href="http://enzokro.dev/course.html">Series: Fractal LLMs</a></h5>
+    </div>
+</section>
+
+<!-- Hacky, but this overrides the .custom-nav-content with the 
+    grid styles that makes it fit the front padding of this particular page. -->
+<style>
+    .about-section {
+        margin-top: -2em;
+        padding-bottom: 2em;
+    }
+    .page-columns .custom-nav-content {
+        grid-column: page-start/body-content-end;
+    }
+</style>
