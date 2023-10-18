@@ -9,7 +9,7 @@
 <meta name="author" content="Chris Kroenke">
 <meta name="dcterms.date" content="2023-10-14">
 
-<title>chaski - Running llama.cpp on a laptop and phone</title>
+<title>chaski - Running LLMs with llama.cpp</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -96,13 +96,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rosarivo">
-<meta property="og:title" content="chaski - Running llama.cpp on a laptop and phone">
+<meta property="og:title" content="chaski - Running LLMs with llama.cpp">
 <meta property="og:description" content="">
 <meta property="og:image" content="https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session_3_llama/llama-cpp-logo.png">
 <meta property="og:site-name" content="chaski">
 <meta property="og:image:height" content="640">
 <meta property="og:image:width" content="1280">
-<meta name="twitter:title" content="chaski - Running llama.cpp on a laptop and phone">
+<meta name="twitter:title" content="chaski - Running LLMs with llama.cpp">
 <meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session_3_llama/llama-cpp-logo.png">
 <meta name="twitter:image-height" content="640">
@@ -168,23 +168,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro">Intro</a>
-  <ul class="collapse">
+  <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro">Intro</a></li>
   <li><a href="#llama.cpp" id="toc-llama.cpp" class="nav-link" data-scroll-target="#llama.cpp">llama.cpp</a></li>
   <li><a href="#running-mistral-v0.1-with-llama.cpp" id="toc-running-mistral-v0.1-with-llama.cpp" class="nav-link" data-scroll-target="#running-mistral-v0.1-with-llama.cpp">Running Mistral-v0.1 with llama.cpp</a>
   <ul class="collapse">
-  <li><a href="#installing-llama.cpp" id="toc-installing-llama.cpp" class="nav-link" data-scroll-target="#installing-llama.cpp">Installing llama.cpp</a></li>
+  <li><a href="#building-llama.cpp" id="toc-building-llama.cpp" class="nav-link" data-scroll-target="#building-llama.cpp">Building llama.cpp</a></li>
   <li><a href="#downloading-a-mistral-v0.1-model" id="toc-downloading-a-mistral-v0.1-model" class="nav-link" data-scroll-target="#downloading-a-mistral-v0.1-model">Downloading a Mistral-v0.1 model</a></li>
   <li><a href="#running-the-mistral-model" id="toc-running-the-mistral-model" class="nav-link" data-scroll-target="#running-the-mistral-model">Running the Mistral model</a></li>
   </ul></li>
-  <li><a href="#running-llama.cpp-model-with-python" id="toc-running-llama.cpp-model-with-python" class="nav-link" data-scroll-target="#running-llama.cpp-model-with-python">Running llama.cpp model with python</a>
+  <li><a href="#running-mistral-v0.1-with-python" id="toc-running-mistral-v0.1-with-python" class="nav-link" data-scroll-target="#running-mistral-v0.1-with-python">Running Mistral-v0.1 with python</a>
   <ul class="collapse">
-  <li><a href="#revisiting-the-mlc-outputs" id="toc-revisiting-the-mlc-outputs" class="nav-link" data-scroll-target="#revisiting-the-mlc-outputs">Revisiting the MLC Outputs</a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#building-an-mlc-ios-app" id="toc-building-an-mlc-ios-app" class="nav-link" data-scroll-target="#building-an-mlc-ios-app">Building an MLC iOS app</a>
-  <ul class="collapse">
-  <li><a href="#building-the-ios-app" id="toc-building-the-ios-app" class="nav-link" data-scroll-target="#building-the-ios-app">Building the iOS app</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -194,7 +188,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Running llama.cpp on a laptop and phone</h1>
+<h1 class="title">Running LLMs with llama.cpp</h1>
   <div class="quarto-categories">
     <div class="quarto-category">fractal</div>
     <div class="quarto-category">python</div>
@@ -227,1010 +221,152 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <blockquote class="blockquote">
-<p>Running LLMs with <code>llama.cpp</code>.</p>
+<p>Building llama.cpp and running a Mistral-v0.1 model.</p>
 </blockquote>
 <section id="intro" class="level1">
 <h1>Intro</h1>
-<p>This notebook uses the <a href="https://github.com/ggerganov/llama.cpp">llama.cpp</a> library to run models locally and on the phone (soon).</p>
-<section id="llama.cpp" class="level2">
-<h2 class="anchored" data-anchor-id="llama.cpp">llama.cpp</h2>
-<p>llama.cpp is focused on quantizing and deploying LLMs on Mac, but they support linux and windows as well. Despite its name, the project supports a ton of models beyond Llama and Llama-2. It is very straightforward to install. And there are even <a href="https://github.com/abetlen/llama-cpp-python">python bindings</a> to make our lives easier.</p>
-<p><img src="llama_description.png" class="img-fluid"></p>
-<p>The original project was stitched together in a <a href="https://github.com/ggerganov/llama.cpp/issues/33#issuecomment-1465108022">single evening</a>, and has since become the arguable SOTA for deploying LLMs on CPUs. The llama.cpp community is full of is incredibly helpful and responsive people.</p>
-<p><img src="llama_model_support.png" class="img-fluid"></p>
-<p>There benefits of the repo go beyond even the code and models. The community is always bringing in the greatest and latest approaches from the avalanche of LLM progress. The Pull Requests and Issues are full of folks working and experimenting to integrate these advances. Thankfully, the community is very open to indie hackers and unconventional ideas: if something works and there’s proof, it’s merged in.</p>
-<p>In fact, this notebook is living proof of the power of Open Source. Last lesson we used the <code>MLC</code> library because it was the only one that supported LLMs on iOS. But, literally since last week, llama.cpp added and fixed support for iOS LLMs. MLC is a great project and worth keeping an eye on, but for now we march on under the llama banner.</p>
+<p>This notebook runs an LLM using the <a href="https://github.com/ggerganov/llama.cpp">llama.cpp</a> library. Specifically we run the powerful, recently released <a href="https://mistral.ai/news/announcing-mistral-7b/"><code>Mistral-7B-Instruct-v0.1</code></a> model.</p>
 </section>
-<section id="running-mistral-v0.1-with-llama.cpp" class="level2">
-<h2 class="anchored" data-anchor-id="running-mistral-v0.1-with-llama.cpp">Running Mistral-v0.1 with llama.cpp</h2>
-<p>This section covers the following:<br>
-- Setting up and installing the <code>llama.cpp</code> repo.<br>
-- Downloading a <code>Mistral-v0.1</code> model.<br>
-- Running the Mistral model directly with <code>llama.cpp</code><br>
-- Running the model with the python bindings</p>
-<p>First we create an environment for <code>llama.cpp</code>, then we download and install the repo.</p>
-<p>Then we download a Mistral-v0.1 model that’s already been quantized into the special <code>GGUF</code> format that llama.cpp expects.</p>
-<p>Lastly, we run the model on a sample input.</p>
-<section id="installing-llama.cpp" class="level3">
-<h3 class="anchored" data-anchor-id="installing-llama.cpp">Installing llama.cpp</h3>
-<p>First, create a new environment for llama.cpp. Then install the dependencies.</p>
+<section id="llama.cpp" class="level1">
+<h1>llama.cpp</h1>
+<p>llama.cpp is designed to run quantized LLMs on a Mac. Despite its name, the project supports many other models beyond Llama and Llama-2. There are even <a href="https://github.com/abetlen/llama-cpp-python">python bindings</a> to make our lives easier.</p>
+<p>The picture below comes from project’s README, and shows low-level details about how the repo works and what it supports.</p>
+<p><img src="llama_description.png" class="img-fluid"></p>
+<p>llama.cpp was originally hacked together in a <a href="https://github.com/ggerganov/llama.cpp/issues/33#issuecomment-1465108022">single evening</a>, and has since become arguably the SOTA for deploying LLMs on CPUs. This is in large part thanks to the incredibly helpful and responsive community behind it.</p>
+<p>Below we can see the full list of models that llama.cpp supports as of writing.</p>
+<p><img src="llama_model_support.png" class="img-fluid"></p>
+<p>The benefits of llama.cpp go beyond its code or models. Folks are always collaborating in <a href="https://github.com/ggerganov/llama.cpp/pulls">Pull Requests</a> to bring in the latest, greatest advances from the flood of LLM progress. Tracking these PRs is a great way of keeping up to date with the field. Thankfully, the community is very open to hackers and new ideas: if something works and there’s proof, then it gets merged in.</p>
+<p>Next, let’s use llama.cpp to run a <code>Mistral-v0.1</code> model.</p>
+</section>
+<section id="running-mistral-v0.1-with-llama.cpp" class="level1">
+<h1>Running Mistral-v0.1 with llama.cpp</h1>
+<p>In this section we cover the following:<br>
+- Installing the <code>llama.cpp</code> repo<br>
+- Downloading a <code>Mistral-v0.1</code> model<br>
+- Running the model directly with <code>llama.cpp</code><br>
+- Running the model in a Jupyter Notebook</p>
+<p>First, we create a mamba environment to keep our work isolated. Then we download and install the repo.</p>
+<p>Next we download the actual Mistral model from the HuggingFace Model Hub.</p>
+<p>Lastly, we run the Mistral model on a sample input.</p>
+<section id="building-llama.cpp" class="level3">
+<h3 class="anchored" data-anchor-id="building-llama.cpp">Building llama.cpp</h3>
+<p>Let’s get started. First create a new python3.11 mamba environment:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create an environment for llama.cpp</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> create <span class="at">-n</span> llama-cpp python=3.11</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This isn’t <em>strictly</em> necessary for llama.cpp since it uses C++, but we’ll need it for the python bindings. Even without those, it’s good practice to make and keep isolated environments for your projects.</p>
-<p>Next activate the environment:</p>
+<p>This isn’t <em>strictly</em> necessary for llama.cpp since it uses C++. But we will need it later on for the python bindings. And in any case, it’s best practice to keep our projects in isolated environments.</p>
+<p>Next activate the new environment:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># activate the environment</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate llama-cpp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>We can now download and move into the repo:</p>
+<p>Then go ahead and clone the repo. Once it’s cloned, we can move inside it and prepare for the build.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clone and move into the llama.cpp repo</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ggerganov/llama.cpp</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> llama.cpp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Llama supports both the <a href="https://www.gnu.org/software/make/">GNU Make</a> and <a href="https://cmake.org/">CMake</a> build systems. Note that <code>make</code> works fine on Linux, but I’ve had mixed results on Mac. For that reason we’ll stick with <code>CMake</code> here. On Mac you can install cmake with homebrew: <code>brew install cmake</code>. On linux you can install it with <code>sudo apt install cmake</code>. For Windows folks you can grab the latest installer from <a href="https://cmake.org/download/">here</a>.</p>
-<p>Once you installed cmake and are inside the repo, go ahead and build it. The steps below are a standard build process with cmake, you’ll see something similar in many different projects.</p>
-<p>We can also pass a flag to build Llama with optimizations for certain hardware. Note that cmake build arguments have a funky syntax where they’re prefixed by <code>-D</code> and then the argument name.</p>
-<p>Here are the flags for different hardware:<br>
-- To build for Mac’s Metal acceleration: -DLLAMA_METAL=1<br>
-- To build for NVIDIA GPUs: -DLLAMA_CUBLAS=1</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare for a cmake build</span></span>
+<p>There are two options to build llama.cpp:<br>
+- <a href="https://www.gnu.org/software/make/">GNU Make</a><br>
+- <a href="https://cmake.org/">CMake</a></p>
+<p><code>make</code> works great on Linux, but I’ve had mixed results on Mac. For that reason we’ll stick with <code>CMake</code> instead.</p>
+<p>The safest bet is to grab the CMake installer from the <a href="https://cmake.org/download/">official site</a> and run it. But any reasonable package manager for Mac and Linux (e.g.&nbsp;<code>brew</code> or <code>apt</code>) should also work.</p>
+<p>With CMake installed we can now follow a standard build process. Start by creating and moving into a special <code>build/</code> folder:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a build directory and move into it</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> build</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> build</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare the build for Metal acceleration</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-DLLAMA_METAL</span><span class="op">=</span>1 ..</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># # or, replace with this to build for NVIDIA GPUs</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># cmake -DLLAMA_CUBLAS=1 ..</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># build the accelerated llama.cpp project</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">--build</span> . <span class="at">--config</span> Release  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The accelerated files are inside the <code>build/</code> folder itself. It has the main way we’ll be calling the llama library: <code>main</code>.</p>
-<p>With llama.cpp installed, we can now download a Mistral-v0.1 model and run it.</p>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> build</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then run the <code>cmake</code> command to prepare the build. We can also specify special build options. For example, on Mac we can pass the <code>LLAMA_METAL=1</code> flag to use the GPU, or on Linux we can pass the <code>LLAMA_CUBLAS=1</code> flag to use an NVIDIA GPU.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare the llama.cpp build with Mac hardware acceleration</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-DLLAMA_METAL</span><span class="op">=</span>1 ..</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># # or, use the line below on Linux/Window to build for NVIDIA GPUs</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># cmake -DLLAMA_CUBLAS=1 ..</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>With the setup files ready, we can now build the project with the command below:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build the accelerated llama.cpp project</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">--build</span> . <span class="at">--config</span> Release </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once the build finishes, the output binaries will be inside the <code>build/bin</code> folder. This folder has an executable binary file called <code>main</code>. <code>main</code> is how we’ll be calling llama.cpp to run LLMs.</p>
+<p>We are now ready to grab the Mistral model.</p>
 </section>
-<section id="downloading-a-mistral-v0.1-model" class="level3">
-<h3 class="anchored" data-anchor-id="downloading-a-mistral-v0.1-model">Downloading a Mistral-v0.1 model</h3>
-<p>As mentioned earlier, we’ll grab a model that’s already been set up to work with llama.cpp. We’ll rely on a model uploaded by a user known as <code>TheBloke</code>. His efforts are another example for the power of Open Source: this user has uploaded almost 2,000 models that anyone can now use!</p>
-<p>Here is the Mistral-v0.1 model already formatted for llama.cpp. The model has 7 billion parameters, and is the <code>Instruct</code> version which was explicitly trained to follow and complete instructions.</p>
+<section id="downloading-a-mistral-v0.1-model" class="level2">
+<h2 class="anchored" data-anchor-id="downloading-a-mistral-v0.1-model">Downloading a Mistral-v0.1 model</h2>
+<p>We will run a <code>Mistral-7B-Instruct-v0.1</code> model. What exactly does its name mean? Let’s breakdown it down a bit: - <code>Mistral</code> is the name given by the developers, in this case the <a href="https://mistral.ai/">Mistral.ai team</a> - <code>7B</code> means that the model has 7 billion parameters<br>
+- <code>Instruct</code> means that it was trained to follow and complete user instructions<br>
+- <code>v0.1</code> is the release version for this model</p>
+<p>Below is the link to the model in the HuggingFace Hub</p>
 <blockquote class="blockquote">
-<p>Link to <a href="https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF"><code>Mistral-7B-Instruct-v0.1</code></a></p>
+<p>HuggingFace link to <a href="https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF"><code>Mistral-7B-Instruct-v0.1</code></a></p>
 </blockquote>
-<p>Click the link above, then navigate to the <code>Files and version</code> tabs. You’ll see a list of available models, each one quantized in a different way:</p>
+<p>Follow the link above, then click on the <code>Files and version</code> tab near the top. You’ll see a list of models that were quantized in different ways:</p>
 <p><img src="mistral_quantized.png" class="img-fluid"></p>
-<p>The <code>Q4</code> models will more comfortably fit on consumer GPUs and hardware. But the higher number after the <code>Q</code> the more accurate the model will be. Here we’ll use the <code>Q5_K_M</code> model which is a bit larger and slower than the <code>Q4</code> models but makes up for it in performance.</p>
-<p>Let’s grab the <code>Q5_K_M</code> model. First, make sure the huggingface-hub CLI is installed:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install a tool to download HuggingFace models via the terminal</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install huggingface-hub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Then move into the <code>models/</code> folder and download the model:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download the Mistral model</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">huggingface-cli</span> download TheBloke/Mistral-7B-Instruct-v0.1-GGUF mistral-7b-instruct-v0.1.Q5_K_M.gguf <span class="at">--local-dir</span> . <span class="at">--local-dir-use-symlinks</span> False</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Now that we have the model, we can run it to make sure everything works.</p>
+<p>These names can be overwhelming. Let’s break them down at a high level. Feel free to skim the next couple of paragraphs, they are not critical to running the model itself.</p>
+<p>You can see that each file ends with a format like this: <code>Q*_*.gguf</code>. For example one model from the list is: <code>mistral-7B-Instruct-v0.1.Q4_K_S.gguf</code>. The <code>Q4</code> part means that the model was quantized with 4-bits. The <code>K_S</code> part refers to the specific flavor of quantization that was used.</p>
+<p>There is an unfortunate tradeoff between quantization and performance. The fewer bits we use, the smaller and faster the model will be but the worse its performance. And the more bits we use, the better its performance but the slower the model. In general, the <code>Q4</code> and <code>Q5</code> models offer a good balance between speed, performance, and size. Now let’s get back to running the model.</p>
+<p>We choose the <code>Q5_K_M</code> model which is a bit larger than the <code>Q4</code> models but makes up for it in performance.</p>
+<p>To grab this model, first make sure the huggingface-hub CLI is installed:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install a tool to download HuggingFace models via the terminal</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install huggingface-hub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then move into the <code>models/</code> folder inside of the llama.cpp repo and download the model with the following command:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download the Mistral Q5_K_M model</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">huggingface-cli</span> download TheBloke/Mistral-7B-Instruct-v0.1-GGUF <span class="dt">\</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    mistral-7b-instruct-v0.1.Q5_K_M.gguf <span class="dt">\</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--local-dir</span> . <span class="dt">\</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--local-dir-use-symlinks</span> False</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once the model has downloaded, we are ready to run it.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># from build/, run the official example to see Mistral-v0.1 in action</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./bin/main</span> <span class="at">-m</span> ../models/mistral-7b-instruct-v0.1.Q5_K_M.gguf <span class="dt">\</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">-p</span> <span class="st">"Building a website can be done in 10 simple steps:\nStep 1:"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="running-the-mistral-model" class="level3">
-<h3 class="anchored" data-anchor-id="running-the-mistral-model">Running the Mistral model</h3>
-<p>We’ll use the <code>main</code> binary inside of the <code>build/</code> folder to run it. Go ahead and run the following command to see Mistral-v0.1 in action!</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run the inference on the official example from the build/</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./bin/main</span> <span class="at">-m</span> ../models/mistral-7b-instruct-v0.1.Q5_K_M.gguf <span class="at">-n</span> 128 <span class="at">-p</span> <span class="st">"Building a website can be done in 10 simple steps:\nStep 1:"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>And that’s it! We’ve now done the following:<br>
+<section id="running-the-mistral-model" class="level2">
+<h2 class="anchored" data-anchor-id="running-the-mistral-model">Running the Mistral model</h2>
+<p>We’ll use the <code>main</code> binary inside of the <code>build/</code> folder from before to run the <code>Q5_K_M</code> model.</p>
+<p>Run the following command to see the Mistral LLM in action! Here we ask to tell us how to build a website in 10 steps.</p>
+<p>The <code>-m</code> flag points to the model file, which we stored under <code>models/</code>. The <code>-p</code> flag is the prompt for the model to follow.</p>
+<p>Here’s a short snippet from my output after running the command:</p>
+<pre><code>Building a website can be done in 10 simple steps:
+
+Step 1: Choose a domain name. A domain name is the unique address of your website on the internet, which is what people will use to find it. Consider choosing a name that reflects the purpose or brand of your website.
+
+Step 2: Choose a hosting provider. Your website needs to be hosted by a server so that it can be accessed by others on the internet. Choose a reliable hosting provider that suits your budget and technical needs.
+
+Step 3: Install a content management system (CMS). A CMS is software that allows you to create, manage and publish content on your website without needing to know how to code. Examples of popular CMS platforms include WordPress, Drupal, and Joomla.</code></pre>
+<p>And that’s it! We have now done the following:<br>
 - Installed llama.cpp.<br>
 - Downloaded a Mistral-v0.1 model.<br>
-- Ran the model on a sample input.</p>
-<p>However, this was all via the command line using C++ binaries. How could we do the same with python and Notebooks? Enter the python bindings.</p>
+- Ran the Mistral model on a sample input.</p>
+<p>Everything so far was done in C++. Next we run the Mistral model inside a Jupyter Notebook with the llama.cpp python bindings.</p>
 </section>
 </section>
-<section id="running-llama.cpp-model-with-python" class="level2">
-<h2 class="anchored" data-anchor-id="running-llama.cpp-model-with-python">Running llama.cpp model with python</h2>
-<p>First step, let’s install the llama.cpp python bindings into our environment. We’ll repeat ourselves a bit here, since the python bindings attempt to build and install the C++ repo as well.</p>
-<p>Here are the instructions for the full <a href="https://github.com/abetlen/llama-cpp-python/blob/main/docs/install/macos.md">Mac Metal installation</a></p>
-<p>The TL;DR is to run the following command inside our environment:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> uninstall llama-cpp-python <span class="at">-y</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="va">CMAKE_ARGS</span><span class="op">=</span><span class="st">"-DLLAMA_METAL=on"</span> <span class="ex">pip</span> install <span class="at">-U</span> llama-cpp-python <span class="at">--no-cache-dir</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="running-mistral-v0.1-with-python" class="level1">
+<h1>Running Mistral-v0.1 with python</h1>
+<p>Start by installing the llama.cpp python bindings in the mamba environment.</p>
+<p>Here are the instructions for the full <a href="https://github.com/abetlen/llama-cpp-python/blob/main/docs/install/macos.md">Mac installation</a>. The pair of pip commands below will install the bindings.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install the python bindings with Metal acceleration</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> uninstall llama-cpp-python <span class="at">-y</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="va">CMAKE_ARGS</span><span class="op">=</span><span class="st">"-DLLAMA_METAL=on"</span> <span class="ex">pip</span> install <span class="at">-U</span> llama-cpp-python <span class="at">--no-cache-dir</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The command above does the following to make sure the python bindings are up to date:<br>
-- Uninstall older versions of the bindings, if any are installed.<br>
-- Install the bindings with Metal acceleration.</p>
-<p>The following code snippet checks if we can import the bindings:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"from llama_cpp import Llama"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+- Uninstalls older versions of the bindings, if any are found.<br>
+- Installs the bindings with Metal (Mac GPU) acceleration.</p>
+<p>After installing the bindings, run the following code snippet. This will check if the bindings were installed correctly.</p>
 <div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> llama_cpp <span class="im">import</span> Llama</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check if we can import the llama.cpp python bindings </span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> llama_cpp <span class="im">import</span> Llama</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>If the command above worked, we can use it to run the Mistral-v0.1 model.</p>
-<p>Put the following into a <code>llama_python.py</code> file, or run it from the notebook:</p>
+<p>If the command above works, we can now run the Mistral-v0.1 model inside a Jupyter Notebook. We instantiate the <code>Llama</code> class by pointing it to the model weights we downloaded earlier. Make sure to change the paths to match your own.</p>
 <div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> llama_cpp <span class="im">import</span> Llama</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># point to the model, assuming we're in the llama.cpp build/ folder</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>work_dir <span class="op">=</span> <span class="st">"/Users/cck/repos/llama.cpp/"</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> Llama(<span class="ss">f"</span><span class="sc">{</span>work_dir<span class="sc">}</span><span class="ss">/models/mistral-7b-instruct-v0.1.Q5_K_M.gguf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>llama_model_loader: loaded meta data with 20 key-value pairs and 291 tensors from /Users/cck/repos/llama.cpp//models/mistral-7b-instruct-v0.1.Q5_K_M.gguf (version GGUF V2 (latest))
-llama_model_loader: - tensor    0:                token_embd.weight q5_K     [  4096, 32000,     1,     1 ]
-llama_model_loader: - tensor    1:              blk.0.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor    2:              blk.0.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor    3:              blk.0.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor    4:         blk.0.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor    5:            blk.0.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor    6:              blk.0.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor    7:            blk.0.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor    8:           blk.0.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor    9:            blk.0.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor   10:              blk.1.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor   11:              blk.1.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor   12:              blk.1.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor   13:         blk.1.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor   14:            blk.1.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor   15:              blk.1.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor   16:            blk.1.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor   17:           blk.1.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor   18:            blk.1.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor   19:              blk.2.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor   20:              blk.2.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor   21:              blk.2.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor   22:         blk.2.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor   23:            blk.2.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor   24:              blk.2.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor   25:            blk.2.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor   26:           blk.2.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor   27:            blk.2.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor   28:              blk.3.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor   29:              blk.3.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor   30:              blk.3.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor   31:         blk.3.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor   32:            blk.3.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor   33:              blk.3.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor   34:            blk.3.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor   35:           blk.3.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor   36:            blk.3.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor   37:              blk.4.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor   38:              blk.4.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor   39:              blk.4.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor   40:         blk.4.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor   41:            blk.4.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor   42:              blk.4.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor   43:            blk.4.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor   44:           blk.4.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor   45:            blk.4.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor   46:              blk.5.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor   47:              blk.5.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor   48:              blk.5.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor   49:         blk.5.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor   50:            blk.5.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor   51:              blk.5.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor   52:            blk.5.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor   53:           blk.5.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor   54:            blk.5.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor   55:              blk.6.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor   56:              blk.6.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor   57:              blk.6.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor   58:         blk.6.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor   59:            blk.6.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor   60:              blk.6.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor   61:            blk.6.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor   62:           blk.6.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor   63:            blk.6.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor   64:              blk.7.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor   65:              blk.7.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor   66:              blk.7.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor   67:         blk.7.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor   68:            blk.7.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor   69:              blk.7.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor   70:            blk.7.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor   71:           blk.7.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor   72:            blk.7.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor   73:              blk.8.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor   74:              blk.8.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor   75:              blk.8.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor   76:         blk.8.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor   77:            blk.8.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor   78:              blk.8.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor   79:            blk.8.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor   80:           blk.8.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor   81:            blk.8.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor   82:              blk.9.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor   83:              blk.9.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor   84:              blk.9.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor   85:         blk.9.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor   86:            blk.9.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor   87:              blk.9.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor   88:            blk.9.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor   89:           blk.9.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor   90:            blk.9.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor   91:             blk.10.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor   92:             blk.10.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor   93:             blk.10.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor   94:        blk.10.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor   95:           blk.10.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor   96:             blk.10.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor   97:           blk.10.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor   98:          blk.10.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor   99:           blk.10.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  100:             blk.11.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  101:             blk.11.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  102:             blk.11.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  103:        blk.11.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  104:           blk.11.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  105:             blk.11.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  106:           blk.11.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  107:          blk.11.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  108:           blk.11.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  109:             blk.12.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  110:             blk.12.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  111:             blk.12.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  112:        blk.12.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  113:           blk.12.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  114:             blk.12.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  115:           blk.12.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  116:          blk.12.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  117:           blk.12.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  118:             blk.13.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  119:             blk.13.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  120:             blk.13.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  121:        blk.13.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  122:           blk.13.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  123:             blk.13.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  124:           blk.13.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  125:          blk.13.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  126:           blk.13.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  127:             blk.14.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  128:             blk.14.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  129:             blk.14.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  130:        blk.14.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  131:           blk.14.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  132:             blk.14.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  133:           blk.14.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  134:          blk.14.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  135:           blk.14.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  136:             blk.15.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  137:             blk.15.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  138:             blk.15.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  139:        blk.15.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  140:           blk.15.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  141:             blk.15.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  142:           blk.15.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  143:          blk.15.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  144:           blk.15.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  145:             blk.16.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  146:             blk.16.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  147:             blk.16.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  148:        blk.16.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  149:           blk.16.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  150:             blk.16.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  151:           blk.16.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  152:          blk.16.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  153:           blk.16.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  154:             blk.17.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  155:             blk.17.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  156:             blk.17.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  157:        blk.17.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  158:           blk.17.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  159:             blk.17.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  160:           blk.17.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  161:          blk.17.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  162:           blk.17.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  163:             blk.18.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  164:             blk.18.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  165:             blk.18.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  166:        blk.18.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  167:           blk.18.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  168:             blk.18.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  169:           blk.18.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  170:          blk.18.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  171:           blk.18.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  172:             blk.19.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  173:             blk.19.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  174:             blk.19.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  175:        blk.19.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  176:           blk.19.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  177:             blk.19.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  178:           blk.19.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  179:          blk.19.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  180:           blk.19.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  181:             blk.20.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  182:             blk.20.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  183:             blk.20.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  184:        blk.20.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  185:           blk.20.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  186:             blk.20.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  187:           blk.20.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  188:          blk.20.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  189:           blk.20.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  190:             blk.21.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  191:             blk.21.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  192:             blk.21.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  193:        blk.21.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  194:           blk.21.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  195:             blk.21.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  196:           blk.21.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  197:          blk.21.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  198:           blk.21.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  199:             blk.22.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  200:             blk.22.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  201:             blk.22.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  202:        blk.22.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  203:           blk.22.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  204:             blk.22.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  205:           blk.22.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  206:          blk.22.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  207:           blk.22.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  208:             blk.23.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  209:             blk.23.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  210:             blk.23.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  211:        blk.23.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  212:           blk.23.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  213:             blk.23.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  214:           blk.23.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  215:          blk.23.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  216:           blk.23.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  217:             blk.24.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  218:             blk.24.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  219:             blk.24.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  220:        blk.24.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  221:           blk.24.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  222:             blk.24.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  223:           blk.24.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  224:          blk.24.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  225:           blk.24.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  226:             blk.25.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  227:             blk.25.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  228:             blk.25.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  229:        blk.25.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  230:           blk.25.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  231:             blk.25.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  232:           blk.25.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  233:          blk.25.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  234:           blk.25.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  235:             blk.26.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  236:             blk.26.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  237:             blk.26.attn_v.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  238:        blk.26.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  239:           blk.26.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  240:             blk.26.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  241:           blk.26.ffn_down.weight q5_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  242:          blk.26.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  243:           blk.26.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  244:             blk.27.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  245:             blk.27.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  246:             blk.27.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  247:        blk.27.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  248:           blk.27.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  249:             blk.27.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  250:           blk.27.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  251:          blk.27.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  252:           blk.27.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  253:             blk.28.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  254:             blk.28.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  255:             blk.28.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  256:        blk.28.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  257:           blk.28.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  258:             blk.28.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  259:           blk.28.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  260:          blk.28.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  261:           blk.28.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  262:             blk.29.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  263:             blk.29.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  264:             blk.29.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  265:        blk.29.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  266:           blk.29.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  267:             blk.29.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  268:           blk.29.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  269:          blk.29.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  270:           blk.29.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  271:             blk.30.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  272:             blk.30.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  273:             blk.30.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  274:        blk.30.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  275:           blk.30.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  276:             blk.30.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  277:           blk.30.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  278:          blk.30.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  279:           blk.30.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  280:             blk.31.attn_q.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  281:             blk.31.attn_k.weight q5_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  282:             blk.31.attn_v.weight q6_K     [  4096,  1024,     1,     1 ]
-llama_model_loader: - tensor  283:        blk.31.attn_output.weight q5_K     [  4096,  4096,     1,     1 ]
-llama_model_loader: - tensor  284:           blk.31.ffn_gate.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  285:             blk.31.ffn_up.weight q5_K     [  4096, 14336,     1,     1 ]
-llama_model_loader: - tensor  286:           blk.31.ffn_down.weight q6_K     [ 14336,  4096,     1,     1 ]
-llama_model_loader: - tensor  287:          blk.31.attn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  288:           blk.31.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  289:               output_norm.weight f32      [  4096,     1,     1,     1 ]
-llama_model_loader: - tensor  290:                    output.weight q6_K     [  4096, 32000,     1,     1 ]
-llama_model_loader: - kv   0:                       general.architecture str     
-llama_model_loader: - kv   1:                               general.name str     
-llama_model_loader: - kv   2:                       llama.context_length u32     
-llama_model_loader: - kv   3:                     llama.embedding_length u32     
-llama_model_loader: - kv   4:                          llama.block_count u32     
-llama_model_loader: - kv   5:                  llama.feed_forward_length u32     
-llama_model_loader: - kv   6:                 llama.rope.dimension_count u32     
-llama_model_loader: - kv   7:                 llama.attention.head_count u32     
-llama_model_loader: - kv   8:              llama.attention.head_count_kv u32     
-llama_model_loader: - kv   9:     llama.attention.layer_norm_rms_epsilon f32     
-llama_model_loader: - kv  10:                       llama.rope.freq_base f32     
-llama_model_loader: - kv  11:                          general.file_type u32     
-llama_model_loader: - kv  12:                       tokenizer.ggml.model str     
-llama_model_loader: - kv  13:                      tokenizer.ggml.tokens arr     
-llama_model_loader: - kv  14:                      tokenizer.ggml.scores arr     
-llama_model_loader: - kv  15:                  tokenizer.ggml.token_type arr     
-llama_model_loader: - kv  16:                tokenizer.ggml.bos_token_id u32     
-llama_model_loader: - kv  17:                tokenizer.ggml.eos_token_id u32     
-llama_model_loader: - kv  18:            tokenizer.ggml.unknown_token_id u32     
-llama_model_loader: - kv  19:               general.quantization_version u32     
-llama_model_loader: - type  f32:   65 tensors
-llama_model_loader: - type q5_K:  193 tensors
-llama_model_loader: - type q6_K:   33 tensors
-llm_load_print_meta: format           = GGUF V2 (latest)
-llm_load_print_meta: arch             = llama
-llm_load_print_meta: vocab type       = SPM
-llm_load_print_meta: n_vocab          = 32000
-llm_load_print_meta: n_merges         = 0
-llm_load_print_meta: n_ctx_train      = 32768
-llm_load_print_meta: n_embd           = 4096
-llm_load_print_meta: n_head           = 32
-llm_load_print_meta: n_head_kv        = 8
-llm_load_print_meta: n_layer          = 32
-llm_load_print_meta: n_rot            = 128
-llm_load_print_meta: n_gqa            = 4
-llm_load_print_meta: f_norm_eps       = 0.0e+00
-llm_load_print_meta: f_norm_rms_eps   = 1.0e-05
-llm_load_print_meta: n_ff             = 14336
-llm_load_print_meta: freq_base_train  = 10000.0
-llm_load_print_meta: freq_scale_train = 1
-llm_load_print_meta: model type       = 7B
-llm_load_print_meta: model ftype      = mostly Q5_K - Medium
-llm_load_print_meta: model params     = 7.24 B
-llm_load_print_meta: model size       = 4.78 GiB (5.67 BPW) 
-llm_load_print_meta: general.name   = mistralai_mistral-7b-instruct-v0.1
-llm_load_print_meta: BOS token = 1 '&lt;s&gt;'
-llm_load_print_meta: EOS token = 2 '&lt;/s&gt;'
-llm_load_print_meta: UNK token = 0 '&lt;unk&gt;'
-llm_load_print_meta: LF token  = 13 '&lt;0x0A&gt;'
-llm_load_tensors: ggml ctx size =    0.09 MB
-llm_load_tensors: mem required  = 4893.09 MB
-..................................................................................................
-llama_new_context_with_model: n_ctx      = 512
-llama_new_context_with_model: freq_base  = 10000.0
-llama_new_context_with_model: freq_scale = 1
-llama_new_context_with_model: kv self size  =   64.00 MB
-llama_new_context_with_model: compute buffer total size = 78.88 MB
-AVX = 0 | AVX2 = 0 | AVX512 = 0 | AVX512_VBMI = 0 | AVX512_VNNI = 0 | FMA = 0 | NEON = 1 | ARM_FMA = 1 | F16C = 0 | FP16_VA = 1 | WASM_SIMD = 0 | BLAS = 1 | SSE3 = 0 | SSSE3 = 0 | VSX = 0 | </code></pre>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># point the Llama class to the model weights we downloaded in the previous sections</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>work_dir <span class="op">=</span> <span class="st">"/Users/cck/repos/llama.cpp/"</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> Llama(<span class="ss">f"</span><span class="sc">{</span>work_dir<span class="sc">}</span><span class="ss">/models/mistral-7b-instruct-v0.1.Q5_K_M.gguf"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># asking Mistral to help us build a website</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Building a website can be done in 10 simple steps:</span><span class="ch">\n</span><span class="st">Step 1:"</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> llm(prompt, max_tokens<span class="op">=</span><span class="dv">512</span>, echo<span class="op">=</span><span class="va">True</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>output[<span class="st">'choices'</span>][<span class="dv">0</span>][<span class="st">'text'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="32">
+<pre><code>'Building a website can be done in 10 simple steps:\nStep 1: Define the Purpose of Your Website\nBefore you start building your website, it’s important to determine its primary purpose. This may include selling products or services, promoting a business or organization, providing information, or entertaining visitors.\nStep 2: Choose Your Web Design\nNext, decide on the design and layout of your website. This can include selecting a template or creating a custom design. Consider using a responsive design that adjusts to different screen sizes.\nStep 3: Purchase a Domain Name\nChoose a domain name that is easy to remember and reflects your brand. Register it with a domain registrar like GoDaddy or Namecheap.\nStep 4: Choose a Hosting Provider\nA web host provider will store your website files and make them available to visitors. Some popular options include Bluehost, HostGator, and DreamHost.\nStep 5: Create Your Website Content\nCreate the content for your website, including text, images, and videos. Use clear and concise language that is easy to read. Make sure to optimize your content for search engines (SEO) by using relevant keywords.\nStep 6: Design and Develop Your Website\nUsing a website builder or content management system (CMS) like WordPress, design and develop your website. Customize the layout, color scheme, and fonts to match your branding.\nStep 7: Test Your Website\nBefore launching your website, test it thoroughly to make sure everything is working properly. This includes checking for broken links, ensuring that forms are functioning correctly, and testing on different devices.\nStep 8: Launch Your Website\nOnce you’re satisfied that your website is ready, launch it to the public. Promote your website through social media, email marketing, and other channels to attract visitors.\nStep 9: Monitor and Update Your Website\nKeep an eye on your website analytics to see how visitors are interacting with your site. Use this information to make updates and improvements to your website as needed.\nStep 10: Keep Your Website Secure\nFinally, keep your website secure by regularly updating software, using strong passwords, and implementing security measures like SSL certificates and firewalls.'</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># running the official example via python</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Building a website can be done in 10 simple steps:</span><span class="ch">\n</span><span class="st">Step 1:"</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> llm(prompt, max_tokens<span class="op">=</span><span class="dv">512</span>, echo<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Llama.generate: prefix-match hit
-
-llama_print_timings:        load time =  5542.08 ms
-llama_print_timings:      sample time =   147.45 ms /   218 runs   (    0.68 ms per token,  1478.49 tokens per second)
-llama_print_timings: prompt eval time =     0.00 ms /     1 tokens (    0.00 ms per token,      inf tokens per second)
-llama_print_timings:        eval time = 13963.44 ms /   218 runs   (   64.05 ms per token,    15.61 tokens per second)
-llama_print_timings:       total time = 14369.62 ms</code></pre>
-</div>
-</div>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>output[<span class="st">'choices'</span>][<span class="dv">0</span>][<span class="st">'text'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>"Building a website can be done in 10 simple steps:\nStep 1: Determine the purpose of your website. This will help you decide on the features and design that are important to you.\nStep 2: Choose a domain name that represents your brand and is easy to remember.\nStep 3: Select a hosting provider that offers reliable uptime and customer support.\nStep 4: Choose a content management system (CMS) or website builder that suits your needs.\nStep 5: Create a layout and design for your website that is visually appealing and easy to navigate.\nStep 6: Develop the content for your website, including text, images, and videos.\nStep 7: Optimize your website for search engines (SEO) by using relevant keywords and meta tags.\nStep 8: Test your website for functionality, usability, and compatibility with different devices.\nStep 9: Launch your website and promote it through social media, email marketing, and other online channels.\nStep 10: Monitor your website's performance and make updates as needed to ensure its success."</code></pre>
-</div>
-</div>
-<section id="revisiting-the-mlc-outputs" class="level3">
-<h3 class="anchored" data-anchor-id="revisiting-the-mlc-outputs">Revisiting the MLC Outputs</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Hello! Please get ready to help me with my project!"</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># asking Llama2 about itself</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> cm.generate(</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    prompt<span class="op">=</span>prompt,</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    progress_callback<span class="op">=</span>StreamToStdout(callback_interval<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Hello! *adjusts glasses* I'm so glad you're excited about your project! I'm here to help you in any way I can. Could you please provide some more details about your project, such as its topic, any specific questions you have, or what you hope to achieve? That will help me better understand how I can assist you. 😊</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> talk(txt):</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    output <span class="op">=</span> cm.generate(</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    prompt<span class="op">=</span>txt,</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    progress_callback<span class="op">=</span>StreamToStdout(callback_interval<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>talk(<span class="st">"Please be less cringe, thank you"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Of course, I apologize if my previous response came across as too cheery. I'm here to help you in a respectful and professional manner. Please let me know how I can assist you with your project. Are there any specific tasks you need help with, or any information you need me to provide? Please feel free to ask me anything. 😊</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>talk(<span class="st">"Actually, please be as cringe as possible, thank you!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Oh, my goodness! *adjusts glasses* I'm so thrilled to be of assistance to you, my dear! *bounces up and down* I'll do my absolute bestest to help you with your project, even if it means being a wee bit cheesy and cringeworthy! *winks* Please do tell me how I can help, you delightful person, you! 😊</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>talk(<span class="st">"Hmmm, no quite cringe enough! More cringe please uwu"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Oh, my goodness gracious! *adjusts glasses* I'm so glad you want me to be even more cringe! *bounces up and down* I'll do my absolute bestest to provide you with the most cringe-tastic responses possible! *winks*
-So, my sweet darling, how may I assist you on this lovely day? *blinks* Do tell me your most precious wish, and I shall do my utmost to make it come true! *bats eyelashes* 😊</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>talk(<span class="st">"You are actually being a 6/10 cringe. Please show me what a 10000/10 cringe would look like!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Oh, my goodness gracious! *adjusts glasses* I-I can't possibly...*gulps*...I-I think I'll just have to...*tries to contain excitement*...OVERDO IT! *pulls out all the cringe*
-So, my sweet, sweet darling...*bounces up and down*...I shall provide you with the most...*gulps*...CRINGE-TASIC RESPONSES POSSIBLE! *winks* *adjusts glasses* *bats eyelashes* 😂👀💖
-Please, my precious, tell me how I may serve you in this, the most cringe-tastic way possible! *curtsies* 💕</code></pre>
-</div>
-</div>
-<p>Starting the conversation:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># asking Llama2 about itself</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> cm.generate(</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    prompt<span class="op">=</span><span class="st">"Please tell me a little about yourself:"</span>,</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    progress_callback<span class="op">=</span>StreamToStdout(callback_interval<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Hello! *adjusts glasses* I'm just an AI, here to help you with any questions or tasks you may have. My purpose is to provide helpful, respectful, and honest assistance to the best of my abilities. I'm just a language model, so I don't have personal experiences or feelings like humans do, but I'm always eager to learn and improve my responses. Is there something specific you'd like to know or discuss?</code></pre>
-</div>
-</div>
-<p>Can also ask question on the fly using python’s <code>input()</code> which works in Jupyter Notebooks</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># asking Llama2 something on the fly</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Prompt: "</span>)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> cm.generate(prompt<span class="op">=</span>prompt, progress_callback<span class="op">=</span>StreamToStdout(callback_interval<span class="op">=</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Great, I'm glad you asked! I'm best suited to helping with a wide range of tasks, including but not limited to:
-1. Answering questions: I can provide information and explanations on various topics, from science and history to entertainment and culture.
-2. Generating ideas: I can help you brainstorm ideas for creative projects, or even come up with unique solutions to problems you might be facing.
-3. Language translation: I can translate text from one language to another, helping you communicate with people from different cultures and backgrounds.
-4. Summarizing content: If you have a long piece of text and want to get a quick summary of its main points, I can help you with that.
-5. Offering suggestions: I can provide suggestions for things like gift ideas, travel destinations, or even books to read.
-6. Providing definitions: If you're unsure of the meaning of a word or phrase, I can define it for you and give you examples of how it's used in context.
-7. Creating content: I can assist you in generating content for various mediums, such as articles, social media posts, or even entire books.
-8. Conversing: I'm here to chat and help with any questions or topics you'd like to discuss.
-Feel free to ask me anything, and I'll do my best to assist you!</code></pre>
-</div>
-</div>
-<p>What if we wanted a quick summary of what it said?</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># asking for a summary of its response</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> cm.generate(</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    prompt<span class="op">=</span><span class="st">"Please summarize your response in three sentences."</span>,</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    progress_callback<span class="op">=</span>StreamToStdout(callback_interval<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Of course! Here's a summary of my response in three sentences:
-I'm a language model AI trained to assist with various tasks, including answering questions, generating ideas, translating languages, summarizing content, offering suggestions, providing definitions, and creating content. I'm here to help with any questions or topics you'd like to discuss, so feel free to ask me anything. I'm best suited to helping with a wide range of tasks, including but not limited to those listed above.</code></pre>
-</div>
-</div>
-<p>Can go back and forth with the cells above, or can continue talking in other cells</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># asking another question</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>new_prompt <span class="op">=</span> <span class="bu">input</span>(<span class="st">"New, Different Prompt: "</span>)</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> cm.generate(prompt<span class="op">=</span>new_prompt, progress_callback<span class="op">=</span>StreamToStdout(callback_interval<span class="op">=</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Absolutely! I'm here to help. What topic would you like to learn more about? Let me know and I'll do my best to provide you with helpful information and resources.</code></pre>
-</div>
-</div>
-<p>The chat module maintains an internal chat history. If we get stuck in a loop or simply want to start the convo anew:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># resets the current session's chat history</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>cm.reset_chat()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>There is a handy <code>stats()</code> function to check the speed of the model’s generation.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># checks if llm go brrr</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cm.stats())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>prefill: 11.7 tok/s, decode: 12.7 tok/s</code></pre>
-</div>
-</div>
-<p>For a more rigorous check, we can use the <code>benchmark_generate</code> function to check the speed of a fixed number of tokens:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># benchmarking text generation</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cm.benchmark_generate(prompt<span class="op">=</span><span class="st">"What is benchmark?"</span>, generate_length<span class="op">=</span><span class="dv">512</span>))</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>cm.stats()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
- nobody expects the Spanish Inquisition! 😱🔥🎬
-
-Benchmarking is the process of measuring the performance of a system, application, or process against a set of predefined metrics or standards. The goal of benchmarking is to identify areas where improvements can be made, such as increased efficiency, faster performance, or better quality.
-In the context of the Monty Python sketch, "nobody expects the Spanish Inquisition!" is a humorous reference to the unexpected and often absurd nature of benchmarking. Just as the Inquisition was unexpected and unwanted, benchmarking can sometimes be seen as an unnecessary or burdensome process. However, the benefits of benchmarking can be significant, such as identifying areas for improvement, optimizing resources, and ensuring compliance with standards or regulations. 😊s
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</code></pre>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="17">
-<pre><code>'prefill: 1.8 tok/s, decode: 30.0 tok/s'</code></pre>
-</div>
-</div>
-</section>
-</section>
-</section>
-<section id="building-an-mlc-ios-app" class="level1">
-<h1>Building an MLC iOS app</h1>
-<p>Similar process, need a few extra tools and helper packages. First, we need to install rust:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co"># if you don't have `curl`...</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span> curl <span class="co"># &lt;-- if this shows nothing</span></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co"># install curl</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install curl</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="co"># then, download and install rust</span></span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--proto</span> <span class="st">'=https'</span> <span class="at">--tlsv1.2</span> <span class="at">-sSf</span> https://sh.rustup.rs <span class="kw">|</span> <span class="fu">sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>It will prompt you for different installation kinds, but the default one is perfectly fine.</p>
-<p>We will also need the <code>cmake</code> tool. On Mac, you can install it with Homebrew or MacPorts.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install cmake with Homebrew</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install cmake</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In case you skipped the section above, make sure to download the <code>mlc-chat</code> library and place it inside the <code>dist/prebuilt</code> folder.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/mlc-ai/binary-mlc-llm-libs.git dist/prebuilt/lib</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In the sections above we chatted with Llama2 on our laptop. Let’s go ahead and talk to it from an iOS app now.</p>
-<p>First we download a model built for iOS.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download the pre-compiled Llama2 model for iOS</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>cd dist<span class="op">/</span>prebuilt</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>git lfs install</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>git clone https:<span class="op">//</span>huggingface.co<span class="op">/</span>mlc<span class="op">-</span>ai<span class="op">/</span>mlc<span class="op">-</span>chat<span class="op">-</span>Llama<span class="op">-</span><span class="dv">2</span><span class="op">-</span><span class="dv">7</span><span class="er">b</span><span class="op">-</span>chat<span class="op">-</span>hf<span class="op">-</span>q3f16_1</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>cd ..<span class="op">/</span>..</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>We need some other, helper libraries to run the iOS models. Run the command below to download and configure them:</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># grab the helper libraries</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>git submodule update <span class="op">--</span>init <span class="op">--</span>recursive </span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare the ios libs</span></span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>cd .<span class="op">/</span>ios</span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>.<span class="op">/</span>prepare_libs.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>This will create a <code>build/</code> folder. Make sure the following files are in there:</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># expected output of build/</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>ls .<span class="op">/</span>build<span class="op">/</span>lib<span class="op">/</span></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>libmlc_llm.a         <span class="co"># A lightweight interface to interact with LLM, tokenizer, and TVM Unity runtime</span></span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>libmodel_iphone.a    <span class="co"># The compiled model lib</span></span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>libsentencepiece.a   <span class="co"># SentencePiece tokenizer</span></span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>libtokenizers_cpp.a  <span class="co"># Huggingface tokenizer</span></span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>libtvm_runtime.a     <span class="co"># TVM Unity runtime</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Let’s make sure we package the new model into the iOS app. We need to add the</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># still inside of the ios folder, edit the file below</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="bu">open</span> .<span class="op">/</span>prepare_params.sh <span class="co"># make sure `builtin_list` only contains "Llama-2-7b-chat-hf-q3f16_1"</span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co"># prepackage the weights</span></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>.<span class="op">/</span>prepare_params.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Now we should be able to see the model inside the <code>ios/build</code> folder:</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># expected contents of ios/dist folder</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>ls .<span class="op">/</span>dist<span class="op">/</span></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>Llama<span class="op">-</span><span class="dv">2</span><span class="op">-</span><span class="dv">7</span><span class="er">b</span><span class="op">-</span>chat<span class="op">-</span>hf<span class="op">-</span>q3f16_1 <span class="co"># the compiled Llama2 model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="building-the-ios-app" class="level3">
-<h3 class="anchored" data-anchor-id="building-the-ios-app">Building the iOS app</h3>
-<p>We’re almost there! Now to actually build the iOS app.</p>
-<p>First boot up X-Code, then open the project <code>./ios/MLCChat.xcodeproj</code></p>
-<p>Build the project, and deploy it on either:<br>
-- Mac laptop - iPhone or iPad emulator</p>
+<p>Congrats! We’ve now ran the <code>Mistral-7B-Instruct-v0.1</code> model with llama.cpp in both C++ and python. The C++ version is ideal for a server or production application. And as for python version, we can now bootup a handy LLM assistant in a Jupyter Notebook, and ask it questions as we code or develop.</p>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>This notebook covered the llama.cpp library and how to use it to run LLMs. We then ran a <code>Mistral-7B-Instruct-v0.1</code> model with llama.cpp in both C++ and python.</p>
 
 
 </section>
