@@ -2125,12 +2125,9 @@ font-style: inherit;">quarto</span> publish</span></code></pre></div>
 
 
 
-<section id="fractal-u-llm-course" class="level1">
-<h1>Fractal-U LLM Course</h1>
 <blockquote class="blockquote">
 <p>Overview and motivations for the Fractal-U LLM Course.</p>
 </blockquote>
-</section>
 <section id="intro" class="level1">
 <h1>Intro</h1>
 <p>In this course we will fine-tune a Large Language Model (LLM) to create a simple AI Agent that is specialized for a certain task. What exactly do we mean by Agent, and why would we focus on a simple one?</p>
