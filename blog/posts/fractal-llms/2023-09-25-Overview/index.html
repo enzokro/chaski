@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Chris Kroenke">
+<meta name="dcterms.date" content="2023-09-25">
 
-<title>chaski - Fractal LLMs</title>
+<title>chaski - Fractal-U LLM Course</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +25,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./favicon.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<link href="../../../../favicon.png" rel="icon" type="image/png">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -61,40 +61,19 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rosarivo">
-<meta property="og:title" content="chaski - Fractal LLMs">
+<meta property="og:title" content="chaski - Fractal-U LLM Course">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://enzokro.dev/blog/posts/fractal-llms/2023-09-25-Overview/fractal-llm-mascot.png">
 <meta property="og:site-name" content="chaski">
-<meta name="twitter:title" content="chaski - Fractal LLMs">
-<meta name="twitter:card" content="summary">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:width" content="1024">
+<meta name="twitter:title" content="chaski - Fractal-U LLM Course">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://enzokro.dev/blog/posts/fractal-llms/2023-09-25-Overview/fractal-llm-mascot.png">
+<meta name="twitter:image-height" content="1024">
+<meta name="twitter:image-width" content="1024">
+<meta name="twitter:card" content="summary_large_image">
 </head><body class="nav-fixed"><header id="custom-site-header" class="custom-nav page-columns page-rows-contents"> 
     <nav class="custom-nav-content">
         <div class="navbar-brand-container">
@@ -108,10 +87,8 @@ ul.task-list li input[type="checkbox"] {
     </div>
 </header>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../../../styles.css">
 
 
 
@@ -121,7 +98,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../../../index.html">
     <span class="navbar-title">chaski</span>
     </a>
   </div>
@@ -149,177 +126,113 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page">
-      <h1 class="title">Fractal LLMs</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#fractal-u-llm-course" id="toc-fractal-u-llm-course" class="nav-link active" data-scroll-target="#fractal-u-llm-course">Fractal-U LLM Course</a></li>
+  <li><a href="#intro" id="toc-intro" class="nav-link" data-scroll-target="#intro">Intro</a>
+  <ul class="collapse">
+  <li><a href="#realisitic-agent-expectations" id="toc-realisitic-agent-expectations" class="nav-link" data-scroll-target="#realisitic-agent-expectations">Realisitic Agent Expectations</a></li>
+  <li><a href="#fine-tuning-reasonable-agents" id="toc-fine-tuning-reasonable-agents" class="nav-link" data-scroll-target="#fine-tuning-reasonable-agents">Fine-Tuning Reasonable Agents</a></li>
+  <li><a href="#course-overview" id="toc-course-overview" class="nav-link" data-scroll-target="#course-overview">Course Overview</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Fractal-U LLM Course</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">fractal</div>
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">LLM</div>
+  </div>
+  </div>
 
 
 
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Chris Kroenke </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 25, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="fractal-u-llm-course" class="level1">
+<h1>Fractal-U LLM Course</h1>
+<blockquote class="blockquote">
+<p>Overview and motivations for the Fractal-U LLM Course.</p>
+</blockquote>
+</section>
+<section id="intro" class="level1">
+<h1>Intro</h1>
+<p>In this course we will fine-tune a Large Language Model (LLM) to create a simple AI Agent that is specialized for a certain task. What exactly do we mean by Agent, and why would we focus on a simple one?</p>
+<p>There is a lot of talk and hype around Agents at the moment. Folks are thinking about a future where we all have personalized AI assistants, aka Agents, at our fingertips. These Agents promise to make our lives easier and more comfortable. They are the AI assistants from Science Fiction made material: TARS from Interstellar, Jarvis from Iron Man, HAL 9000 from Space Odyssey, Samantha from Her, etc.</p>
+<section id="realisitic-agent-expectations" class="level2">
+<h2 class="anchored" data-anchor-id="realisitic-agent-expectations">Realisitic Agent Expectations</h2>
+<p>However, despite the breakneck speed of progress in AI and LLMs, Agents as powerful as those are still a ways off. It is hard if not impossible to predict the exact timelines. For now it is safe to say that Agents of that caliber won’t be here anytime “soon”. But, barring some force majeure, they <em>will</em> exist at some point.</p>
+<p>The gap, then, is that folks are promising these advanced Agents while on the ground we are still dealing with sycophantic LLMs, their hallucinations, and prohibitive compute requirements.</p>
+</section>
+<section id="fine-tuning-reasonable-agents" class="level2">
+<h2 class="anchored" data-anchor-id="fine-tuning-reasonable-agents">Fine-Tuning Reasonable Agents</h2>
+<p>Where does that leave us? Well, as a recent announcement <a href="https://twitter.com/gdb/status/1694107518488981868">from OpenAI</a> shows, fine-tuning GPT-3.5 on small, clean datasets surpasses GPT-4 on certain tasks.</p>
+<p><em>That’s</em> what we are aiming for. In other words, we already have the ability to develop outrageously powerful tools by fine-tuning LLMs on small, clean datasets.</p>
+<p>So we won’t build Iron Man’s Jarvis, but we will aim for far more than a simple chatbot. If it helps, think about our simple Agent like an Intelligent Rubber Duck. A Rubber Duck is anything (actual yellow rubber duckie optional) that you keep around your desk and talk to about your work. It is a physical tool for thought, since it’s so often helpful to speak out loud the swirl of thoughts in our head.</p>
+<p>Our simple Agent will be a Rubber Duck that can talk with us. When we ask it a question about our work, it will respond given what it knows about the project as a whole. Or, if we are simply verbalizing a thought to untangle it, the Agent will give us feedback or suggest other approaches.</p>
+<p>If we can be so bold: our Agent will be a mini-Jarvis laser-focused on a specific topic. Then, as both the tools and tech progresses, we will have a full development stack to unlock even more capabilities from our Intelligent Rubber Duck.</p>
+<blockquote class="blockquote">
+<p>Course Summary: We will fine-tune an LLM on a small, clean dataset of our choosing to build an Intelligent Rubber Duck to better help us create.</p>
+</blockquote>
+</section>
+<section id="course-overview" class="level2">
+<h2 class="anchored" data-anchor-id="course-overview">Course Overview</h2>
+<p>This course is meant to be public-facing. Students should write about their journey to both chronicle and track their progress. Publishing a piece of work lets us see it under a new critical light, and that is a powerful tool for learning. Sharing each other’s work will also crystalize your understanding of a topic by seeing it from different angles. Blogging and writing can be scary, but here we aim to make it as smooth and helpful as possible.</p>
+<p>Each lesson is inside a Jupyter Notebook. The notebooks build on each other, but they are also self-contained and reviewable on their own.</p>
+<p>Here is an outline of the notebook lessons:</p>
+<p><strong>1. Python environments for LLMs</strong><br>
+&gt; Using mamba and pip to create isolated and reproducible python environments.</p>
+<p><strong>2. Blogging with nbdev</strong><br>
+&gt; Setting up a blog with nbdev and github pages.</p>
+<p><strong>3. Running HuggingFace models</strong><br>
+&gt; Using the HuggingFace API to run ML models, and get familiar with weight files.</p>
+<p><strong>4. Running LLMs with llama.cpp</strong><br>
+&gt; Running quantized, optimized LLMs optimized for deployment.</p>
+<p><strong>5. Processing text documents for LLMs</strong><br>
+&gt; Preparing text data for fine-tuning and Retrieval Augmented Generation (RAG) tasks</p>
+<p><strong>6. Fine-tuning LLMs on one or few GPUs</strong><br>
+&gt; Scripts and setups to efficiently fine-tune LLMs</p>
+<p><strong>7. Running fine-tuned LLMs locally on your phone</strong><br>
+&gt; Deploying fine-tuned, quantized LLMs on mobile devices</p>
+<p>Thank you for coming on this journey! I promise that we will learn a ton and have lots of fun along the way.</p>
 
 
+</section>
+</section>
 
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="fractal,python,LLM" data-listing-date-sort="1697230800000" data-listing-file-modified-sort="1697659363317" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
-<div class="body">
-<a href="./blog/posts/fractal-llms/2023-10-14-Session-3-llama/index.html">
-<h3 class="no-anchor listing-title">
-Running LLMs with llama.cpp
-</h3>
-<div class="listing-subtitle">
-
-</div>
-<div class="listing-description">
-Building llama.cpp and running a Mistral-v0.1 model.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./blog/posts/fractal-llms/2023-10-14-Session-3-llama/index.html">
-<div class="listing-date">
-Oct 14, 2023
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="fractal,python,LLM" data-listing-date-sort="1697230800000" data-listing-file-modified-sort="1697919005495" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
-<div class="body">
-<a href="./blog/posts/fractal-llms/2023-10-20-Session-5-text-data-qa/index.html">
-<h3 class="no-anchor listing-title">
-Preparing text data for LLM Instruct fine-tuning
-</h3>
-<div class="listing-subtitle">
-
-</div>
-<div class="listing-description">
-Turning a set of documents into Q&amp;A pairs for LLM fine-tuning.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./blog/posts/fractal-llms/2023-10-20-Session-5-text-data-qa/index.html">
-<div class="listing-date">
-Oct 14, 2023
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="fractal,python,LLM" data-listing-date-sort="1696626000000" data-listing-file-modified-sort="1696885210759" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
-<div class="body">
-<a href="./blog/posts/fractal-llms/2023-10-07-Session-2-mlc/index.html">
-<h3 class="no-anchor listing-title">
-Overview of MLC and llama.cpp
-</h3>
-<div class="listing-subtitle">
-
-</div>
-<div class="listing-description">
-A look at <code>llama.cpp</code>, and running Llama2 with the Machine Learning Compilation (<code>MLC</code>) library.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./blog/posts/fractal-llms/2023-10-07-Session-2-mlc/index.html">
-<div class="listing-date">
-Oct 7, 2023
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="fractal,python,LLM" data-listing-date-sort="1696453200000" data-listing-file-modified-sort="1698310971553" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
-<div class="body">
-<a href="./blog/posts/fractal-llms/2023-10-05-Session-0-env/index.html">
-<h3 class="no-anchor listing-title">
-A Python Environment for LLMs
-</h3>
-<div class="listing-subtitle">
-
-</div>
-<div class="listing-description">
-Building an LLM python environment using <code>mamba</code> and <code>pip</code>
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./blog/posts/fractal-llms/2023-10-05-Session-0-env/index.html">
-<div class="listing-date">
-Oct 5, 2023
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="fractal,python,nbdev" data-listing-date-sort="1695762000000" data-listing-file-modified-sort="1697684245452" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
-<div class="body">
-<a href="./blog/posts/fractal-llms/2023-09-27-Session-1-nbdev/index.html">
-<h3 class="no-anchor listing-title">
-Blogging with Quarto and nbdev
-</h3>
-<div class="listing-subtitle">
-
-</div>
-<div class="listing-description">
-Building a personal blog with nbdev and publishing it with Quarto.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./blog/posts/fractal-llms/2023-09-27-Session-1-nbdev/index.html">
-<div class="listing-date">
-Sep 27, 2023
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="fractal,python,LLM" data-listing-date-sort="1695589200000" data-listing-file-modified-sort="1698310736779" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
-<div class="body">
-<a href="./blog/posts/fractal-llms/2023-09-25-Overview/index.html">
-<h3 class="no-anchor listing-title">
-Fractal-U LLM Course
-</h3>
-<div class="listing-subtitle">
-
-</div>
-<div class="listing-description">
-Overview and motivations for the Fractal-U LLM Course.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./blog/posts/fractal-llms/2023-09-25-Overview/index.html">
-<div class="listing-date">
-Sep 25, 2023
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -553,8 +466,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<script src="https://utteranc.es/client.js" repo="enzokro/chaski_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
 </div> <!-- /content -->
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></div></div></footer></body></html>
+</body></html>

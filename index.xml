@@ -10,11 +10,11 @@
 <atom:link href="https://enzokro.dev/index.xml" rel="self" type="application/rss+xml"/>
 <description>Enzo&#39;s site.</description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Sat, 14 Oct 2023 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 13 Oct 2023 21:00:00 GMT</lastBuildDate>
 <item>
   <title>Running LLMs with llama.cpp</title>
   <dc:creator>Chris Kroenke</dc:creator>
-  <link>https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session_3_llama/index.html</link>
+  <link>https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session-3-llama/index.html</link>
   <description><![CDATA[ 
 
 
@@ -30,10 +30,10 @@
 <h1>llama.cpp</h1>
 <p>llama.cpp is designed to run quantized LLMs on a Mac. Despite its name, the project supports many other models beyond Llama and Llama-2. There are even <a href="https://github.com/abetlen/llama-cpp-python">python bindings</a> to make our lives easier.</p>
 <p>The picture below comes from project’s README, and shows low-level details about how the repo works and what it supports.</p>
-<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session_3_llama/llama_description.png" class="img-fluid"></p>
+<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session-3-llama/llama_description.png" class="img-fluid"></p>
 <p>llama.cpp was originally hacked together in a <a href="https://github.com/ggerganov/llama.cpp/issues/33#issuecomment-1465108022">single evening</a>, and has since become arguably the SOTA for deploying LLMs on CPUs. This is in large part thanks to the incredibly helpful and responsive community behind it.</p>
 <p>Below we can see the full list of models that llama.cpp supports as of writing.</p>
-<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session_3_llama/llama_model_support.png" class="img-fluid"></p>
+<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session-3-llama/llama_model_support.png" class="img-fluid"></p>
 <p>The benefits of llama.cpp go beyond its code or models. Folks are always collaborating in <a href="https://github.com/ggerganov/llama.cpp/pulls">Pull Requests</a> to bring in the latest, greatest advances from the flood of LLM progress. Tracking these PRs is a great way of keeping up to date with the field. Thankfully, the community is very open to hackers and new ideas: if something works and there’s proof, then it gets merged in.</p>
 <p>Next, let’s use llama.cpp to run a <code>Mistral-v0.1</code> model.</p>
 </section>
@@ -133,7 +133,7 @@ font-style: inherit;">--config</span> Release </span></code></pre></div>
 <p>HuggingFace link to <a href="https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF"><code>Mistral-7B-Instruct-v0.1</code></a></p>
 </blockquote>
 <p>Follow the link above, then click on the <code>Files and version</code> tab near the top. You’ll see a list of models that were quantized in different ways:</p>
-<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session_3_llama/mistral_quantized.png" class="img-fluid"></p>
+<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session-3-llama/mistral_quantized.png" class="img-fluid"></p>
 <p>These names can be overwhelming. Let’s break them down at a high level. Feel free to skim the next couple of paragraphs, they are not critical to running the model itself.</p>
 <p>You can see that each file ends with a format like this: <code>Q*_*.gguf</code>. For example one model from the list is: <code>mistral-7B-Instruct-v0.1.Q4_K_S.gguf</code>. The <code>Q4</code> part means that the model was quantized with 4-bits. The <code>K_S</code> part refers to the specific flavor of quantization that was used.</p>
 <p>There is an unfortunate tradeoff between quantization and performance. The fewer bits we use, the smaller and faster the model will be but the worse its performance. And the more bits we use, the better its performance but the slower the model. In general, the <code>Q4</code> and <code>Q5</code> models offer a good balance between speed, performance, and size. Now let’s get back to running the model.</p>
@@ -317,14 +317,40 @@ font-style: inherit;">'text'</span>]</span></code></pre></div>
   <category>fractal</category>
   <category>python</category>
   <category>LLM</category>
-  <guid>https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session_3_llama/index.html</guid>
-  <pubDate>Sat, 14 Oct 2023 04:00:00 GMT</pubDate>
-  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session_3_llama/llama-cpp-logo.png" medium="image" type="image/png" height="72" width="144"/>
+  <guid>https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session-3-llama/index.html</guid>
+  <pubDate>Fri, 13 Oct 2023 21:00:00 GMT</pubDate>
+  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session-3-llama/llama-cpp-logo.png" medium="image" type="image/png" height="72" width="144"/>
+</item>
+<item>
+  <title>Preparing text data for LLM Instruct fine-tuning</title>
+  <dc:creator>Chris Kroenke</dc:creator>
+  <link>https://enzokro.dev/blog/posts/fractal-llms/2023-10-20-Session-5-text-data-qa/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<blockquote class="blockquote">
+<p>Turning a set of documents into Q&amp;A pairs for LLM fine-tuning.</p>
+</blockquote>
+<section id="intro" class="level1">
+<h1>Intro</h1>
+<p>This notebook</p>
+
+
+</section>
+
+ ]]></description>
+  <category>fractal</category>
+  <category>python</category>
+  <category>LLM</category>
+  <guid>https://enzokro.dev/blog/posts/fractal-llms/2023-10-20-Session-5-text-data-qa/index.html</guid>
+  <pubDate>Fri, 13 Oct 2023 21:00:00 GMT</pubDate>
+  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/2023-10-20-Session-5-text-data-qa/llama-cpp-logo.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Overview of MLC and llama.cpp</title>
   <dc:creator>Chris Kroenke</dc:creator>
-  <link>https://enzokro.dev/blog/posts/fractal-llms/2023-10-07-Session_2_mlc/index.html</link>
+  <link>https://enzokro.dev/blog/posts/fractal-llms/2023-10-07-Session-2-mlc/index.html</link>
   <description><![CDATA[ 
 
 
@@ -1467,14 +1493,14 @@ font-style: inherit;"># the compiled Llama2 model</span></span></code></pre></di
   <category>fractal</category>
   <category>python</category>
   <category>LLM</category>
-  <guid>https://enzokro.dev/blog/posts/fractal-llms/2023-10-07-Session_2_mlc/index.html</guid>
-  <pubDate>Sat, 07 Oct 2023 04:00:00 GMT</pubDate>
-  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/2023-10-07-Session_2_mlc/llama.jpeg" medium="image" type="image/jpeg"/>
+  <guid>https://enzokro.dev/blog/posts/fractal-llms/2023-10-07-Session-2-mlc/index.html</guid>
+  <pubDate>Fri, 06 Oct 2023 21:00:00 GMT</pubDate>
+  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/2023-10-07-Session-2-mlc/llama.jpeg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>A Python Environment for LLMs</title>
   <dc:creator>Chris Kroenke</dc:creator>
-  <link>https://enzokro.dev/blog/posts/fractal-llms/2023-10-05-Session_0_env/index.html</link>
+  <link>https://enzokro.dev/blog/posts/fractal-llms/2023-10-05-Session-0-env/index.html</link>
   <description><![CDATA[ 
 
 
@@ -1482,20 +1508,8 @@ font-style: inherit;"># the compiled Llama2 model</span></span></code></pre></di
 <blockquote class="blockquote">
 <p>Building an LLM python environment using <code>mamba</code> and <code>pip</code></p>
 </blockquote>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p>The goal of this course is to build an AI Agent by fine-tuning a Large Language Model (LLM) on documents chosen by each student. What exactly do we mean by Agent, and why would we focus on a simple one?</p>
-<p>To give some context, there is a lot of talk and hype around Agents at the moment. Folks are looking towards a future where we all have personalized AI assistants, aka Agents, at our fingertips. These Agents will make our lives better both in the day to day and in the long term. They are the AI assistants of Science Fiction made material. Agents like TARS from Interstellar, Jarvis from Iron Man, HAL 9000 from Space Odyssey, Samantha from Her, etc.</p>
-<p>For as fast as the progress in AI and LLMs has been, Agents as powerful as those are still a ways off. It’s hard if not impossible to predict the exact timelines. Suffice it to say that these Agents won’t be here anytime “soon”. But, barring some force majeure, they <em>will</em> exist at some point.</p>
-<p>The gap, then, is that folks are talking about (and promising) these advanced Agent capabilities, while on the ground we are still dealing with LLM hallucinations and prohibitive compute requirements.</p>
-<p>Where does that leave us? Well, as <a href="https://twitter.com/gdb/status/1694107518488981868">a recent announcement from OpenAI</a> shows, fine-tuning GPT-3.5 on small, clean datasets can even surpass GPT-4 on certain tasks. <em>That’s</em> what we are aiming for. In other words, we already have the ability to develop outrageously powerful tools by fine-tuning LLMs on small, clean datasets.</p>
-<p>So we won’t build a simple chatbot, nor will we be build Iron Man’s Jarvis. We will land somewhere in the middle. If it helps, try thinking about this simple Agent as an Intelligent Rubber Duck. In case you’re not familiar with the concept: a Rubber Duck is anything (actual yellow rubber duckie optional) that you keep around your desk and talk to about your work. It is a physical tool for thought, since it’s so often helpful to say out loud the swarm of thoughts in our head.</p>
-<p>Our simple Agent will be a Rubber Duck that speaks back at you. When you ask it a question about your work, it will respond given what it knows about the project as a whole. Or, if you are simply verbalizing a thought to untangle it, the Agent will give you some feedback or suggest other approaches. If we can be so bold: our Agent will be a Jarvis-lite, laser-focused on a narrow scope. Then, as both the tools and tech progresses, we’ll have everything needed to unlock even more capabilities from our Intelligent Rubber Duck.</p>
-<blockquote class="blockquote">
-<p>Summary: In this course we will fine-tune an LLM on a small, clean dataset of our choosing to build an Intelligent Rubber Duck that can help us work or create better.</p>
-</blockquote>
-<section id="things-we-need-for-the-class" class="level2">
-<h2 class="anchored" data-anchor-id="things-we-need-for-the-class">Things we need for the class</h2>
+<section id="a-programming-environment-for-the-course" class="level2">
+<h2 class="anchored" data-anchor-id="a-programming-environment-for-the-course">A programming environment for the course</h2>
 <p>In order to fully use a current, open source LLM, the first thing we need to do is set up a proper <code>programming environment</code>. The environment is a computing ecosystem with all the software libraries and packages needed to run an LLM.</p>
 <p>Note that setting up this environment is often one of the most time-consuming and challenging tasks when it comes to Machine Learning. There is no silver bullet or universal solution, as you will see by the dozens of tools that folks have come up with to tackle this problem (insert xkcd comic about competing standards).</p>
 <p>The main point here is that setting up the environment is often annoying. It can even be straight up painful. It’s ok to feel lost or struggle with it. Please take some comfort in the fact that once we have the environment, many of the downstream tasks will feel easy by comparison!</p>
@@ -1524,7 +1538,6 @@ font-style: inherit;"># the compiled Llama2 model</span></span></code></pre></di
 <blockquote class="blockquote">
 <p>Note: Run <code>pip install -e .</code> to install a dynamic version of this package that tracks live code changes.</p>
 </blockquote>
-</section>
 </section>
 <section id="installing-mamba-on-our-computers" class="level1">
 <h1>Installing <code>mamba</code> on our computers</h1>
@@ -1815,23 +1828,25 @@ font-style: inherit;">Build</span> cuda_12.1.r12.1/compiler.32415258_0</span></c
 background-color: null;
 font-style: inherit;">nvcc</span> <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">--version</span> <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># should output something like the following:</span></span>
+font-style: inherit;">--version</span>  </span>
 <span id="cb14-2"></span>
 <span id="cb14-3"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># nvcc: NVIDIA (R) Cuda compiler driver</span></span>
-<span id="cb14-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Copyright (c) 2005-2023 NVIDIA Corporation</span></span>
+font-style: inherit;"># should output something like the following:</span></span>
+<span id="cb14-4"></span>
 <span id="cb14-5"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># Built on Tue_Feb__7_19:32:13_PST_2023</span></span>
+font-style: inherit;"># nvcc: NVIDIA (R) Cuda compiler driver</span></span>
 <span id="cb14-6"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># Cuda compilation tools, release 12.1, V12.1.66</span></span>
+font-style: inherit;"># Copyright (c) 2005-2023 NVIDIA Corporation</span></span>
 <span id="cb14-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Built on Tue_Feb__7_19:32:13_PST_2023</span></span>
+<span id="cb14-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Cuda compilation tools, release 12.1, V12.1.66</span></span>
+<span id="cb14-9"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Build cuda_12.1.r12.1/compiler.32415258_0</span></span></code></pre></div>
 
@@ -1843,14 +1858,14 @@ font-style: inherit;"># Build cuda_12.1.r12.1/compiler.32415258_0</span></span><
   <category>fractal</category>
   <category>python</category>
   <category>LLM</category>
-  <guid>https://enzokro.dev/blog/posts/fractal-llms/2023-10-05-Session_0_env/index.html</guid>
-  <pubDate>Thu, 05 Oct 2023 04:00:00 GMT</pubDate>
-  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/2023-10-05-Session_0_env/mamba_logo.webp" medium="image" type="image/webp"/>
+  <guid>https://enzokro.dev/blog/posts/fractal-llms/2023-10-05-Session-0-env/index.html</guid>
+  <pubDate>Wed, 04 Oct 2023 21:00:00 GMT</pubDate>
+  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/2023-10-05-Session-0-env/mamba_logo.webp" medium="image" type="image/webp"/>
 </item>
 <item>
   <title>Blogging with Quarto and nbdev</title>
   <dc:creator>Chris Kroenke</dc:creator>
-  <link>https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session_1_nbdev/index.html</link>
+  <link>https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session-1-nbdev/index.html</link>
   <description><![CDATA[ 
 
 
@@ -1870,7 +1885,7 @@ font-style: inherit;"># Build cuda_12.1.r12.1/compiler.32415258_0</span></span><
 <p>The original idea was proposed by <a href="https://en.wikipedia.org/wiki/Donald_Knuth">Donald Knuth</a> in 1984. In Literate Programming, notes and tests are woven directly into a project’s source code. Each piece is crucial to the overall approach and makes for better, more readable code. The code, documentation, and tests are all first-class citizens in Literate Programming. This is very different from the usual software approach where tests and documentation live in a separate set of files.</p>
 <p>In <code>nbdev</code>, a Jupyter Notebook is the single source of truth for code, documentation, and tests. Instead of managing three independent groups of files, everything is defined and happens in the Notebook. If the Notebook runs, then you know your code will run.</p>
 <p>So, why is this helpful? A fun analogy might help: Notebooks are the modern, digital version of field journals. The inspirational samples below from <a href="https://www.wired.com/2011/07/science-field-notes-gallery/">this Wired article</a> show what science, at its best, can be:</p>
-<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session_1_nbdev/field-notes-butterflies.jpg" class="img-fluid"> <img src="https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session_1_nbdev/field-notes-lynx.jpg" class="img-fluid"> <img src="https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session_1_nbdev/field-notes-grinnell.jpg" class="img-fluid"></p>
+<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session-1-nbdev/field-notes-butterflies.jpg" class="img-fluid"> <img src="https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session-1-nbdev/field-notes-lynx.jpg" class="img-fluid"> <img src="https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session-1-nbdev/field-notes-grinnell.jpg" class="img-fluid"></p>
 <p>Let’s focus on the last example: the field notes about a lynx. Notice that we’re not reading a long description of what a Lynx is <em>supposed</em> to look like. And we’re not looking at a series of pictures with no context either. We’re getting the best of both worlds: short and relevant descriptions right next to clear, working examples. Field notes bridge the gap between the written, theoretical and the actual, practical.</p>
 <p>Notebooks can do for code what the field notes above did for the lynx. We can interactively show people the data, describe what’s being done, and make sure that the results are correct. We can even show any mistakes and struggles along the way. This tight loop between what you’re doing (<em>code</em>), describing what you’re doing (<em>documentation</em>), and making sure it’s correct (<em>tests</em>) is a great way to approach research. More than that, it is an incredibly powerful way to communicate and share ideas.</p>
 </section>
@@ -1898,7 +1913,7 @@ font-style: inherit;"># Build cuda_12.1.r12.1/compiler.32415258_0</span></span><
 2. Create a blog inside the project.<br>
 3. Host the blog on Github Pages.</p>
 <p><code>nbdev</code> uses the <a href="https://quarto.org/">Quarto framework</a> to publish blogs. Quarto is tailored for writing beautiful articles on technical or scientific topics. In a way it’s a blogging platform for Literate Programming, where a series of code and comments take the reader on a journey.</p>
-<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session_1_nbdev/quarto.png" class="img-fluid"></p>
+<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session-1-nbdev/quarto.png" class="img-fluid"></p>
 <section id="creating-a-new-nbdev-project" class="level3">
 <h3 class="anchored" data-anchor-id="creating-a-new-nbdev-project">Creating a new <code>nbdev</code> project</h3>
 <p><code>nbdev</code> works on top of a Git repo. That means our first step is creating a new, empty repository. Here is a <a href="https://github.com/new">handy Github link</a> that takes us straight to the page for creating new repos.</p>
@@ -2093,7 +2108,7 @@ font-style: inherit;">---</span></span></code></pre></div>
 <section id="hosting-the-blog-on-github-pages" class="level4">
 <h4 class="anchored" data-anchor-id="hosting-the-blog-on-github-pages">Hosting the Blog on Github Pages</h4>
 <p>The site will be hosted on Github’s <a href="https://pages.github.com/">Pages platform</a>. This is a built-in feature offered by Github and we can leverage it by changing a few settings. The screenshot below shows the to configure the repo so it can be published as a blog.</p>
-<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session_1_nbdev/github_pages.png" class="img-fluid"></p>
+<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session-1-nbdev/github_pages.png" class="img-fluid"></p>
 <p>Specifically, we need to set the <code>Deploy from a branch</code> option under the <code>Build and deployment section</code>. Then, we pick the <code>gh-pages</code> branch as the branch to deploy from. <code>gh-pages</code> is a special branch where nbdev parses our Notebooks into a proper Quarto website.</p>
 <p>Next, run the <code>quarto publish</code> command to build and publish the blog.</p>
 <div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="co" style="color: #5E5E5E;
@@ -2124,9 +2139,76 @@ font-style: inherit;">quarto</span> publish</span></code></pre></div>
   <category>fractal</category>
   <category>python</category>
   <category>nbdev</category>
-  <guid>https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session_1_nbdev/index.html</guid>
-  <pubDate>Wed, 27 Sep 2023 04:00:00 GMT</pubDate>
-  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session_1_nbdev/nbdev_pic.png" medium="image" type="image/png" height="66" width="144"/>
+  <guid>https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session-1-nbdev/index.html</guid>
+  <pubDate>Tue, 26 Sep 2023 21:00:00 GMT</pubDate>
+  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session-1-nbdev/nbdev_pic.png" medium="image" type="image/png" height="66" width="144"/>
+</item>
+<item>
+  <title>Fractal-U LLM Course</title>
+  <dc:creator>Chris Kroenke</dc:creator>
+  <link>https://enzokro.dev/blog/posts/fractal-llms/2023-09-25-Overview/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="fractal-u-llm-course" class="level1">
+<h1>Fractal-U LLM Course</h1>
+<blockquote class="blockquote">
+<p>Overview and motivations for the Fractal-U LLM Course.</p>
+</blockquote>
+</section>
+<section id="intro" class="level1">
+<h1>Intro</h1>
+<p>In this course we will fine-tune a Large Language Model (LLM) to create a simple AI Agent that is specialized for a certain task. What exactly do we mean by Agent, and why would we focus on a simple one?</p>
+<p>There is a lot of talk and hype around Agents at the moment. Folks are thinking about a future where we all have personalized AI assistants, aka Agents, at our fingertips. These Agents promise to make our lives easier and more comfortable. They are the AI assistants from Science Fiction made material: TARS from Interstellar, Jarvis from Iron Man, HAL 9000 from Space Odyssey, Samantha from Her, etc.</p>
+<section id="realisitic-agent-expectations" class="level2">
+<h2 class="anchored" data-anchor-id="realisitic-agent-expectations">Realisitic Agent Expectations</h2>
+<p>However, despite the breakneck speed of progress in AI and LLMs, Agents as powerful as those are still a ways off. It is hard if not impossible to predict the exact timelines. For now it is safe to say that Agents of that caliber won’t be here anytime “soon”. But, barring some force majeure, they <em>will</em> exist at some point.</p>
+<p>The gap, then, is that folks are promising these advanced Agents while on the ground we are still dealing with sycophantic LLMs, their hallucinations, and prohibitive compute requirements.</p>
+</section>
+<section id="fine-tuning-reasonable-agents" class="level2">
+<h2 class="anchored" data-anchor-id="fine-tuning-reasonable-agents">Fine-Tuning Reasonable Agents</h2>
+<p>Where does that leave us? Well, as a recent announcement <a href="https://twitter.com/gdb/status/1694107518488981868">from OpenAI</a> shows, fine-tuning GPT-3.5 on small, clean datasets surpasses GPT-4 on certain tasks.</p>
+<p><em>That’s</em> what we are aiming for. In other words, we already have the ability to develop outrageously powerful tools by fine-tuning LLMs on small, clean datasets.</p>
+<p>So we won’t build Iron Man’s Jarvis, but we will aim for far more than a simple chatbot. If it helps, think about our simple Agent like an Intelligent Rubber Duck. A Rubber Duck is anything (actual yellow rubber duckie optional) that you keep around your desk and talk to about your work. It is a physical tool for thought, since it’s so often helpful to speak out loud the swirl of thoughts in our head.</p>
+<p>Our simple Agent will be a Rubber Duck that can talk with us. When we ask it a question about our work, it will respond given what it knows about the project as a whole. Or, if we are simply verbalizing a thought to untangle it, the Agent will give us feedback or suggest other approaches.</p>
+<p>If we can be so bold: our Agent will be a mini-Jarvis laser-focused on a specific topic. Then, as both the tools and tech progresses, we will have a full development stack to unlock even more capabilities from our Intelligent Rubber Duck.</p>
+<blockquote class="blockquote">
+<p>Course Summary: We will fine-tune an LLM on a small, clean dataset of our choosing to build an Intelligent Rubber Duck to better help us create.</p>
+</blockquote>
+</section>
+<section id="course-overview" class="level2">
+<h2 class="anchored" data-anchor-id="course-overview">Course Overview</h2>
+<p>This course is meant to be public-facing. Students should write about their journey to both chronicle and track their progress. Publishing a piece of work lets us see it under a new critical light, and that is a powerful tool for learning. Sharing each other’s work will also crystalize your understanding of a topic by seeing it from different angles. Blogging and writing can be scary, but here we aim to make it as smooth and helpful as possible.</p>
+<p>Each lesson is inside a Jupyter Notebook. The notebooks build on each other, but they are also self-contained and reviewable on their own.</p>
+<p>Here is an outline of the notebook lessons:</p>
+<p><strong>1. Python environments for LLMs</strong><br>
+&gt; Using mamba and pip to create isolated and reproducible python environments.</p>
+<p><strong>2. Blogging with nbdev</strong><br>
+&gt; Setting up a blog with nbdev and github pages.</p>
+<p><strong>3. Running HuggingFace models</strong><br>
+&gt; Using the HuggingFace API to run ML models, and get familiar with weight files.</p>
+<p><strong>4. Running LLMs with llama.cpp</strong><br>
+&gt; Running quantized, optimized LLMs optimized for deployment.</p>
+<p><strong>5. Processing text documents for LLMs</strong><br>
+&gt; Preparing text data for fine-tuning and Retrieval Augmented Generation (RAG) tasks</p>
+<p><strong>6. Fine-tuning LLMs on one or few GPUs</strong><br>
+&gt; Scripts and setups to efficiently fine-tune LLMs</p>
+<p><strong>7. Running fine-tuned LLMs locally on your phone</strong><br>
+&gt; Deploying fine-tuned, quantized LLMs on mobile devices</p>
+<p>Thank you for coming on this journey! I promise that we will learn a ton and have lots of fun along the way.</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>fractal</category>
+  <category>python</category>
+  <category>LLM</category>
+  <guid>https://enzokro.dev/blog/posts/fractal-llms/2023-09-25-Overview/index.html</guid>
+  <pubDate>Sun, 24 Sep 2023 21:00:00 GMT</pubDate>
+  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/2023-09-25-Overview/fractal-llm-mascot.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 <item>
   <title>Tips for LLM prompts</title>
@@ -2199,7 +2281,7 @@ font-style: inherit;">quarto</span> publish</span></code></pre></div>
   <category>LLM</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2023-04-17-llm-prompt-tips/index.html</guid>
-  <pubDate>Mon, 17 Apr 2023 04:00:00 GMT</pubDate>
+  <pubDate>Sun, 16 Apr 2023 21:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Stable Diffusion v2 with dynamic Classifier-free Guidance</title>
@@ -3328,7 +3410,7 @@ font-style: inherit;">'stabilityai/stable-diffusion-2'</span>)</span></code></pr
   <category>classifier-free guidance</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-28-sd-v2-schedules-1/index.html</guid>
-  <pubDate>Mon, 28 Nov 2022 05:00:00 GMT</pubDate>
+  <pubDate>Sun, 27 Nov 2022 21:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-28-sd-v2-schedules-1/better_village.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 <item>
@@ -4915,7 +4997,7 @@ font-style: inherit;">'stabilityai/stable-diffusion-2-base'</span>)</span></code
   <category>classifier-free guidance</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-26-guidance-expts-8/index.html</guid>
-  <pubDate>Sun, 27 Nov 2022 05:00:00 GMT</pubDate>
+  <pubDate>Sat, 26 Nov 2022 21:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-26-guidance-expts-8/better_inca.png" medium="image" type="image/png" height="180" width="144"/>
 </item>
 <item>
@@ -6182,7 +6264,7 @@ Done.</code></pre>
   <category>classifier-free guidance</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-25-guidance-expts-7/index.html</guid>
-  <pubDate>Sat, 26 Nov 2022 05:00:00 GMT</pubDate>
+  <pubDate>Fri, 25 Nov 2022 21:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-25-guidance-expts-7/better_horse_6.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 <item>
@@ -8175,7 +8257,7 @@ Done.</code></pre>
   <category>classifier-free guidance</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-24-guidance-expts-6/index.html</guid>
-  <pubDate>Fri, 25 Nov 2022 05:00:00 GMT</pubDate>
+  <pubDate>Thu, 24 Nov 2022 21:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-24-guidance-expts-6/better_horse_5.png" medium="image" type="image/png" height="145" width="144"/>
 </item>
 <item>
@@ -9285,7 +9367,7 @@ font-style: inherit;"># plt.plot(s)</span></span></code></pre></div>
   <category>classifier-free guidance</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-24-guidance-expts-5/index.html</guid>
-  <pubDate>Thu, 24 Nov 2022 05:00:00 GMT</pubDate>
+  <pubDate>Wed, 23 Nov 2022 21:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-24-guidance-expts-5/log_cos_sweep.png" medium="image" type="image/png" height="96" width="144"/>
 </item>
 <item>
@@ -10742,7 +10824,7 @@ Done.</code></pre>
   <category>classifier-free guidance</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-23-guidance-expts-4/index.html</guid>
-  <pubDate>Wed, 23 Nov 2022 05:00:00 GMT</pubDate>
+  <pubDate>Tue, 22 Nov 2022 21:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-23-guidance-expts-4/better_horse_4.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 <item>
@@ -11653,7 +11735,7 @@ Done.</code></pre>
   <category>classifier-free guidance</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-21-guidance-expts-3/index.html</guid>
-  <pubDate>Tue, 22 Nov 2022 05:00:00 GMT</pubDate>
+  <pubDate>Mon, 21 Nov 2022 21:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-21-guidance-expts-3/better_horse_3.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 <item>
@@ -12236,7 +12318,7 @@ font-style: inherit;">;</span></span></code></pre></div>
   <category>diffusion</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-20-minimal-diffusion/index.html</guid>
-  <pubDate>Mon, 21 Nov 2022 05:00:00 GMT</pubDate>
+  <pubDate>Sun, 20 Nov 2022 21:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-20-minimal-diffusion/dynam_cfg.png" medium="image" type="image/png" height="160" width="144"/>
 </item>
 <item>
@@ -13981,7 +14063,7 @@ Done.</code></pre>
   <category>classifier-free guidance</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-20-guidance-expts-2/index.html</guid>
-  <pubDate>Sun, 20 Nov 2022 05:00:00 GMT</pubDate>
+  <pubDate>Sat, 19 Nov 2022 21:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-20-guidance-expts-2/better-gen-horse.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 <item>
@@ -14525,7 +14607,7 @@ font-style: inherit;">;</span></span></code></pre></div>
   <category>latent interpolation</category>
   <category>SLERP</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-16-pytorch-slerp/index.html</guid>
-  <pubDate>Wed, 16 Nov 2022 05:00:00 GMT</pubDate>
+  <pubDate>Tue, 15 Nov 2022 21:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-16-pytorch-slerp/slerp.png" medium="image" type="image/png" height="102" width="144"/>
 </item>
 <item>
@@ -16688,7 +16770,7 @@ Done.</code></pre>
   <category>classifier-free guidance</category>
   <category>deep learning</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-15-guidance-expts-1/index.html</guid>
-  <pubDate>Sun, 13 Nov 2022 05:00:00 GMT</pubDate>
+  <pubDate>Sat, 12 Nov 2022 21:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-15-guidance-expts-1/cat2.jpeg" medium="image" type="image/jpeg"/>
 </item>
 <item>
@@ -16944,7 +17026,7 @@ font-style: inherit;">return</span> node</span></code></pre></div>
   <category>algorithms</category>
   <category>functional</category>
   <guid>https://enzokro.dev/blog/posts/2022-11-08-merge-n-BSTs/index.html</guid>
-  <pubDate>Tue, 08 Nov 2022 05:00:00 GMT</pubDate>
+  <pubDate>Mon, 07 Nov 2022 21:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-11-08-merge-n-BSTs/merging_bts.png" medium="image" type="image/png" height="138" width="144"/>
 </item>
 <item>
@@ -18282,841 +18364,8 @@ font-style: inherit;">;</span></span></code></pre></div>
   <category>deep learning</category>
   <category>complex networks</category>
   <guid>https://enzokro.dev/blog/posts/2022-09-01-rayleigh-init/index.html</guid>
-  <pubDate>Thu, 01 Sep 2022 04:00:00 GMT</pubDate>
+  <pubDate>Wed, 31 Aug 2022 21:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-09-01-rayleigh-init/polar_plot.png" medium="image" type="image/png" height="141" width="144"/>
-</item>
-<item>
-  <title>Normalizing spectrograms for Deep Learning</title>
-  <dc:creator>enzokro </dc:creator>
-  <link>https://enzokro.dev/blog/posts/2022-08-20-spec-norms/index.html</link>
-  <description><![CDATA[ 
-
-
-
-<section id="how-to-normalize-spectrograms" class="level1">
-<h1>How to normalize spectrograms</h1>
-<blockquote class="blockquote">
-<p>Scaling spectrograms for classification tasks with neural networks.</p>
-</blockquote>
-</section>
-<section id="note-under-heavy-construction" class="level1">
-<h1><strong>NOTE: under heavy construction</strong></h1>
-</section>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p>Spectrograms are often used as images to train deep neural networks for audio tasks. By treating spectrograms as images, we can borrow from the many powerful ideas in image recognition with deep learning. A spectrogram, however, is fundamentally different than natural images as we will see below. That brings up the central question of this post: how should spectrograms be normalized during training?</p>
-<p>This post assumes some familiarity with deep learning and signal processing concepts like the FFT. It is also a light introduction to the <a href="https://github.com/fastaudio/fastaudio">fastaudio</a> library.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> plt</span>
-<span id="cb1-2"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> np</span></code></pre></div>
-</details>
-</div>
-</section>
-<section id="transforming-audio-into-two-dimensions" class="level1">
-<h1>Transforming audio into two dimensions</h1>
-<p>Image classification is a challenging task that was previously done with expert, handcrafted features. Now, features are automatically learned from labeled data instead. The success of these learned features has completely shifted the paradigm of Computer Vision. We would ideally like to apply these same, proven techniques on audio tasks.</p>
-<p>However, audio is treated like a one dimensional signal in most Machine Learning applications. That means raw audio is unusable with 2-D Convolutional Neural Networks (CNNs), which are the workhorses of modern image recognition. If we could somehow represent audio in two dimensions, like an image, then we could leverage the successful approaches in image classification.</p>
-<p>Thankfully there are many ways of transforming audio into two dimensions. The most popular one is turning audio into a <a href="https://ccrma.stanford.edu/~jos/mdft/Spectrograms.html">spectrogram</a>. As an example, the image below shows the spectrogram of this <a href="https://upload.wikimedia.org/wikipedia/commons/d/d1/Violin_for_spectrogram.ogg">violin recording</a> taken from Wikipedia.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://enzokro.dev/blog/posts/2022-08-20-spec-norms/images/violin_spec.png" title="Spectrogram of a violing recording." class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">The spectrogram of a violin recording</figcaption>
-</figure>
-</div>
-<p>The spectrogram is a 2-D signal representation in time and frequency, so we can use it with 2-D CNNs! But first it is crucial to preprocess and normalize the spectrograms. Neural networks have a much easier time learning when their inputs are normalized.</p>
-<p>For natural images, normalization uses an estimated mean (<img src="https://latex.codecogs.com/png.latex?%5Cmu">) and standard deviation (<img src="https://latex.codecogs.com/png.latex?%5Csigma">) as follows: - Subtract <img src="https://latex.codecogs.com/png.latex?%5Cmu"> from the image values to give them a mean of <img src="https://latex.codecogs.com/png.latex?0">. - Divide the image values by <img src="https://latex.codecogs.com/png.latex?%5Csigma"> to give them a variance of <img src="https://latex.codecogs.com/png.latex?1">.</p>
-<p>In math terms, if <img src="https://latex.codecogs.com/png.latex?x"> is our image then <img src="https://latex.codecogs.com/png.latex?x_%7B%5Ctext%7Bnorm%7D%7D"> is: <img src="https://latex.codecogs.com/png.latex?x_%7B%5Ctext%7Bnorm%7D%7D%20=%20%5Cfrac%7B(x%20-%20%5Cmu)%7D%7B%5Csigma%7D"></p>
-<p>Since spectrograms are fundamentally different than natural images, we should reevaluate if this same normalization makes sense.</p>
-</section>
-<section id="why-spectrograms-are-not-images-and-how-to-normalize-them" class="level1">
-<h1>Why spectrograms are not images and how to normalize them</h1>
-<p>Now we can describe what makes spectrograms different from natural images. We start with a high-level overview of images and their normalization, then do the same for spectrograms. A quick recap of how spectrograms are computed will further show how different they are from images. This recap naturally leads to a specific normalization for spectrogram features. Finally, we talk about Transfer Learning and why we avoid it in this post.</p>
-<p>In an image, both axes (height and width) are in the spatial domain and at the same scale. Images are stored as integers in the range of <code>[0, 255]</code>. To normalize them we first divide all pixels by 255, the max possible value, to map them into the range <code>[0, 1]</code>. Then, we find the statistics that approximately center the data with a mean of <img src="https://latex.codecogs.com/png.latex?0"> and a variance of <img src="https://latex.codecogs.com/png.latex?1">. The three RGB channels in a color image are normalized separately. If an image is greyscale then we normalize its single channel instead.</p>
-<p>The axes in a spectrogram are from different domains than the axes in an image. In a spectrogram, the horizontal axis represents time and the vertical axis represents frequency. Each of these quantities has its own scale. The frequency dimension is determined by the size of the FFT window. The time dimension is set by the total length of the signal, the size of the FFT window, and the hop size of the window. You can check the documentation of the <a href="https://pytorch.org/docs/stable/generated/torch.stft.html">torch.stft</a> function for a breakdown of how each axis is determined.</p>
-<p>To be more specific, a spectrogram is actually the log of the power spectrum. Below we give a quick recap of how the spectrogram is computed to show how much it differs from images.</p>
-<p>If <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bx%7D"> is our input audio then the STFT returns the spectrum: <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bspectrum%7D%20=%20%5Ctext%7BSTFT(x)%7D"> We are more interested in the energy or power of the signal, so we take the absolute value of the STFT and square it:<br>
-<img src="https://latex.codecogs.com/png.latex?%5Ctext%7BpowerSpectrum%7D%20=%20%7C%5Ctext%7BSTFT(x)%7D%7C%5E2"> We cannot use the power spectrum as a feature because it has a few strong peaks and many small values. You can check this other <a href="https://danielsdiscoveries.wordpress.com/2017/09/29/spectrogram-input-normalisation-for-neural-networks/">fantastic post</a> on spectrogram normalization to learn why this is a problem. Taking the log of the power spectrum spreads out the values and makes them better features. This becomes the spectrogram: <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bspectrogram%7D%20=%20log(%7C%5Ctext%7BSTFT(x)%7D%7C%5E2)"> The range of the log function is <img src="https://latex.codecogs.com/png.latex?-%5Cinfty"> to <img src="https://latex.codecogs.com/png.latex?+%5Cinfty"> which is clearly different than the integers from 0 to 255 in an image.</p>
-<p>A spectrogram transformation can also be thought of as a very simple <a href="https://en.wikipedia.org/wiki/Channelizer">“channelizer”</a> in Digital Signal Processing (DSP) terms. That is a fancy way of saying that it splits the continuous frequency spectrum of a signal into discrete bins, or channels. For example, consider taking a spectrogram with 512 bins from a signal sampled at 16 kHz. This spectrogram will have 512 channels where each channel has a “bandwidth” of <img src="https://latex.codecogs.com/png.latex?16%20%5C%20%5Ctext%7BkHz%7D%20%5C%20%5C%20/%20%5C%20%5C%20512%20%5C%20%5Ctext%7Bbins%7D%20=%2031.25%20%5C%20%5Ctext%7BHz%20per%20bin%7D"></p>
-<p><a href="https://en.wikipedia.org/wiki/Communication_channel">Spectrogram channels</a> are very different from the image channels we are used to. So it raises the question: should we normalize the entire spectrogram “image” with a single, global value? Or should we normalize each spectrogram channel just like the channels in an image? In the rest of this post, we compare global and channel-based spectrogram normalizations on a real-world dataset to find which is better.</p>
-<section id="a-quick-note-on-transfer-learning" class="level2">
-<h2 class="anchored" data-anchor-id="a-quick-note-on-transfer-learning">A quick note on Transfer Learning</h2>
-<p>We also have to talk about Transfer Learning in the context of normalization. In Transfer Learning, it is best-practice to normalize the new dataset with the statistics from the old dataset. This makes sure that the new network inputs are at the same scale as the original inputs. Since most pretrained vision models were trained on ImageNet, we normalize any new inputs with ImageNet statistics.<br>
-However, we avoid Transfer Learning in this post and instead train an 18-layer xResNet from scratch. The reason is that pretrained image models operate at a completely different scale than spectrograms. And the main goal here is to learn our own scalings instead!</p>
-</section>
-</section>
-<section id="downloading-a-sample-dataset" class="level1">
-<h1>Downloading a sample dataset</h1>
-<p>To keep things practical, we will apply these spectrogram normalization techniques to a <a href="https://github.com/fastaudio/Audio-Competition">sound classification challenge</a> hosted by fastaudio. <a href="https://github.com/fastaudio/fastaudio">fastaudio</a> is a community extension of the <a href="https://github.com/fastai/fastai/tree/master/fastai">fastai</a> library to make audio tasks with neural networks more accessible.<br>
-The challenge here is to classify sounds in the <a href="https://github.com/karolpiczak/ESC-50">ESC-50 dataset</a>, where ESC-50 stands for “Environment Sound Classification with 50 classes”. This dataset has many different types of sounds which show how varied audio spectrograms can be.</p>
-<p>Many of the lines below are based on the fastaudio <a href="https://github.com/fastaudio/Audio-Competition/blob/master/ESC-50-baseline-1Fold.ipynb">baseline results notebook</a>.</p>
-<section id="the-esc-50-dataset" class="level2">
-<h2 class="anchored" data-anchor-id="the-esc-50-dataset">The ESC-50 dataset</h2>
-<p>The first step is to download the data. ESC-50 is already included in fastaudio so we can grab it with <code>untar_data</code>.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># from fastai.vision.all import *</span></span>
-<span id="cb2-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># from fastaudio.core.all import *</span></span>
-<span id="cb2-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># from fastaudio.augment.all import *</span></span>
-<span id="cb2-4"></span>
-<span id="cb2-5"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># already in fastaudio, can download with fastai's `untar_data`</span></span>
-<span id="cb2-6"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># path = untar_data(URLs.ESC50)</span></span></code></pre></div>
-</details>
-</div>
-<p>The downloaded audio files are inside the aptly named <code>audio</code> folder. Below we use the <code>ls</code> method, a fastai addition to python’s <code>pathlib.Path</code>, to check the contents of this folder.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># wavs = (path/"audio").ls()</span></span>
-<span id="cb3-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># wavs</span></span></code></pre></div>
-</details>
-</div>
-<p>The output of <code>ls</code> shows 2,000 audio files. But the filenames are not very descriptive, so how do we know what is actually in each one?<br>
-Thankfully, as with many datasets, the download includes a table with more information about the data (aka metadata).</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># # read the audio metadata and show the first few rows</span></span>
-<span id="cb4-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># df = pd.read_csv(path/"meta"/"esc50.csv")</span></span>
-<span id="cb4-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># df.head()</span></span></code></pre></div>
-</details>
-</div>
-<p>The key info from this table are in the <code>filename</code> and <code>category</code> columns.<br>
-<code>filename</code> gives the name of a file inside of the <code>audio</code> folder.<br>
-<code>category</code> tells us which class a file belongs to.</p>
-<p>The last file in the data directory will be our working example for normalization. We can index into the metadata table above using this file’s <code>name</code> to learn more about it.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># # pick the row where "filename" matches the file's "name".</span></span>
-<span id="cb5-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># df.loc[df.filename == wavs[-1].name]</span></span></code></pre></div>
-</details>
-</div>
-<p>This is a recording of crickets!<br>
-We can load this file with the <code>AudioTensor</code> class in fastaudio. Its <code>create</code> function reads the audio samples straight into a <code>torch.Tensor</code>.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># # create an AudioTensor from a file path</span></span>
-<span id="cb6-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># sample = AudioTensor.create(wavs[-1])</span></span></code></pre></div>
-</details>
-</div>
-<p>An <code>AudioTensor</code> can plot and even play the audio with its <code>show</code> method.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># print(f'Audio shape [channels, samples]: {sample.shape}')</span></span>
-<span id="cb7-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># sample.show();</span></span></code></pre></div>
-</details>
-</div>
-<p>Each “burst” in the plot above is a cricket chirp. There are three full chirps and the early starts of a fourth chirp.</p>
-</section>
-</section>
-<section id="normalizing-an-audio-waveform" class="level1">
-<h1>Normalizing an audio waveform</h1>
-<p>The first step is normalizing the audio waveform itself. We give it a mean of zero and unit variance in the usual way:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Ctext%7BnormedAudio%7D%20=%20%5Cfrac%7B%5Ctext%7Baudio%7D%20-%20mean(%5Ctext%7Baudio%7D)%7D%7Bstd(%5Ctext%7Baudio%7D)%7D%20"></p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># # normalize the waveform</span></span>
-<span id="cb8-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># norm_sample = (sample - sample.mean()) / sample.std()</span></span></code></pre></div>
-</details>
-</div>
-<p>Let’s check if the mean is roughly <img src="https://latex.codecogs.com/png.latex?0"> and the variance is roughly <img src="https://latex.codecogs.com/png.latex?1">:</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># # checking the mean</span></span>
-<span id="cb9-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># print(f'Original audio mean:   {sample.mean()}')</span></span>
-<span id="cb9-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># print(f'Normalized audio mean: {norm_sample.mean()}')</span></span></code></pre></div>
-</details>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># # checking the standard deviation</span></span>
-<span id="cb10-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># print(f'Original audio standard dev:   {sample.var()}')</span></span>
-<span id="cb10-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># print(f'Normalized audio standard dev: {norm_sample.var()}')</span></span></code></pre></div>
-</details>
-</div>
-<p>Success! The waveform is normalized.</p>
-<p>For convenience later on, we define the <code>AudioNormalize</code> transform to normalize waveforms in a fastai training loop.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># class AudioNormalize(Transform):</span></span>
-<span id="cb11-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     "Normalizes a single `AudioTensor`."</span></span>
-<span id="cb11-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     def encodes(self, x:AudioTensor): return (x-x.mean()) / x.std()</span></span></code></pre></div>
-</details>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># # checking if the Transform normalized the waveform</span></span>
-<span id="cb12-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># wav_norm = AudioNormalize()</span></span>
-<span id="cb12-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># norm_sample = wav_norm(sample)</span></span>
-<span id="cb12-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># print(f'Audio mean after transform: {norm_sample.mean()}')</span></span>
-<span id="cb12-5"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># print(f'Audio standard dev after transform: {norm_sample.var()}')</span></span></code></pre></div>
-</details>
-</div>
-</section>
-<section id="extracting-spectrograms-from-audio" class="level1">
-<h1>Extracting spectrograms from audio</h1>
-<p>The next step is to extract a spectrogram from the normalized audio. We can do this with the <code>AudioToSpec</code> class in fastaudio. This class takes an <code>AudioTensor</code> as input and, as we might expect, returns an <code>AudioSpectrogram</code>.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># # create a fastaudio Transform to convert audio into spectrograms</span></span>
-<span id="cb13-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># cfg = AudioConfig.BasicSpectrogram() # with default torchaudio parameters</span></span>
-<span id="cb13-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># audio2spec = AudioToSpec.from_cfg(cfg)</span></span>
-<span id="cb13-4"></span>
-<span id="cb13-5"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># # extract the spectrogram</span></span>
-<span id="cb13-6"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># spec = audio2spec(norm_sample)</span></span></code></pre></div>
-</details>
-</div>
-<p>The <code>show</code> method of the <code>AudioSpectrogram</code> is a great, quick way to plot the spectrogram.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># print(f'Spectrogram shape [channels, bins, time_steps]: {spec.shape}')</span></span>
-<span id="cb14-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># spec.show();</span></span></code></pre></div>
-</details>
-</div>
-<p>The colorbar on the right showing the power in the signal is especially helpful since <code>matplotlib</code> always scales the values in a plot to the same color range. Without this colorbar, it is impossible to know or even guess the specific values in a spectrogram plot.</p>
-</section>
-<section id="finding-spectrogram-normalization-stats" class="level1">
-<h1>Finding spectrogram normalization stats</h1>
-<p>To get the normalization stats, we have to step through the training set and find the mean and standard deviation of each mini-batch. Then we average all the mini-batch statistics to get a single pair of (<img src="https://latex.codecogs.com/png.latex?%5Cmu,%5Csigma)"> normalization statistics. Note that normalization statistics must alway come from the training set. This is a crucial place to avoid data leakage.</p>
-<p>One small detail: if your training dataset is large enough it is not necessary to go through the whole set. Sampling 10% to 20% of the dataset can be enough for accurate statistics. However, since ESC-50 is small we find (<img src="https://latex.codecogs.com/png.latex?%5Cmu,%5Csigma)"> from the whole set.</p>
-<p>To accumulate these statistics over mini-batches we can borrow and slightly refactor a class from this <a href="http://notmatthancock.github.io/2017/03/23/simple-batch-stat-updates.html">very helpful post</a>. The <code>StatsRecorder</code> class below tracks the mean and standard deviation across mini-batches.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># class StatsRecorder:</span></span>
-<span id="cb15-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     def __init__(self, red_dims=(0,2,3)):</span></span>
-<span id="cb15-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         """Accumulates normalization statistics across mini-batches.</span></span>
-<span id="cb15-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         ref: http://notmatthancock.github.io/2017/03/23/simple-batch-stat-updates.html</span></span>
-<span id="cb15-5"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         """</span></span>
-<span id="cb15-6"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         self.red_dims = red_dims # which mini-batch dimensions to average over</span></span>
-<span id="cb15-7"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         self.nobservations = 0   # running number of observations</span></span>
-<span id="cb15-8"></span>
-<span id="cb15-9"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     def update(self, data):</span></span>
-<span id="cb15-10"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         """</span></span>
-<span id="cb15-11"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         data: ndarray, shape (nobservations, ndimensions)</span></span>
-<span id="cb15-12"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         """</span></span>
-<span id="cb15-13"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         # initialize stats and dimensions on first batch</span></span>
-<span id="cb15-14"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         if self.nobservations == 0:</span></span>
-<span id="cb15-15"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#             self.mean = data.mean(dim=self.red_dims, keepdim=True)</span></span>
-<span id="cb15-16"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#             self.std  = data.std (dim=self.red_dims,keepdim=True)</span></span>
-<span id="cb15-17"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#             self.nobservations = data.shape[0]</span></span>
-<span id="cb15-18"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#             self.ndimensions   = data.shape[1]</span></span>
-<span id="cb15-19"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         else:</span></span>
-<span id="cb15-20"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#             if data.shape[1] != self.ndimensions:</span></span>
-<span id="cb15-21"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#                 raise ValueError('Data dims do not match previous observations.')</span></span>
-<span id="cb15-22">            </span>
-<span id="cb15-23"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#             # find mean of new mini batch</span></span>
-<span id="cb15-24"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#             newmean = data.mean(dim=self.red_dims, keepdim=True)</span></span>
-<span id="cb15-25"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#             newstd  = data.std(dim=self.red_dims, keepdim=True)</span></span>
-<span id="cb15-26">            </span>
-<span id="cb15-27"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#             # update number of observations</span></span>
-<span id="cb15-28"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#             m = self.nobservations * 1.0</span></span>
-<span id="cb15-29"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#             n = data.shape[0]</span></span>
-<span id="cb15-30"></span>
-<span id="cb15-31"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#             # update running statistics</span></span>
-<span id="cb15-32"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#             tmp = self.mean</span></span>
-<span id="cb15-33"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#             self.mean = m/(m+n)*tmp + n/(m+n)*newmean</span></span>
-<span id="cb15-34"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#             self.std  = m/(m+n)*self.std**2 + n/(m+n)*newstd**2 +\</span></span>
-<span id="cb15-35"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#                         m*n/(m+n)**2 * (tmp - newmean)**2</span></span>
-<span id="cb15-36"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#             self.std  = torch.sqrt(self.std)</span></span>
-<span id="cb15-37">                                 </span>
-<span id="cb15-38"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#             # update total number of seen samples</span></span>
-<span id="cb15-39"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#             self.nobservations += n</span></span></code></pre></div>
-</details>
-</div>
-<p>By default <code>StatsRecorder</code> averages over the image channel dimensions (grayscale or RGB). The <code>red_dims</code> argument might look familiar from normalization code in other Computer Vision tasks (also the <code>Normalize</code> in fastai).<br>
-To average over spectrogram channels instead we only need to pass a different <code>red_dims</code>.</p>
-<section id="building-the-dataset-loader" class="level2">
-<h2 class="anchored" data-anchor-id="building-the-dataset-loader">Building the dataset loader</h2>
-<p>The setup below follows the fastaudio ESC-50 baseline to step through the training dataset. It is worth mentioning that the files in ESC-50 are sampled 44.1 kHz, but fastaudio will resample them to 16 kHz by default. Downsampling like this risks throwing away some information. But, keeping the higher sampling rate almost triples the “width” (aka time) of the spectrogram. This larger image will take up more memory in the GPU and limits our batch size and architecture choices. We keep this downsampling since it gives the spectrograms a very reasonable shape of <code>[201, 401]</code>, compared with the much larger shape of <code>[201, 1103]</code> if we don’t downsample.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># def CrossValidationSplitter(col='fold', fold=1):</span></span>
-<span id="cb16-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     "Split `items` (supposed to be a dataframe) by fold in `col`"</span></span>
-<span id="cb16-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     def _inner(o):</span></span>
-<span id="cb16-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         assert isinstance(o, pd.DataFrame), "ColSplitter only works when your items are a pandas DataFrame"</span></span>
-<span id="cb16-5"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         col_values = o.iloc[:,col] if isinstance(col, int) else o[col]</span></span>
-<span id="cb16-6"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         valid_idx = (col_values == fold).values.astype('bool')</span></span>
-<span id="cb16-7"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         return IndexSplitter(mask2idxs(valid_idx))(o)</span></span>
-<span id="cb16-8"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     return _inner</span></span>
-<span id="cb16-9"></span>
-<span id="cb16-10"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># auds = DataBlock(blocks=(AudioBlock, CategoryBlock),  </span></span>
-<span id="cb16-11"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#                  get_x=ColReader("filename", pref=path/"audio"), </span></span>
-<span id="cb16-12"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#                  splitter=CrossValidationSplitter(fold=1),</span></span>
-<span id="cb16-13"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#                  item_tfms = [AudioNormalize],</span></span>
-<span id="cb16-14"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#                  batch_tfms = [audio2spec],</span></span>
-<span id="cb16-15"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#                  get_y=ColReader("category"))</span></span>
-<span id="cb16-16"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># dbunch = auds.dataloaders(df, bs=64)</span></span>
-<span id="cb16-17"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># dbunch.show_batch(figsize=(7,7))</span></span></code></pre></div>
-</details>
-</div>
-</section>
-<section id="calculating-the-statistics" class="level2">
-<h2 class="anchored" data-anchor-id="calculating-the-statistics">Calculating the statistics</h2>
-<p>Next we make two recorders: one for global statistics and the other for channel-based statistics. Then we step through the training dataset to find both sets of stats.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># # create recorders</span></span>
-<span id="cb17-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># global_stats  = StatsRecorder()</span></span>
-<span id="cb17-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># channel_stats = StatsRecorder(red_dims=(0,1,3))</span></span>
-<span id="cb17-4"></span>
-<span id="cb17-5"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># # step through the training dataset</span></span>
-<span id="cb17-6"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># with torch.no_grad():</span></span>
-<span id="cb17-7"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     for idx,(x,y) in enumerate(iter(dbunch.train)):</span></span>
-<span id="cb17-8"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         # update normalization statistics</span></span>
-<span id="cb17-9"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         global_stats.update(x)</span></span>
-<span id="cb17-10"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         channel_stats.update(x)</span></span>
-<span id="cb17-11">    </span>
-<span id="cb17-12"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># # parse out both sets of stats</span></span>
-<span id="cb17-13"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># global_mean,global_std = global_stats.mean,global_stats.std</span></span>
-<span id="cb17-14"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># channel_mean,channel_std = channel_stats.mean,channel_stats.std</span></span></code></pre></div>
-</details>
-</div>
-<p>We can check the shape of the statistics to make sure they are correct. For the global statistics, we expect a shape of: <code>[1,1,1,1]</code>. With spectrogram channel normalizations, we expect one value per spectrogram bin for a shape of <code>[1,1,201,1]</code>.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># print(f'Shape of global mean: {global_mean.shape}')</span></span>
-<span id="cb18-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># print(f'Shape of global standard dev: {global_std.shape}')</span></span></code></pre></div>
-</details>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># print(f'Shape of channel mean: {channel_mean.shape}')</span></span>
-<span id="cb19-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># print(f'Shape of channel standard dev: {channel_std.shape}')</span></span></code></pre></div>
-</details>
-</div>
-</section>
-</section>
-<section id="training-with-normalizations" class="level1">
-<h1>Training with normalizations</h1>
-<p>Now for the moment of truth. We train with the two different spectrogram normalizations and measure their impact. For this we again follow the fastaudio baseline and train each type of normalization for 20 epochs. The final score is the averaged accuracy of five runs.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># epochs = 20</span></span>
-<span id="cb20-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># num_runs = 5</span></span></code></pre></div>
-</details>
-</div>
-<section id="transforms-to-normalize-mini-batches" class="level2">
-<h2 class="anchored" data-anchor-id="transforms-to-normalize-mini-batches"><code>Transforms</code> to normalize mini-batches</h2>
-<p>We need to extend the fastai <code>Normalize</code> class in order to use the spectrogram normalization statistics. The reason is type dispatch. fastai normalization uses ImageNet statistics due to the focus on transfer learning with color images. But this ImageNet normalization is only applied on RGB images of the <code>TensorImage</code> class, while <code>AudioSpectrogram</code> subclasses the different <code>TensorImageBase</code>. The solution is to define <code>encodes</code> and <code>decodes</code> for <code>TensorImageBase</code> instead.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># class SpecNormalize(Normalize):</span></span>
-<span id="cb21-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     "Normalize/denorm batch of `TensorImage`"</span></span>
-<span id="cb21-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     def encodes(self, x:TensorImageBase): return (x-self.mean) / self.std</span></span>
-<span id="cb21-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     def decodes(self, x:TensorImageBase):</span></span>
-<span id="cb21-5"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         f = to_cpu if x.device.type=='cpu' else noop</span></span>
-<span id="cb21-6"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         return (x*f(self.std) + f(self.mean))</span></span></code></pre></div>
-</details>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># # make global and channel normalizers</span></span>
-<span id="cb22-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># GlobalSpecNorm  = SpecNormalize(global_mean,  global_std,  axes=(0,2,3))</span></span>
-<span id="cb22-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># ChannelSpecNorm = SpecNormalize(channel_mean, channel_std, axes=(0,1,3))</span></span></code></pre></div>
-</details>
-</div>
-</section>
-<section id="training-helpers" class="level2">
-<h2 class="anchored" data-anchor-id="training-helpers">Training helpers</h2>
-<p>To avoid repeating ourselves, the helper functions below build the dataloaders and run the training loops.<br>
-The <code>get_dls</code> function makes it clear which normalization is being applied. The <code>train_loops</code> function repeats training runs a given number of times.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># def get_dls(bs=64, item_tfms=[], batch_tfms=[]):</span></span>
-<span id="cb23-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     "Get dataloaders with given `bs` and batch/item tfms."</span></span>
-<span id="cb23-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     auds = DataBlock(blocks=(AudioBlock, CategoryBlock),  </span></span>
-<span id="cb23-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#                      get_x=ColReader("filename", pref=path/"audio"), </span></span>
-<span id="cb23-5"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#                      splitter=CrossValidationSplitter(fold=1),</span></span>
-<span id="cb23-6"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#                      item_tfms=item_tfms,   # for waveform normalization</span></span>
-<span id="cb23-7"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#                      batch_tfms=batch_tfms, # for spectrogram normalization</span></span>
-<span id="cb23-8"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#                      get_y=ColReader("category"))</span></span>
-<span id="cb23-9"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     dls = auds.dataloaders(df, bs=bs)</span></span>
-<span id="cb23-10"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     return dls</span></span>
-<span id="cb23-11"></span>
-<span id="cb23-12"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># def make_xresnet_grayscale(model, n_in=1):</span></span>
-<span id="cb23-13"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     "Modifies xresnet `model` for single-channel images." </span></span>
-<span id="cb23-14"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     model[0][0].in_channels = n_in</span></span>
-<span id="cb23-15"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     # sum weights to reduce dimension</span></span>
-<span id="cb23-16"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     model[0][0].weight = torch.nn.parameter.Parameter(model[0][0].weight.mean(1, keepdim=True))</span></span>
-<span id="cb23-17"></span>
-<span id="cb23-18"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># def train_loops(dls, name, num_runs=num_runs, epochs=epochs, num_cls=50):</span></span>
-<span id="cb23-19"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     "Runs `num_runs` training loops with `dls` for given `epochs`."</span></span>
-<span id="cb23-20"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     accuracies = []</span></span>
-<span id="cb23-21"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     for i in range(num_runs):</span></span>
-<span id="cb23-22"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         # make new grayscale xresnet</span></span>
-<span id="cb23-23"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         model = xresnet18(pretrained=False, n_out=num_cls)</span></span>
-<span id="cb23-24"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         make_xresnet_grayscale(model, n_in=1)</span></span>
-<span id="cb23-25"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         # get learner for this run</span></span>
-<span id="cb23-26"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         learn = Learner(dls, model, metrics=[accuracy])</span></span>
-<span id="cb23-27"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         # train network and track accuracy</span></span>
-<span id="cb23-28"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         learn.fit_one_cycle(epochs)</span></span>
-<span id="cb23-29"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#         accuracies.append(learn.recorder.values[-1][-1])</span></span>
-<span id="cb23-30"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#     print(f'Average accuracy for "{name}": {sum(accuracies) / num_runs}')</span></span></code></pre></div>
-</details>
-</div>
-</section>
-<section id="baseline-performance" class="level2">
-<h2 class="anchored" data-anchor-id="baseline-performance">Baseline performance</h2>
-<p>Before getting carried away with normalization, we have to first set a baseline without normalizations. This allows us to evaluate the impact of normalization later on, else there is no way to know if normalization helps at all.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># # data without normalization</span></span>
-<span id="cb24-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># dls = get_dls(batch_tfms=[audio2spec])</span></span>
-<span id="cb24-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># # run training loops</span></span>
-<span id="cb24-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># train_loops(dls, name='No Norm')</span></span></code></pre></div>
-</details>
-</div>
-</section>
-<section id="performance-with-global-normalization" class="level2">
-<h2 class="anchored" data-anchor-id="performance-with-global-normalization">Performance with global normalization</h2>
-<p>Next we normalize each audio waveform and the spectrograms with global, scalar statistics.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># # data with waveform and global normalization</span></span>
-<span id="cb25-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># dls = get_dls(item_tfms=[AudioNormalize],</span></span>
-<span id="cb25-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#               batch_tfms=[audio2spec, GlobalSpecNorm])</span></span>
-<span id="cb25-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># # run training loops</span></span>
-<span id="cb25-5"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># train_loops(dls, name='Global Norm')</span></span></code></pre></div>
-</details>
-</div>
-</section>
-<section id="performance-with-channel-normalization" class="level2">
-<h2 class="anchored" data-anchor-id="performance-with-channel-normalization">Performance with channel normalization</h2>
-<p>Finally, we normalize each audio waveform and the spectrograms with channel-based statistics.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># # get data with waveform and channel normalization</span></span>
-<span id="cb26-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># dls = get_dls(item_tfms=[AudioNormalize],</span></span>
-<span id="cb26-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#               batch_tfms=[audio2spec, ChannelSpecNorm])</span></span>
-<span id="cb26-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># # run training loops</span></span>
-<span id="cb26-5"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># train_loops(dls, name='Channel Norm')</span></span></code></pre></div>
-</details>
-</div>
-</section>
-</section>
-<section id="discussion" class="level1">
-<h1>Discussion</h1>
-<p>The results are:</p>
-<table class="table">
-<thead>
-<tr class="header">
-<th style="text-align: center;">Normalization</th>
-<th style="text-align: center;">Average Accuracy</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">None</td>
-<td style="text-align: center;">.7110</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">Global</td>
-<td style="text-align: center;"><strong>.7315</strong></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">Channel</td>
-<td style="text-align: center;">.7144</td>
-</tr>
-</tbody>
-</table>
-<p>I ran the cells above several times to make sure these patterns held. Overall, there is a gain from global normalization. Channel-based normalization shows a smaller benefit. While these increases in performance are a good starting point, there are several explanations for this that point us towards other approaches.</p>
-<p>For starters, the spectrograms in ESC-50 are very different both within and across classes. In other words the activity in each spectrogram channel changes a lot from sample to sample. A global statistic likely fares better under these unpredictable conditions. If all the audio came from a similar source, like speech, then the per-channel normalization might fare better.</p>
-<p>We also process the entire five second files at once, which is a large analysis window by audio standards. This large window means that each sample looks exactly the same in every epoch. If we used a smaller analysis window, say 2 seconds, we could randomly “crop” many spectrogram regions from a single example as a kind of data augmentation. The risk here is grabbing a silent region without any information but still giving it a class label (though an energy threshold can prevent this). Cropping with a smaller analysis window is one way to expose the networks to more samples and variability.</p>
-<p>Using the entire waveform at once also means that the waveform statistics need to model a very long-term relationship. Going back to the cricket recording example: we would not expect good normalization statistics for the chirps to be the same as good statistics for the pauses in between chirps. To counter this it is possible to do a “short-time” normalization. Here we pick a sliding window, often much smaller than the whole waveform, and only normalize the data inside as it steps through the waveform. This “short-time” normalization can be applied with or without the global waveform normalization.</p>
-<p>Furthermore, the spectrogram is a high-dimensional feature with 201 frequency bins. It is common in audio tasks to reduce this dimension by combining nearby bins. This is done with something called “filterbanks” which usually operate at the Mel frequency scale. <a href="http://practicalcryptography.com/miscellaneous/machine-learning/guide-mel-frequency-cepstral-coefficients-mfccs/">This tutorial</a> is one of my favorites and gives an incredibly clear description of Mel frequency and the filterbank process. There are other options such as <a href="https://www.mathworks.com/help/audio/ref/gammatonefilterbank-system-object.html">Gammatone filterbanks</a> as well. While this might seem like an expert handcrafted feature, there is good reason for using filterbanks in audio tasks. If we feed in a raw spectrogram, the early convolutional layers tend to learn something like a filterbank anyway! So directly feeding a filterbank into the network lets it focus on more complicated relationships. As a bonus, the channel-based normalization discussed here also works on filterbank features.</p>
-<p>We are also training a powerful 18-layer model from scratch with only 1600 images. While deep learning can handle datasets this small, it is usually only through Transfer Learning. But, we stayed away from Transfer Learning because pretrained networks are tightly coupled to their original dataset’s normalization statistics. And the main idea here was to learn our own spectrogram scalings. It is possible that a smaller, simpler network will perform better. Looking at the training logs above, it seems the validation loss was still decreasing. So we’d still have to train for longer to check if the network is actually overfitting and a simpler model is needed.</p>
-<p>Lastly, there is no data augmentation even though it is almost de facto when training CNNs. It is possible to use image augmentations (flips, rotations, etc) even though they do not technically make sense on a spectrogram. It might be better to use augmentations directly inspired by signal processing like <a href="https://arxiv.org/abs/1904.08779"><code>SpecAugment</code></a>. By the way, <code>SpecAugment</code> is already included in fastaudio! Along with many other waveform and spectrogram <a href="https://github.com/fastaudio/fastaudio/tree/master/src/fastaudio/augment">augmentations</a>.</p>
-<p>To recap, there are many good reasons why normalization only helped a little on the ESC-50 dataset. The points above described some possible next steps to increase performance.</p>
-</section>
-<section id="conclusions" class="level1">
-<h1>Conclusions</h1>
-<p>In this post we saw how spectrograms are fundamentally different than natural images. We then explored two ways of normalizing spectrograms when training neural networks: global normalization and channel-based normalization.</p>
-<p>Next we implemented these two normalization techniques and tested them against an unnormalized baseline on the ESC-50 dataset. Both normalizations showed a gain in performance, with global normalization outperforming channel-based normalization. We then offered some next steps that could further boost performance.</p>
-<p>In the end, the choice of spectrogram normalization will depend on how the system is used. For example, if the system will be deployed in an environment similar to the training environment, then normalizing by spectrogram channels makes more sense. This is because the training statistics will be a good match for the similar patterns and distributions in the deployed environment. However, it is critical to monitor the system in this environment and update the statistics as needed to avoid shifting out of domain.</p>
-<p>If the system will instead be used in a completely different environment, of which you have no knowledge, then the global statistics could be a better fit. While not as technically sound, the model will (hopefully) be less surprised by radically new activity across the channels.</p>
-<p>To recap, there is no one universally correct way to normalize spectrograms for every audio task. Like many aspects of deep learning, the final choice will be experimental and based on the specifics of both the problem and domain.</p>
-<p>I hope this post gave you an idea of how to normalize spectrograms. Even moreso, I hope that it gave you new ideas to try out. The ESC-50 is a great playground for any new ideas. Happy experimenting!</p>
-<p>from nbdev.showdoc import *</p>
-<p>::: {.cell 0=‘h’ 1=‘i’ 2=‘d’ 3=‘e’}</p>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> nbdev<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">;</span> nbdev.nbdev_export()</span></code></pre></div>
-</details>
-<p>:::</p>
-<p>::: {.cell 0=‘h’ 1=‘i’ 2=‘d’ 3=‘e’}</p>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">from</span> nbdev.showdoc <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">import</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">*</span></span></code></pre></div>
-</details>
-<p>:::</p>
-
-
-</section>
-
- ]]></description>
-  <category>deep learning</category>
-  <category>spectrogram normalizations</category>
-  <guid>https://enzokro.dev/blog/posts/2022-08-20-spec-norms/index.html</guid>
-  <pubDate>Sat, 20 Aug 2022 04:00:00 GMT</pubDate>
-  <media:content url="https://enzokro.dev/blog/posts/2022-08-20-spec-norms/violin_spec.png" medium="image" type="image/png" height="81" width="144"/>
 </item>
 </channel>
 </rss>
