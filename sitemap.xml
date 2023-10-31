@@ -1,95 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session-3-llama/index.html</loc>
-    <lastmod>2023-10-31T08:00:15.918Z</lastmod>
+    <loc>https://enzokro.dev/blog/posts/fractal-llms/04-llama/index.html</loc>
+    <lastmod>2023-10-31T08:08:45.761Z</lastmod>
   </url>
   <url>
-    <loc>https://enzokro.dev/blog/posts/fractal-llms/2023-10-05-Session-0-env/index.html</loc>
-    <lastmod>2023-10-31T08:00:15.145Z</lastmod>
+    <loc>https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/index.html</loc>
+    <lastmod>2023-10-31T08:08:44.954Z</lastmod>
   </url>
   <url>
-    <loc>https://enzokro.dev/blog/posts/fractal-llms/2023-09-25-Overview/index.html</loc>
-    <lastmod>2023-10-31T08:00:14.336Z</lastmod>
+    <loc>https://enzokro.dev/blog/posts/fractal-llms/00-Overview/index.html</loc>
+    <lastmod>2023-10-31T08:08:44.133Z</lastmod>
   </url>
   <url>
     <loc>https://enzokro.dev/blog/posts/2022-11-28-sd-v2-schedules-1/index.html</loc>
-    <lastmod>2023-10-31T08:00:13.709Z</lastmod>
+    <lastmod>2023-10-31T08:08:43.559Z</lastmod>
   </url>
   <url>
     <loc>https://enzokro.dev/blog/posts/2022-11-25-guidance-expts-7/index.html</loc>
-    <lastmod>2023-10-31T08:00:12.809Z</lastmod>
+    <lastmod>2023-10-31T08:08:42.644Z</lastmod>
   </url>
   <url>
     <loc>https://enzokro.dev/blog/posts/2022-11-24-guidance-expts-5/index.html</loc>
-    <lastmod>2023-10-31T08:00:11.605Z</lastmod>
+    <lastmod>2023-10-31T08:08:41.497Z</lastmod>
   </url>
   <url>
     <loc>https://enzokro.dev/blog/posts/2022-11-21-guidance-expts-3/index.html</loc>
-    <lastmod>2023-10-31T08:00:10.591Z</lastmod>
+    <lastmod>2023-10-31T08:08:40.529Z</lastmod>
   </url>
   <url>
     <loc>https://enzokro.dev/blog/posts/2022-11-20-guidance-expts-2/index.html</loc>
-    <lastmod>2023-10-31T08:00:09.769Z</lastmod>
+    <lastmod>2023-10-31T08:08:39.733Z</lastmod>
   </url>
   <url>
     <loc>https://enzokro.dev/blog/posts/2022-11-15-guidance-expts-1/index.html</loc>
-    <lastmod>2023-10-31T08:00:08.875Z</lastmod>
+    <lastmod>2023-10-31T08:08:38.845Z</lastmod>
   </url>
   <url>
     <loc>https://enzokro.dev/blog/posts/2022-09-01-rayleigh-init/index.html</loc>
-    <lastmod>2023-10-31T08:00:07.882Z</lastmod>
+    <lastmod>2023-10-31T08:08:37.839Z</lastmod>
   </url>
   <url>
     <loc>https://enzokro.dev/index.html</loc>
-    <lastmod>2023-10-31T08:00:06.314Z</lastmod>
+    <lastmod>2023-10-31T08:08:36.251Z</lastmod>
   </url>
   <url>
     <loc>https://enzokro.dev/blog/index.html</loc>
-    <lastmod>2023-10-31T08:00:04.968Z</lastmod>
+    <lastmod>2023-10-31T08:08:34.934Z</lastmod>
   </url>
   <url>
     <loc>https://enzokro.dev/course.html</loc>
-    <lastmod>2023-10-31T08:00:05.279Z</lastmod>
+    <lastmod>2023-10-31T08:08:35.232Z</lastmod>
   </url>
   <url>
     <loc>https://enzokro.dev/blog/posts/2022-08-20-spec-norms/index.html</loc>
-    <lastmod>2023-10-31T08:00:07.067Z</lastmod>
+    <lastmod>2023-10-31T08:08:36.990Z</lastmod>
   </url>
   <url>
     <loc>https://enzokro.dev/blog/posts/2022-11-08-merge-n-BSTs/index.html</loc>
-    <lastmod>2023-10-31T08:00:08.190Z</lastmod>
+    <lastmod>2023-10-31T08:08:38.134Z</lastmod>
   </url>
   <url>
     <loc>https://enzokro.dev/blog/posts/2022-11-16-pytorch-slerp/index.html</loc>
-    <lastmod>2023-10-31T08:00:09.252Z</lastmod>
+    <lastmod>2023-10-31T08:08:39.214Z</lastmod>
   </url>
   <url>
     <loc>https://enzokro.dev/blog/posts/2022-11-20-minimal-diffusion/index.html</loc>
-    <lastmod>2023-10-31T08:00:10.138Z</lastmod>
+    <lastmod>2023-10-31T08:08:40.077Z</lastmod>
   </url>
   <url>
     <loc>https://enzokro.dev/blog/posts/2022-11-23-guidance-expts-4/index.html</loc>
-    <lastmod>2023-10-31T08:00:11.125Z</lastmod>
+    <lastmod>2023-10-31T08:08:41.033Z</lastmod>
   </url>
   <url>
     <loc>https://enzokro.dev/blog/posts/2022-11-24-guidance-expts-6/index.html</loc>
-    <lastmod>2023-10-31T08:00:12.315Z</lastmod>
+    <lastmod>2023-10-31T08:08:42.157Z</lastmod>
   </url>
   <url>
     <loc>https://enzokro.dev/blog/posts/2022-11-26-guidance-expts-8/index.html</loc>
-    <lastmod>2023-10-31T08:00:13.297Z</lastmod>
+    <lastmod>2023-10-31T08:08:43.140Z</lastmod>
   </url>
   <url>
     <loc>https://enzokro.dev/blog/posts/2023-04-17-llm-prompt-tips/index.html</loc>
-    <lastmod>2023-10-31T08:00:14.001Z</lastmod>
+    <lastmod>2023-10-31T08:08:43.820Z</lastmod>
   </url>
   <url>
-    <loc>https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session-1-nbdev/index.html</loc>
-    <lastmod>2023-10-31T08:00:14.737Z</lastmod>
+    <loc>https://enzokro.dev/blog/posts/fractal-llms/01-env/index.html</loc>
+    <lastmod>2023-10-31T08:08:44.514Z</lastmod>
   </url>
   <url>
-    <loc>https://enzokro.dev/blog/posts/fractal-llms/2023-10-07-Session-2-mlc/index.html</loc>
-    <lastmod>2023-10-31T08:00:15.543Z</lastmod>
+    <loc>https://enzokro.dev/blog/posts/fractal-llms/03-mlc/index.html</loc>
+    <lastmod>2023-10-31T08:08:45.368Z</lastmod>
   </url>
 </urlset>

@@ -14,7 +14,7 @@
 <item>
   <title>Running LLMs with llama.cpp</title>
   <dc:creator>Chris Kroenke</dc:creator>
-  <link>https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session-3-llama/index.html</link>
+  <link>https://enzokro.dev/blog/posts/fractal-llms/04-llama/index.html</link>
   <description><![CDATA[ 
 
 
@@ -30,10 +30,10 @@
 <h1>llama.cpp</h1>
 <p>llama.cpp is designed to run quantized LLMs on a Mac. Despite its name, the project supports many other models beyond Llama and Llama-2. There are even <a href="https://github.com/abetlen/llama-cpp-python">python bindings</a> to make our lives easier.</p>
 <p>The picture below comes from project’s README, and shows low-level details about how the repo works and what it supports.</p>
-<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session-3-llama/llama_description.png" class="img-fluid"></p>
+<p><img src="https://enzokro.dev/blog/posts/fractal-llms/04-llama/llama_description.png" class="img-fluid"></p>
 <p>llama.cpp was originally hacked together in a <a href="https://github.com/ggerganov/llama.cpp/issues/33#issuecomment-1465108022">single evening</a>, and has since become arguably the SOTA for deploying LLMs on CPUs. This is in large part thanks to the incredibly helpful and responsive community behind it.</p>
 <p>Below we can see the full list of models that llama.cpp supports as of writing.</p>
-<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session-3-llama/llama_model_support.png" class="img-fluid"></p>
+<p><img src="https://enzokro.dev/blog/posts/fractal-llms/04-llama/llama_model_support.png" class="img-fluid"></p>
 <p>The benefits of llama.cpp go beyond its code or models. Folks are always collaborating in <a href="https://github.com/ggerganov/llama.cpp/pulls">Pull Requests</a> to bring in the latest, greatest advances from the flood of LLM progress. Tracking these PRs is a great way of keeping up to date with the field. Thankfully, the community is very open to hackers and new ideas: if something works and there’s proof, then it gets merged in.</p>
 <p>Next, let’s use llama.cpp to run a <code>Mistral-v0.1</code> model.</p>
 </section>
@@ -133,7 +133,7 @@ font-style: inherit;">--config</span> Release </span></code></pre></div>
 <p>HuggingFace link to <a href="https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF"><code>Mistral-7B-Instruct-v0.1</code></a></p>
 </blockquote>
 <p>Follow the link above, then click on the <code>Files and version</code> tab near the top. You’ll see a list of models that were quantized in different ways:</p>
-<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session-3-llama/mistral_quantized.png" class="img-fluid"></p>
+<p><img src="https://enzokro.dev/blog/posts/fractal-llms/04-llama/mistral_quantized.png" class="img-fluid"></p>
 <p>These names can be overwhelming. Let’s break them down at a high level. Feel free to skim the next couple of paragraphs, they are not critical to running the model itself.</p>
 <p>You can see that each file ends with a format like this: <code>Q*_*.gguf</code>. For example one model from the list is: <code>mistral-7B-Instruct-v0.1.Q4_K_S.gguf</code>. The <code>Q4</code> part means that the model was quantized with 4-bits. The <code>K_S</code> part refers to the specific flavor of quantization that was used.</p>
 <p>There is an unfortunate tradeoff between quantization and performance. The fewer bits we use, the smaller and faster the model will be but the worse its performance. And the more bits we use, the better its performance but the slower the model. In general, the <code>Q4</code> and <code>Q5</code> models offer a good balance between speed, performance, and size. Now let’s get back to running the model.</p>
@@ -317,14 +317,14 @@ font-style: inherit;">'text'</span>]</span></code></pre></div>
   <category>fractal</category>
   <category>python</category>
   <category>LLM</category>
-  <guid>https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session-3-llama/index.html</guid>
+  <guid>https://enzokro.dev/blog/posts/fractal-llms/04-llama/index.html</guid>
   <pubDate>Fri, 13 Oct 2023 21:00:00 GMT</pubDate>
-  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/2023-10-14-Session-3-llama/llama-cpp-logo.png" medium="image" type="image/png" height="72" width="144"/>
+  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/04-llama/llama-cpp-logo.png" medium="image" type="image/png" height="72" width="144"/>
 </item>
 <item>
   <title>Overview of MLC and llama.cpp</title>
   <dc:creator>Chris Kroenke</dc:creator>
-  <link>https://enzokro.dev/blog/posts/fractal-llms/2023-10-07-Session-2-mlc/index.html</link>
+  <link>https://enzokro.dev/blog/posts/fractal-llms/03-mlc/index.html</link>
   <description><![CDATA[ 
 
 
@@ -1467,14 +1467,14 @@ font-style: inherit;"># the compiled Llama2 model</span></span></code></pre></di
   <category>fractal</category>
   <category>python</category>
   <category>LLM</category>
-  <guid>https://enzokro.dev/blog/posts/fractal-llms/2023-10-07-Session-2-mlc/index.html</guid>
+  <guid>https://enzokro.dev/blog/posts/fractal-llms/03-mlc/index.html</guid>
   <pubDate>Fri, 06 Oct 2023 21:00:00 GMT</pubDate>
-  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/2023-10-07-Session-2-mlc/llama.jpeg" medium="image" type="image/jpeg"/>
+  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/03-mlc/llama.jpeg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>A Python Environment for LLMs</title>
   <dc:creator>Chris Kroenke</dc:creator>
-  <link>https://enzokro.dev/blog/posts/fractal-llms/2023-10-05-Session-0-env/index.html</link>
+  <link>https://enzokro.dev/blog/posts/fractal-llms/01-env/index.html</link>
   <description><![CDATA[ 
 
 
@@ -1832,14 +1832,14 @@ font-style: inherit;"># Build cuda_12.1.r12.1/compiler.32415258_0</span></span><
   <category>fractal</category>
   <category>python</category>
   <category>LLM</category>
-  <guid>https://enzokro.dev/blog/posts/fractal-llms/2023-10-05-Session-0-env/index.html</guid>
+  <guid>https://enzokro.dev/blog/posts/fractal-llms/01-env/index.html</guid>
   <pubDate>Wed, 04 Oct 2023 21:00:00 GMT</pubDate>
-  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/2023-10-05-Session-0-env/mamba_logo.webp" medium="image" type="image/webp"/>
+  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/01-env/mamba_logo.webp" medium="image" type="image/webp"/>
 </item>
 <item>
   <title>Blogging with Quarto and nbdev</title>
   <dc:creator>Chris Kroenke</dc:creator>
-  <link>https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session-1-nbdev/index.html</link>
+  <link>https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/index.html</link>
   <description><![CDATA[ 
 
 
@@ -1859,7 +1859,7 @@ font-style: inherit;"># Build cuda_12.1.r12.1/compiler.32415258_0</span></span><
 <p>The original idea was proposed by <a href="https://en.wikipedia.org/wiki/Donald_Knuth">Donald Knuth</a> in 1984. In Literate Programming, notes and tests are woven directly into a project’s source code. Each piece is crucial to the overall approach and makes for better, more readable code. The code, documentation, and tests are all first-class citizens in Literate Programming. This is very different from the usual software approach where tests and documentation live in a separate set of files.</p>
 <p>In <code>nbdev</code>, a Jupyter Notebook is the single source of truth for code, documentation, and tests. Instead of managing three independent groups of files, everything is defined and happens in the Notebook. If the Notebook runs, then you know your code will run.</p>
 <p>So, why is this helpful? A fun analogy might help: Notebooks are the modern, digital version of field journals. The inspirational samples below from <a href="https://www.wired.com/2011/07/science-field-notes-gallery/">this Wired article</a> show what science, at its best, can be:</p>
-<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session-1-nbdev/field-notes-butterflies.jpg" class="img-fluid"> <img src="https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session-1-nbdev/field-notes-lynx.jpg" class="img-fluid"> <img src="https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session-1-nbdev/field-notes-grinnell.jpg" class="img-fluid"></p>
+<p><img src="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/field-notes-butterflies.jpg" class="img-fluid"> <img src="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/field-notes-lynx.jpg" class="img-fluid"> <img src="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/field-notes-grinnell.jpg" class="img-fluid"></p>
 <p>Let’s focus on the last example: the field notes about a lynx. Notice that we’re not reading a long description of what a Lynx is <em>supposed</em> to look like. And we’re not looking at a series of pictures with no context either. We’re getting the best of both worlds: short and relevant descriptions right next to clear, working examples. Field notes bridge the gap between the written, theoretical and the actual, practical.</p>
 <p>Notebooks can do for code what the field notes above did for the lynx. We can interactively show people the data, describe what’s being done, and make sure that the results are correct. We can even show any mistakes and struggles along the way. This tight loop between what you’re doing (<em>code</em>), describing what you’re doing (<em>documentation</em>), and making sure it’s correct (<em>tests</em>) is a great way to approach research. More than that, it is an incredibly powerful way to communicate and share ideas.</p>
 </section>
@@ -1887,7 +1887,7 @@ font-style: inherit;"># Build cuda_12.1.r12.1/compiler.32415258_0</span></span><
 2. Create a blog inside the project.<br>
 3. Host the blog on Github Pages.</p>
 <p><code>nbdev</code> uses the <a href="https://quarto.org/">Quarto framework</a> to publish blogs. Quarto is tailored for writing beautiful articles on technical or scientific topics. In a way it’s a blogging platform for Literate Programming, where a series of code and comments take the reader on a journey.</p>
-<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session-1-nbdev/quarto.png" class="img-fluid"></p>
+<p><img src="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/quarto.png" class="img-fluid"></p>
 <section id="creating-a-new-nbdev-project" class="level3">
 <h3 class="anchored" data-anchor-id="creating-a-new-nbdev-project">Creating a new <code>nbdev</code> project</h3>
 <p><code>nbdev</code> works on top of a Git repo. That means our first step is creating a new, empty repository. Here is a <a href="https://github.com/new">handy Github link</a> that takes us straight to the page for creating new repos.</p>
@@ -2082,7 +2082,7 @@ font-style: inherit;">---</span></span></code></pre></div>
 <section id="hosting-the-blog-on-github-pages" class="level4">
 <h4 class="anchored" data-anchor-id="hosting-the-blog-on-github-pages">Hosting the Blog on Github Pages</h4>
 <p>The site will be hosted on Github’s <a href="https://pages.github.com/">Pages platform</a>. This is a built-in feature offered by Github and we can leverage it by changing a few settings. The screenshot below shows the to configure the repo so it can be published as a blog.</p>
-<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session-1-nbdev/github_pages.png" class="img-fluid"></p>
+<p><img src="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/github_pages.png" class="img-fluid"></p>
 <p>Specifically, we need to set the <code>Deploy from a branch</code> option under the <code>Build and deployment section</code>. Then, we pick the <code>gh-pages</code> branch as the branch to deploy from. <code>gh-pages</code> is a special branch where nbdev parses our Notebooks into a proper Quarto website.</p>
 <p>Next, run the <code>quarto publish</code> command to build and publish the blog.</p>
 <div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="co" style="color: #5E5E5E;
@@ -2113,86 +2113,9 @@ font-style: inherit;">quarto</span> publish</span></code></pre></div>
   <category>fractal</category>
   <category>python</category>
   <category>nbdev</category>
-  <guid>https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session-1-nbdev/index.html</guid>
+  <guid>https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/index.html</guid>
   <pubDate>Tue, 26 Sep 2023 21:00:00 GMT</pubDate>
-  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/2023-09-27-Session-1-nbdev/nbdev_pic.png" medium="image" type="image/png" height="66" width="144"/>
-</item>
-<item>
-  <title>Fractal-U LLM Course</title>
-  <dc:creator>Chris Kroenke</dc:creator>
-  <link>https://enzokro.dev/blog/posts/fractal-llms/2023-09-25-Overview/index.html</link>
-  <description><![CDATA[ 
-
-
-
-<blockquote class="blockquote">
-<p>Overview and motivations for the Fractal-U LLM Course.</p>
-</blockquote>
-<section id="intro" class="level1">
-<h1>Intro</h1>
-<p>In this course we will create a simple AI Assistant, specialized on a specific task, by fine-tuning and augmenting a Large Language Model (LLM). What exactly do we mean by Assistant, and why would we focus on a simple one?</p>
-<p>There is a lot of talk and hype around AI Assistants at the moment. Folks are imagining a future where we all have powerful, personalized helpers at our fingertips. These Assistants promise to make our lives more comfortable and easier. They are the AIs of Science Fiction manifest: TARS from Interstellar, Jarvis from Iron Man, HAL 9000 from Space Odyssey, Samantha from Her, etc.</p>
-<section id="realistic-assistant-expectations" class="level2">
-<h2 class="anchored" data-anchor-id="realistic-assistant-expectations">Realistic Assistant Expectations</h2>
-<p>Despite the breakneck speed of progress in LLMs, AI Assistants as powerful as those are still a ways off. Exact timelines are hard, if not impossible, to predict. For now it is safe to say that Assistants of that caliber won’t be here “soon”. But, barring some force majeure, they <em>will</em> exist at some point.</p>
-<p>The gap, then, is that folks are promising advanced Assistants while on the ground we deal with sycophantic LLMs hallucinations and prohibitive compute requirements.</p>
-</section>
-<section id="building-realistic-assistants" class="level2">
-<h2 class="anchored" data-anchor-id="building-realistic-assistants">Building Realistic Assistants</h2>
-<p>Where does that leave us? Well, as a recent announcement <a href="https://twitter.com/gdb/status/1694107518488981868">from OpenAI</a> shows, fine-tuning a GPT-3.5 model on small, clean datasets surpasses GPT-4 on certain tasks.</p>
-<p><em>That’s</em> what we are aiming for. In other words, we already have the ability to develop outrageously powerful tools by fine-tuning LLMs on small, clean datasets.</p>
-<p>So while we won’t make Iron Man’s Jarvis, we are aiming for far more than a simple chatbot. If it helps, think of our simple Assistant like an Intelligent Rubber Duck. A Rubber Duck is anything (actual yellow rubber duckie optional) that you keep around your desk and talk to about your work. It is a physical tool for thought, since it’s so often helpful to speak out loud the swirl of thoughts in our head.</p>
-<p>Our simple Assistant will be a Rubber Duck that can talk back to us. When we ask it a question about our work, it will respond given what it knows about the project as a whole. Or, if we are simply verbalizing a thought to untangle it, the Assistant will give us feedback or suggest other approaches.</p>
-<p>If we can be so bold: our Assistant will be a mini-Jarvis laser-focused on a specific task. Then, as both the tools and field progresses, we will have a full development stack to unlock even more capabilities from this Intelligent Rubber Duck.</p>
-<blockquote class="blockquote">
-<p>Course Summary: We will fine-tune and augment an LLM on a small, clean dataset to build an Intelligent Rubber Duck.</p>
-</blockquote>
-</section>
-<section id="course-overview" class="level2">
-<h2 class="anchored" data-anchor-id="course-overview">Course Overview</h2>
-<p>This course is meant to be public-facing. Students should write about their journey to both chronicle and track their progress. Publishing is a powerful tool for learning since it casts a piece of work under a new, critical light. Sharing each other’s work will also crystalize your understanding of a topic by seeing it from different angles. Blogging and writing can be scary, but here we aim to make it as smooth and helpful as possible.</p>
-<p>Each lesson lives inside a Jupyter Notebook. The notebooks build on each other, but they are also self-contained and reviewable on their own.</p>
-<p>Here is an outline of the lessons:</p>
-<p><strong>1. Python environments for LLMs</strong><br>
-&gt; Using mamba and pip to create isolated and reproducible python environments.</p>
-<p><strong>2. Blogging with nbdev</strong><br>
-&gt; Setting up a blog with nbdev and github pages.</p>
-<p><strong>3. Running HuggingFace models</strong><br>
-&gt; Using the HuggingFace API to run ML models, and get familiar with weight files.</p>
-<p><strong>4. Running LLMs with llama.cpp</strong><br>
-&gt; Running quantized, optimized LLMs optimized for deployment.</p>
-<p><strong>5. Processing text documents for LLMs</strong><br>
-&gt; Preparing text data for fine-tuning and Retrieval Augmented Generation (RAG) tasks</p>
-<p><strong>6. Fine-tuning LLMs on one or few GPUs</strong><br>
-&gt; Scripts and setups to efficiently fine-tune LLMs</p>
-<p><strong>7. Running fine-tuned LLMs locally on your phone</strong><br>
-&gt; Deploying fine-tuned, quantized LLMs on mobile devices</p>
-</section>
-<section id="course-philosophy" class="level2">
-<h2 class="anchored" data-anchor-id="course-philosophy">Course Philosophy</h2>
-<p>Jupyter Notebooks are the modern, programming version of field journals. The inspirational samples from <a href="https://www.wired.com/2011/07/science-field-notes-gallery/">this Wired article</a> below show what science, at its best and most alive, can be:</p>
-<p><img src="https://enzokro.dev/blog/posts/fractal-llms/2023-09-25-Overview/field-notes-butterflies.jpg" class="img-fluid"> <img src="https://enzokro.dev/blog/posts/fractal-llms/2023-09-25-Overview/field-notes-grinnell.jpg" class="img-fluid"> <img src="https://enzokro.dev/blog/posts/fractal-llms/2023-09-25-Overview/field-notes-lynx.jpg" class="img-fluid"></p>
-<p>Let’s focus on the last example: the field notes about a lynx. Notice that we’re not reading a long description of what a Lynx is <em>supposed</em> to look like. And we’re not looking at a series of diagrams without context either. We’re getting the best of both worlds: short and relevant descriptions right next to clear, working examples. Field notes bridge the gap between the written, theoretical and the actual, practical.</p>
-<p>Notebooks can do for code what the field notes above did for the lynx. We can interactively show people the data, describe what’s being done, and make sure that the results are correct. We can even show any mistakes and struggles along the way.</p>
-<p>This tight loop between what you’re doing (<em>code</em>), describing what you’re doing (<em>documentation</em>), and making sure it’s correct (<em>tests</em>) is a great way to approach research. More than that, it is an incredibly powerful way to communicate and share ideas.</p>
-<p>Each lesson is like an interactive field journal. You should feel as if someone is walking you through an experiment, going step by step and talking through the process along the way. And you should feel like an active participant in the research: you can always modify a cell or insert new ones to try out your own ideas.</p>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>This notebook introduced our goals and approach for the Fractal U LLMs course. In summary, we will fine-tune and augment an open-source LLM to create a simple AI Assistant that can help us better learn and create.</p>
-<p>Thank you for choosing to go on this journey! I promise that we will learn a ton, and have lots of fun along the way.</p>
-
-
-</section>
-</section>
-
- ]]></description>
-  <category>fractal</category>
-  <category>python</category>
-  <category>LLM</category>
-  <guid>https://enzokro.dev/blog/posts/fractal-llms/2023-09-25-Overview/index.html</guid>
-  <pubDate>Sun, 24 Sep 2023 21:00:00 GMT</pubDate>
-  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/2023-09-25-Overview/fractal-llm-mascot.png" medium="image" type="image/png" height="144" width="144"/>
+  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/nbdev_pic.png" medium="image" type="image/png" height="66" width="144"/>
 </item>
 <item>
   <title>Tips for LLM prompts</title>
@@ -19183,6 +19106,75 @@ font-style: inherit;">*</span></span></code></pre></div>
   <guid>https://enzokro.dev/blog/posts/2022-08-20-spec-norms/index.html</guid>
   <pubDate>Fri, 19 Aug 2022 21:00:00 GMT</pubDate>
   <media:content url="https://enzokro.dev/blog/posts/2022-08-20-spec-norms/violin_spec.png" medium="image" type="image/png" height="81" width="144"/>
+</item>
+<item>
+  <title>Intro</title>
+  <link>https://enzokro.dev/blog/posts/fractal-llms/00-Overview/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<blockquote class="blockquote">
+<p>Overview and motivations for the Fractal-U LLM Course.</p>
+</blockquote>
+<p>In this course we will create a simple AI Assistant, specialized on a specific task, by fine-tuning and augmenting a Large Language Model (LLM). What exactly do we mean by Assistant, and why would we focus on a simple one?</p>
+<p>There is a lot of talk and hype around AI Assistants at the moment. Folks are imagining a future where we all have powerful, personalized helpers at our fingertips. These Assistants promise to make our lives more comfortable and easier. They are the AIs of Science Fiction manifest: TARS from Interstellar, Jarvis from Iron Man, HAL 9000 from Space Odyssey, Samantha from Her, etc.</p>
+<section id="realistic-assistant-expectations" class="level2">
+<h2 class="anchored" data-anchor-id="realistic-assistant-expectations">Realistic Assistant Expectations</h2>
+<p>Despite the breakneck speed of progress in LLMs, AI Assistants as powerful as those are still a ways off. Exact timelines are hard, if not impossible, to predict. For now it is safe to say that Assistants of that caliber won’t be here “soon”. But, barring some force majeure, they <em>will</em> exist at some point.</p>
+<p>The gap, then, is that folks are promising advanced Assistants while on the ground we deal with sycophantic LLMs hallucinations and prohibitive compute requirements.</p>
+</section>
+<section id="building-realistic-assistants" class="level2">
+<h2 class="anchored" data-anchor-id="building-realistic-assistants">Building Realistic Assistants</h2>
+<p>Where does that leave us? Well, as a recent announcement <a href="https://twitter.com/gdb/status/1694107518488981868">from OpenAI</a> shows, fine-tuning a GPT-3.5 model on small, clean datasets surpasses GPT-4 on certain tasks.</p>
+<p><em>That’s</em> what we are aiming for. In other words, we already have the ability to develop outrageously powerful tools by fine-tuning LLMs on small, clean datasets.</p>
+<p>So while we won’t make Iron Man’s Jarvis, we are aiming for far more than a simple chatbot. If it helps, think of our simple Assistant like an Intelligent Rubber Duck. A Rubber Duck is anything (actual yellow rubber duckie optional) that you keep around your desk and talk to about your work. It is a physical tool for thought, since it’s so often helpful to speak out loud the swirl of thoughts in our head.</p>
+<p>Our simple Assistant will be a Rubber Duck that can talk back to us. When we ask it a question about our work, it will respond given what it knows about the project as a whole. Or, if we are simply verbalizing a thought to untangle it, the Assistant will give us feedback or suggest other approaches.</p>
+<p>If we can be so bold: our Assistant will be a mini-Jarvis laser-focused on a specific task. Then, as both the tools and field progresses, we will have a full development stack to unlock even more capabilities from this Intelligent Rubber Duck.</p>
+<blockquote class="blockquote">
+<p>Course Summary: We will fine-tune and augment an LLM on a small, clean dataset to build an Intelligent Rubber Duck.</p>
+</blockquote>
+</section>
+<section id="course-overview" class="level2">
+<h2 class="anchored" data-anchor-id="course-overview">Course Overview</h2>
+<p>This course is meant to be public-facing. Students should write about their journey to both chronicle and track their progress. Publishing is a powerful tool for learning since it casts a piece of work under a new, critical light. Sharing each other’s work will also crystalize your understanding of a topic by seeing it from different angles. Blogging and writing can be scary, but here we aim to make it as smooth and helpful as possible.</p>
+<p>Each lesson lives inside a Jupyter Notebook. The notebooks build on each other, but they are also self-contained and reviewable on their own.</p>
+<p>Here is an outline of the lessons:</p>
+<p><strong>1. Python environments for LLMs</strong><br>
+&gt; Using mamba and pip to create isolated and reproducible python environments.</p>
+<p><strong>2. Blogging with nbdev</strong><br>
+&gt; Setting up a blog with nbdev and github pages.</p>
+<p><strong>3. Running HuggingFace models</strong><br>
+&gt; Using the HuggingFace API to run ML models, and get familiar with weight files.</p>
+<p><strong>4. Running LLMs with llama.cpp</strong><br>
+&gt; Running quantized, optimized LLMs optimized for deployment.</p>
+<p><strong>5. Processing text documents for LLMs</strong><br>
+&gt; Preparing text data for fine-tuning and Retrieval Augmented Generation (RAG) tasks</p>
+<p><strong>6. Fine-tuning LLMs on one or few GPUs</strong><br>
+&gt; Scripts and setups to efficiently fine-tune LLMs</p>
+<p><strong>7. Running fine-tuned LLMs locally on your phone</strong><br>
+&gt; Deploying fine-tuned, quantized LLMs on mobile devices</p>
+</section>
+<section id="course-philosophy" class="level2">
+<h2 class="anchored" data-anchor-id="course-philosophy">Course Philosophy</h2>
+<p>Jupyter Notebooks are the modern, programming version of field journals. The inspirational samples from <a href="https://www.wired.com/2011/07/science-field-notes-gallery/">this Wired article</a> below show what science, at its best and most alive, can be:</p>
+<p><img src="https://enzokro.dev/blog/posts/fractal-llms/00-Overview/field-notes-butterflies.jpg" class="img-fluid"> <img src="https://enzokro.dev/blog/posts/fractal-llms/00-Overview/field-notes-grinnell.jpg" class="img-fluid"> <img src="https://enzokro.dev/blog/posts/fractal-llms/00-Overview/field-notes-lynx.jpg" class="img-fluid"></p>
+<p>Let’s focus on the last example: the field notes about a lynx. Notice that we’re not reading a long description of what a Lynx is <em>supposed</em> to look like. And we’re not looking at a series of diagrams without context either. We’re getting the best of both worlds: short and relevant descriptions right next to clear, working examples. Field notes bridge the gap between the written, theoretical and the actual, practical.</p>
+<p>Notebooks can do for code what the field notes above did for the lynx. We can interactively show people the data, describe what’s being done, and make sure that the results are correct. We can even show any mistakes and struggles along the way.</p>
+<p>This tight loop between what you’re doing (<em>code</em>), describing what you’re doing (<em>documentation</em>), and making sure it’s correct (<em>tests</em>) is a great way to approach research. More than that, it is an incredibly powerful way to communicate and share ideas.</p>
+<p>Each lesson is like an interactive field journal. You should feel as if someone is walking you through an experiment, going step by step and talking through the process along the way. And you should feel like an active participant in the research: you can always modify a cell or insert new ones to try out your own ideas.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>This notebook introduced our goals and approach for the Fractal U LLMs course. In summary, we will fine-tune and augment an open-source LLM to create a simple AI Assistant that can help us better learn and create.</p>
+<p>Thank you for choosing to go on this journey! I promise that we will learn a ton, and have lots of fun along the way.</p>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://enzokro.dev/blog/posts/fractal-llms/00-Overview/index.html</guid>
+  <pubDate>Tue, 31 Oct 2023 08:08:36 GMT</pubDate>
 </item>
 </channel>
 </rss>
