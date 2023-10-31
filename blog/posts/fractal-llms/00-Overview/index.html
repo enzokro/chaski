@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Chris Kroenke">
+<meta name="dcterms.date" content="2023-09-25">
 
-<title>chaski - Intro</title>
+<title>chaski - Fractal-U LLM Course</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -60,13 +62,17 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rosarivo">
-<meta property="og:title" content="chaski - Intro">
+<meta property="og:title" content="chaski - Fractal-U LLM Course">
 <meta property="og:description" content="">
-<meta property="og:image" content="https://enzokro.dev/blog/posts/fractal-llms/00-Overview/field-notes-butterflies.jpg">
+<meta property="og:image" content="https://enzokro.dev/blog/posts/fractal-llms/00-Overview/fractal-llm-mascot.png">
 <meta property="og:site-name" content="chaski">
-<meta name="twitter:title" content="chaski - Intro">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:width" content="1024">
+<meta name="twitter:title" content="chaski - Fractal-U LLM Course">
 <meta name="twitter:description" content="">
-<meta name="twitter:image" content="https://enzokro.dev/blog/posts/fractal-llms/00-Overview/field-notes-butterflies.jpg">
+<meta name="twitter:image" content="https://enzokro.dev/blog/posts/fractal-llms/00-Overview/fractal-llm-mascot.png">
+<meta name="twitter:image-height" content="1024">
+<meta name="twitter:image-width" content="1024">
 <meta name="twitter:card" content="summary_large_image">
 </head><body class="nav-fixed"><header id="custom-site-header" class="custom-nav page-columns page-rows-contents"> 
     <nav class="custom-nav-content">
@@ -128,8 +134,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#realistic-assistant-expectations" id="toc-realistic-assistant-expectations" class="nav-link active" data-scroll-target="#realistic-assistant-expectations">Realistic Assistant Expectations</a></li>
+  <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro">Intro</a>
+  <ul class="collapse">
+  <li><a href="#realistic-assistant-expectations" id="toc-realistic-assistant-expectations" class="nav-link" data-scroll-target="#realistic-assistant-expectations">Realistic Assistant Expectations</a></li>
   <li><a href="#building-an-ai-assistant" id="toc-building-an-ai-assistant" class="nav-link" data-scroll-target="#building-an-ai-assistant">Building an AI Assistant</a></li>
+  </ul></li>
   <li><a href="#course-overview" id="toc-course-overview" class="nav-link" data-scroll-target="#course-overview">Course Overview</a></li>
   <li><a href="#course-philosophy" id="toc-course-philosophy" class="nav-link" data-scroll-target="#course-philosophy">Course Philosophy</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
@@ -141,14 +150,31 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Intro</h1>
-</div>
+<h1 class="title">Fractal-U LLM Course</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">fractal</div>
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">LLM</div>
+  </div>
+  </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Chris Kroenke </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 25, 2023</p>
+    </div>
+  </div>
   
     
   </div>
@@ -159,6 +185,8 @@ ul.task-list li input[type="checkbox"] {
 <blockquote class="blockquote">
 <p>Overview and motivations for the Fractal-U LLM Course.</p>
 </blockquote>
+<section id="intro" class="level1">
+<h1>Intro</h1>
 <p>In this course we will create our own simple AI Assistant. Our Assistant will be specialized for a specific, given task. We will build it by fine-tuning and augmenting an open-source Large Language Model (LLM).</p>
 <p>What exactly do we mean by Assistant, and why would we focus on a simple one?</p>
 <p>There is a lot of talk and hype around AI Assistants at the moment. Folks are imagining a future where we all have powerful, personalized helpers at our fingertips. These Assistants promise to make our lives more comfortable and easier. They are the manifest AIs of Science Fiction: TARS from Interstellar, Jarvis from Iron Man, HAL 9000 from Space Odyssey, Samantha from Her, etc.</p>
@@ -177,6 +205,7 @@ ul.task-list li input[type="checkbox"] {
 <blockquote class="blockquote">
 <p>Course Summary: We will fine-tune and augment an LLM on a small, clean dataset to build an Intelligent Rubber Duck.</p>
 </blockquote>
+</section>
 </section>
 <section id="course-overview" class="level1">
 <h1>Course Overview</h1>
