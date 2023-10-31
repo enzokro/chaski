@@ -136,9 +136,11 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro">Intro</a>
   <ul class="collapse">
-  <li><a href="#realisitic-agent-expectations" id="toc-realisitic-agent-expectations" class="nav-link" data-scroll-target="#realisitic-agent-expectations">Realisitic Agent Expectations</a></li>
-  <li><a href="#fine-tuning-reasonable-agents" id="toc-fine-tuning-reasonable-agents" class="nav-link" data-scroll-target="#fine-tuning-reasonable-agents">Fine-Tuning Reasonable Agents</a></li>
+  <li><a href="#realistic-assistant-expectations" id="toc-realistic-assistant-expectations" class="nav-link" data-scroll-target="#realistic-assistant-expectations">Realistic Assistant Expectations</a></li>
+  <li><a href="#building-realistic-assistants" id="toc-building-realistic-assistants" class="nav-link" data-scroll-target="#building-realistic-assistants">Building Realistic Assistants</a></li>
   <li><a href="#course-overview" id="toc-course-overview" class="nav-link" data-scroll-target="#course-overview">Course Overview</a></li>
+  <li><a href="#course-philosophy" id="toc-course-philosophy" class="nav-link" data-scroll-target="#course-philosophy">Course Philosophy</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -185,29 +187,29 @@ ul.task-list li input[type="checkbox"] {
 </blockquote>
 <section id="intro" class="level1">
 <h1>Intro</h1>
-<p>In this course we will fine-tune a Large Language Model (LLM) to create a simple AI Agent that is specialized for a certain task. What exactly do we mean by Agent, and why would we focus on a simple one?</p>
-<p>There is a lot of talk and hype around Agents at the moment. Folks are thinking about a future where we all have personalized AI assistants, aka Agents, at our fingertips. These Agents promise to make our lives easier and more comfortable. They are the AI assistants from Science Fiction made material: TARS from Interstellar, Jarvis from Iron Man, HAL 9000 from Space Odyssey, Samantha from Her, etc.</p>
-<section id="realisitic-agent-expectations" class="level2">
-<h2 class="anchored" data-anchor-id="realisitic-agent-expectations">Realisitic Agent Expectations</h2>
-<p>However, despite the breakneck speed of progress in AI and LLMs, Agents as powerful as those are still a ways off. It is hard if not impossible to predict the exact timelines. For now it is safe to say that Agents of that caliber won’t be here anytime “soon”. But, barring some force majeure, they <em>will</em> exist at some point.</p>
-<p>The gap, then, is that folks are promising these advanced Agents while on the ground we are still dealing with sycophantic LLMs, their hallucinations, and prohibitive compute requirements.</p>
+<p>In this course we will create a simple AI Assistant, specialized on a specific task, by fine-tuning and augmenting a Large Language Model (LLM). What exactly do we mean by Assistant, and why would we focus on a simple one?</p>
+<p>There is a lot of talk and hype around AI Assistants at the moment. Folks are imagining a future where we all have powerful, personalized helpers at our fingertips. These Assistants promise to make our lives more comfortable and easier. They are the AIs of Science Fiction manifest: TARS from Interstellar, Jarvis from Iron Man, HAL 9000 from Space Odyssey, Samantha from Her, etc.</p>
+<section id="realistic-assistant-expectations" class="level2">
+<h2 class="anchored" data-anchor-id="realistic-assistant-expectations">Realistic Assistant Expectations</h2>
+<p>Despite the breakneck speed of progress in LLMs, AI Assistants as powerful as those are still a ways off. Exact timelines are hard, if not impossible, to predict. For now it is safe to say that Assistants of that caliber won’t be here “soon”. But, barring some force majeure, they <em>will</em> exist at some point.</p>
+<p>The gap, then, is that folks are promising advanced Assistants while on the ground we deal with sycophantic LLMs hallucinations and prohibitive compute requirements.</p>
 </section>
-<section id="fine-tuning-reasonable-agents" class="level2">
-<h2 class="anchored" data-anchor-id="fine-tuning-reasonable-agents">Fine-Tuning Reasonable Agents</h2>
-<p>Where does that leave us? Well, as a recent announcement <a href="https://twitter.com/gdb/status/1694107518488981868">from OpenAI</a> shows, fine-tuning GPT-3.5 on small, clean datasets surpasses GPT-4 on certain tasks.</p>
+<section id="building-realistic-assistants" class="level2">
+<h2 class="anchored" data-anchor-id="building-realistic-assistants">Building Realistic Assistants</h2>
+<p>Where does that leave us? Well, as a recent announcement <a href="https://twitter.com/gdb/status/1694107518488981868">from OpenAI</a> shows, fine-tuning a GPT-3.5 model on small, clean datasets surpasses GPT-4 on certain tasks.</p>
 <p><em>That’s</em> what we are aiming for. In other words, we already have the ability to develop outrageously powerful tools by fine-tuning LLMs on small, clean datasets.</p>
-<p>So we won’t build Iron Man’s Jarvis, but we will aim for far more than a simple chatbot. If it helps, think about our simple Agent like an Intelligent Rubber Duck. A Rubber Duck is anything (actual yellow rubber duckie optional) that you keep around your desk and talk to about your work. It is a physical tool for thought, since it’s so often helpful to speak out loud the swirl of thoughts in our head.</p>
-<p>Our simple Agent will be a Rubber Duck that can talk with us. When we ask it a question about our work, it will respond given what it knows about the project as a whole. Or, if we are simply verbalizing a thought to untangle it, the Agent will give us feedback or suggest other approaches.</p>
-<p>If we can be so bold: our Agent will be a mini-Jarvis laser-focused on a specific topic. Then, as both the tools and tech progresses, we will have a full development stack to unlock even more capabilities from our Intelligent Rubber Duck.</p>
+<p>So while we won’t make Iron Man’s Jarvis, we are aiming for far more than a simple chatbot. If it helps, think of our simple Assistant like an Intelligent Rubber Duck. A Rubber Duck is anything (actual yellow rubber duckie optional) that you keep around your desk and talk to about your work. It is a physical tool for thought, since it’s so often helpful to speak out loud the swirl of thoughts in our head.</p>
+<p>Our simple Assistant will be a Rubber Duck that can talk back to us. When we ask it a question about our work, it will respond given what it knows about the project as a whole. Or, if we are simply verbalizing a thought to untangle it, the Assistant will give us feedback or suggest other approaches.</p>
+<p>If we can be so bold: our Assistant will be a mini-Jarvis laser-focused on a specific task. Then, as both the tools and field progresses, we will have a full development stack to unlock even more capabilities from this Intelligent Rubber Duck.</p>
 <blockquote class="blockquote">
-<p>Course Summary: We will fine-tune an LLM on a small, clean dataset of our choosing to build an Intelligent Rubber Duck to better help us create.</p>
+<p>Course Summary: We will fine-tune and augment an LLM on a small, clean dataset to build an Intelligent Rubber Duck.</p>
 </blockquote>
 </section>
 <section id="course-overview" class="level2">
 <h2 class="anchored" data-anchor-id="course-overview">Course Overview</h2>
-<p>This course is meant to be public-facing. Students should write about their journey to both chronicle and track their progress. Publishing a piece of work lets us see it under a new critical light, and that is a powerful tool for learning. Sharing each other’s work will also crystalize your understanding of a topic by seeing it from different angles. Blogging and writing can be scary, but here we aim to make it as smooth and helpful as possible.</p>
-<p>Each lesson is inside a Jupyter Notebook. The notebooks build on each other, but they are also self-contained and reviewable on their own.</p>
-<p>Here is an outline of the notebook lessons:</p>
+<p>This course is meant to be public-facing. Students should write about their journey to both chronicle and track their progress. Publishing is a powerful tool for learning since it casts a piece of work under a new, critical light. Sharing each other’s work will also crystalize your understanding of a topic by seeing it from different angles. Blogging and writing can be scary, but here we aim to make it as smooth and helpful as possible.</p>
+<p>Each lesson lives inside a Jupyter Notebook. The notebooks build on each other, but they are also self-contained and reviewable on their own.</p>
+<p>Here is an outline of the lessons:</p>
 <p><strong>1. Python environments for LLMs</strong><br>
 &gt; Using mamba and pip to create isolated and reproducible python environments.</p>
 <p><strong>2. Blogging with nbdev</strong><br>
@@ -222,7 +224,20 @@ ul.task-list li input[type="checkbox"] {
 &gt; Scripts and setups to efficiently fine-tune LLMs</p>
 <p><strong>7. Running fine-tuned LLMs locally on your phone</strong><br>
 &gt; Deploying fine-tuned, quantized LLMs on mobile devices</p>
-<p>Thank you for coming on this journey! I promise that we will learn a ton and have lots of fun along the way.</p>
+</section>
+<section id="course-philosophy" class="level2">
+<h2 class="anchored" data-anchor-id="course-philosophy">Course Philosophy</h2>
+<p>Jupyter Notebooks are the modern, programming version of field journals. The inspirational samples from <a href="https://www.wired.com/2011/07/science-field-notes-gallery/">this Wired article</a> below show what science, at its best and most alive, can be:</p>
+<p><img src="field-notes-butterflies.jpg" class="img-fluid"> <img src="field-notes-grinnell.jpg" class="img-fluid"> <img src="field-notes-lynx.jpg" class="img-fluid"></p>
+<p>Let’s focus on the last example: the field notes about a lynx. Notice that we’re not reading a long description of what a Lynx is <em>supposed</em> to look like. And we’re not looking at a series of diagrams without context either. We’re getting the best of both worlds: short and relevant descriptions right next to clear, working examples. Field notes bridge the gap between the written, theoretical and the actual, practical.</p>
+<p>Notebooks can do for code what the field notes above did for the lynx. We can interactively show people the data, describe what’s being done, and make sure that the results are correct. We can even show any mistakes and struggles along the way.</p>
+<p>This tight loop between what you’re doing (<em>code</em>), describing what you’re doing (<em>documentation</em>), and making sure it’s correct (<em>tests</em>) is a great way to approach research. More than that, it is an incredibly powerful way to communicate and share ideas.</p>
+<p>Each lesson is like an interactive field journal. You should feel as if someone is walking you through an experiment, going step by step and talking through the process along the way. And you should feel like an active participant in the research: you can always modify a cell or insert new ones to try out your own ideas.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>This notebook introduced our goals and approach for the Fractal U LLMs course. In summary, we will fine-tune and augment an open-source LLM to create a simple AI Assistant that can help us better learn and create.</p>
+<p>Thank you for choosing to go on this journey! I promise that we will learn a ton, and have lots of fun along the way.</p>
 
 
 </section>
