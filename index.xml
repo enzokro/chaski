@@ -1472,6 +1472,287 @@ font-style: inherit;"># the compiled Llama2 model</span></span></code></pre></di
   <media:content url="https://enzokro.dev/blog/posts/fractal-llms/03-mlc/llama.jpeg" medium="image" type="image/jpeg"/>
 </item>
 <item>
+  <title>Lessong 2: Creating a blog with nbdev</title>
+  <dc:creator>Chris Kroenke</dc:creator>
+  <link>https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/index.html</link>
+  <description><![CDATA[ 
+
+
+
+<blockquote class="blockquote">
+<p>Building a personal blog with nbdev and publishing it with Quarto.</p>
+</blockquote>
+<section id="intro" class="level1">
+<h1>Intro</h1>
+<p><a href="https://nbdev.fast.ai/"><code>nbdev</code></a> is a powerful tool for creating python modules. It is based on writing code, documentation, and tests directly in an interactive Jupyter Notebook. This notebook-driven development has all of the tools needed to support a full, proper software library.</p>
+<p><code>nbdev</code> is inspired by two paradigms in the coding world:<br>
+- <a href="https://en.wikipedia.org/wiki/Literate_programming">Literate Programming</a><br>
+- <a href="https://en.wikipedia.org/wiki/Exploratory_programming">Exploratory Programming</a></p>
+<p>Let’s go over these two ideas and why their combination is so powerful.</p>
+<section id="literate-programming" class="level3">
+<h3 class="anchored" data-anchor-id="literate-programming">Literate Programming</h3>
+<p>The original idea was proposed by <a href="https://en.wikipedia.org/wiki/Donald_Knuth">Donald Knuth</a> in 1984. In Literate Programming, notes and tests are woven directly into a project’s source code. Each piece is crucial to the overall approach and makes for better, more readable code. The code, documentation, and tests are all first-class citizens in Literate Programming. This is very different from the usual software approach where tests and documentation live in a separate set of files.</p>
+<p>In <code>nbdev</code>, a Jupyter Notebook is the single source of truth for code, documentation, and tests. Instead of managing three independent groups of files, everything is defined and happens in the Notebook. If the Notebook runs, then you know your code will run.</p>
+<p>So, why is this helpful? A fun analogy might help: Notebooks are the modern, digital version of field journals. The inspirational samples below from <a href="https://www.wired.com/2011/07/science-field-notes-gallery/">this Wired article</a> show what science, at its best, can be:</p>
+<p><img src="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/field-notes-butterflies.jpg" class="img-fluid"> <img src="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/field-notes-lynx.jpg" class="img-fluid"> <img src="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/field-notes-grinnell.jpg" class="img-fluid"></p>
+<p>Let’s focus on the last example: the field notes about a lynx. Notice that we’re not reading a long description of what a Lynx is <em>supposed</em> to look like. And we’re not looking at a series of pictures with no context either. We’re getting the best of both worlds: short and relevant descriptions right next to clear, working examples. Field notes bridge the gap between the written, theoretical and the actual, practical.</p>
+<p>Notebooks can do for code what the field notes above did for the lynx. We can interactively show people the data, describe what’s being done, and make sure that the results are correct. We can even show any mistakes and struggles along the way. This tight loop between what you’re doing (<em>code</em>), describing what you’re doing (<em>documentation</em>), and making sure it’s correct (<em>tests</em>) is a great way to approach research. More than that, it is an incredibly powerful way to communicate and share ideas.</p>
+</section>
+<section id="exploratory-programming" class="level3">
+<h3 class="anchored" data-anchor-id="exploratory-programming">Exploratory Programming</h3>
+<p>Exploratory Programming is an open-ended approach for tackling new problems and unknown domains. It’s very useful at the start of a project when details are still being finalized. And it can also bring out different angles to a known, established approach by showing it under a new light.</p>
+<p>Notebooks are both dynamic and interactive which makes them perfect for Exploratory Programming. They make the barrier for trying new things extremely low. And they’re downright fun!</p>
+<p>The video below is an incredible talk by Bret Victor about the power of Exploratory Programming, with stunning examples throughout to drive the point home:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PUv66718DII?si=rPbY3LL6kQw-4yUa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
+</iframe>
+</section>
+<section id="combining-literate-and-exploratory-programming" class="level3">
+<h3 class="anchored" data-anchor-id="combining-literate-and-exploratory-programming">Combining Literate and Exploratory Programming</h3>
+<p><code>nbdev</code> combines these two ideas in its workflow. We can interactively learn about and explore how something works. Iterations are fast and cheap so it’s easy to follow any hit of curiosity. And we can now develop and test code in a much more dynamic way than usual.</p>
+<p>These ideas can be doled out on the fly. For example, at the start of a project we could lean Exploratory to map out the problem space. Then, as the idea matures, we can pivot to Literate to refine and crystallize our approach.</p>
+<p>And if anything breaks, we can always restart the Notebook and try again.</p>
+<p>Next let’s look at how <code>nbdev</code> can turn Notebooks into blog posts.</p>
+</section>
+</section>
+<section id="turning-notebooks-into-blog-posts" class="level1">
+<h1>Turning Notebooks into Blog Posts</h1>
+<p>First, a high-level look at the steps to create and publish a blog:</p>
+<p><strong>High-Level Steps</strong><br>
+1. Make a new <code>nbdev</code> project.<br>
+2. Create a blog inside the project.<br>
+3. Host the blog on Github Pages.</p>
+<p><code>nbdev</code> uses the <a href="https://quarto.org/">Quarto framework</a> to publish blogs. Quarto is tailored for writing beautiful articles on technical or scientific topics. In a way it’s a blogging platform for Literate Programming, where a series of code and comments take the reader on a journey.</p>
+<p><img src="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/quarto.png" class="img-fluid"></p>
+<section id="creating-a-new-nbdev-project" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-new-nbdev-project">Creating a new <code>nbdev</code> project</h3>
+<p><code>nbdev</code> works on top of a Git repo. That means our first step is creating a new, empty repository. Here is a <a href="https://github.com/new">handy Github link</a> that takes us straight to the page for creating new repos.</p>
+<blockquote class="blockquote">
+<p>Note: We need a completely empty repo. Don’t include a <code>.gitignore</code> or <code>README.md</code>.</p>
+</blockquote>
+<p>In this example the empty repo is called <code>sample_blog</code>, but feel free to call it anything you’d like. We’re not tied to this name. We can always make new repos with different, better names.</p>
+<p>Clone the new, empty repo to your computer. Make sure to change the github link below so it points to your repo instead.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># clone the repo to your computer</span></span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> clone https://github.com/enzokro/sample_blog.git <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># &lt;-- ! link with your repo here</span></span></code></pre></div>
+<p>Now we can move into this repo and let <code>nbdev</code> work its initialization magic. Run the <code>nbdev_new</code> command to get started. The command will prompt you for some general info, like a short description about the project.</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># move into the new repo and initialize the nbdev project</span></span>
+<span id="cb2-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> sample_blog/</span>
+<span id="cb2-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">nbdev_new</span></span></code></pre></div>
+<blockquote class="blockquote">
+<p>Note: All of the options and configs for the project are in the <code>settings.ini</code> file. <code>nbdev</code> looks in this file when it needs any information for its commands.</p>
+</blockquote>
+<p>After <code>nbdev_new</code> finishes, we will have a brand new <code>nbdev</code> project!</p>
+<p>Run a <code>git status</code> command to see everything that was added. Then we commit and push these changes to Github.</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># add, commit, and push the files created by nbdev</span></span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> add .</span>
+<span id="cb3-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> commit <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-m</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Initial nbdev project creation'</span></span>
+<span id="cb3-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> push</span></code></pre></div>
+<p>As mentioned earlier, <code>nbdev</code> publishes notebooks using Quarto. Let’s now take a look at how to turn this project into a full Quarto blog.</p>
+</section>
+<section id="adding-quarto-to-the-mix" class="level3">
+<h3 class="anchored" data-anchor-id="adding-quarto-to-the-mix">Adding Quarto to the Mix</h3>
+<p>Start by activating the virtual environment from the previous <a href="link_tbd">Environment Setup Notebook</a>:</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># activate the environment</span></span>
+<span id="cb4-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">mamba</span> activate llm_base</span></code></pre></div>
+<p><code>nbdev</code> comes with a built-in command to install quarto: <code>nbdev_install_quarto</code>. Note that the command will ask for admin privileges.</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># install quarto</span></span>
+<span id="cb5-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">nbdev_install_quarto</span></span></code></pre></div>
+<p>You may need to refresh the terminal before it can see the newly installed <code>quarto</code> binary. To be safe, open up a new terminal and re-activate the environment. Then the command below will check if Quarto was installed successfully.</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># shows us where quarto was installed</span></span>
+<span id="cb6-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">which</span> quarto </span></code></pre></div>
+<p>Now that Quarto is installed, let’s turn our fresh nbdev project into an actual blog.</p>
+<section id="turn-an-nbdev-project-into-a-quarto-blog" class="level4">
+<h4 class="anchored" data-anchor-id="turn-an-nbdev-project-into-a-quarto-blog">Turn an <code>nbdev</code> project into a Quarto blog</h4>
+<p>In an <code>nbdev</code> project the Notebooks usually live inside the <code>nbs/</code> folder. These Notebooks eventually become a project’s code source, tests, and documentation.</p>
+<p>For Quarto to instead publish Notebooks as blog posts, we need to add a few files and folders to the <code>nbs/</code> folder.</p>
+<p>Below is the structure for a <code>nbs/</code> folder that’s been primed for its blog post.</p>
+<p><strong>Initial Structure for Quarto Blog</strong>:</p>
+<pre><code>sample_blog
+└───nbs/
+│   │   _quarto.yml
+│   │   index.ipynb
+│   └───blog/
+│       │   index.qmd
+│       └───posts/
+│           └───2023-09-27-Blog-Intro/     
+│               │   index.ipynb</code></pre>
+<p>The main change is adding a <code>blog/</code> folder inside of the <code>nbs/</code> directory. Inside, at its top level, we place an <code>index.qmd</code> file that tells Quarto about our blog. Here’s example <code>index.qmd</code> file that titles our blog and describes how posts will be listed:</p>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">---</span></span>
+<span id="cb8-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">title</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> Example Blog</span></span>
+<span id="cb8-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">subtitle</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> Publishing with Quarto and nbdev</span></span>
+<span id="cb8-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">listing</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span></span>
+<span id="cb8-5"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sort</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"date desc"</span></span>
+<span id="cb8-6"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">contents</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"posts"</span></span>
+<span id="cb8-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sort-ui</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">false</span></span>
+<span id="cb8-8"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">filter-ui</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">false</span></span>
+<span id="cb8-9"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">categories</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">true</span></span>
+<span id="cb8-10"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">feed</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">true</span></span>
+<span id="cb8-11"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">page-layout</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> full</span></span>
+<span id="cb8-12"><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">---</span></span></code></pre></div>
+<p>To stay better organized, each post will get its in folder. An <code>index.ipynb</code> Notebook inside each folder will have the post’s actual content. We can also put photos, videos, or any other assets to enhance a post into this folder.</p>
+<p>As a working example, we are going a bit meta and using this Notebook itself as <code>index.ipynb</code> in the folder called <code>2023-09-27-Blog-Intro/</code>.</p>
+<p>In other words this Notebook will also be our first blog post.</p>
+</section>
+<section id="hosting-the-blog-on-github-pages" class="level4">
+<h4 class="anchored" data-anchor-id="hosting-the-blog-on-github-pages">Hosting the Blog on Github Pages</h4>
+<p>The site will be hosted on Github’s <a href="https://pages.github.com/">Pages platform</a>. This is a built-in feature offered by Github and we can leverage it by changing a few settings. The screenshot below shows the to configure the repo so it can be published as a blog.</p>
+<p><img src="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/github_pages.png" class="img-fluid"></p>
+<p>Specifically, we need to set the <code>Deploy from a branch</code> option under the <code>Build and deployment section</code>. Then, we pick the <code>gh-pages</code> branch as the branch to deploy from. <code>gh-pages</code> is a special branch where nbdev parses our Notebooks into a proper Quarto website.</p>
+<p>Next, run the <code>quarto publish</code> command to build and publish the blog.</p>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># publish the blog on github pages</span></span>
+<span id="cb9-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">quarto</span> publish</span></code></pre></div>
+<p>And there we go! We created and published our first blog post using <code>nbdev</code>. <a href="https://enzokro.dev/blog/posts/2023-09-27-Session_1_nbdev/">Click here</a> for a live link to this Notebook as a blog post.</p>
+</section>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>This Notebook covered how to create and publish a blog. We used <code>nbdev</code> to build the blog and Quarto to publish it. We also showed how the mix of Literate and Exploratory Programming is a powerful approach to both research and thinking in general.</p>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li><a href="https://nbdev.fast.ai/tutorials/tutorial.html#installation">Official nbdev tutorial</a></li>
+<li><a href="https://nbdev.fast.ai/tutorials/blogging.html">Blogging with nbdev</a></li>
+</ul>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>fractal</category>
+  <category>python</category>
+  <category>nbdev</category>
+  <guid>https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/index.html</guid>
+  <pubDate>Wed, 04 Oct 2023 21:00:00 GMT</pubDate>
+  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/nbdev_pic.png" medium="image" type="image/png" height="66" width="144"/>
+</item>
+<item>
   <title>Lesson 1: A Python Environment for LLMs</title>
   <dc:creator>Chris Kroenke</dc:creator>
   <link>https://enzokro.dev/blog/posts/fractal-llms/01-env/index.html</link>
@@ -2051,289 +2332,8 @@ font-style: inherit;">--index-url</span> https://download.pytorch.org/whl/cu121<
   <category>python</category>
   <category>LLM</category>
   <guid>https://enzokro.dev/blog/posts/fractal-llms/01-env/index.html</guid>
-  <pubDate>Wed, 04 Oct 2023 21:00:00 GMT</pubDate>
-  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/01-env/mamba_logo.webp" medium="image" type="image/webp"/>
-</item>
-<item>
-  <title>Blogging with Quarto and nbdev</title>
-  <dc:creator>Chris Kroenke</dc:creator>
-  <link>https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/index.html</link>
-  <description><![CDATA[ 
-
-
-
-<blockquote class="blockquote">
-<p>Building a personal blog with nbdev and publishing it with Quarto.</p>
-</blockquote>
-<section id="intro" class="level1">
-<h1>Intro</h1>
-<p><a href="https://nbdev.fast.ai/"><code>nbdev</code></a> is a powerful tool for creating python modules. It is based on writing code, documentation, and tests directly in an interactive Jupyter Notebook. This notebook-driven development has all of the tools needed to support a full, proper software library.</p>
-<p><code>nbdev</code> is inspired by two paradigms in the coding world:<br>
-- <a href="https://en.wikipedia.org/wiki/Literate_programming">Literate Programming</a><br>
-- <a href="https://en.wikipedia.org/wiki/Exploratory_programming">Exploratory Programming</a></p>
-<p>Let’s go over these two ideas and why their combination is so powerful.</p>
-<section id="literate-programming" class="level3">
-<h3 class="anchored" data-anchor-id="literate-programming">Literate Programming</h3>
-<p>The original idea was proposed by <a href="https://en.wikipedia.org/wiki/Donald_Knuth">Donald Knuth</a> in 1984. In Literate Programming, notes and tests are woven directly into a project’s source code. Each piece is crucial to the overall approach and makes for better, more readable code. The code, documentation, and tests are all first-class citizens in Literate Programming. This is very different from the usual software approach where tests and documentation live in a separate set of files.</p>
-<p>In <code>nbdev</code>, a Jupyter Notebook is the single source of truth for code, documentation, and tests. Instead of managing three independent groups of files, everything is defined and happens in the Notebook. If the Notebook runs, then you know your code will run.</p>
-<p>So, why is this helpful? A fun analogy might help: Notebooks are the modern, digital version of field journals. The inspirational samples below from <a href="https://www.wired.com/2011/07/science-field-notes-gallery/">this Wired article</a> show what science, at its best, can be:</p>
-<p><img src="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/field-notes-butterflies.jpg" class="img-fluid"> <img src="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/field-notes-lynx.jpg" class="img-fluid"> <img src="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/field-notes-grinnell.jpg" class="img-fluid"></p>
-<p>Let’s focus on the last example: the field notes about a lynx. Notice that we’re not reading a long description of what a Lynx is <em>supposed</em> to look like. And we’re not looking at a series of pictures with no context either. We’re getting the best of both worlds: short and relevant descriptions right next to clear, working examples. Field notes bridge the gap between the written, theoretical and the actual, practical.</p>
-<p>Notebooks can do for code what the field notes above did for the lynx. We can interactively show people the data, describe what’s being done, and make sure that the results are correct. We can even show any mistakes and struggles along the way. This tight loop between what you’re doing (<em>code</em>), describing what you’re doing (<em>documentation</em>), and making sure it’s correct (<em>tests</em>) is a great way to approach research. More than that, it is an incredibly powerful way to communicate and share ideas.</p>
-</section>
-<section id="exploratory-programming" class="level3">
-<h3 class="anchored" data-anchor-id="exploratory-programming">Exploratory Programming</h3>
-<p>Exploratory Programming is an open-ended approach for tackling new problems and unknown domains. It’s very useful at the start of a project when details are still being finalized. And it can also bring out different angles to a known, established approach by showing it under a new light.</p>
-<p>Notebooks are both dynamic and interactive which makes them perfect for Exploratory Programming. They make the barrier for trying new things extremely low. And they’re downright fun!</p>
-<p>The video below is an incredible talk by Bret Victor about the power of Exploratory Programming, with stunning examples throughout to drive the point home:</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/PUv66718DII?si=rPbY3LL6kQw-4yUa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
-</iframe>
-</section>
-<section id="combining-literate-and-exploratory-programming" class="level3">
-<h3 class="anchored" data-anchor-id="combining-literate-and-exploratory-programming">Combining Literate and Exploratory Programming</h3>
-<p><code>nbdev</code> combines these two ideas in its workflow. We can interactively learn about and explore how something works. Iterations are fast and cheap so it’s easy to follow any hit of curiosity. And we can now develop and test code in a much more dynamic way than usual.</p>
-<p>These ideas can be doled out on the fly. For example, at the start of a project we could lean Exploratory to map out the problem space. Then, as the idea matures, we can pivot to Literate to refine and crystallize our approach.</p>
-<p>And if anything breaks, we can always restart the Notebook and try again.</p>
-<p>Next let’s look at how <code>nbdev</code> can turn Notebooks into blog posts.</p>
-</section>
-</section>
-<section id="turning-notebooks-into-blog-posts" class="level1">
-<h1>Turning Notebooks into Blog Posts</h1>
-<p>First, a high-level look at the steps to create and publish a blog:</p>
-<p><strong>High-Level Steps</strong><br>
-1. Make a new <code>nbdev</code> project.<br>
-2. Create a blog inside the project.<br>
-3. Host the blog on Github Pages.</p>
-<p><code>nbdev</code> uses the <a href="https://quarto.org/">Quarto framework</a> to publish blogs. Quarto is tailored for writing beautiful articles on technical or scientific topics. In a way it’s a blogging platform for Literate Programming, where a series of code and comments take the reader on a journey.</p>
-<p><img src="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/quarto.png" class="img-fluid"></p>
-<section id="creating-a-new-nbdev-project" class="level3">
-<h3 class="anchored" data-anchor-id="creating-a-new-nbdev-project">Creating a new <code>nbdev</code> project</h3>
-<p><code>nbdev</code> works on top of a Git repo. That means our first step is creating a new, empty repository. Here is a <a href="https://github.com/new">handy Github link</a> that takes us straight to the page for creating new repos.</p>
-<blockquote class="blockquote">
-<p>Note: We need a completely empty repo. Don’t include a <code>.gitignore</code> or <code>README.md</code>.</p>
-</blockquote>
-<p>In this example the empty repo is called <code>sample_blog</code>, but feel free to call it anything you’d like. We’re not tied to this name. We can always make new repos with different, better names.</p>
-<p>Clone the new, empty repo to your computer. Make sure to change the github link below so it points to your repo instead.</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># clone the repo to your computer</span></span>
-<span id="cb1-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">git</span> clone https://github.com/enzokro/sample_blog.git <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># &lt;-- ! link with your repo here</span></span></code></pre></div>
-<p>Now we can move into this repo and let <code>nbdev</code> work its initialization magic. Run the <code>nbdev_new</code> command to get started. The command will prompt you for some general info, like a short description about the project.</p>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># move into the new repo and initialize the nbdev project</span></span>
-<span id="cb2-2"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">cd</span> sample_blog/</span>
-<span id="cb2-3"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">nbdev_new</span></span></code></pre></div>
-<blockquote class="blockquote">
-<p>Note: All of the options and configs for the project are in the <code>settings.ini</code> file. <code>nbdev</code> looks in this file when it needs any information for its commands.</p>
-</blockquote>
-<p>After <code>nbdev_new</code> finishes, we will have a brand new <code>nbdev</code> project!</p>
-<p>Run a <code>git status</code> command to see everything that was added. Then we commit and push these changes to Github.</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># add, commit, and push the files created by nbdev</span></span>
-<span id="cb3-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">git</span> add .</span>
-<span id="cb3-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">git</span> commit <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-m</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Initial nbdev project creation'</span></span>
-<span id="cb3-4"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">git</span> push</span></code></pre></div>
-<p>As mentioned earlier, <code>nbdev</code> publishes notebooks using Quarto. Let’s now take a look at how to turn this project into a full Quarto blog.</p>
-</section>
-<section id="adding-quarto-to-the-mix" class="level3">
-<h3 class="anchored" data-anchor-id="adding-quarto-to-the-mix">Adding Quarto to the Mix</h3>
-<p>Start by activating the virtual environment from the previous <a href="link_tbd">Environment Setup Notebook</a>:</p>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># activate the environment</span></span>
-<span id="cb4-2"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">mamba</span> activate llm_base</span></code></pre></div>
-<p><code>nbdev</code> comes with a built-in command to install quarto: <code>nbdev_install_quarto</code>. Note that the command will ask for admin privileges.</p>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># install quarto</span></span>
-<span id="cb5-2"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">nbdev_install_quarto</span></span></code></pre></div>
-<p>You may need to refresh the terminal before it can see the newly installed <code>quarto</code> binary. To be safe, open up a new terminal and re-activate the environment. Then the command below will check if Quarto was installed successfully.</p>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># shows us where quarto was installed</span></span>
-<span id="cb6-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">which</span> quarto </span></code></pre></div>
-<p>Now that Quarto is installed, let’s turn our fresh nbdev project into an actual blog.</p>
-<section id="turn-an-nbdev-project-into-a-quarto-blog" class="level4">
-<h4 class="anchored" data-anchor-id="turn-an-nbdev-project-into-a-quarto-blog">Turn an <code>nbdev</code> project into a Quarto blog</h4>
-<p>In an <code>nbdev</code> project the Notebooks usually live inside the <code>nbs/</code> folder. These Notebooks eventually become a project’s code source, tests, and documentation.</p>
-<p>For Quarto to instead publish Notebooks as blog posts, we need to add a few files and folders to the <code>nbs/</code> folder.</p>
-<p>Below is the structure for a <code>nbs/</code> folder that’s been primed for its blog post.</p>
-<p><strong>Initial Structure for Quarto Blog</strong>:</p>
-<pre><code>sample_blog
-└───nbs/
-│   │   _quarto.yml
-│   │   index.ipynb
-│   └───blog/
-│       │   index.qmd
-│       └───posts/
-│           └───2023-09-27-Blog-Intro/     
-│               │   index.ipynb</code></pre>
-<p>The main change is adding a <code>blog/</code> folder inside of the <code>nbs/</code> directory. Inside, at its top level, we place an <code>index.qmd</code> file that tells Quarto about our blog. Here’s example <code>index.qmd</code> file that titles our blog and describes how posts will be listed:</p>
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">---</span></span>
-<span id="cb8-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">title</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">:</span><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;"> Example Blog</span></span>
-<span id="cb8-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">subtitle</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">:</span><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;"> Publishing with Quarto and nbdev</span></span>
-<span id="cb8-4"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">listing</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">:</span></span>
-<span id="cb8-5"><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sort</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">:</span><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;"> </span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"date desc"</span></span>
-<span id="cb8-6"><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">contents</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">:</span><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;"> </span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"posts"</span></span>
-<span id="cb8-7"><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sort-ui</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">:</span><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;"> </span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">false</span></span>
-<span id="cb8-8"><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">filter-ui</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">:</span><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;"> </span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">false</span></span>
-<span id="cb8-9"><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">categories</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">:</span><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;"> </span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">true</span></span>
-<span id="cb8-10"><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">feed</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">:</span><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;"> </span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">true</span></span>
-<span id="cb8-11"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">page-layout</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">:</span><span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;"> full</span></span>
-<span id="cb8-12"><span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">---</span></span></code></pre></div>
-<p>To stay better organized, each post will get its in folder. An <code>index.ipynb</code> Notebook inside each folder will have the post’s actual content. We can also put photos, videos, or any other assets to enhance a post into this folder.</p>
-<p>As a working example, we are going a bit meta and using this Notebook itself as <code>index.ipynb</code> in the folder called <code>2023-09-27-Blog-Intro/</code>.</p>
-<p>In other words this Notebook will also be our first blog post.</p>
-</section>
-<section id="hosting-the-blog-on-github-pages" class="level4">
-<h4 class="anchored" data-anchor-id="hosting-the-blog-on-github-pages">Hosting the Blog on Github Pages</h4>
-<p>The site will be hosted on Github’s <a href="https://pages.github.com/">Pages platform</a>. This is a built-in feature offered by Github and we can leverage it by changing a few settings. The screenshot below shows the to configure the repo so it can be published as a blog.</p>
-<p><img src="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/github_pages.png" class="img-fluid"></p>
-<p>Specifically, we need to set the <code>Deploy from a branch</code> option under the <code>Build and deployment section</code>. Then, we pick the <code>gh-pages</code> branch as the branch to deploy from. <code>gh-pages</code> is a special branch where nbdev parses our Notebooks into a proper Quarto website.</p>
-<p>Next, run the <code>quarto publish</code> command to build and publish the blog.</p>
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># publish the blog on github pages</span></span>
-<span id="cb9-2"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">quarto</span> publish</span></code></pre></div>
-<p>And there we go! We created and published our first blog post using <code>nbdev</code>. <a href="https://enzokro.dev/blog/posts/2023-09-27-Session_1_nbdev/">Click here</a> for a live link to this Notebook as a blog post.</p>
-</section>
-</section>
-</section>
-<section id="conclusion" class="level1">
-<h1>Conclusion</h1>
-<p>This Notebook covered how to create and publish a blog. We used <code>nbdev</code> to build the blog and Quarto to publish it. We also showed how the mix of Literate and Exploratory Programming is a powerful approach to both research and thinking in general.</p>
-<section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
-<ul>
-<li><a href="https://nbdev.fast.ai/tutorials/tutorial.html#installation">Official nbdev tutorial</a></li>
-<li><a href="https://nbdev.fast.ai/tutorials/blogging.html">Blogging with nbdev</a></li>
-</ul>
-
-
-</section>
-</section>
-
- ]]></description>
-  <category>fractal</category>
-  <category>python</category>
-  <category>nbdev</category>
-  <guid>https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/index.html</guid>
   <pubDate>Tue, 26 Sep 2023 21:00:00 GMT</pubDate>
-  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/nbdev_pic.png" medium="image" type="image/png" height="66" width="144"/>
+  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/01-env/mamba_logo.webp" medium="image" type="image/webp"/>
 </item>
 <item>
   <title>Fractal-U Course on LLMs</title>
