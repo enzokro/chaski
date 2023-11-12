@@ -35,6 +35,17 @@
 </ul>
 <p>So far, we’ve used LLMs off the shelf as they are. Now we take our first steps towards augmenting our own LLM.</p>
 <p>Specifically, we will augment an LLM with the <a href="https://diataxis.fr/">Diátaxis</a> website. Diátaxis is a framework and approach to write technical documents. Our goal is to give an LLM knowledge about Diátaxis and use it to help us write better notebooks.</p>
+<p>Let’s start with our running notebook best practice:</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span>load_ext autoreload</span>
+<span id="cb1-2"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span>autoreload <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span></code></pre></div>
+</div>
 </section>
 <section id="grabbing-the-diátaxis-data" class="level1">
 <h1>Grabbing the Diátaxis data</h1>
@@ -42,10 +53,10 @@
 <blockquote class="blockquote">
 <p>Link to <a href="https://github.com/evildmp/diataxis-documentation-framework">Diátaxis code repo</a></p>
 </blockquote>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># clone the Diátaxis repo</span></span>
-<span id="cb1-2"><span class="fu" style="color: #4758AB;
+<span id="cb2-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">git</span> clone https://github.com/evildmp/diataxis-documentation-framework</span></code></pre></div>
 <section id="converting-.rst-to-.txt-files" class="level2">
@@ -67,36 +78,36 @@ Note
 </div>
 </div>
 <p>Run the cell below to install the rst processing libraries.</p>
-<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;shellscript&quot;}">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># installing the rst to txt converter and writer</span></span>
-<span id="cb2-2">pip install rst2txt docutils</span></code></pre></div>
-</div>
+<span id="cb3-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">pip</span> install rst2txt docutils</span></code></pre></div>
 <p>Next we can modify the example in the <a href="https://github.com/stephenfin/rst2txt"><code>rst2txt</code> documentation</a> to write a function that turns an <code>.rst</code> file into a <code>.txt</code> file.</p>
-<div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> docutils.core <span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> publish_file</span>
-<span id="cb3-2"><span class="im" style="color: #00769E;
+<span id="cb4-2"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> rst2txt</span>
-<span id="cb3-3"></span>
-<span id="cb3-4"><span class="kw" style="color: #003B4F;
+<span id="cb4-3"></span>
+<span id="cb4-4"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> convert_rst_to_txt(filename):</span>
-<span id="cb3-5">    <span class="co" style="color: #5E5E5E;
+<span id="cb4-5">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">"""</span></span>
-<span id="cb3-6"><span class="co" style="color: #5E5E5E;
+<span id="cb4-6"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">    Turns an rst file to a txt file with the same name.</span></span>
-<span id="cb3-7"><span class="co" style="color: #5E5E5E;
+<span id="cb4-7"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">    """</span></span>
-<span id="cb3-8">    <span class="cf" style="color: #003B4F;
+<span id="cb4-8">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">with</span> <span class="bu" style="color: null;
 background-color: null;
@@ -105,45 +116,45 @@ background-color: null;
 font-style: inherit;">'r'</span>) <span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">as</span> source:</span>
-<span id="cb3-9">        publish_file(</span>
-<span id="cb3-10">            source<span class="op" style="color: #5E5E5E;
+<span id="cb4-9">        publish_file(</span>
+<span id="cb4-10">            source<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>source,</span>
-<span id="cb3-11">            destination_path<span class="op" style="color: #5E5E5E;
+<span id="cb4-11">            destination_path<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>filename.replace(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">".rst"</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">".txt"</span>),</span>
-<span id="cb3-12">            writer<span class="op" style="color: #5E5E5E;
+<span id="cb4-12">            writer<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>rst2txt.Writer()</span>
-<span id="cb3-13">        )</span></code></pre></div>
+<span id="cb4-13">        )</span></code></pre></div>
 </div>
 <p>Next up, let’s grab all of the .rst files in the Diátaxis repository and convert them into .txt files.</p>
-<div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> os</span>
-<span id="cb4-2"></span>
-<span id="cb4-3"><span class="co" style="color: #5E5E5E;
+<span id="cb5-2"></span>
+<span id="cb5-3"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># </span><span class="al" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">NOTE</span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">: replace with your path to the Diátaxis repo</span></span>
-<span id="cb4-4">path_to_diataxis <span class="op" style="color: #5E5E5E;
+<span id="cb5-4">path_to_diataxis <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'/Users/cck/repos/diataxis-documentation-framework'</span></span>
-<span id="cb4-5"></span>
-<span id="cb4-6"><span class="co" style="color: #5E5E5E;
+<span id="cb5-5"></span>
+<span id="cb5-6"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># find all rst files in the docs repo</span></span>
-<span id="cb4-7">rst_files <span class="op" style="color: #5E5E5E;
+<span id="cb5-7">rst_files <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> [o <span class="cf" style="color: #003B4F;
 background-color: null;
@@ -154,16 +165,16 @@ background-color: null;
 font-style: inherit;">if</span> o.endswith(<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'.rst'</span>)]</span>
-<span id="cb4-8"></span>
-<span id="cb4-9"><span class="co" style="color: #5E5E5E;
+<span id="cb5-8"></span>
+<span id="cb5-9"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># convert all rst files to txt files</span></span>
-<span id="cb4-10"><span class="cf" style="color: #003B4F;
+<span id="cb5-10"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">for</span> rst <span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">in</span> rst_files:</span>
-<span id="cb4-11">    convert_rst_to_txt(<span class="ss" style="color: #20794D;
+<span id="cb5-11">    convert_rst_to_txt(<span class="ss" style="color: #20794D;
 background-color: null;
 font-style: inherit;">f'</span><span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -180,66 +191,66 @@ background-color: null;
 font-style: inherit;">'</span>)</span></code></pre></div>
 </div>
 <p>The following subset are the docs with relevant information an LLM would need to write notebooks in the Diaxtaxis style.</p>
-<div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># files with important content about writing docs</span></span>
-<span id="cb5-2">valid_files <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> [</span>
-<span id="cb5-3">    <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'compass.txt'</span>,</span>
-<span id="cb5-4">    <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'complex-hierarchies.txt'</span>,</span>
-<span id="cb5-5">    <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'explanation.txt'</span>,</span>
-<span id="cb5-6">    <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'how-to-guides.txt'</span>,</span>
-<span id="cb5-7">    <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'how-to-use-diataxis.txt'</span>,</span>
-<span id="cb5-8">    <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'needs.txt'</span>,</span>
-<span id="cb5-9">    <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'quality.txt'</span>,</span>
-<span id="cb5-10">    <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'reference-explanation.txt'</span>,</span>
-<span id="cb5-11">    <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'reference.txt'</span>,</span>
-<span id="cb5-12">    <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'tutorials-how-to.txt'</span>,</span>
-<span id="cb5-13">    <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'tutorials.txt'</span>,</span>
-<span id="cb5-14">]</span></code></pre></div>
-</div>
-<p>Let’s read in these text files and store them into a <code>data</code> dictionary.</p>
-<div class="cell" data-execution_count="25">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
+font-style: inherit;"># files with important content about writing docs</span></span>
+<span id="cb6-2">valid_files <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [</span>
+<span id="cb6-3">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'compass.txt'</span>,</span>
+<span id="cb6-4">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'complex-hierarchies.txt'</span>,</span>
+<span id="cb6-5">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'explanation.txt'</span>,</span>
+<span id="cb6-6">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'how-to-guides.txt'</span>,</span>
+<span id="cb6-7">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'how-to-use-diataxis.txt'</span>,</span>
+<span id="cb6-8">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'needs.txt'</span>,</span>
+<span id="cb6-9">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'quality.txt'</span>,</span>
+<span id="cb6-10">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'reference-explanation.txt'</span>,</span>
+<span id="cb6-11">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'reference.txt'</span>,</span>
+<span id="cb6-12">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'tutorials-how-to.txt'</span>,</span>
+<span id="cb6-13">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'tutorials.txt'</span>,</span>
+<span id="cb6-14">]</span></code></pre></div>
+</div>
+<p>Let’s read in these text files and store them into a <code>data</code> dictionary.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
 font-style: inherit;"># stores the text data</span></span>
-<span id="cb6-2">data <span class="op" style="color: #5E5E5E;
+<span id="cb7-2">data <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> {}</span>
-<span id="cb6-3"></span>
-<span id="cb6-4"><span class="co" style="color: #5E5E5E;
+<span id="cb7-3"></span>
+<span id="cb7-4"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># read in the relevant files</span></span>
-<span id="cb6-5"><span class="cf" style="color: #003B4F;
+<span id="cb7-5"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">for</span> f <span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">in</span> valid_files:</span>
-<span id="cb6-6">    <span class="cf" style="color: #003B4F;
+<span id="cb7-6">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">with</span> <span class="bu" style="color: null;
 background-color: null;
@@ -264,7 +275,7 @@ background-color: null;
 font-style: inherit;">as</span> <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">file</span>:</span>
-<span id="cb6-7">        data[f] <span class="op" style="color: #5E5E5E;
+<span id="cb7-7">        data[f] <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="bu" style="color: null;
 background-color: null;
@@ -292,69 +303,69 @@ font-style: inherit;">file</span>.read())</span></code></pre></div>
 - Properly handle escaped characters (<code>\t</code>, <code>\n</code>, etc).</p>
 <p>Other steps like lower-casing, removing numbers, or dropping typical <a href="https://gist.github.com/sebleier/554280">stop-words</a> are more task-specific.</p>
 <p>Let’s define a <code>clean_text</code> function that cleans up a given string.</p>
-<div class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">import</span> re</span>
-<span id="cb8-2"></span>
-<span id="cb8-3"><span class="kw" style="color: #003B4F;
+<span id="cb9-2"></span>
+<span id="cb9-3"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> clean_text(text):</span>
-<span id="cb8-4">    <span class="co" style="color: #5E5E5E;
+<span id="cb9-4">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">"""</span></span>
-<span id="cb8-5"><span class="co" style="color: #5E5E5E;
+<span id="cb9-5"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">    Cleans up the headers and footers of the text.</span></span>
-<span id="cb8-6"><span class="co" style="color: #5E5E5E;
+<span id="cb9-6"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">    """</span></span>
-<span id="cb8-7">    <span class="co" style="color: #5E5E5E;
+<span id="cb9-7">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Replace multiple spaces with a single space</span></span>
-<span id="cb8-8">    text <span class="op" style="color: #5E5E5E;
+<span id="cb9-8">    text <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> re.sub(<span class="vs" style="color: #20794D;
 background-color: null;
 font-style: inherit;">r'\s+'</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">' '</span>, text)</span>
-<span id="cb8-9"></span>
-<span id="cb8-10">    <span class="co" style="color: #5E5E5E;
+<span id="cb9-9"></span>
+<span id="cb9-10">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Define the regex pattern for the headers and footers</span></span>
-<span id="cb8-11">    pattern <span class="op" style="color: #5E5E5E;
+<span id="cb9-11">    pattern <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="vs" style="color: #20794D;
 background-color: null;
 font-style: inherit;">r'[\*\=\^]+'</span></span>
-<span id="cb8-12">    <span class="co" style="color: #5E5E5E;
+<span id="cb9-12">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Substitute the special sequences with an empty string</span></span>
-<span id="cb8-13">    text <span class="op" style="color: #5E5E5E;
+<span id="cb9-13">    text <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> re.sub(pattern, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">''</span>, text)</span>
-<span id="cb8-14"></span>
-<span id="cb8-15">    <span class="co" style="color: #5E5E5E;
+<span id="cb9-14"></span>
+<span id="cb9-15">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># </span><span class="al" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">TODO</span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">: any other cleaning you can think of?</span></span>
-<span id="cb8-16">    </span>
-<span id="cb8-17">    <span class="cf" style="color: #003B4F;
+<span id="cb9-16">    </span>
+<span id="cb9-17">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">return</span> text</span></code></pre></div>
 </div>
 <p>Let’s call this cleanup function on the raw text file.</p>
-<div class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><span class="co" style="color: #5E5E5E;
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># cleaning up the text</span></span>
-<span id="cb9-2">data <span class="op" style="color: #5E5E5E;
+<span id="cb10-2">data <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> {k: clean_text(v) <span class="cf" style="color: #003B4F;
 background-color: null;
@@ -366,17 +377,17 @@ font-style: inherit;">in</span> data.items()}</span></code></pre></div>
 <section id="special-text-cleanup" class="level3">
 <h3 class="anchored" data-anchor-id="special-text-cleanup">Special text cleanup</h3>
 <p>Now we can handle the errors that popped up when converting <code>.rst</code> documents. Let’s split the documents into list of sentences, so we can find the incorrect “SYSTEM MESSAGE” lines.</p>
-<div class="cell" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><span class="co" style="color: #5E5E5E;
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># split the data into a list of sentences</span></span>
-<span id="cb10-2"><span class="kw" style="color: #003B4F;
+<span id="cb11-2"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> split_sentences(text):</span>
-<span id="cb10-3">    <span class="co" style="color: #5E5E5E;
+<span id="cb11-3">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">"Turns documents into a list of sentences."</span></span>
-<span id="cb10-4">    <span class="cf" style="color: #003B4F;
+<span id="cb11-4">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">return</span> [o <span class="cf" style="color: #003B4F;
 background-color: null;
@@ -387,8 +398,8 @@ background-color: null;
 font-style: inherit;">'. '</span>) <span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">if</span> o]</span>
-<span id="cb10-5"></span>
-<span id="cb10-6">split_data <span class="op" style="color: #5E5E5E;
+<span id="cb11-5"></span>
+<span id="cb11-6">split_data <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> {k: split_sentences(v) <span class="cf" style="color: #003B4F;
 background-color: null;
@@ -397,37 +408,37 @@ background-color: null;
 font-style: inherit;">in</span> data.items()}</span></code></pre></div>
 </div>
 <p>Let’s look at one of the sentences in the <code>how-to-guides.txt</code> file.</p>
-<div class="cell" data-execution_count="39">
-<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><span class="co" style="color: #5E5E5E;
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Looking at an example sentence</span></span>
-<span id="cb11-2">split_data[<span class="st" style="color: #20794D;
+<span id="cb12-2">split_data[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'how-to-guides.txt'</span>][<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">5</span>]</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="39">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>'How-to guides matter not just because users need to be able to accomplish things: the list of how-to guides in your documentation helps frame the picture of what your product can actually do'</code></pre>
 </div>
 </div>
 <p>How many processing errors are in this documents?</p>
-<div class="cell" data-execution_count="43">
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><span class="co" style="color: #5E5E5E;
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># counting the number of system messages in how-to-guides.txt</span></span>
-<span id="cb13-2">doc <span class="op" style="color: #5E5E5E;
+<span id="cb14-2">doc <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'how-to-guides.txt'</span></span>
-<span id="cb13-3"></span>
-<span id="cb13-4"><span class="kw" style="color: #003B4F;
+<span id="cb14-3"></span>
+<span id="cb14-4"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> count_errors(text):</span>
-<span id="cb13-5">    <span class="co" style="color: #5E5E5E;
+<span id="cb14-5">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">"Counts the number of system messages in the text."</span></span>
-<span id="cb13-6">    <span class="cf" style="color: #003B4F;
+<span id="cb14-6">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">return</span> <span class="bu" style="color: null;
 background-color: null;
@@ -444,25 +455,25 @@ background-color: null;
 font-style: inherit;">'&lt;SYSTEM MESSAGE:'</span> <span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">in</span> o)</span>
-<span id="cb13-7"></span>
-<span id="cb13-8">count_errors(split_data[<span class="st" style="color: #20794D;
+<span id="cb14-7"></span>
+<span id="cb14-8">count_errors(split_data[<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'how-to-guides.txt'</span>])</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="43">
+<div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>1</code></pre>
 </div>
 </div>
 <p>Let’s count the errors in all of the documents.</p>
-<div class="cell" data-execution_count="47">
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><span class="co" style="color: #5E5E5E;
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># checking the full count of system errors</span></span>
-<span id="cb15-2"><span class="cf" style="color: #003B4F;
+<span id="cb16-2"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">for</span> f <span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">in</span> valid_files:</span>
-<span id="cb15-3">    <span class="bu" style="color: null;
+<span id="cb16-3">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
 background-color: null;
@@ -494,14 +505,14 @@ NumErrors tutorials.txt: 0</code></pre>
 </div>
 </div>
 <p>Not too bad, but still something we want to clean up.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><span class="kw" style="color: #003B4F;
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">def</span> clean_rst_errors(txt):</span>
-<span id="cb17-2">    <span class="co" style="color: #5E5E5E;
+<span id="cb18-2">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">"Only returns items without system messages."</span></span>
-<span id="cb17-3">    <span class="cf" style="color: #003B4F;
+<span id="cb18-3">    <span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">return</span> [o <span class="cf" style="color: #003B4F;
 background-color: null;
@@ -516,11 +527,11 @@ background-color: null;
 font-style: inherit;">not</span> <span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">in</span> o]  </span>
-<span id="cb17-4"></span>
-<span id="cb17-5"><span class="co" style="color: #5E5E5E;
+<span id="cb18-4"></span>
+<span id="cb18-5"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># our cleaned up data split into sentences</span></span>
-<span id="cb17-6">clean_data <span class="op" style="color: #5E5E5E;
+<span id="cb18-6">clean_data <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> {k: clean_rst_errors(v) <span class="cf" style="color: #003B4F;
 background-color: null;
@@ -529,20 +540,20 @@ background-color: null;
 font-style: inherit;">in</span> split_data.items()}</span></code></pre></div>
 </div>
 <p>We can then check if the system messages are gone:</p>
-<div class="cell" data-execution_count="48">
-<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><span class="co" style="color: #5E5E5E;
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># checking the full count of system errors</span></span>
-<span id="cb18-2"><span class="cf" style="color: #003B4F;
+<span id="cb19-2"><span class="cf" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">for</span> f <span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">in</span> valid_files:</span>
-<span id="cb18-3">    <span class="bu" style="color: null;
+<span id="cb19-3">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
 background-color: null;
-font-style: inherit;">f"Clena NumErrors </span><span class="sc" style="color: #5E5E5E;
+font-style: inherit;">f"Clean NumErrors </span><span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">{</span>f<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -556,23 +567,188 @@ font-style: inherit;">}</span><span class="ss" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"</span>)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Clena NumErrors compass.txt: 0
-Clena NumErrors complex-hierarchies.txt: 0
-Clena NumErrors explanation.txt: 0
-Clena NumErrors how-to-guides.txt: 0
-Clena NumErrors how-to-use-diataxis.txt: 0
-Clena NumErrors needs.txt: 0
-Clena NumErrors quality.txt: 0
-Clena NumErrors reference-explanation.txt: 0
-Clena NumErrors reference.txt: 0
-Clena NumErrors tutorials-how-to.txt: 0
-Clena NumErrors tutorials.txt: 0</code></pre>
+<pre><code>Clean NumErrors compass.txt: 0
+Clean NumErrors complex-hierarchies.txt: 0
+Clean NumErrors explanation.txt: 0
+Clean NumErrors how-to-guides.txt: 0
+Clean NumErrors how-to-use-diataxis.txt: 0
+Clean NumErrors needs.txt: 0
+Clean NumErrors quality.txt: 0
+Clean NumErrors reference-explanation.txt: 0
+Clean NumErrors reference.txt: 0
+Clean NumErrors tutorials-how-to.txt: 0
+Clean NumErrors tutorials.txt: 0</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="embedding-the-diátaxis-data" class="level1">
+<h1>Embedding the Diátaxis data</h1>
+<p>Now we have a set of clean sentences ready for embedding. Text embeddings are usually placed in vector store databases. There are many startups providing this service, or we could spin up our own. For now, we’ll use the <code>chromadb</code> embedding storage.</p>
+<div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># install chromadb inside llm-env</span></span>
+<span id="cb21-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">pip</span> install chromadb</span></code></pre></div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> chromadb</span>
+<span id="cb22-2">chroma_client <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> chromadb.Client()</span></code></pre></div>
+</div>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1">chroma_client.delete_collection(name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>coll_name)</span></code></pre></div>
+</div>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># create a collection</span></span>
+<span id="cb24-2">coll_name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'diaxtaxis_docs'</span></span>
+<span id="cb24-3">collection <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> chroma_client.create_collection(name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>coll_name)</span></code></pre></div>
+</div>
+<p>Now we can store the embeddings.</p>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># step through our documents and sentences</span></span>
+<span id="cb25-2"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> fid, sentences <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> clean_data.items():</span>
+<span id="cb25-3"></span>
+<span id="cb25-4">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># metadata for the files</span></span>
+<span id="cb25-5">    metadatas <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [{<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"source"</span>: fid}] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(sentences)</span>
+<span id="cb25-6"></span>
+<span id="cb25-7">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># unique id for each file</span></span>
+<span id="cb25-8">    ids <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>fid<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">_</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>i<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(sentences))]</span>
+<span id="cb25-9"></span>
+<span id="cb25-10">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># add the documents</span></span>
+<span id="cb25-11">    collection.add(</span>
+<span id="cb25-12">        documents<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>sentences,</span>
+<span id="cb25-13">        metadatas<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>metadatas,</span>
+<span id="cb25-14">        ids<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>ids,</span>
+<span id="cb25-15">    )</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/cck/.cache/chroma/onnx_models/all-MiniLM-L6-v2/onnx.tar.gz: 100%|██████████| 79.3M/79.3M [01:42&lt;00:00, 814kiB/s] </code></pre>
+</div>
+</div>
+<section id="querying-the-database" class="level2">
+<h2 class="anchored" data-anchor-id="querying-the-database">Querying the database</h2>
+<p>Now we have a stored set of embeddings we can search with queries. Let’s try to find some relevant sentences for writing a Notebook.</p>
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># example setup</span></span>
+<span id="cb27-2">example_prompt <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Writing code to pre-process and cleanup text."</span></span>
+<span id="cb27-3"></span>
+<span id="cb27-4">results <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> collection.query(</span>
+<span id="cb27-5">    query_texts<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[example_prompt],</span>
+<span id="cb27-6">    n_results<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span></span>
+<span id="cb27-7">)</span></code></pre></div>
+</div>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1">results</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="30">
+<pre><code>{'ids': [['how-to-use-diataxis.txt_38',
+   'tutorials.txt_104',
+   'reference.txt_43',
+   'tutorials-how-to.txt_62',
+   'reference.txt_30']],
+ 'distances': [[1.1993290185928345,
+   1.2605922222137451,
+   1.2740986347198486,
+   1.2925323247909546,
+   1.304250955581665]],
+ 'metadatas': [[{'source': 'how-to-use-diataxis.txt'},
+   {'source': 'tutorials.txt'},
+   {'source': 'reference.txt'},
+   {'source': 'tutorials-how-to.txt'},
+   {'source': 'reference.txt'}]],
+ 'embeddings': None,
+ 'documents': [["Working like this helps reduce the stress of one of the most paralysing and troublesome aspects of the documentation-writer's work: working out what to do",
+   'Provide minimal explanation of actions in the most basic language possible',
+   'List commands, options, operations, features, flags, limitations, error messages, etc',
+   'You already know these processes',
+   'Do nothing but describe  Technical reference has one job: to describe, and to do that clearly, accurately and comprehensively']],
+ 'uris': None,
+ 'data': None}</code></pre>
 </div>
 </div>
 </section>
 </section>
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>
+<p>This notebook took the first steps to augment an LLM with extra knowledge. We embedded the Diátaxis documentation to eventually use it for Retrieval-Augmented Generation (RAG). Later on, we will also use other LLMs to generate Question-and-Answer pairs based on these documents, and use them to fine-tune a model.</p>
 </section>
 <section id="references" class="level1">
 <h1>References</h1>
