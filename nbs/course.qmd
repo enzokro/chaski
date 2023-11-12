@@ -2,7 +2,7 @@
 title: "Fractal LLMs"
 listing:
   contents: blog/posts/fractal-llms
-  sort: "date desc"
+  sort: "date asc"
   type: default
   categories: false
   sort-ui: false

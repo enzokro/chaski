@@ -1,7 +1,8 @@
 ---
 pagetitle: chaski blog
 listing:
-  contents: "posts"
+  contents: 
+    - "posts/*/*.ipynb"
   type: default
   sort:
     - "date desc"

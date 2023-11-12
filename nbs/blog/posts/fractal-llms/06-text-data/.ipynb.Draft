@@ -1,0 +1,54 @@
+{
+ "cells": [
+  {
+   "cell_type": "raw",
+   "metadata": {},
+   "source": [
+    "---\n",
+    "title: \"Preparing text data for LLM Instruct fine-tuning\"\n",
+    "author: \"Chris Kroenke\"\n",
+    "date: \"10/20/2023\"\n",
+    "toc: true \n",
+    "badges: true\n",
+    "categories: [fractal, python, LLM]\n",
+    "image: llama-cpp-logo.png\n",
+    "jupyter: python3\n",
+    "---"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {},
+   "source": [
+    "> Turning a set of documents into Q&A pairs for LLM fine-tuning."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Intro\n",
+    "\n",
+    "This notebook "
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "metadata": {},
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "chaski",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "name": "python",
+   "version": "3.11.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

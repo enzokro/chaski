@@ -1,0 +1,14 @@
+/Users/cck/writings/chaski/nbs/blog/posts/fractal-llms/2023-10-17-Session-4-llm-rag/content/adoption.txt
+/Users/cck/writings/chaski/nbs/blog/posts/fractal-llms/2023-10-17-Session-4-llm-rag/content/colofon.txt
+/Users/cck/writings/chaski/nbs/blog/posts/fractal-llms/2023-10-17-Session-4-llm-rag/content/compass.txt
+/Users/cck/writings/chaski/nbs/blog/posts/fractal-llms/2023-10-17-Session-4-llm-rag/content/complex-hierarchies.txt
+/Users/cck/writings/chaski/nbs/blog/posts/fractal-llms/2023-10-17-Session-4-llm-rag/content/diataxis.fr.txt
+/Users/cck/writings/chaski/nbs/blog/posts/fractal-llms/2023-10-17-Session-4-llm-rag/content/explanation.txt
+/Users/cck/writings/chaski/nbs/blog/posts/fractal-llms/2023-10-17-Session-4-llm-rag/content/how-to-guides.txt
+/Users/cck/writings/chaski/nbs/blog/posts/fractal-llms/2023-10-17-Session-4-llm-rag/content/how-to-use-diataxis.txt
+/Users/cck/writings/chaski/nbs/blog/posts/fractal-llms/2023-10-17-Session-4-llm-rag/content/needs.txt
+/Users/cck/writings/chaski/nbs/blog/posts/fractal-llms/2023-10-17-Session-4-llm-rag/content/quality.txt
+/Users/cck/writings/chaski/nbs/blog/posts/fractal-llms/2023-10-17-Session-4-llm-rag/content/reference-explanation.txt
+/Users/cck/writings/chaski/nbs/blog/posts/fractal-llms/2023-10-17-Session-4-llm-rag/content/reference.txt
+/Users/cck/writings/chaski/nbs/blog/posts/fractal-llms/2023-10-17-Session-4-llm-rag/content/tutorials-how-to.txt
+/Users/cck/writings/chaski/nbs/blog/posts/fractal-llms/2023-10-17-Session-4-llm-rag/content/tutorials.txt
