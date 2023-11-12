@@ -1,29 +1,13 @@
 [
   {
-    "listing": "/index.html",
+    "listing": "/course.html",
     "items": [
-      "/blog/posts/fractal-llms/05-rag/index.html",
-      "/blog/posts/fractal-llms/04-llama/index.html",
-      "/blog/posts/fractal-llms/03-hf-nlp-models/index.html",
-      "/blog/posts/fractal-llms/03-hf-nlp-models/old_mlc_nb.html",
-      "/blog/posts/fractal-llms/02-nbdev/index.html",
-      "/blog/posts/fractal-llms/01-env/index.html",
       "/blog/posts/fractal-llms/00-Overview/index.html",
-      "/blog/posts/2023-04-17-llm-prompt-tips/index.html",
-      "/blog/posts/2022-11-28-sd-v2-schedules-1/index.html",
-      "/blog/posts/2022-11-26-guidance-expts-8/index.html",
-      "/blog/posts/2022-11-25-guidance-expts-7/index.html",
-      "/blog/posts/2022-11-24-guidance-expts-6/index.html",
-      "/blog/posts/2022-11-24-guidance-expts-5/index.html",
-      "/blog/posts/2022-11-23-guidance-expts-4/index.html",
-      "/blog/posts/2022-11-21-guidance-expts-3/index.html",
-      "/blog/posts/2022-11-20-minimal-diffusion/index.html",
-      "/blog/posts/2022-11-20-guidance-expts-2/index.html",
-      "/blog/posts/2022-11-16-pytorch-slerp/index.html",
-      "/blog/posts/2022-11-15-guidance-expts-1/index.html",
-      "/blog/posts/2022-11-08-merge-n-BSTs/index.html",
-      "/blog/posts/2022-09-01-rayleigh-init/index.html",
-      "/blog/posts/2022-08-20-spec-norms/index.html"
+      "/blog/posts/fractal-llms/01-env/index.html",
+      "/blog/posts/fractal-llms/02-nbdev/index.html",
+      "/blog/posts/fractal-llms/03-hf-nlp-models/index.html",
+      "/blog/posts/fractal-llms/04-llama/index.html",
+      "/blog/posts/fractal-llms/05-rag/index.html"
     ]
   },
   {
@@ -47,15 +31,29 @@
     ]
   },
   {
-    "listing": "/course.html",
+    "listing": "/index.html",
     "items": [
-      "/blog/posts/fractal-llms/00-Overview/index.html",
-      "/blog/posts/fractal-llms/01-env/index.html",
-      "/blog/posts/fractal-llms/02-nbdev/index.html",
-      "/blog/posts/fractal-llms/03-hf-nlp-models/index.html",
-      "/blog/posts/fractal-llms/03-hf-nlp-models/old_mlc_nb.html",
+      "/blog/posts/fractal-llms/05-rag/index.html",
       "/blog/posts/fractal-llms/04-llama/index.html",
-      "/blog/posts/fractal-llms/05-rag/index.html"
+      "/blog/posts/fractal-llms/03-hf-nlp-models/index.html",
+      "/blog/posts/fractal-llms/02-nbdev/index.html",
+      "/blog/posts/fractal-llms/01-env/index.html",
+      "/blog/posts/fractal-llms/00-Overview/index.html",
+      "/blog/posts/2023-04-17-llm-prompt-tips/index.html",
+      "/blog/posts/2022-11-28-sd-v2-schedules-1/index.html",
+      "/blog/posts/2022-11-26-guidance-expts-8/index.html",
+      "/blog/posts/2022-11-25-guidance-expts-7/index.html",
+      "/blog/posts/2022-11-24-guidance-expts-6/index.html",
+      "/blog/posts/2022-11-24-guidance-expts-5/index.html",
+      "/blog/posts/2022-11-23-guidance-expts-4/index.html",
+      "/blog/posts/2022-11-21-guidance-expts-3/index.html",
+      "/blog/posts/2022-11-20-minimal-diffusion/index.html",
+      "/blog/posts/2022-11-20-guidance-expts-2/index.html",
+      "/blog/posts/2022-11-16-pytorch-slerp/index.html",
+      "/blog/posts/2022-11-15-guidance-expts-1/index.html",
+      "/blog/posts/2022-11-08-merge-n-BSTs/index.html",
+      "/blog/posts/2022-09-01-rayleigh-init/index.html",
+      "/blog/posts/2022-08-20-spec-norms/index.html"
     ]
   }
 ]
