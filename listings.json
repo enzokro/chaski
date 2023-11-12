@@ -2,8 +2,10 @@
   {
     "listing": "/index.html",
     "items": [
+      "/blog/posts/fractal-llms/05-rag/index.html",
       "/blog/posts/fractal-llms/04-llama/index.html",
-      "/blog/posts/fractal-llms/03-mlc/index.html",
+      "/blog/posts/fractal-llms/03-hf-nlp-models/index.html",
+      "/blog/posts/fractal-llms/03-hf-nlp-models/old_mlc_nb.html",
       "/blog/posts/fractal-llms/02-nbdev/index.html",
       "/blog/posts/fractal-llms/01-env/index.html",
       "/blog/posts/fractal-llms/00-Overview/index.html",
@@ -50,8 +52,10 @@
       "/blog/posts/fractal-llms/00-Overview/index.html",
       "/blog/posts/fractal-llms/01-env/index.html",
       "/blog/posts/fractal-llms/02-nbdev/index.html",
-      "/blog/posts/fractal-llms/03-mlc/index.html",
-      "/blog/posts/fractal-llms/04-llama/index.html"
+      "/blog/posts/fractal-llms/03-hf-nlp-models/index.html",
+      "/blog/posts/fractal-llms/03-hf-nlp-models/old_mlc_nb.html",
+      "/blog/posts/fractal-llms/04-llama/index.html",
+      "/blog/posts/fractal-llms/05-rag/index.html"
     ]
   }
 ]

@@ -9,7 +9,7 @@
 <meta name="author" content="Chris Kroenke">
 <meta name="dcterms.date" content="2023-10-05">
 
-<title>chaski - Lessong 2: Creating a blog with nbdev</title>
+<title>chaski - Lessong 2: Blogging with nbdev</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -96,13 +96,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rosarivo">
-<meta property="og:title" content="chaski - Lessong 2: Creating a blog with nbdev">
+<meta property="og:title" content="chaski - Lessong 2: Blogging with nbdev">
 <meta property="og:description" content="">
 <meta property="og:image" content="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/nbdev_pic.png">
 <meta property="og:site-name" content="chaski">
 <meta property="og:image:height" content="1132">
 <meta property="og:image:width" content="2472">
-<meta name="twitter:title" content="chaski - Lessong 2: Creating a blog with nbdev">
+<meta name="twitter:title" content="chaski - Lessong 2: Blogging with nbdev">
 <meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/nbdev_pic.png">
 <meta name="twitter:image-height" content="1132">
@@ -191,7 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lessong 2: Creating a blog with nbdev</h1>
+<h1 class="title">Lessong 2: Blogging with nbdev</h1>
   <div class="quarto-categories">
     <div class="quarto-category">fractal</div>
     <div class="quarto-category">python</div>
@@ -224,35 +224,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <blockquote class="blockquote">
-<p>Building a personal blog with nbdev and publishing it with Quarto.</p>
+<p>Making a personal blog for the course using nbdev.</p>
 </blockquote>
 <section id="intro" class="level1">
 <h1>Intro</h1>
-<p><a href="https://nbdev.fast.ai/"><code>nbdev</code></a> is a powerful tool for creating python modules. It is based on writing code, documentation, and tests directly in an interactive Jupyter Notebook. This notebook-driven development has all of the tools needed to support a full, proper software library.</p>
+<p><a href="https://nbdev.fast.ai/"><code>nbdev</code></a> is a powerful tool for programming. It is based on writing code, documentation, and tests directly in an interactive Jupyter Notebook.</p>
 <p><code>nbdev</code> is inspired by two paradigms in the coding world:<br>
 - <a href="https://en.wikipedia.org/wiki/Literate_programming">Literate Programming</a><br>
 - <a href="https://en.wikipedia.org/wiki/Exploratory_programming">Exploratory Programming</a></p>
 <p>Let’s go over these two ideas and why their combination is so powerful.</p>
-<section id="literate-programming" class="level3">
-<h3 class="anchored" data-anchor-id="literate-programming">Literate Programming</h3>
-<p>The original idea was proposed by <a href="https://en.wikipedia.org/wiki/Donald_Knuth">Donald Knuth</a> in 1984. In Literate Programming, notes and tests are woven directly into a project’s source code. Each piece is crucial to the overall approach and makes for better, more readable code. The code, documentation, and tests are all first-class citizens in Literate Programming. This is very different from the usual software approach where tests and documentation live in a separate set of files.</p>
+<section id="literate-programming" class="level2">
+<h2 class="anchored" data-anchor-id="literate-programming">Literate Programming</h2>
+<p>In Literate Programming, notes and tests are woven directly into a project’s source code. Each piece is crucial to the overall approach and makes for better, more readable code. The original idea was proposed by <a href="https://en.wikipedia.org/wiki/Donald_Knuth">Donald Knuth</a> in 1984.</p>
+<p>The code, documentation, and tests are all first-class citizens in Literate Programming. This is very different from the typical approach to software where tests and documentation live in a separate set of files.</p>
 <p>In <code>nbdev</code>, a Jupyter Notebook is the single source of truth for code, documentation, and tests. Instead of managing three independent groups of files, everything is defined and happens in the Notebook. If the Notebook runs, then you know your code will run.</p>
-<p>So, why is this helpful? A fun analogy might help: Notebooks are the modern, digital version of field journals. The inspirational samples below from <a href="https://www.wired.com/2011/07/science-field-notes-gallery/">this Wired article</a> show what science, at its best, can be:</p>
-<p><img src="field-notes-butterflies.jpg" class="img-fluid"> <img src="field-notes-lynx.jpg" class="img-fluid"> <img src="field-notes-grinnell.jpg" class="img-fluid"></p>
-<p>Let’s focus on the last example: the field notes about a lynx. Notice that we’re not reading a long description of what a Lynx is <em>supposed</em> to look like. And we’re not looking at a series of pictures with no context either. We’re getting the best of both worlds: short and relevant descriptions right next to clear, working examples. Field notes bridge the gap between the written, theoretical and the actual, practical.</p>
-<p>Notebooks can do for code what the field notes above did for the lynx. We can interactively show people the data, describe what’s being done, and make sure that the results are correct. We can even show any mistakes and struggles along the way. This tight loop between what you’re doing (<em>code</em>), describing what you’re doing (<em>documentation</em>), and making sure it’s correct (<em>tests</em>) is a great way to approach research. More than that, it is an incredibly powerful way to communicate and share ideas.</p>
 </section>
-<section id="exploratory-programming" class="level3">
-<h3 class="anchored" data-anchor-id="exploratory-programming">Exploratory Programming</h3>
+<section id="exploratory-programming" class="level2">
+<h2 class="anchored" data-anchor-id="exploratory-programming">Exploratory Programming</h2>
 <p>Exploratory Programming is an open-ended approach for tackling new problems and unknown domains. It’s very useful at the start of a project when details are still being finalized. And it can also bring out different angles to a known, established approach by showing it under a new light.</p>
 <p>Notebooks are both dynamic and interactive which makes them perfect for Exploratory Programming. They make the barrier for trying new things extremely low. And they’re downright fun!</p>
 <p>The video below is an incredible talk by Bret Victor about the power of Exploratory Programming, with stunning examples throughout to drive the point home:</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/PUv66718DII?si=rPbY3LL6kQw-4yUa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
 </iframe>
 </section>
-<section id="combining-literate-and-exploratory-programming" class="level3">
-<h3 class="anchored" data-anchor-id="combining-literate-and-exploratory-programming">Combining Literate and Exploratory Programming</h3>
-<p><code>nbdev</code> combines these two ideas in its workflow. We can interactively learn about and explore how something works. Iterations are fast and cheap so it’s easy to follow any hit of curiosity. And we can now develop and test code in a much more dynamic way than usual.</p>
+<section id="combining-literate-and-exploratory-programming" class="level2">
+<h2 class="anchored" data-anchor-id="combining-literate-and-exploratory-programming">Combining Literate and Exploratory Programming</h2>
+<p><code>nbdev</code> combines these two ideas in its workflow. We covered why this is a powerful combination in the <a href="https://enzokro.dev/blog/posts/fractal-llms/00-Overview/#course-philosophy">Course Philosophy</a> section of the syllabus. Please take a moment to re-read with the new context from above.</p>
+<p>With this combo, we can interactively learn about and explore how something works. Iterations are fast and cheap so it’s easy to follow any hit of curiosity. And we can now develop and test code in a much more dynamic way than usual.</p>
 <p>These ideas can be doled out on the fly. For example, at the start of a project we could lean Exploratory to map out the problem space. Then, as the idea matures, we can pivot to Literate to refine and crystallize our approach.</p>
 <p>And if anything breaks, we can always restart the Notebook and try again.</p>
 <p>Next let’s look at how <code>nbdev</code> can turn Notebooks into blog posts.</p>

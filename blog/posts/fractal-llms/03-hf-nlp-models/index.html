@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Chris Kroenke">
+<meta name="dcterms.date" content="2023-10-07">
+
+<title>chaski - Lesson 3: HuggingFace NLP Models</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<link href="../../../../favicon.png" rel="icon" type="image/png">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rosarivo">
+<meta property="og:title" content="chaski - Lesson 3: HuggingFace NLP Models">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://enzokro.dev/blog/posts/fractal-llms/03-hf-nlp-models/llama.jpeg">
+<meta property="og:site-name" content="chaski">
+<meta name="twitter:title" content="chaski - Lesson 3: HuggingFace NLP Models">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://enzokro.dev/blog/posts/fractal-llms/03-hf-nlp-models/llama.jpeg">
+<meta name="twitter:card" content="summary_large_image">
+</head><body class="nav-fixed"><header id="custom-site-header" class="custom-nav page-columns page-rows-contents"> 
+    <nav class="custom-nav-content">
+        <div class="navbar-brand-container">
+            <a class="navbar-brand" href="http://enzokro.dev/">
+                <span class="navbar-title custom-title">Chaski</span>
+            </a>
+        </div>
+    </nav>
+    <div class="custom-nav-sidebar">
+        <div id="quarto-search" title="Search"></div>
+    </div>
+</header>
+
+
+<link rel="stylesheet" href="../../../../styles.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">chaski</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/enzokro_" rel="" target=""><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/enzokro" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro">Intro</a>
+  <ul class="collapse">
+  <li><a href="#notebook-best-practices" id="toc-notebook-best-practices" class="nav-link" data-scroll-target="#notebook-best-practices">Notebook best practices</a></li>
+  </ul></li>
+  <li><a href="#sentiment-analysis-with-huggingface" id="toc-sentiment-analysis-with-huggingface" class="nav-link" data-scroll-target="#sentiment-analysis-with-huggingface">Sentiment Analysis with HuggingFace</a>
+  <ul class="collapse">
+  <li><a href="#first-a-pipeline" id="toc-first-a-pipeline" class="nav-link" data-scroll-target="#first-a-pipeline">First, a Pipeline</a></li>
+  </ul></li>
+  <li><a href="#going-inside-the-pipeline" id="toc-going-inside-the-pipeline" class="nav-link" data-scroll-target="#going-inside-the-pipeline">Going inside the <code>pipeline</code></a>
+  <ul class="collapse">
+  <li><a href="#config-class" id="toc-config-class" class="nav-link" data-scroll-target="#config-class">Config class</a></li>
+  <li><a href="#preprocessor-class" id="toc-preprocessor-class" class="nav-link" data-scroll-target="#preprocessor-class">Preprocessor class</a></li>
+  <li><a href="#model-class" id="toc-model-class" class="nav-link" data-scroll-target="#model-class">Model class</a></li>
+  <li><a href="#naming-the-model" id="toc-naming-the-model" class="nav-link" data-scroll-target="#naming-the-model">Naming the model</a></li>
+  <li><a href="#putting-together-a-simple_pipeline" id="toc-putting-together-a-simple_pipeline" class="nav-link" data-scroll-target="#putting-together-a-simple_pipeline">Putting together a <code>simple_pipeline</code></a>
+  <ul class="collapse">
+  <li><a href="#preprocessing-the-inputs" id="toc-preprocessing-the-inputs" class="nav-link" data-scroll-target="#preprocessing-the-inputs">Preprocessing the inputs</a></li>
+  <li><a href="#runnning-the-model" id="toc-runnning-the-model" class="nav-link" data-scroll-target="#runnning-the-model">Runnning the model</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#true-huggingface-magic-auto-classes" id="toc-true-huggingface-magic-auto-classes" class="nav-link" data-scroll-target="#true-huggingface-magic-auto-classes">True HuggingFace magic: <code>Auto</code> classes</a>
+  <ul class="collapse">
+  <li><a href="#using-the-custom-sentimentpipeline" id="toc-using-the-custom-sentimentpipeline" class="nav-link" data-scroll-target="#using-the-custom-sentimentpipeline">Using the custom <code>SentimentPipeline</code></a></li>
+  </ul></li>
+  <li><a href="#conlusion" id="toc-conlusion" class="nav-link" data-scroll-target="#conlusion">Conlusion</a></li>
+  <li><a href="#appendix-1-counting-the-number-of-parameters-in-a-model" id="toc-appendix-1-counting-the-number-of-parameters-in-a-model" class="nav-link" data-scroll-target="#appendix-1-counting-the-number-of-parameters-in-a-model">Appendix 1: Counting the number of parameters in a model</a></li>
+  <li><a href="#appendix-2-inspecting-the-classifier-notebook-style." id="toc-appendix-2-inspecting-the-classifier-notebook-style." class="nav-link" data-scroll-target="#appendix-2-inspecting-the-classifier-notebook-style.">Appendix 2: Inspecting the <code>classifier</code>, notebook style.</a>
+  <ul class="collapse">
+  <li><a href="#asking-questions-and" id="toc-asking-questions-and" class="nav-link" data-scroll-target="#asking-questions-and">Asking questions: <code>?</code> and <code>??</code></a></li>
+  <li><a href="#inspecting-a-specific-classifier-function" id="toc-inspecting-a-specific-classifier-function" class="nav-link" data-scroll-target="#inspecting-a-specific-classifier-function">Inspecting a specific <code>classifier</code> function</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lesson 3: HuggingFace NLP Models</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">fractal</div>
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">LLM</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Chris Kroenke </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 7, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<blockquote class="blockquote">
+<p>Running powerful NLP models with the HuggingFace <code>transformers</code> library.</p>
+</blockquote>
+<section id="intro" class="level1">
+<h1>Intro</h1>
+<p>Welcome to the third lesson of the course. Let’s recap our progress so far:</p>
+<ul>
+<li>Lesson 1: We made a python environment for LLMs.<br>
+</li>
+<li>Lesson 2: Set up a personal blog to track our progress.</li>
+</ul>
+<p>Next we will use our first LLM. We’ll start with a Natural Language Processing (NLP) model provided by the HuggingFace team.</p>
+<section id="notebook-best-practices" class="level2">
+<h2 class="anchored" data-anchor-id="notebook-best-practices">Notebook best practices</h2>
+<p>First, let’s set up our notebook to be fully interactive and easy to use. We can do this with a couple of “magic functions” built-in to Jupyter.</p>
+<p>Specifically, we use the magic <code>autoreload</code> and <code>matplotlib</code> functions. The cell below shows them in action:</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># best practice notebook magic</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext autoreload</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>autoreload <span class="dv">2</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s take a look at what these magic functions do.</p>
+<p><code>autoreload</code> dynamically reloads code libraries, even as they’re changing under the hood. That means we do not have to restart the notebook after every change. We can instead code and experiment on the fly.</p>
+<p><code>matplotlib inline</code> automatically displays any plots below the code cell that created them. The plots are also saved in the notebook itself, which is perfect for our blog posts.</p>
+<p>All of our notebooks going forward will start with these magic functions.</p>
+<p>Let’s start with the <code>"hello, world!"</code> of NLP: sentiment analysis.</p>
+</section>
+</section>
+<section id="sentiment-analysis-with-huggingface" class="level1">
+<h1>Sentiment Analysis with HuggingFace</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The code and examples below are based on the official HuggingFace tutorial, reworked to better suit the course.</p>
+</div>
+</div>
+<p>Imagine that we’re selling some product. And we’ve gathered a bunch of reviews from a large group of users to find out both the good and bad things that people are saying. The bad reviews will point out where our product needs improving. Positive reviews will show what we’re doing right.</p>
+<p>Figuring out the tone of a statement (<em>positive vs.&nbsp;negative</em>) is an area of NLP known as <code>sentiment analysis</code>.</p>
+<p>Going through each review would give us a ton of insight about our product. But, it would take a ton of intense and manual effort. Enter Machine Learning to the rescue! An NLP model can automatically analyze and classify the reviews in bulk.</p>
+<section id="first-a-pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="first-a-pipeline">First, a Pipeline</h2>
+<p>Let’s take a look at the HuggingFace NLP model that we’ll run. At a high level, the model is built around three key pieces:</p>
+<ol type="1">
+<li>A <code>Config</code> file.<br>
+</li>
+<li>A <code>Preprocessor</code> file.<br>
+</li>
+<li><code>Model</code> file(s).</li>
+</ol>
+<p>The HuggingFace API has a handy, high-level <code>pipeline</code> that wraps up all three objects for us.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before going forward, make sure that the <code>llm-env</code> environment from the first lesson is active. This environment has the HuggingFace libraries used below.</p>
+</div>
+</div>
+<p>The code below uses the <code>transformers</code> library to build a Sentiment Analysis <code>pipeline</code>.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load in the pipeline object from HuggingFace</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create a sentiment analysis pipeline</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>classifier <span class="op">=</span> pipeline(<span class="st">"sentiment-analysis"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>No model was supplied, defaulted to distilbert-base-uncased-finetuned-sst-2-english and revision af0f99b (https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english).
+Using a pipeline without specifying a model name and revision in production is not recommended.</code></pre>
+</div>
+</div>
+<p>Since we didn’t specify a model, you can see in the output above that HuggingFace picked a <a href="distilbert-base-uncased-finetuned-sst-2-english">distilbert model</a> for us by default.</p>
+<p>We will learn more about what exactly <code>distilbert</code> is and how it works later on. For now, think of it as a useful NLP genie who can look at a sentence and tell us whether its has a positive or negative tone.</p>
+<p>Next, let’s find out what the model thinks about the sentence: <code>"HuggingFace pipelines are awesome!"</code></p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sentiment analysis on a simple, example sentence</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>example_sentence <span class="op">=</span> <span class="st">"HuggingFace pipelines are awesome!"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>classifier(example_sentence)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>[{'label': 'POSITIVE', 'score': 0.9998503923416138}]</code></pre>
+</div>
+</div>
+<p>Not bad. We see a strong confident score for a <code>POSITIVE</code> label, as could be expected.</p>
+<p>We can also pass many sentences at once, which starts to show the bulk processing power of these models. Let’s process four sentences at once: three positive ones, and a clearly negative one.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># many sentences at once, in a python list</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>many_sentences <span class="op">=</span> [</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"HuggingFace pipelines are awesome!"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I hope you're enjoying this course so far"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Hopefully the material is clear and useful"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I don't like this course so far"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># process many sentences at once</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> classifier(many_sentences)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># check the tone of each sentence</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> result <span class="kw">in</span> results:</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"label: </span><span class="sc">{</span>result[<span class="st">'label'</span>]<span class="sc">}</span><span class="ss">, with score: </span><span class="sc">{</span><span class="bu">round</span>(result[<span class="st">'score'</span>], <span class="dv">4</span>)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>label: POSITIVE, with score: 0.9999
+label: POSITIVE, with score: 0.9998
+label: POSITIVE, with score: 0.9998
+label: NEGATIVE, with score: 0.8758</code></pre>
+</div>
+</div>
+<p>Congrats! You’ve now ran a HuggingFace pipeline and used it to analyze the tone of a few sentences. Next, let’s take a closer look at the pipeline object.</p>
+</section>
+</section>
+<section id="going-inside-the-pipeline" class="level1">
+<h1>Going inside the <code>pipeline</code></h1>
+<p>Under the hood, a pipeline handles three key HuggingFace NLP pieces: Config, Preprocessor, and Model.</p>
+<p>To better understand each piece, let’s take one small step down the ladder of abstraction and build our own simple pipeline.</p>
+<p>We will use the same <code>distilbert</code> model from before. First we need the three key pieces mentioned above. Thankfully, we can import each of these pieces from the <code>transformers</code> library.</p>
+<section id="config-class" class="level2">
+<h2 class="anchored" data-anchor-id="config-class">Config class</h2>
+<p>The <code>config</code> class is a simple map with the options and configurations of a model. It has the key-value pairs that define a model’s architecture and hyperparameters.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># config for the model</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> DistilBertConfig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="preprocessor-class" class="level2">
+<h2 class="anchored" data-anchor-id="preprocessor-class">Preprocessor class</h2>
+<p>The <code>preprocessor</code> object in this case is a <code>Tokenizer</code>. Tokenizers convert strings and characters into special tensor inputs for the LLM.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Correctly pre-processing inputs is one of the most important and error-prone steps in using ML models. In other words, it’s good to offload to a class that’s already been tested and debugged.</p>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># input preprocessor to tokenize strings</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> DistilBertTokenizer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="model-class" class="level2">
+<h2 class="anchored" data-anchor-id="model-class">Model class</h2>
+<p>The <code>model</code> class holds the weights and parameters for the actual LLM. It’s the “meat and bones” of the setup, so to speak.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the text classifier model</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> DistilBertForSequenceClassification</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="naming-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="naming-the-model">Naming the model</h2>
+<p>We need to know a model’s full, proper name in to load it from HuggingFace. Its name is how we find the model on the <a href="https://huggingface.co/docs/hub/models-the-hub">HuggingFace Model Hub</a>.</p>
+<p>Once we know its full name, there is a handy <code>from_pretrained()</code> function that will automatically find and download the pieces for us.</p>
+<p>In this case, the distilbert model’s full name is:<br>
+&gt; <code>distilbert-base-uncased-finetuned-sst-2-english</code>.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sentiment analysis model name</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">'distilbert-base-uncased-finetuned-sst-2-english'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the code below we can now load each of the three NLP pieces for this model.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the config</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> DistilBertConfig.from_pretrained(model_name)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create the input tokenizer </span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> DistilBertTokenizer.from_pretrained(model_name)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># create the model</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> DistilBertForSequenceClassification.from_pretrained(model_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next we will compose these three pieces together to mimic the original <code>pipeline</code> example.</p>
+</section>
+<section id="putting-together-a-simple_pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="putting-together-a-simple_pipeline">Putting together a <code>simple_pipeline</code></h2>
+<section id="preprocessing-the-inputs" class="level3">
+<h3 class="anchored" data-anchor-id="preprocessing-the-inputs">Preprocessing the inputs</h3>
+<p>First, we create a <code>preprocess</code> function to turn a given <code>text</code> string into the proper, tokenized inputs than an LLM expects.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> preprocess(text: <span class="bu">str</span>):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Sends `text` through the model's tokenizer.  </span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">    The tokenizer turns words and characters into proper inputs for an NLP model.</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    tokenized_inputs <span class="op">=</span> tokenizer(text, return_tensors<span class="op">=</span><span class="st">'pt'</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tokenized_inputs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s test this preprocessing function on the example sentence from earlier.</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># manually preprocessing the example sentence: "HuggingFace pipelines are awesome!"</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>preprocess(example_sentence)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>{'input_ids': tensor([[  101, 17662, 12172, 13117,  2015,  2024, 12476,   999,   102]]), 'attention_mask': tensor([[1, 1, 1, 1, 1, 1, 1, 1, 1]])}</code></pre>
+</div>
+</div>
+<p>It turned an input string into numerical embeddings for the LLM. We’ll breakdown what exactly this output means later on in the course. For now, think of it as sanitizing and formatting the text into a format that the LLM has been trained to work with.</p>
+</section>
+<section id="runnning-the-model" class="level3">
+<h3 class="anchored" data-anchor-id="runnning-the-model">Runnning the model</h3>
+<p>Next up, let’s make our own <code>forward</code> function that run the LLM on preprocessed inputs.</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> forward(text: <span class="bu">str</span>):</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">    First we preprocess the `text` into tokens.</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Then we send the `tokenized_inputs` to the model.</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    tokenized_inputs <span class="op">=</span> preprocess(text)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    outputs <span class="op">=</span> model(<span class="op">**</span>tokenized_inputs)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> outputs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s check what this outputs for our running example sentence.</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>outputs <span class="op">=</span> forward(example_sentence)<span class="op">;</span> outputs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>SequenceClassifierOutput(loss=None, logits=tensor([[-4.2326,  4.5748]], grad_fn=&lt;AddmmBackward0&gt;), hidden_states=None, attentions=None)</code></pre>
+</div>
+</div>
+<p>You’ll see a lot going on in the <code>SequenceClassifierOutput</code> above. To be honest, this is where the original <code>pipeline</code> does most of the heavy-lifting for us. It takes the raw, detailed output from an LLM and converts it into a more human-readable format.</p>
+<p>We’ll mimic this heavy-lifting by using the <code>Config</code> class and model outputs to find out whether the sentence is positive or negative.</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> process_outputs(outs):</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Converting the raw model outputs into a human-readable result.</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Steps:</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">        1. Grab the raw "scores" from the model for Positive and Negative labels.  </span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">        2. Find out which score is the highest (aka the model's decision).  </span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">        3. Use the `config` object to find the class label for the highest score.  </span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co">        4. Turn the raw score into a human-readable probability value.  </span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co">        5. Print out the predicted labels with its probability.  </span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 1. Grab the raw "scores" that from the model for Positive and Negative labels</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    logits <span class="op">=</span> outs.logits</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 2. Find the strongest label score, aka the model's decision</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    pred_idx <span class="op">=</span> logits.argmax(<span class="dv">1</span>).item()</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 3. Use the `config` object to find the class label</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    pred_label <span class="op">=</span> config.id2label[pred_idx]  </span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 4. Calculate the human-readable number for the score</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    pred_score <span class="op">=</span> logits.softmax(<span class="op">-</span><span class="dv">1</span>)[:, pred_idx].item()</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 5. return the label and score in a dictionary</span></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">'label'</span>: pred_label,</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">'score'</span>: pred_score, </span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can now put together a <code>simple_pipeline</code>, and check how it compares to the original <code>pipeline</code>.</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simple_pipeline(text):</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Putting the NLP pieces and functions together into a pipeline.</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get the model's raw output</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    model_outs <span class="op">=</span> forward(text)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># convert the raw outputs into a human readable result</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    predictions <span class="op">=</span> process_outputs(model_outs)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> predictions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Calling the <code>simple_pipeline</code> on the example sentence, drumroll please…</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># running out simple pipeline on the example text</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>simple_pipeline(example_sentence)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre><code>{'label': 'POSITIVE', 'score': 0.9998503923416138}</code></pre>
+</div>
+</div>
+<p>And just like that, we too a small peek under the <code>pipeline</code> hood and built our own, simple working version.</p>
+<p>One pain point: we had to know the full, proper name of the different <code>Distilbert*</code> pieces to import the Config, Preprocessor, and Model. This gets overwhelming fast given the flood of LLM models released almost daily. Thankfully, HuggingFace has come up with a great solution to this problem: the <code>Auto</code> class.</p>
+</section>
+</section>
+</section>
+<section id="true-huggingface-magic-auto-classes" class="level1">
+<h1>True HuggingFace magic: <code>Auto</code> classes</h1>
+<p>With <code>Auto</code> classes, we don’t have to know the exact or proper name of the LLM’s objects to import them. We only need the proper name of the model on the hub:</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># viewing our distilber model's name</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>model_name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>'distilbert-base-uncased-finetuned-sst-2-english'</code></pre>
+</div>
+</div>
+<p>Run the cell below to import the Auto classes. Then we’ll use them with the model name to create an even cleaner <code>simple_pipeline</code>.</p>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># importing the Auto classes</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoConfig</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoModelForSequenceClassification</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next we create the three key NLP pieces with the Auto classes.</p>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># building the pieces with `Auto` classes</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> AutoConfig.from_pretrained(model_name)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(model_name)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> AutoModelForSequenceClassification.from_pretrained(model_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can now use these pieces to build a <code>simple_pipeline</code> class that’s cleaner than before, and can handle any model_name:</p>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SentimentPipeline:</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, model_name: <span class="bu">str</span>):</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">        Simple Sentiment Analysis pipeline.</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.model_name <span class="op">=</span> model_name</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.config <span class="op">=</span> AutoConfig.from_pretrained(<span class="va">self</span>.model_name)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(<span class="va">self</span>.model_name)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.model <span class="op">=</span> AutoModelForSequenceClassification.from_pretrained(<span class="va">self</span>.model_name)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> preprocess(<span class="va">self</span>, text: <span class="bu">str</span>):</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co">        Sends `text` through the LLM's tokenizer.  </span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="co">        The tokenizer turns words and characters into special inputs for the LLM.</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>        tokenized_inputs <span class="op">=</span> <span class="va">self</span>.tokenizer(text, return_tensors<span class="op">=</span><span class="st">'pt'</span>)</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> tokenized_inputs</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, text: <span class="bu">str</span>):</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="co">        First we preprocess the `text` into tokens.</span></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a><span class="co">        Then we send the `token_inputs` to the model.</span></span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>        token_inputs <span class="op">=</span> <span class="va">self</span>.preprocess(text)</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>        outputs <span class="op">=</span> <span class="va">self</span>.model(<span class="op">**</span>token_inputs)</span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> outputs</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> process_outputs(<span class="va">self</span>, outs):</span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a><span class="co">        Here we mimic the post-processing that HuggingFace automatically does in its `pipeline`.  </span></span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>        <span class="co"># grab the raw scores from the model for Positive and Negative labels</span></span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>        logits <span class="op">=</span> outs.logits</span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a>        <span class="co"># find the strongest label score, aka the model's decision</span></span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a>        pred_idx <span class="op">=</span> logits.argmax(<span class="dv">1</span>).item()</span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a>        <span class="co"># use the `config` object to find the actual class label</span></span>
+<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a>        pred_label <span class="op">=</span> <span class="va">self</span>.config.id2label[pred_idx]  </span>
+<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a>        <span class="co"># calculate the human-readable probability score for this class</span></span>
+<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a>        pred_score <span class="op">=</span> logits.softmax(<span class="op">-</span><span class="dv">1</span>)[:, pred_idx].item()</span>
+<span id="cb27-43"><a href="#cb27-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-44"><a href="#cb27-44" aria-hidden="true" tabindex="-1"></a>        <span class="co"># return the predicted label and its score</span></span>
+<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> {</span>
+<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a>            <span class="st">'label'</span>: pred_label,</span>
+<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a>            <span class="st">'score'</span>: pred_score, </span>
+<span id="cb27-48"><a href="#cb27-48" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb27-49"><a href="#cb27-49" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb27-50"><a href="#cb27-50" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>, text: <span class="bu">str</span>):</span>
+<span id="cb27-51"><a href="#cb27-51" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
+<span id="cb27-52"><a href="#cb27-52" aria-hidden="true" tabindex="-1"></a><span class="co">        Overriding the call method to easily and intuitively call the pipeline.</span></span>
+<span id="cb27-53"><a href="#cb27-53" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
+<span id="cb27-54"><a href="#cb27-54" aria-hidden="true" tabindex="-1"></a>        model_outs <span class="op">=</span> <span class="va">self</span>.forward(text)</span>
+<span id="cb27-55"><a href="#cb27-55" aria-hidden="true" tabindex="-1"></a>        preds <span class="op">=</span> <span class="va">self</span>.process_outputs(model_outs)</span>
+<span id="cb27-56"><a href="#cb27-56" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> preds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="using-the-custom-sentimentpipeline" class="level2">
+<h2 class="anchored" data-anchor-id="using-the-custom-sentimentpipeline">Using the custom <code>SentimentPipeline</code></h2>
+<p>Let’s leverage both the new class and a different model, to show the power of Auto classes.</p>
+<p>For fun, let’s use BERT model that was trained specifically on tweets. The full model’s name is <a href="https://huggingface.co/finiteautomata/bertweet-base-sentiment-analysis"><code>finiteautomata/bertweet-base-sentiment-analysis</code></a>.</p>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using a different model</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>new_model_name <span class="op">=</span> <span class="st">'finiteautomata/bertweet-base-sentiment-analysis'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating a new sentiment pipeline</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>simple_pipeline <span class="op">=</span> SentimentPipeline(new_model_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>emoji is not installed, thus not converting emoticons or emojis into text. Install emoji: pip3 install emoji==0.6.0</code></pre>
+</div>
+</div>
+<p>Now let’s run it on our handy example sentence.</p>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calling our new, flexible pipeline</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>simple_pipeline(example_sentence)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>{'label': 'POS', 'score': 0.9908382296562195}</code></pre>
+</div>
+</div>
+<p>Congrats! You’ve now built a flexible pipeline for Sentiment Analysis that can leverage most NLP models on the HuggingFace hub.</p>
+</section>
+</section>
+<section id="conlusion" class="level1">
+<h1>Conlusion</h1>
+<p>This notebook went through the basics of using a HuggingFace pipeline to run sentiment analysis on a few sentences. We then looked under the hood at the pipeline’s three key pieces: Config, Preprocessor, and Model.</p>
+<p>Lastly, we built our own <code>simple_pipeline</code> from scratch to see how the pieces fit together.</p>
+<p>The goal of this notebook was two fold. First, we wanted to gain hands-on experience with using the <code>transformers</code> API from HuggingFace. It’s an incredibly powerful library, that lets us do what used to be difficult, research-level NLP tasks in a few lines of code.</p>
+<p>Second, we wanted to get some familiarity with downloading models. The model weights that we downloaded from HuggingFace are the same ones that we will be fine-tuning, quantizing, and deploying on our devices throughout the course.</p>
+<p>There are two appendixes below. The first one gives a handy way of counting the number of weights in a model. The second one goes into more details about how to interactively debug an analyze the code in a Jupyter notebook.</p>
+</section>
+<section id="appendix-1-counting-the-number-of-parameters-in-a-model" class="level1">
+<h1>Appendix 1: Counting the number of parameters in a model</h1>
+<p>The following code snippet counts the number of trainable parameters in a model. It’s a question that comes up often when working with LLMs, and having a quick reference to find out a rough model’s size often comes in handy.</p>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_parameters(model):</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Counts the number of trainable parameters in a `model`.</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span>(p.numel() <span class="cf">for</span> p <span class="kw">in</span> model.parameters() <span class="cf">if</span> p.requires_grad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here we use it to count the number of parameters in the distilbert model from above.</p>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># view the number of parameters in the last model used</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="ss">f"Number of trainable params: </span><span class="sc">{</span>count_parameters(model)<span class="sc">:,}</span><span class="ss">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<pre><code>'Number of trainable params: 66,955,010'</code></pre>
+</div>
+</div>
+</section>
+<section id="appendix-2-inspecting-the-classifier-notebook-style." class="level1">
+<h1>Appendix 2: Inspecting the <code>classifier</code>, notebook style.</h1>
+<p>What is the <code>classifier</code> object, exactly? Jupyter has many powerful ways of inspecting and analyzing its code.</p>
+<p>One of the simplest ways of checking an object is to call it by itself in a code cell, as shown below.</p>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># show the contents of the `classifier` object</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>classifier</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<pre><code>&lt;transformers.pipelines.text_classification.TextClassificationPipeline at 0x15ac5f6d0&gt;</code></pre>
+</div>
+</div>
+<p>We can see the <code>classifier</code> is a type of <code>TextClassification</code> pipeline. This makes sense: we fed it an input sentence and asked it to classify the statement as <em>positive</em> vs.&nbsp;<em>negative</em>.</p>
+<p>There is also a tab-autocomplete feature to find the members and methods of an object. For example, to look up everything in <code>classifier</code>, hit tab after adding a <code>.</code>.</p>
+<p>Uncomment the cells below and hit the tab key to test the auto-complete feature.</p>
+<div class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">## tab after the `.` to auto-complete all variables/methods</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># classifier.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s say you vaguely remember the name of a variable or function, say for example the <code>forward()</code> method. In that case you can type the first few letters and hit tab to auto-complete the full set of options:</p>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">## tab after the `.for` to auto-complete the rest of the options</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># classifier.for</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="asking-questions-and" class="level2">
+<h2 class="anchored" data-anchor-id="asking-questions-and">Asking questions: <code>?</code> and <code>??</code></h2>
+<p>Lastly, we can literally interrogate an object in Jupyter for more information.</p>
+<p>If we tag a single <code>?</code> after an object, we’ll get its basic documentation (docstring). Note that we omit it here to keep the notebook from getting too busy.</p>
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">## the power of asking questions</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>classifier?</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If we tag on <em>two</em> question marks: <code>??</code>, then we get the full source code of the object:</p>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">## really curious about classifier</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>classifier??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Both <code>?</code> and <code>??</code> are excellent and quick ways to look under the hood of any object in Jupyter.</p>
+</section>
+<section id="inspecting-a-specific-classifier-function" class="level2">
+<h2 class="anchored" data-anchor-id="inspecting-a-specific-classifier-function">Inspecting a specific <code>classifier</code> function</h2>
+<p>Let’s take a look at the function that does the heavy lifting for our sentiment analysis task: <code>forward()</code>.</p>
+<div class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a> <span class="co"># looking at what actually runs the inputs</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>classifier.forward</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="31">
+<pre><code>&lt;bound method Pipeline.forward of &lt;transformers.pipelines.text_classification.TextClassificationPipeline object at 0x15ac5f6d0&gt;&gt;</code></pre>
+</div>
+</div>
+<p>What does this function actually do? Let’s find out.</p>
+<div class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># source code of the forward function</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>classifier.forward??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Signature: classifier.forward(model_inputs, **forward_params)
+Docstring: &lt;no docstring&gt;
+Source:   
+    def forward(self, model_inputs, **forward_params):
+        with self.device_placement():
+            if self.framework == "tf":
+                model_inputs["training"] = False
+                model_outputs = self._forward(model_inputs, **forward_params)
+            elif self.framework == "pt":
+                inference_context = self.get_inference_context()
+                with inference_context():
+                    model_inputs = self._ensure_tensor_on_device(model_inputs, device=self.device)
+                    model_outputs = self._forward(model_inputs, **forward_params)
+                    model_outputs = self._ensure_tensor_on_device(model_outputs, device=torch.device("cpu"))
+            else:
+                raise ValueError(f"Framework {self.framework} is not supported")
+        return model_outputs
+File:      ~/mambaforge/envs/llm_base/lib/python3.11/site-packages/transformers/pipelines/base.py
+Type:      method</code></pre>
+</div>
+</div>
+<p>We can see that it automatically handles whether we’re running a TensorFlow (<code>tf</code>) or PyTorch (<code>pt</code>) model. Then, it makes sure the tensors are on the correct device. Lastly is calls another function, <code>_forward()</code> on the prepared inputs.</p>
+<p>We can follow the rabbit hole as far down as needed. Let’s take a look at the source of <code>_forward</code>.</p>
+<div class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># going deeper</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>classifier._forward??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Signature: classifier._forward(model_inputs)
+Docstring:
+_forward will receive the prepared dictionary from `preprocess` and run it on the model. This method might
+involve the GPU or the CPU and should be agnostic to it. Isolating this function is the reason for `preprocess`
+and `postprocess` to exist, so that the hot path, this method generally can run as fast as possible.
+
+It is not meant to be called directly, `forward` is preferred. It is basically the same but contains additional
+code surrounding `_forward` making sure tensors and models are on the same device, disabling the training part
+of the code (leading to faster inference).
+Source:   
+    def _forward(self, model_inputs):
+        # `XXXForSequenceClassification` models should not use `use_cache=True` even if it's supported
+        model_forward = self.model.forward if self.framework == "pt" else self.model.call
+        if "use_cache" in inspect.signature(model_forward).parameters.keys():
+            model_inputs["use_cache"] = False
+        return self.model(**model_inputs)
+File:      ~/mambaforge/envs/llm_base/lib/python3.11/site-packages/transformers/pipelines/text_classification.py
+Type:      method</code></pre>
+</div>
+</div>
+<p>Ah, we can see it calls the <code>model</code> of the classifier. This is the <code>distilbert</code> model we saw earlier! Now we can peek under the hood at the actual Transformer LLM.</p>
+<div class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the distilbert sentiment analysis model</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>classifier.model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="34">
+<pre><code>DistilBertForSequenceClassification(
+  (distilbert): DistilBertModel(
+    (embeddings): Embeddings(
+      (word_embeddings): Embedding(30522, 768, padding_idx=0)
+      (position_embeddings): Embedding(512, 768)
+      (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+      (dropout): Dropout(p=0.1, inplace=False)
+    )
+    (transformer): Transformer(
+      (layer): ModuleList(
+        (0-5): 6 x TransformerBlock(
+          (attention): MultiHeadSelfAttention(
+            (dropout): Dropout(p=0.1, inplace=False)
+            (q_lin): Linear(in_features=768, out_features=768, bias=True)
+            (k_lin): Linear(in_features=768, out_features=768, bias=True)
+            (v_lin): Linear(in_features=768, out_features=768, bias=True)
+            (out_lin): Linear(in_features=768, out_features=768, bias=True)
+          )
+          (sa_layer_norm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+          (ffn): FFN(
+            (dropout): Dropout(p=0.1, inplace=False)
+            (lin1): Linear(in_features=768, out_features=3072, bias=True)
+            (lin2): Linear(in_features=3072, out_features=768, bias=True)
+            (activation): GELUActivation()
+          )
+          (output_layer_norm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+        )
+      )
+    )
+  )
+  (pre_classifier): Linear(in_features=768, out_features=768, bias=True)
+  (classifier): Linear(in_features=768, out_features=2, bias=True)
+  (dropout): Dropout(p=0.2, inplace=False)
+)</code></pre>
+</div>
+</div>
+<p>We will breakdown the different pieces in this model later on in the course.</p>
+<p>The important takeaway for now is that this shows the main structure of most Transformer LLM models. The changes are mostly incremental from this foundation.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="enzokro/chaski_comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
