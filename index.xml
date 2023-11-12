@@ -589,7 +589,7 @@ Clena NumErrors tutorials.txt: 0</code></pre>
   <category>LLM</category>
   <guid>https://enzokro.dev/blog/posts/fractal-llms/05-rag/index.html</guid>
   <pubDate>Sat, 21 Oct 2023 04:00:00 GMT</pubDate>
-  <media:content url="https://commons.wikimedia.org/wiki/File:Fractal_canopy.svg#/media/File:Fractal_canopy.svg" medium="image" type="image/svg+xml"/>
+  <media:content url="https://enzokro.dev/blog/posts/fractal-llms/05-rag/Fractal_canopy.svg" medium="image" type="image/svg+xml"/>
 </item>
 <item>
   <title>Lesson 4: Quantized LLMs with llama.cpp</title>
