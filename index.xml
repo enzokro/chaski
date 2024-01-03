@@ -3064,21 +3064,21 @@ font-style: inherit;">--index-url</span> https://download.pytorch.org/whl/cu121<
 </blockquote>
 <section id="intro" class="level1">
 <h1>Intro</h1>
-<p>In this course we create our own AI Assistant. We wil build it by fine-tuning and augmenting an open-source Large Language Model (LLM).</p>
+<p>In this course, we will create our own AI Assistant. The assistant will be created by augmenting and fine-tuning an open-source Large Language Model (LLM).</p>
 <p>So what exactly is an AI Assistant, and why would we want to make one?</p>
 <p>There is a lot of hype around AI Assistants at the moment. Folks are imagining a future where we all have powerful, personalized helpers at our fingertips. These Assistants promise to make our lives easier and more comfortable. They will be the AIs of Science Fiction made manifest: TARS from Interstellar, HAL 9000 from Space Odyssey, Iron Man’s Jarvis, etc.</p>
 <section id="realistic-assistants" class="level2">
 <h2 class="anchored" data-anchor-id="realistic-assistants">Realistic Assistants</h2>
 <p>Despite the breakneck speed of LLM progress, AI Assistants as powerful as those are still a ways off. The exact timelines are hard, if not impossible, to predict. For now it is safe to say that Assistants of that caliber won’t be here anytime “soon”. But, barring some force majeure, they <em>will</em> exist at some point.</p>
-<p>The gap, then, is that folks are promising advanced Assistants while on the ground we still deal with LLM hallucinations and prohibitive compute requirements.</p>
+<p>The gap, then, is between the advanced Assistants folks are promising and dreaming about, and the LLM hallucinations and steep compute requirements we are still dealing with one the ground.</p>
 </section>
 <section id="building-an-ai-assistant" class="level2">
 <h2 class="anchored" data-anchor-id="building-an-ai-assistant">Building an AI Assistant</h2>
-<p>Where does that leave us? Well, as a recent announcement <a href="https://twitter.com/gdb/status/1694107518488981868">from OpenAI</a> shows, fine-tuning a GPT-3.5 model on small, clean datasets surpasses GPT-4 on certain tasks.</p>
+<p>Where does that leave us? Well, as a recent announcement <a href="https://twitter.com/gdb/status/1694107518488981868">from OpenAI</a> shows, fine-tuning a GPT-3.5 model on small, clean datasets can even surpass GPT-4 on certain tasks.</p>
 <p><em>That’s</em> what we are aiming for. In other words, we already have the ability to develop outrageously powerful tools by fine-tuning LLMs on small, clean datasets.</p>
-<p>So while we won’t make Iron Man’s Jarvis, we are aiming for far more than a simple chatbot. Think of our Assistant like a smart Rubber Duck. A Rubber Duck is anything (actual yellow rubber duckie optional) that you keep around your desk and talk to about your work. It is a physical tool for thought, since it’s so often helpful to speak out loud the swirl of thoughts in our head.</p>
-<p>Our simple Assistant will be a Rubber Duck that we can talk with. When we ask it a question about our work, it will respond given what it knows about the project as a whole. Or, if we are simply verbalizing a thought to untangle it, the Assistant can give us feedback or suggest other approaches.</p>
-<p>If we can be so bold: our Assistant will be a mini-Jarvis laser-focused on a specific task. Then, as both the tools and field progresses, we will have a full development stack to unlock even more capabilities from this smart Rubber Duck.</p>
+<p>So while we won’t make Iron Man’s Jarvis, we are aiming for far more than a simple chatbot. Think of our Assistant like a smart Rubber Duck. For reference, a Rubber Duck is anything that you keep around your desk and talk to about your work. It is a physical tool for thought, since it’s so often helpful to speak out loud the swirl of thoughts inside our heads.</p>
+<p>Our simple Assistant will be a Rubber Duck that we can talk to, and that talks back. When we ask it a question about our work, it will respond given what it knows about the project as a whole. Or, if we are simply verbalizing a thought to untangle it, the Assistant can give us feedback or suggest other ideas.</p>
+<p>If we can be so bold: our Assistant will be a mini-Jarvis laser-focused on a specific task. Then, as both the tools and field progresses, we will have a full development stack ready to unlock even more capabilities from this smart Rubber Duck.</p>
 <blockquote class="blockquote">
 <p>Course Summary: We will fine-tune and augment an LLM on a small, clean dataset to build an Intelligent Rubber Duck.</p>
 </blockquote>
@@ -3086,7 +3086,6 @@ font-style: inherit;">--index-url</span> https://download.pytorch.org/whl/cu121<
 </section>
 <section id="course-overview" class="level1">
 <h1>Course Overview</h1>
-<p>This course is meant to be public-facing. Students should write about their journey to both chronicle and track their progress. Publishing is a powerful tool for learning since it casts a piece of work under a new, critical light. Sharing each other’s work will also crystalize your understanding of a topic by showing it from different angles. Blogging and writing can be scary, but here we aim to make it as smooth and helpful as possible.</p>
 <p>Each lesson lives inside a Jupyter Notebook. The notebooks build on each other, but they are also self-contained and reviewable on their own.</p>
 <p>Here is an outline of the lessons:</p>
 <p><strong>1. Python environments for LLMs</strong></p>
@@ -3117,6 +3116,9 @@ font-style: inherit;">--index-url</span> https://download.pytorch.org/whl/cu121<
 <blockquote class="blockquote">
 <p>Deploying fine-tuned, quantized LLMs on mobile devices</p>
 </blockquote>
+<p>This is a public-facing course. Students should write about their journey to both cement and track their progress.</p>
+<p>Publishing is a powerful tool for learning since it casts a piece of work under a new, critical light. Your understanding of a topic is also crystallized by seeing other’s work, highlighted from different angles.</p>
+<p>Blogging out in the open can be scary, but here we aim to make it as easy and helpful as possible.</p>
 </section>
 <section id="course-philosophy" class="level1">
 <h1>Course Philosophy</h1>
@@ -3129,8 +3131,8 @@ font-style: inherit;">--index-url</span> https://download.pytorch.org/whl/cu121<
 </section>
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>
-<p>This notebook introduced our goals and approach for the Fractal U LLMs course. In summary, we will fine-tune and augment an open-source LLM to create a simple AI Assistant that can help us better learn and create.</p>
-<p>Thank you for choosing to come along on this journey! I promise that we will learn a ton, and have lots of fun along the way.</p>
+<p>This notebook introduced our goals and approach for the Fractal-U LLMs course. In summary, we will fine-tune and augment an open-source LLM to create a simple AI Assistant that can help us better learn and create.</p>
+<p>Thank you for coming along on this journey! I promise that we will learn a ton, and have lots of fun along the way.</p>
 
 
 </section>
