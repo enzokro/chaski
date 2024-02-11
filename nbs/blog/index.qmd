@@ -3,7 +3,6 @@ pagetitle: chaski blog
 listing:
   contents: 
     - "posts/*/*.ipynb"
-    - "!posts/fractal-llms/"
   type: default
   sort:
     - "date desc"
