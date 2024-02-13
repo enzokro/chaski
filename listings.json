@@ -1,14 +1,7 @@
 [
   {
     "listing": "/course.html",
-    "items": [
-      "/blog/posts/fractal-llms/00-Overview/index.html",
-      "/blog/posts/fractal-llms/01-env/index.html",
-      "/blog/posts/fractal-llms/02-nbdev/index.html",
-      "/blog/posts/fractal-llms/03-hf-nlp-models/index.html",
-      "/blog/posts/fractal-llms/04-llama/index.html",
-      "/blog/posts/fractal-llms/05-rag/index.html"
-    ]
+    "items": []
   },
   {
     "listing": "/blog/index.html",
@@ -33,12 +26,6 @@
   {
     "listing": "/index.html",
     "items": [
-      "/blog/posts/fractal-llms/05-rag/index.html",
-      "/blog/posts/fractal-llms/04-llama/index.html",
-      "/blog/posts/fractal-llms/03-hf-nlp-models/index.html",
-      "/blog/posts/fractal-llms/02-nbdev/index.html",
-      "/blog/posts/fractal-llms/01-env/index.html",
-      "/blog/posts/fractal-llms/00-Overview/index.html",
       "/blog/posts/2023-04-17-llm-prompt-tips/index.html",
       "/blog/posts/2022-11-28-sd-v2-schedules-1/index.html",
       "/blog/posts/2022-11-26-guidance-expts-8/index.html",
