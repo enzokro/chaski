@@ -169,10 +169,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#installing-mamba" id="toc-installing-mamba" class="nav-link" data-scroll-target="#installing-mamba">Installing <code>mamba</code></a>
   <ul class="collapse">
-  <li><a href="#mamba-on-mac" id="toc-mamba-on-mac" class="nav-link" data-scroll-target="#mamba-on-mac">mamba on Mac</a></li>
+  <li><a href="#mamba-on-mac" id="toc-mamba-on-mac" class="nav-link" data-scroll-target="#mamba-on-mac"><code>mamba</code> on Mac</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#creating-a-mamba-python-environment" id="toc-creating-a-mamba-python-environment" class="nav-link" data-scroll-target="#creating-a-mamba-python-environment">Creating a mamba python environment</a>
+  <li><a href="#creating-a-mamba-python-environment" id="toc-creating-a-mamba-python-environment" class="nav-link" data-scroll-target="#creating-a-mamba-python-environment">Creating a <code>mamba</code> python environment</a>
   <ul class="collapse">
   <li><a href="#bringing-in-pip" id="toc-bringing-in-pip" class="nav-link" data-scroll-target="#bringing-in-pip">Bringing in <code>pip</code></a>
   <ul class="collapse">
@@ -235,11 +235,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <blockquote class="blockquote">
-<p>Creating an LLM python environment with <code>mamba</code> and <code>pip</code></p>
+<p>Creating an Large Language Model (LLM) python environment with <code>mamba</code> and <code>pip</code></p>
 </blockquote>
 <section id="intro" class="level1">
 <h1>Intro</h1>
-<p>To use an open-source LLM, the first thing we need is a <code>programming environment</code> for the model. The environment is a computing ecosystem with all of the software libraries and packages the LLM needs.</p>
+<p>The first thing we need to run an open-source LLM is a <code>programming environment</code> for the model. An environment is a programming ecosystem with all of the software libraries and packages that the LLM needs.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -250,18 +250,20 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Setting up an environment can be one of the most time-consuming and challenging tasks in Machine Learning. There is no silver bullet, as you can see by the many approaches that folks have come up with for this problem.</p>
+<p>Setting up an environment is one of the most time-consuming and challenging tasks in Machine Learning. There is no silver bullet, as we can see by the multiple tools and approaches available to tackle the problem.</p>
 </div>
 </div>
-<p>It’s ok to feel lost or struggle with setting up the environment! That is totally normal. There is good reason for all of the memes in the ML community about the pain of dealing with CUDA drivers…</p>
-<p>Please take some comfort in the fact that once we build the environment, most of the other tasks will seem easy by comparison.</p>
-<p>Here we will build a useful base environment. Something we can use for prototyping ML models, writing blog posts, making plots, etc. The goal is to give you a powerful starting point for learning and experimenting. Down the road, we can make leaner environments focused on more specific apps.</p>
-<p>Now, let’s start building our python environment for LLMs.</p>
+<p>It is ok to struggle or feel lost when setting up the environment! That is very normal and even expected. There is a good reason for all of the memes in the ML community about what a pain it is to deal with CUDA drivers…</p>
+<p>Take some comfort in the fact that once we build the environment, most of the other tasks will feel easy by comparison.</p>
+<p>In this notebook we create a useful starter environment. An environment we can use to prototype ML models, write blog posts, explore python code, make plots, etc.</p>
+<p>The goal is to have a powerful launch pad for learning and experimenting. Down the road, we can make leaner environments focused on more specific apps.</p>
+<p>Now, let’s start building our python LLM environment.</p>
 </section>
 <section id="the-base-environment-mamba" class="level1">
 <h1>The Base Environment: <code>mamba</code></h1>
-<p><code>mamba</code> is is a highly optimized C++ wrapper build around the very popular <a href="https://docs.conda.io/en/latest/">Conda package manager</a>. It is faster and more pleasant to use that pure conda.</p>
-<p>If you are familiar with conda, then you already know mamba by proxy. Any <code>conda</code> command can be drop-in replaced with a call to <code>mamba</code> instead.</p>
+<p>There are many tools to create python environments. In this course, we will use <code>mamba</code> to make and manage our environments.</p>
+<p><code>mamba</code> is is a highly optimized C++ wrapper build around the very popular <a href="https://docs.conda.io/en/latest/">Conda package manager</a>.</p>
+<p>If you are familiar with Anaconda, then you already know mamba by proxy. Any call to <code>conda</code> can be drop-in replaced with a call to <code>mamba</code> instead.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -272,14 +274,14 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><em>A conda horror story</em>: I once ran a simple <code>conda</code> command on a GPU cluster that took more than one day to complete. The same <code>mamba</code> command finished in less than 10 minutes.</p>
-<p>Conda’s stability changes a lot by version, whereas mamba tends to stay fast and reliable.</p>
+<p><em>A conda horror story</em>: Once I ran a simple <code>conda</code> command on a GPU cluster that took more than a day to complete. The same <code>mamba</code> command finished in less than 10 minutes.</p>
+<p>Conda’s stability can change a lot between versions, whereas mamba tends to remain fast and reliable.</p>
 </div>
 </div>
 <section id="installing-mamba" class="level2">
 <h2 class="anchored" data-anchor-id="installing-mamba">Installing <code>mamba</code></h2>
-<p>mamba offers an installation script that handles all of the setup for us. But in case you run into any issues, here is a link to the <a href="https://github.com/conda-forge/miniforge#install">official installation instructions</a>.</p>
-<p>Next we install mamba on a Mac computer.</p>
+<p>There is a mamba installation script that handles all of the setup for us. But in case you run into any issues, here is a link to the <a href="https://github.com/conda-forge/miniforge#install">official installation instructions</a>.</p>
+<p>In the cells below we install mamba on a Mac computer.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -294,9 +296,10 @@ Tip
 </div>
 </div>
 <section id="mamba-on-mac" class="level3">
-<h3 class="anchored" data-anchor-id="mamba-on-mac">mamba on Mac</h3>
-<p>How do we know which mamba installation script to use? The <code>uname</code> shell command comes to the rescue. It returns information about the computer and system it is called from. We can use <code>uname</code> to automatically grab the right installation script for our specific Mac.</p>
-<p>The bash commands below will do the following:<br>
+<h3 class="anchored" data-anchor-id="mamba-on-mac"><code>mamba</code> on Mac</h3>
+<p>There are many mamba installation scripts for different computers and OSes. How do we know which script is right for us? Here is where the handy <code>uname</code> shell command comes to the rescue.</p>
+<p><code>uname</code> tells use about the computer and system it is running from. This information lets us automatically grab the correct installation script for our specific Mac.</p>
+<p>Run the bash commands below to do the following:<br>
 - Find the appropriate mamba Mac installation script.<br>
 - Download the script from the official mamba repo.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find the name of the appropriate installation script</span></span>
@@ -308,7 +311,8 @@ Tip
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># download the appropriate script</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-L</span> <span class="at">-O</span> <span class="va">${script_repo}</span>/<span class="va">${script_name}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Note that this command downloads the script into the directory that you’re running it from.</p>
-<p>Once the shell script is downloaded, run it to install mamba:</p>
+<p>Next, we can run the downloaded shell script to install mamba.</p>
+<p>The script will step through all of installation steps. It will prompt you for some info along the way, but we can accept all of the defaults for now (i.e.&nbsp;don’t type anything in, just hit enter).</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run the Mambaforge installer</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> Mambaforge-<span class="va">$(</span><span class="fu">uname</span><span class="va">)</span>-<span class="va">$(</span><span class="fu">uname</span> <span class="at">-m</span><span class="va">)</span>.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -324,33 +328,35 @@ Note
 <p>If you prefer to download the script directly, grab it from here: https://github.com/conda-forge/miniforge/releases/</p>
 </div>
 </div>
-<p>The script now steps through the installation process. It will prompt you for some info along the way, but you can accept all of the defaults for now (i.e.&nbsp;don’t type anything in, just hit enter).</p>
-<p>Once mamba is installed, we are ready to create a base python environment.</p>
+<p>Once <code>mamba</code> is installed, we are ready to create a base python environment.</p>
 </section>
 </section>
 </section>
 <section id="creating-a-mamba-python-environment" class="level1">
-<h1>Creating a mamba python environment</h1>
-<p>We use mamba to install a specific version of python. For example, python versions 3.10 and 3.11 are popular with current open-source LLMs.</p>
-<p>Our LLM environment will be called, quite creatively, <code>llm-env</code>. Let’s now use mamba to create the environment with python 3.11.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the base python environment</span></span>
+<h1>Creating a <code>mamba</code> python environment</h1>
+<p>We can use <code>mamba</code> to install a specific version of python. As of writing, python versions 3.10 and 3.11 are popular with the ML community.</p>
+<p>Our LLM environment will be called, quite creatively, <code>llm-env</code>.</p>
+<p>Let’s now use mamba to create the environment with python 3.11.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the `llm-env` python 3.11 environment</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> create <span class="at">-n</span> llm-env python=3.11</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Now that we have a base environment, we can activate it and start installing the python packages we will need to run LLMs.</p>
+<p>Now that we have a base environment, we can activate it and start installing the python packages we need to run LLMs.</p>
 <section id="bringing-in-pip" class="level2">
 <h2 class="anchored" data-anchor-id="bringing-in-pip">Bringing in <code>pip</code></h2>
 <p>We could install all of the needed python libraries with mamba. However, we will use python’s built in <code>pip</code> package manager instead.</p>
-<p>This is because we’ll rely on some new and state-of-the-art code repos. Repos that are not always available via mamba. And, more than that, sometimes the repos need extra installation steps which are better handled through <code>pip</code>. To recap: <code>pip</code> offers us more flexibility and power than mamba when installing bleeding edge LLM libraries.</p>
+<p>Some folks might understandable gripe with this choice. After hyping up <code>mamba</code> so much, why would we bring in another package amanger?</p>
+<p>The reason is because we’re relying on some new and state-of-the-art libraries. Some of these libraries are not always available via mamba. And, more than that, sometimes the repos need extra installation steps which are better handled through <code>pip</code>.</p>
+<p>To recap: we are bringing in <code>pip</code> because if offers more flexibility than mamba when installing bleeding edge LLM libraries.</p>
 <p>First, make sure that the new <code>llm-env</code> environment is activated. Then we’ll install a few basic libraries that just about all LLM applications need.</p>
 <section id="installing-pytorch" class="level3">
 <h3 class="anchored" data-anchor-id="installing-pytorch">Installing pytorch</h3>
-<p>The basic library we will need is pytorch. This is the main library that handles most of the heavy lifting for python Neural Networks.</p>
+<p>The main library we need is <code>pytorch</code>. PyTorch does most of the heavy lifting for Neural Networks in python.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install the pytorch libraries</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install torch torchvision torchaudio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Note that this will also grab and install pytorch’s many dependencies.</p>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install torch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that this command also installs all of the additional libraries that <code>pytorch</code>’s depends on.</p>
 </section>
 <section id="installing-helper-libraries" class="level3">
 <h3 class="anchored" data-anchor-id="installing-helper-libraries">Installing helper libraries</h3>
-<p>Next we install a few helper libraries for the rest of the course. These are libraries for editing Jupyter notebooks, making plots, and writing a blog. We also install the popular scientific package scipy, which many ML libraries rely on.</p>
+<p>We will also install some helper libraries for the rest of the course. We also install the popular scientific package scipy, which many ML libraries rely on.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install the jupyter notebook library</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install jupyterlab</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -368,14 +374,14 @@ Note
 </section>
 <section id="aside-installing-rust" class="level3">
 <h3 class="anchored" data-anchor-id="aside-installing-rust">Aside: Installing Rust</h3>
-<p>Many LLMs rely on the <code>Rust</code> programming language for fast and optimized tokenizers. Run the short command below to install Rust on our systems and leverage the optimized tokenizers:</p>
+<p>Many LLMs rely on the <code>Rust</code> programming language for fast and optimized tokenizers. Run the command below to install Rust on your system and leverage these optimized tokenizers:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install Rust</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--proto</span> <span class="st">'=https'</span> <span class="at">--tlsv1.2</span> <span class="at">-sSf</span> https://sh.rustup.rs <span class="kw">|</span> <span class="fu">sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="installing-huggingface-libraries" class="level3">
-<h3 class="anchored" data-anchor-id="installing-huggingface-libraries">Installing HuggingFace libraries</h3>
-<p>Next up, we install a suite of HuggingFace libraries for dealing with LLMs. With these libraries you’ll be able to fully leverage the powerful tools offered by the HuggingFace team.</p>
-<p>We won’t use all of them initially, but they will be available should you ever need them in other personal projects.</p>
+<h3 class="anchored" data-anchor-id="installing-huggingface-libraries">Installing <a href="https://huggingface.co/">HuggingFace</a> libraries</h3>
+<p>Next up, we install a suite of HuggingFace libraries. These libraries let us fully leverage the powerful tools offered by the HuggingFace team.</p>
+<p>We won’t use all of them initially, but they will be available should you ever need them in other, personal projects.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install the main LLM library</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install transformers</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -391,31 +397,32 @@ Note
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># install an optimized tokenizer library</span></span>
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install setuptools-rust</span>
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install tiktoken</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Congrats! We have now created a powerful python environment for LLMs. Going forward, we will use this <code>llm-env</code> in the rest of the course.</p>
+<p>Congrats! We have now created a powerful python environment for LLMs. We will use this <code>llm-env</code> going forward in the rest of the course.</p>
 </section>
 </section>
 </section>
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>
-<p>This notebook covered the basics of setting up a python environment for LLMs. We used the <code>mamba</code> package manager to install a base python environment. Then, we used <code>pip</code> to install a set of libraries for running and learning about LLMs.</p>
-<p>There are two appendixes below. The first appendix goes into more details about why environments can be challenging, and why we need them in the first place.</p>
+<p>This notebook covered the basics of setting up a python environment for LLMs. We used the <code>mamba</code> package manager to install a basic python environment. Then, we used <code>pip</code> to install a set of libraries for running and learning about LLMs.</p>
+<p>There are two appendixes below. The first appendix goes into more details about why creating environments is challenging, and why we even need them in the first place.</p>
 <p>The second appendix covers how to install NVIDIA’s GPU libraries on a fresh Ubuntu 22.04 machine. If you are running this on a Linux machine, the second appendix also installs some powerful CUDA-only libraries that speed up LLMs even more. We will come back to this section later in the course when fine-tuning and augmenting our LLMs.</p>
 </section>
 <section id="appendix-1-silent-failures-in-ml-models" class="level1">
 <h1>Appendix 1: Silent Failures in ML Models</h1>
-<p>LLMs, and Machine Learning models more generally, often fail in different ways than other software. For instance, classic bugs in regular software are things like: type mismatches, syntax errors, compilation errors, etc. In other words, failures that stem from a clearly <em>wrong</em> operation (aka a bug) that snuck into the code. We wanted the computer to do <code>X</code>, but we told it by accident to do <code>Y</code> instead.</p>
+<p>LLMs, and Machine Learning models in general, often fail in different ways than other software. For instance, classic bugs in regular software are things like: type mismatches, syntax errors, compilation errors, etc. In other words, failures that stem from a clearly <em>wrong</em> operation (aka a bug) that snuck into the code. We wanted the computer to do <code>X</code>, but we told it by accident to do <code>Y</code> instead.</p>
 <p>In contrast, ML models often have “silent” failures. There is no syntax or compilation error - the program still runs and completes fine. But, there is <em>something</em> wrong in the code: adding where we should have subtracted, grabbing the wrong element from a list, or using the wrong mathematical function. There is no type checker or compiler that would (or even could, for now) catch these errors.</p>
 <p>The fixes for these silent failures are clear:<br>
-- Carefully inspecting the code.<br>
-- Monitoring and validating the model outputs.<br>
+- Carefully inspect the code.<br>
+- Monitor and validate the model’s inputs and outputs.<br>
 - Clarity in both the algorithms and models we are running.</p>
-<p>There is another, unfortunate kind of silent failure: version mismatches. Version mismatches happen when we use a different version of a specific programming library from the version that the model was originally created with.</p>
+<p>There is another, unfortunate kind of silent failure: version mismatches.</p>
+<p>Version mismatches happen when we use a programming library with a different version than the one the model was originally trained with.</p>
 <p>Since the software libraries we rely on are updated frequently, both subtle and major changes in their internals can affect a model’s output. These failures are unfortunately immune to our careful, logical checks.</p>
 <p>Avoiding these silent failures is the main reason for being consistent and disciplined with our model’s programming environment. A good environment setup keeps us focused on the important, conceptual parts of our pipeline instead of getting bogged down managing software versions.</p>
 <section id="an-environment-for-the-future" class="level2">
 <h2 class="anchored" data-anchor-id="an-environment-for-the-future">An environment for the future</h2>
 <p>There is a nice benefit to spending this much time up front on our environment.</p>
-<p>We now not only have a specialized environment to run and fine-tune an LLM. But it is also a springboard to keep up with the state of the art in the field. A setup in which to bring in other groundbreaking improvements. And, to weave in the latest and greatest models as they are released. The LLM world is now our oyster, and <code>llm-env</code> the small grain of sand-would-be-pearl.</p>
+<p>Not only do we now have a specialized environment to run and fine-tune an LLM. But, it is also a springboard to keep up with the state of the art in the field. We now have a way to bring in other groundbreaking improvements as they are released. And, a way to weave in the latest and greatest models. The LLM world is now our oyster, and <code>llm-env</code> the small grain of sand pearl-in-waiting.</p>
 </section>
 </section>
 <section id="appendix-2-installing-nvidia-drivers-and-cuda-libraries-on-a-fresh-ubuntu-22.04-machine" class="level1">
@@ -424,34 +431,34 @@ Note
 - NVIDIA Drivers.<br>
 - CUDA Libraries.<br>
 - cuDNN Libraries.</p>
-<p>Folks often talk about “CUDA” as referring to all three of the above.</p>
-<p>But it’s important to keep things clear and separate. Let’s use a music analogy to help us along: imagine the GPU is an instrument, and running an LLM is like playing a song.</p>
+<p>Folks often talk about “CUDA” as a loose mix of all three.</p>
+<p>However, it’s important to keep things clear and separate. Let’s use a music analogy to help us along: imagine the GPU is an instrument, and running an LLM is like playing a song.</p>
 <p>The NVIDIA Drivers let us pick up the instrument (GPU) with our hands and get ready to play. It’s the first step in making any music at all.</p>
 <p>The CUDA libraries are the basic music theory (scales, chords, etc) and sheet reading that we need to play songs well.</p>
-<p>The cuDNN library is like a set of advanced skills and muscle memory, built on top of lots of practice, that let us really shred.</p>
+<p>The cuDNN library is like a set of advanced skills and muscle memory, built on top of lots of practice, that let us really shred on the instrument.</p>
 <p>With this in mind, let’s install the NVIDIA Drivers and CUDA libraries on a fresh Ubuntu 22.04 machine.</p>
 <section id="helper-libraries" class="level2">
 <h2 class="anchored" data-anchor-id="helper-libraries">Helper libraries</h2>
-<p>First, some best practice. Make sure to update the Ubuntu package list:</p>
+<p>First, some best practice for system administration: make sure to update the Ubuntu package list:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># update the ubuntu package list</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>There are two Ubuntu packages that are worth installing:<br>
 - software-properties-common - build-essential</p>
-<p><code>software-properties-common</code> is a set of tools for adding and managing software repositories. It makes our life a bit easier.</p>
-<p><code>build-essential</code> contains a list of packages that are essential for building Ubuntu packages. It has software key for development like the GNU Compiler Collection (GCC) and GNU Make. It also has the tools to build and install projects from source (aka straight from the repo’s folder).</p>
+<p><code>software-properties-common</code> includes a set of tools for adding and managing software repositories. It makes our life a bit easier.</p>
+<p><code>build-essential</code> has a list of packages that are critical for building Ubuntu software. It has tools like like the GNU Compiler Collection (GCC) and GNU Make that are key for development.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install useful linux packages</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install software-properties-common</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install build-essential</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="installing-nvidia-drivers" class="level2">
 <h2 class="anchored" data-anchor-id="installing-nvidia-drivers">Installing NVIDIA Drivers</h2>
-<p>We’ll use one of the most reliable and straightforward methods to install the NVIDIA drivers: the graphics drivers PPA.</p>
+<p>We’ll use one of the most reliable and straightforward way of installing NVIDIA drivers: the graphics drivers PPA.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add the graphics drivers ppas</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> add-apt-repository ppa:graphics-drivers/ppa</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># update the package list again</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Now we can install the nvidia drivers themselves. As of writing, the <code>535</code> version of the driver is stable and supports a good number of GPU cards.</p>
+<p>Now we can run the command below to install the actual nvidia drivers. As of writing, the <code>535</code> version of the driver is stable and supports a good number of GPU cards.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install the nvidia drivers</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install nvidia-driver-535</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -470,14 +477,14 @@ Important
 </div>
 </div>
 <p>Once the machine is back up, run the following command to check if the drivers were installed correctly.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># should show us any available gpus</span></span>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this should show us any available gpus</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nvidia-smi</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="installing-cuda" class="level2">
 <h2 class="anchored" data-anchor-id="installing-cuda">Installing CUDA</h2>
-<p>With the drivers working, we can now install the CUDA library. The CUDA library has a set of ML tools optimized for NVIDIA GPUs.</p>
-<p>The example below uses a local <code>.dev</code> installer for CUDA version 12.1. The steps comee straight from the official <a href="https://developer.nvidia.com/cuda-12-1-0-download-archive?target_os=Linux&amp;target_arch=x86_64&amp;Distribution=Ubuntu&amp;target_version=22.04&amp;target_type=deb_local">CUDA website</a>.</p>
-<p>There is a lot going on in the steps below. But it has been, in my experience, one of the most straightforward and reliable ways to install specific CUDA versions. Other methods may be easier, but it can be harder to pin down specific versions which leads to many headaches down the road.</p>
+<p>With the drivers working, we can now install the CUDA library. The CUDA library is a set of ML tools optimized for NVIDIA GPUs.</p>
+<p>The example below uses a local <code>.dev</code> installer for CUDA version 12.1. The steps come straight from the official <a href="https://developer.nvidia.com/cuda-12-1-0-download-archive?target_os=Linux&amp;target_arch=x86_64&amp;Distribution=Ubuntu&amp;target_version=22.04&amp;target_type=deb_local">CUDA website</a>.</p>
+<p>There is a lot going on in the steps below. But it has been, in my experience, one of the most straightforward and reliable ways to install specific CUDA versions.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># full steps to install CUDA 12.1 libraries </span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># setting up the repo</span></span>
@@ -532,7 +539,7 @@ Important
 </section>
 <section id="installing-accelerated-cuda-libraries-on-linux" class="level2">
 <h2 class="anchored" data-anchor-id="installing-accelerated-cuda-libraries-on-linux">Installing accelerated CUDA libraries on Linux</h2>
-<p>If you are running on a Linux machine, you’ll have access to many powerful libraries to speed up LLM training and inference even more. Not all of these are available on Mac or Windows, but hopefully that changes with time.</p>
+<p>If you are running on a Linux machine, you’ll have access to many powerful libraries to speed up LLM training and inference. Not all of these are available on Mac or Windows, but hopefully that changes with time.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -546,7 +553,7 @@ Note
 <p>Here we also see the first instance of needing a <code>pip</code> install with extra steps - something we could not have done with <code>mamba</code> alone.</p>
 </div>
 </div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install the optimized CUDA LLM libraries:</span></span>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install optimized CUDA LLM libraries</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># library to massively speed up Transformer LLMs</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install flash-attn <span class="at">--no-build-isolation</span></span>
