@@ -1,7 +1,14 @@
 [
   {
     "listing": "/course.html",
-    "items": []
+    "items": [
+      "/blog/posts/fractal-llms/00-Overview/index.html",
+      "/blog/posts/fractal-llms/01-env/index.html",
+      "/blog/posts/fractal-llms/02-nbdev/index.html",
+      "/blog/posts/fractal-llms/03-hf-nlp-models/index.html",
+      "/blog/posts/fractal-llms/04-llama/index.html",
+      "/blog/posts/fractal-llms/05-rag/index.html"
+    ]
   },
   {
     "listing": "/blog/index.html",
