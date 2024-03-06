@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -59,7 +59,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
@@ -81,7 +81,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -90,6 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -97,13 +104,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rosarivo">
 <meta property="og:title" content="chaski - Dynamic Classifier-free Guidance Pt. 2">
-<meta property="og:description" content="">
+<meta property="og:description" content="Enzo’s site.">
 <meta property="og:image" content="https://enzokro.dev/blog/posts/2022-11-21-guidance-expts-3/better_horse_3.png">
-<meta property="og:site-name" content="chaski">
+<meta property="og:site_name" content="chaski">
 <meta property="og:image:height" content="1438">
 <meta property="og:image:width" content="1438">
 <meta name="twitter:title" content="chaski - Dynamic Classifier-free Guidance Pt. 2">
-<meta name="twitter:description" content="">
+<meta name="twitter:description" content="Enzo’s site.">
 <meta name="twitter:image" content="https://enzokro.dev/blog/posts/2022-11-21-guidance-expts-3/better_horse_3.png">
 <meta name="twitter:image-height" content="1438">
 <meta name="twitter:image-width" content="1438">
@@ -121,12 +128,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
 </header>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../styles.css">
 
@@ -135,9 +169,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">chaski</span>
     </a>
@@ -149,19 +183,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/enzokro_" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/enzokro_"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/enzokro" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/enzokro"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -210,7 +244,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -247,7 +281,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <blockquote class="blockquote">
 <p>Experiments with normalizations for Classifier-free Guidance.</p>
@@ -311,7 +347,7 @@ These two libraries are:</p>
 <h2 class="anchored" data-anchor-id="python-imports">Python Imports</h2>
 <p>To start we import the needed python modules.</p>
 <p>We also handle random seeding to make sure that our results are reproducible across the series.</p>
-<div class="cell">
+<div id="cee5cee6" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
@@ -355,7 +391,7 @@ These two libraries are:</p>
 <section id="the-min_diffusion-library" class="level2">
 <h2 class="anchored" data-anchor-id="the-min_diffusion-library">The <code>min_diffusion</code> library</h2>
 <p>We use the <code>min_diffusion</code> library to load a Stable Diffusion model from the HuggingFace hub.</p>
-<div class="cell">
+<div id="af74809b-8a67-49e9-b435-15556a3fcea0" class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to load Stable Diffusion pipelines</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> min_diffusion.core <span class="im">import</span> MinimalDiffusion</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -365,15 +401,15 @@ These two libraries are:</p>
 <section id="loading-the-openjourney-model-from-prompt-hero" class="level3">
 <h3 class="anchored" data-anchor-id="loading-the-openjourney-model-from-prompt-hero">Loading the <code>openjourney</code> model from Prompt Hero</h3>
 <p>The following code loads the <code>openjourney</code> model in <code>torch.float16</code> precision and puts it on the GPU.</p>
-<div class="cell">
+<div id="aaa29896-dbf1-46ce-8226-559c10203090" class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">'prompthero/openjourney'</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>device     <span class="op">=</span> <span class="st">'cuda'</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>dtype      <span class="op">=</span> torch.float16</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div id="74f9e74c-e0ee-43a7-b8c3-1853f3de6372" class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> MinimalDiffusion(model_name, device, dtype)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div id="8e276d19-564d-403c-bad7-2dd1d4aebe4b" class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pipeline.load()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Enabling default unet attention slicing.</code></pre>
@@ -401,7 +437,7 @@ Important
 <p>To enable this fine-tuned style, we need to add the keyword <code>"mdjrny-v4"</code> at the start of the prompt.</p>
 </div>
 </div>
-<div class="cell">
+<div id="5850cdc4-a6fe-422b-b8a4-d5636671fbe7" class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># text prompt for image generations</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"mdjrny-v4 style a photograph of an astronaut riding a horse"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -409,7 +445,7 @@ Important
 <section id="image-parameters" class="level2">
 <h2 class="anchored" data-anchor-id="image-parameters">Image parameters</h2>
 <p>The images will be generated over <span class="math inline">\(50\)</span> diffusion steps. They will have a height and width of <code>512 x 512</code> pixels.</p>
-<div class="cell">
+<div id="9249e77a" class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the number of diffusion steps</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>num_steps <span class="op">=</span> <span class="dv">50</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -422,10 +458,10 @@ Important
 <h1>The Baseline: Guidance with a constant <span class="math inline">\(G =7.5\)</span></h1>
 <p>First we create the baseline. Then we will check how a normalized, dynamic guidance changes the output.</p>
 <p>The baseline Classifier-free Guidance uses a static, constant update of <span class="math inline">\(G = 7.5\)</span>.</p>
-<div class="cell">
+<div id="ac6b0c75-7791-45c5-9843-ced9e6aa3730" class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cf_guidance.transforms <span class="im">import</span> GuidanceTfm, BaseNormGuidance, TNormGuidance, FullNormGuidance</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div id="6c8258a7" class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the baseline Classifier-free Guidance</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>baseline_run <span class="op">=</span> {<span class="st">'max_val'</span>: [<span class="fl">7.5</span>]}</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -454,7 +490,7 @@ Important
 <h2 class="anchored" data-anchor-id="wrapper-to-run-the-experiments">Wrapper to run the experiments</h2>
 <p>The <code>run</code> function below generates images from a given prompt.</p>
 <p>It also takes an argument <code>guide_tfm</code> for the specific Guidance Transformation class that will guide the outputs. The <code>schedules</code> argument has the parameter values of <span class="math inline">\(G\)</span> at each diffusion timestep.</p>
-<div class="cell">
+<div id="bc74e1c7" class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run(prompt, schedules, guide_tfm<span class="op">=</span><span class="va">None</span>, generator<span class="op">=</span><span class="va">None</span>,</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>        show_each<span class="op">=</span><span class="va">False</span>, test_run<span class="op">=</span><span class="va">False</span>):</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Runs a dynamic Classifier-free Guidance experiment. </span></span>
@@ -502,7 +538,7 @@ Important
 <span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>            <span class="st">'titles'</span>: titles,}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s create the baseline image. The hope is that our guidance changes will then improve on it.</p>
-<div class="cell">
+<div id="a13b16b2" class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>baseline_res <span class="op">=</span> run(prompt, baseline_scheds, guide_tfm<span class="op">=</span>GuidanceTfm, generator<span class="op">=</span>generator)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Using Guidance Transform: &lt;class 'cf_guidance.transforms.GuidanceTfm'&gt;
@@ -515,11 +551,15 @@ Done.</code></pre>
 </script>
 </div>
 </div>
-<div class="cell">
+<div id="94b893cb-b642-49af-9135-19043d885b20" class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># view the baseline image</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>baseline_res[<span class="st">'images'</span>][<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Not a bad starting point. Let’s see if we can do better.</p>
@@ -540,7 +580,7 @@ Done.</code></pre>
 <p>For <code>Prediction Normalization</code> we can use the same static <span class="math inline">\(G = 7.5\)</span> from the baseline.</p>
 <p>For both <code>T-Normalization</code> and <code>Full Normalization</code>, however, we need a much smaller guidance value. The reason is that these normalizations scale the update vector <span class="math inline">\(\left( t - u \right)\)</span> itself. That means that a large value like <span class="math inline">\(G = 7.5\)</span> would de-scale the vectors even more! That is the exact situation we are trying to avoid with normalization in the first place.</p>
 <p>To prevent this, we create a special <span class="math inline">\(G_\text{small}\)</span> schedule for T and Full Normalizations with a smaller value of <span class="math inline">\(G_\text{small} = 0.15\)</span></p>
-<div class="cell">
+<div id="66ef8634-0fcb-4430-a591-09042b482204" class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the baseline Classifier-free Guidance</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>T_run <span class="op">=</span> {<span class="st">'max_val'</span>: [<span class="fl">0.15</span>]}</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -567,7 +607,7 @@ Done.</code></pre>
 </section>
 <section id="prediction-norm-runs" class="level2">
 <h2 class="anchored" data-anchor-id="prediction-norm-runs"><code>Prediction Norm</code> runs</h2>
-<div class="cell">
+<div id="77808631-db65-48b7-aab9-9211d5b6432b" class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the BaseNorm experiments...'</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>base_norm_res <span class="op">=</span> run(prompt, baseline_scheds, guide_tfm<span class="op">=</span>BaseNormGuidance, generator<span class="op">=</span>generator)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -585,7 +625,7 @@ Done.</code></pre>
 </section>
 <section id="t-norm-runs" class="level2">
 <h2 class="anchored" data-anchor-id="t-norm-runs"><code>T-Norm</code> runs</h2>
-<div class="cell">
+<div id="32cf0965-5156-4c43-9c44-d7cc57ed50ac" class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the T-Norm experiments...'</span>)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>t_norm_res <span class="op">=</span> run(prompt, T_scheds, guide_tfm<span class="op">=</span>TNormGuidance, generator<span class="op">=</span>generator)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -603,7 +643,7 @@ Done.</code></pre>
 </section>
 <section id="full-norm-runs" class="level2">
 <h2 class="anchored" data-anchor-id="full-norm-runs"><code>Full Norm</code> runs</h2>
-<div class="cell">
+<div id="5e04d58b-45ea-4874-968b-32b803e81ff1" class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the FullNorm experiments...'</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>full_norm_res <span class="op">=</span> run(prompt, T_scheds, guide_tfm<span class="op">=</span>FullNormGuidance, generator<span class="op">=</span>generator)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -626,9 +666,13 @@ Done.</code></pre>
 <p>The baseline image is on the left, and the normalized version is on the right.</p>
 <section id="prediction-norm-results" class="level2">
 <h2 class="anchored" data-anchor-id="prediction-norm-results"><code>Prediction Norm</code> results</h2>
-<div class="cell">
+<div id="91284489-c6f4-487c-96f6-7a865c02269d" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Comparing left to right, <code>Prediction Normalization</code> improves the overall image.</p>
@@ -638,9 +682,13 @@ Done.</code></pre>
 </section>
 <section id="t-norm-results" class="level2">
 <h2 class="anchored" data-anchor-id="t-norm-results"><code>T-Norm</code> results</h2>
-<div class="cell">
+<div id="06d263fe-71c3-4aaf-8f5c-160319ee5ba3" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>This one is much more interesting. <code>T-Normalization</code> completely changed the image! Even though they started from the exact same noisy latents.</p>
@@ -649,9 +697,13 @@ Done.</code></pre>
 </section>
 <section id="full-norm-results" class="level2">
 <h2 class="anchored" data-anchor-id="full-norm-results"><code>Full Norm</code> results</h2>
-<div class="cell">
+<div id="9ec0a197-239a-4f7a-a773-e9a1fc9776fc" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-22-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p><code>Full Normalization</code> feels like a mix of the best from both worlds.</p>
@@ -756,10 +808,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -769,8 +820,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -783,6 +843,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -826,6 +1005,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -851,6 +1031,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -916,4 +1122,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -81,7 +81,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -90,6 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -97,13 +104,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rosarivo">
 <meta property="og:title" content="chaski - Complex Rayleigh Weight Initializations">
-<meta property="og:description" content="">
+<meta property="og:description" content="Enzo’s site.">
 <meta property="og:image" content="https://enzokro.dev/blog/posts/2022-09-01-rayleigh-init/polar_plot.png">
-<meta property="og:site-name" content="chaski">
+<meta property="og:site_name" content="chaski">
 <meta property="og:image:height" content="432">
 <meta property="og:image:width" content="440">
 <meta name="twitter:title" content="chaski - Complex Rayleigh Weight Initializations">
-<meta name="twitter:description" content="">
+<meta name="twitter:description" content="Enzo’s site.">
 <meta name="twitter:image" content="https://enzokro.dev/blog/posts/2022-09-01-rayleigh-init/polar_plot.png">
 <meta name="twitter:image-height" content="432">
 <meta name="twitter:image-width" content="440">
@@ -124,6 +131,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="../../../styles.css">
 
 
@@ -131,9 +165,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">chaski</span>
     </a>
@@ -145,19 +179,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/enzokro_" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/enzokro_"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/enzokro" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/enzokro"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -218,7 +252,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -254,7 +288,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <blockquote class="blockquote">
 <p>Creating complex-valued Rayleigh initializations for neural networks.</p>
@@ -288,9 +324,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="starting-with-a-real-number" class="level3">
 <h3 class="anchored" data-anchor-id="starting-with-a-real-number">Starting with a real number</h3>
 <p>Plotting examples is a great way to make things concrete. We first plot a regular, real number that we are all familiar with: <span class="math inline">\(x = 2\)</span></p>
-<div class="cell">
+<div id="cell-7" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-2-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -306,9 +346,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We will keep our real component the same: <span class="math inline">\(x = 2\)</span>.</p>
 <p>But now, let’s an imaginary component: <span class="math inline">\(y = 3\)</span>, to turn it into a complex number.</p>
 <p>What does this new complex number look like? We can visualize it on a 2D plot:</p>
-<div class="cell">
+<div id="cell-12" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>We combined these two components to get a complex number! Let’s call this number <span class="math inline">\(z\)</span>.</p>
@@ -320,9 +364,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>While we could use the real and imaginary components, there is another representation of complex numbers that will be more useful to us. This other representation is the <em>magnitude</em> and <em>phase</em> of a complex number.</p>
 <p>Remember how for a real number, its magnitude was the length of an arrow starting from the origin? The same idea applies to complex numbers. With one new detail: we have two components now, so our arrow’s length will be different.<br>
 Let’s first draw our new complex number as an arrow.</p>
-<div class="cell">
+<div id="cell-17" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>The formula to compute the magnitude of a complex number <span class="math inline">\(z\)</span> is:<br>
@@ -338,9 +386,13 @@ Let’s first draw our new complex number as an arrow.</p>
 <p>Instead they are now elevated (“pulled up”) by the imaginary component <span class="math inline">\(y = 3\)</span>. The complex number now has an <em>angle</em> respective to the x-axis.</p>
 <p>This angle, together with a magnitude, is enough to perfectly describe our complex <span class="math inline">\(z\)</span>. In other words: we know both how long to make the vector and where to point it.</p>
 <p>Let’s complete the picture by including the angle of <span class="math inline">\(z\)</span>:</p>
-<div class="cell">
+<div id="cell-23" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>We use <span class="math inline">\(\theta\)</span> to represent the angle. The formula to compute <span class="math inline">\(\theta\)</span> is:<br>
@@ -413,7 +465,7 @@ Let’s first draw our new complex number as an arrow.</p>
 <p>Let’s dive into the details. The equation below is the Probability Density Function (PDF) of the Rayleigh distribution.</p>
 <p><span class="math display">\[f(x,\sigma) = \frac{x}{\sigma^2}e^{-x^2/(2\sigma^2)}, \ \ x \geq 0\]</span></p>
 <p>This equation is a bit intimidating in written form. Let’s instead code it up as a python function with NumPy to make it cleaner.</p>
-<div class="cell">
+<div id="cell-39" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># start by importing the libraries we need</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -430,7 +482,7 @@ Let’s first draw our new complex number as an arrow.</p>
 </div>
 <p>The parameter sigma <span class="math inline">\((\sigma)\)</span> is known as the distribution’s scale. It is commonly found in many probability distributions and often controls how spread out or narrow a distribution is.</p>
 <p>Let us start by setting <span class="math inline">\(\sigma = 1\)</span> to draw the “basic” Rayleigh shape. We will then change sigma to see how this affects the distribution’s shape.</p>
-<div class="cell">
+<div id="cell-42" class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># start with sigma of one as the base case</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="dv">1</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -448,12 +500,16 @@ Let’s first draw our new complex number as an arrow.</p>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the Rayleigh pdf</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>ax.plot(ray_pdf)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>As we mentioned the scale <span class="math inline">\(\sigma\)</span> controls the width or narrowness of the distribution.<br>
 Let’s both halve and double sigma to (<span class="math inline">\(\frac{1}{2}, {2})\)</span> respectively to see what happens.</p>
-<div class="cell">
+<div id="cell-44" class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup plot</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>fig,ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">7</span>), dpi<span class="op">=</span><span class="dv">80</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Sample Value'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
@@ -472,7 +528,11 @@ Let’s both halve and double sigma to (<span class="math inline">\(\frac{1}{2},
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="bu">len</span>(ax.get_xticklabels()))))</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>ax.legend()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>The blue line in the plot above is the same PDF from our first plot where <span class="math inline">\(\sigma = 1\)</span>.</p>
@@ -485,7 +545,7 @@ Let’s both halve and double sigma to (<span class="math inline">\(\frac{1}{2},
 <h1>Generating Rayleigh samples</h1>
 <p>We use the <a href="https://numpy.org/doc/stable/reference/random/generator.html">default_rng</a> class in numpy to draw Rayleigh samples. <code>default_rng</code> is a helpful class that can sample from just about every known distribution.</p>
 <p>First we create the <code>default_rng</code> class with an arbitrary seed of <span class="math inline">\(0\)</span>.</p>
-<div class="cell">
+<div id="cell-50" class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>seed <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rand <span class="op">=</span> default_rng(seed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -493,7 +553,7 @@ Let’s both halve and double sigma to (<span class="math inline">\(\frac{1}{2},
 - <code>scale</code>: <span class="math inline">\(\sigma\)</span> with a default value of 1.<br>
 - <code>size</code>: the shape of the output array</p>
 <p>Let’s start by drawing 1,000 Rayleigh samples with <span class="math inline">\(\sigma = 1\)</span>.</p>
-<div class="cell">
+<div id="cell-53" class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> <span class="dv">1</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>shape <span class="op">=</span> <span class="dv">1000</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># one dimensional vector with 1000 samples</span></span>
@@ -501,7 +561,7 @@ Let’s both halve and double sigma to (<span class="math inline">\(\frac{1}{2},
 </div>
 <p>How can we check check if these samples are actually Rayleigh distributed? We can compare these values to the plots of the theoretical Rayleigh PDF from the previous section.</p>
 <p>The easiest way to compare the samples is with a histogram.</p>
-<div class="cell">
+<div id="cell-55" class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup the histogram plot for our drawn samples</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">7</span>), dpi<span class="op">=</span><span class="dv">80</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Sample Value'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
@@ -511,12 +571,16 @@ Let’s both halve and double sigma to (<span class="math inline">\(\frac{1}{2},
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the histogram of 1000 Rayleigh samples</span></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.hist(ray_vals, bins<span class="op">=</span><span class="dv">50</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>This is an ok start. If we squint, we can almost see the Rayleigh PDF shape we plotted earlier. But <span class="math inline">\(1,000\)</span> is a small number of samples.</p>
 <p>As we draw more samples, the distribution should grow closer and closer to the theoretical PDF plots. Let’s make sure this happens by now drawing <span class="math inline">\(10,000\)</span> samples.</p>
-<div class="cell">
+<div id="cell-57" class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup the new plot with more samples</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">7</span>), dpi<span class="op">=</span><span class="dv">80</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Sample Value'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
@@ -528,14 +592,18 @@ Let’s both halve and double sigma to (<span class="math inline">\(\frac{1}{2},
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>many_ray_vals <span class="op">=</span> rand.rayleigh(scale<span class="op">=</span>sigma, size<span class="op">=</span>large_shape)</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>plt.hist(many_ray_vals, bins<span class="op">=</span><span class="dv">35</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>This looks much better! Now we can compare this histogram to the theoretical Rayleigh PDF.</p>
 <blockquote class="blockquote">
 <p>Note that we pass <code>density=True</code> to the histogram function to normalize it and make it an approximate PDF.</p>
 </blockquote>
-<div class="cell">
+<div id="cell-59" class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup the plot again</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">7</span>), dpi<span class="op">=</span><span class="dv">80</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Sampled vs. Theoretical Rayleigh PDFs'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
@@ -547,7 +615,11 @@ Let’s both halve and double sigma to (<span class="math inline">\(\frac{1}{2},
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.plot(points, ray_pdf, c<span class="op">=</span><span class="st">'r'</span>, label<span class="op">=</span><span class="st">'theoretical rayleigh pdf'</span>, linewidth<span class="op">=</span><span class="dv">3</span>)</span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>plt.legend()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>A near perfect match! Now we can successfully generate our initial complex Rayleigh magnitudes.</p>
@@ -561,7 +633,7 @@ Let’s both halve and double sigma to (<span class="math inline">\(\frac{1}{2},
 <p>Instead, by uniformly picking random starting phases it is like we are pointing in every direction, roughly equally. Tying it back to our compass example from earlier. It’s as if we told each weight to random pick a degree and start walking in that direction.</p>
 <p>Then, during training, the network will learn how to best orient the weights for its given task.</p>
 <p>Sampling this random uniform phase is straightforward. We pick uniform samples from <span class="math inline">\(-\pi\)</span> to <span class="math inline">\(\pi\)</span> radians which maps to a full loop of the unit circle. Even better, we can also reuse the same <code>default_rng</code> from before!</p>
-<div class="cell">
+<div id="cell-63" class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pick random directions along the unit circle</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>phase <span class="op">=</span> rand.uniform(low<span class="op">=-</span>np.pi, high<span class="op">=</span>np.pi, size<span class="op">=</span>ray_vals.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -570,7 +642,7 @@ Let’s both halve and double sigma to (<span class="math inline">\(\frac{1}{2},
 <p>We mentioned earlier that a complex number has real and imaginary components. But so far we have deal with magnitudes and phases instead. How are these quantities related?</p>
 <p>It turns out that we can use the phase and magnitude to split our vector into its real and imaginary parts. The cosine of the phase and magnitude gives us the real part, and the sine of the phase gives us the imaginary part.</p>
 <p>These are two different representations of the same complex number. We do not lose anything going from one to the other or vice-versa.</p>
-<div class="cell">
+<div id="cell-66" class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># splitting our phases and magnitues into real and imaginary components</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>real <span class="op">=</span> ray_vals <span class="op">*</span> np.cos(phase)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>imag <span class="op">=</span> ray_vals <span class="op">*</span> np.sin(phase)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -580,7 +652,7 @@ Let’s both halve and double sigma to (<span class="math inline">\(\frac{1}{2},
 <section id="visualizing-our-random-phases" class="level2">
 <h2 class="anchored" data-anchor-id="visualizing-our-random-phases">Visualizing our random phases</h2>
 <p>Now we can check if these phases are truly orienting our magnitudes in random directions. To do so we plot the first 500 complex weights in the polar plane.</p>
-<div class="cell">
+<div id="cell-70" class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># indexes for the first 500 random weights</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>chosen_samples <span class="op">=</span> <span class="bu">range</span>(<span class="dv">500</span>) </span>
@@ -597,7 +669,11 @@ Let’s both halve and double sigma to (<span class="math inline">\(\frac{1}{2},
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Magnitudes and Phases of our Complex Weights'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>That definitely looks like a random, uniform orientation!</p>
@@ -657,7 +733,7 @@ The <a href="https://arxiv.org/pdf/1705.09792.pdf">Complex Neural Nets paper</a>
 - Match the He or Glorot variance criteria.<br>
 - Are PyTorch tensors with the correct shape for a given network layer.</p>
 <p>We can refactor the earlier code into a function that does just this.</p>
-<div class="cell">
+<div id="cell-94" class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_complex_inits(module, seed<span class="op">=</span><span class="va">None</span>, criterion<span class="op">=</span><span class="st">'he'</span>, dtype<span class="op">=</span><span class="st">'float32'</span>):</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Initializes complex-valued Rayleigh weights as PyTorch tensors.</span></span>
@@ -693,7 +769,7 @@ The <a href="https://arxiv.org/pdf/1705.09792.pdf">Complex Neural Nets paper</a>
 <p>Let’s use this function to get complex weight initializations for a Linear and Convolutional module.</p>
 <section id="complex-initializations-for-nn.linear" class="level2">
 <h2 class="anchored" data-anchor-id="complex-initializations-for-nn.linear">Complex initializations for <code>nn.Linear</code></h2>
-<div class="cell">
+<div id="cell-97" class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># re-create out earlier example with a single layer</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>fan_in, fan_out <span class="op">=</span> <span class="dv">100</span>, <span class="dv">50</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>sigma_he <span class="op">=</span> <span class="fl">1.</span> <span class="op">/</span> np.sqrt(fan_in) <span class="co"># to match the He criteria</span></span>
@@ -703,11 +779,11 @@ The <a href="https://arxiv.org/pdf/1705.09792.pdf">Complex Neural Nets paper</a>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>real, imag <span class="op">=</span> get_complex_inits(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We should check that the magnitude of the weights actually follow a Rayleigh distribution.</p>
-<div class="cell">
+<div id="cell-99" class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get linear magnitudes as a flat numpy vector</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>magnitude <span class="op">=</span> torch.sqrt(real<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> imag<span class="op">**</span><span class="dv">2</span>).numpy().reshape(<span class="op">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div id="cell-100" class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup the plot</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">7</span>), dpi<span class="op">=</span><span class="dv">80</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Complex nn.Linear Weights vs. Theoretical Rayleigh PDF'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
@@ -722,7 +798,11 @@ The <a href="https://arxiv.org/pdf/1705.09792.pdf">Complex Neural Nets paper</a>
 <span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>plt.hist(magnitude, bins<span class="op">=</span><span class="dv">35</span>, density<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>plt.plot(points, ray_pdf, c<span class="op">=</span><span class="st">'r'</span>, linewidth<span class="op">=</span><span class="dv">3</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Success! Our Linear module is properly initialized.</p>
@@ -730,7 +810,7 @@ The <a href="https://arxiv.org/pdf/1705.09792.pdf">Complex Neural Nets paper</a>
 <section id="complex-initializations-for-nn.conv2d" class="level2">
 <h2 class="anchored" data-anchor-id="complex-initializations-for-nn.conv2d">Complex initializations for <code>nn.Conv2d</code></h2>
 <p>Can we do the same for a convolutional layer? Our main concern is correctly handling both the tensor shape and <code>fan_in</code>, <code>fan_out</code>.</p>
-<div class="cell">
+<div id="cell-104" class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make conv layer with 100 input features, 50 output features, and (3x3) kernel</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">3</span> <span class="co"># kernel size</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># now, these are the number of feature maps (chan_in and chan_out)</span></span>
@@ -746,11 +826,11 @@ The <a href="https://arxiv.org/pdf/1705.09792.pdf">Complex Neural Nets paper</a>
 </div>
 </div>
 <p>Let’s check if these convolutional weights are still Rayleigh distributed.</p>
-<div class="cell">
+<div id="cell-106" class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get convolutional magnitudes as a flat numpy vector</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>conv_magnitude <span class="op">=</span> torch.sqrt(real_conv<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> imag_conv<span class="op">**</span><span class="dv">2</span>).numpy().reshape(<span class="op">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div id="cell-107" class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup the plots</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">7</span>), dpi<span class="op">=</span><span class="dv">80</span>)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Complex nn.Conv2d Weights vs. Theoretical Rayleigh PDF'</span>, fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
@@ -771,7 +851,11 @@ The <a href="https://arxiv.org/pdf/1705.09792.pdf">Complex Neural Nets paper</a>
 <span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>plt.hist(conv_magnitude, bins<span class="op">=</span><span class="dv">35</span>, density<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>plt.plot(points, ray_pdf, c<span class="op">=</span><span class="st">'r'</span>, linewidth<span class="op">=</span><span class="dv">3</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-23-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-23-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Another match! Our convolutional layer is also properly initialized.</p>
@@ -867,10 +951,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -880,8 +963,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -894,6 +986,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -937,6 +1148,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -962,6 +1174,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1027,4 +1265,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

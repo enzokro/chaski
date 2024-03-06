@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -81,7 +81,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -90,6 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -97,11 +104,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rosarivo">
 <meta property="og:title" content="chaski - Lesson 3: HuggingFace NLP Models">
-<meta property="og:description" content="">
+<meta property="og:description" content="Enzo’s site.">
 <meta property="og:image" content="https://enzokro.dev/blog/posts/fractal-llms/03-hf-nlp-models/llama.jpeg">
-<meta property="og:site-name" content="chaski">
+<meta property="og:site_name" content="chaski">
 <meta name="twitter:title" content="chaski - Lesson 3: HuggingFace NLP Models">
-<meta name="twitter:description" content="">
+<meta name="twitter:description" content="Enzo’s site.">
 <meta name="twitter:image" content="https://enzokro.dev/blog/posts/fractal-llms/03-hf-nlp-models/llama.jpeg">
 <meta name="twitter:card" content="summary_large_image">
 </head><body class="nav-fixed"><header id="custom-site-header" class="custom-nav page-columns page-rows-contents"> 
@@ -125,9 +132,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../../../index.html">
     <span class="navbar-title">chaski</span>
     </a>
@@ -139,19 +146,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/enzokro_" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/enzokro_"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/enzokro" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/enzokro"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -196,7 +203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#inspecting-a-specific-classifier-function" id="toc-inspecting-a-specific-classifier-function" class="nav-link" data-scroll-target="#inspecting-a-specific-classifier-function">Inspecting a specific <code>classifier</code> function</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -233,7 +240,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <blockquote class="blockquote">
 <p>Running powerful NLP models with the HuggingFace <code>transformers</code> library.</p>
@@ -251,7 +260,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="notebook-best-practices">Notebook best practices</h2>
 <p>First, let’s set up our notebook to be fully interactive and easy to use. We can do this with a couple of “magic functions” built-in to Jupyter.</p>
 <p>Specifically, we use the magic <code>autoreload</code> and <code>matplotlib</code> functions. The cell below shows them in action:</p>
-<div class="cell" data-execution_count="1">
+<div id="cell-4" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># best practice notebook magic</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext autoreload</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>autoreload <span class="dv">2</span></span>
@@ -307,7 +316,7 @@ Important
 </div>
 </div>
 <p>The code below uses the <code>transformers</code> library to build a Sentiment Analysis <code>pipeline</code>.</p>
-<div class="cell" data-execution_count="2">
+<div id="cell-18" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load in the pipeline object from HuggingFace</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -321,7 +330,7 @@ Using a pipeline without specifying a model name and revision in production is n
 <p>Since we didn’t specify a model, you can see in the output above that HuggingFace picked a <a href="distilbert-base-uncased-finetuned-sst-2-english">distilbert model</a> for us by default.</p>
 <p>We will learn more about what exactly <code>distilbert</code> is and how it works later on. For now, think of it as a useful NLP genie who can look at a sentence and tell us whether its has a positive or negative tone.</p>
 <p>Next, let’s find out what the model thinks about the sentence: <code>"HuggingFace pipelines are awesome!"</code></p>
-<div class="cell" data-execution_count="3">
+<div id="cell-21" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sentiment analysis on a simple, example sentence</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>example_sentence <span class="op">=</span> <span class="st">"HuggingFace pipelines are awesome!"</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>classifier(example_sentence)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -331,7 +340,7 @@ Using a pipeline without specifying a model name and revision in production is n
 </div>
 <p>Not bad. We see a strong confident score for a <code>POSITIVE</code> label, as could be expected.</p>
 <p>We can also pass many sentences at once, which starts to show the bulk processing power of these models. Let’s process four sentences at once: three positive ones, and a clearly negative one.</p>
-<div class="cell" data-execution_count="4">
+<div id="cell-24" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># many sentences at once, in a python list</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>many_sentences <span class="op">=</span> [</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"HuggingFace pipelines are awesome!"</span>,</span>
@@ -364,7 +373,7 @@ label: NEGATIVE, with score: 0.8758</code></pre>
 <section id="config-class" class="level2">
 <h2 class="anchored" data-anchor-id="config-class">Config class</h2>
 <p>The <code>config</code> class is a simple map with the options and configurations of a model. It has the key-value pairs that define a model’s architecture and hyperparameters.</p>
-<div class="cell" data-execution_count="5">
+<div id="cell-31" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># config for the model</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> DistilBertConfig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -385,7 +394,7 @@ Note
 <p>Correctly pre-processing inputs is one of the most important and error-prone steps in using ML models. In other words, it’s good to offload to a class that’s already been tested and debugged.</p>
 </div>
 </div>
-<div class="cell" data-execution_count="6">
+<div id="cell-35" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># input preprocessor to tokenize strings</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> DistilBertTokenizer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -393,7 +402,7 @@ Note
 <section id="model-class" class="level2">
 <h2 class="anchored" data-anchor-id="model-class">Model class</h2>
 <p>The <code>model</code> class holds the weights and parameters for the actual LLM. It’s the “meat and bones” of the setup, so to speak.</p>
-<div class="cell" data-execution_count="7">
+<div id="cell-38" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the text classifier model</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> DistilBertForSequenceClassification</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -404,12 +413,12 @@ Note
 <p>Once we know its full name, there is a handy <code>from_pretrained()</code> function that will automatically find and download the pieces for us.</p>
 <p>In this case, the distilbert model’s full name is:<br>
 &gt; <code>distilbert-base-uncased-finetuned-sst-2-english</code>.</p>
-<div class="cell" data-execution_count="8">
+<div id="cell-41" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sentiment analysis model name</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">'distilbert-base-uncased-finetuned-sst-2-english'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In the code below we can now load each of the three NLP pieces for this model.</p>
-<div class="cell" data-execution_count="9">
+<div id="cell-43" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the config</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> DistilBertConfig.from_pretrained(model_name)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -426,7 +435,7 @@ Note
 <section id="preprocessing-the-inputs" class="level3">
 <h3 class="anchored" data-anchor-id="preprocessing-the-inputs">Preprocessing the inputs</h3>
 <p>First, we create a <code>preprocess</code> function to turn a given <code>text</code> string into the proper, tokenized inputs than an LLM expects.</p>
-<div class="cell" data-execution_count="10">
+<div id="cell-48" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> preprocess(text: <span class="bu">str</span>):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Sends `text` through the model's tokenizer.  </span></span>
@@ -436,7 +445,7 @@ Note
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tokenized_inputs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s test this preprocessing function on the example sentence from earlier.</p>
-<div class="cell" data-execution_count="11">
+<div id="cell-50" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># manually preprocessing the example sentence: "HuggingFace pipelines are awesome!"</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>preprocess(example_sentence)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
@@ -448,7 +457,7 @@ Note
 <section id="runnning-the-model" class="level3">
 <h3 class="anchored" data-anchor-id="runnning-the-model">Runnning the model</h3>
 <p>Next up, let’s make our own <code>forward</code> function that run the LLM on preprocessed inputs.</p>
-<div class="cell" data-execution_count="12">
+<div id="cell-54" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> forward(text: <span class="bu">str</span>):</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">    First we preprocess the `text` into tokens.</span></span>
@@ -459,7 +468,7 @@ Note
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> outputs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s check what this outputs for our running example sentence.</p>
-<div class="cell" data-execution_count="13">
+<div id="cell-56" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>outputs <span class="op">=</span> forward(example_sentence)<span class="op">;</span> outputs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>SequenceClassifierOutput(loss=None, logits=tensor([[-4.2326,  4.5748]], grad_fn=&lt;AddmmBackward0&gt;), hidden_states=None, attentions=None)</code></pre>
@@ -467,7 +476,7 @@ Note
 </div>
 <p>You’ll see a lot going on in the <code>SequenceClassifierOutput</code> above. To be honest, this is where the original <code>pipeline</code> does most of the heavy-lifting for us. It takes the raw, detailed output from an LLM and converts it into a more human-readable format.</p>
 <p>We’ll mimic this heavy-lifting by using the <code>Config</code> class and model outputs to find out whether the sentence is positive or negative.</p>
-<div class="cell" data-execution_count="14">
+<div id="cell-59" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> process_outputs(outs):</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Converting the raw model outputs into a human-readable result.</span></span>
@@ -498,7 +507,7 @@ Note
 <span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can now put together a <code>simple_pipeline</code>, and check how it compares to the original <code>pipeline</code>.</p>
-<div class="cell" data-execution_count="15">
+<div id="cell-61" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simple_pipeline(text):</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Putting the NLP pieces and functions together into a pipeline.</span></span>
@@ -510,7 +519,7 @@ Note
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> predictions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Calling the <code>simple_pipeline</code> on the example sentence, drumroll please…</p>
-<div class="cell" data-execution_count="16">
+<div id="cell-63" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># running out simple pipeline on the example text</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>simple_pipeline(example_sentence)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
@@ -525,7 +534,7 @@ Note
 <section id="true-huggingface-magic-auto-classes" class="level1">
 <h1>True HuggingFace magic: <code>Auto</code> classes</h1>
 <p>With <code>Auto</code> classes, we don’t have to know the exact or proper name of the LLM’s objects to import them. We only need the proper name of the model on the hub:</p>
-<div class="cell" data-execution_count="17">
+<div id="cell-67" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># viewing our distilber model's name</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>model_name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
@@ -533,21 +542,21 @@ Note
 </div>
 </div>
 <p>Run the cell below to import the Auto classes. Then we’ll use them with the model name to create an even cleaner <code>simple_pipeline</code>.</p>
-<div class="cell" data-execution_count="18">
+<div id="cell-69" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># importing the Auto classes</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoConfig</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoModelForSequenceClassification</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next we create the three key NLP pieces with the Auto classes.</p>
-<div class="cell" data-execution_count="19">
+<div id="cell-71" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># building the pieces with `Auto` classes</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> AutoConfig.from_pretrained(model_name)</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(model_name)</span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> AutoModelForSequenceClassification.from_pretrained(model_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can now use these pieces to build a <code>simple_pipeline</code> class that’s cleaner than before, and can handle any model_name:</p>
-<div class="cell" data-execution_count="20">
+<div id="cell-73" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SentimentPipeline:</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, model_name: <span class="bu">str</span>):</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
@@ -609,11 +618,11 @@ Note
 <h2 class="anchored" data-anchor-id="using-the-custom-sentimentpipeline">Using the custom <code>SentimentPipeline</code></h2>
 <p>Let’s leverage both the new class and a different model, to show the power of Auto classes.</p>
 <p>For fun, let’s use BERT model that was trained specifically on tweets. The full model’s name is <a href="https://huggingface.co/finiteautomata/bertweet-base-sentiment-analysis"><code>finiteautomata/bertweet-base-sentiment-analysis</code></a>.</p>
-<div class="cell" data-execution_count="21">
+<div id="cell-76" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using a different model</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>new_model_name <span class="op">=</span> <span class="st">'finiteautomata/bertweet-base-sentiment-analysis'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="22">
+<div id="cell-77" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creating a new sentiment pipeline</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>simple_pipeline <span class="op">=</span> SentimentPipeline(new_model_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -621,7 +630,7 @@ Note
 </div>
 </div>
 <p>Now let’s run it on our handy example sentence.</p>
-<div class="cell" data-execution_count="23">
+<div id="cell-79" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calling our new, flexible pipeline</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>simple_pipeline(example_sentence)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="23">
@@ -642,7 +651,7 @@ Note
 <section id="appendix-1-counting-the-number-of-parameters-in-a-model" class="level1">
 <h1>Appendix 1: Counting the number of parameters in a model</h1>
 <p>The following code snippet counts the number of trainable parameters in a model. It’s a question that comes up often when working with LLMs, and having a quick reference to find out a rough model’s size often comes in handy.</p>
-<div class="cell" data-execution_count="24">
+<div id="cell-86" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_parameters(model):</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Counts the number of trainable parameters in a `model`.</span></span>
@@ -650,7 +659,7 @@ Note
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span>(p.numel() <span class="cf">for</span> p <span class="kw">in</span> model.parameters() <span class="cf">if</span> p.requires_grad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Here we use it to count the number of parameters in the distilbert model from above.</p>
-<div class="cell" data-execution_count="25">
+<div id="cell-88" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># view the number of parameters in the last model used</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="ss">f"Number of trainable params: </span><span class="sc">{</span>count_parameters(model)<span class="sc">:,}</span><span class="ss">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="25">
@@ -662,7 +671,7 @@ Note
 <h1>Appendix 2: Inspecting the <code>classifier</code>, notebook style.</h1>
 <p>What is the <code>classifier</code> object, exactly? Jupyter has many powerful ways of inspecting and analyzing its code.</p>
 <p>One of the simplest ways of checking an object is to call it by itself in a code cell, as shown below.</p>
-<div class="cell" data-execution_count="26">
+<div id="cell-92" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># show the contents of the `classifier` object</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>classifier</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="26">
@@ -672,12 +681,12 @@ Note
 <p>We can see the <code>classifier</code> is a type of <code>TextClassification</code> pipeline. This makes sense: we fed it an input sentence and asked it to classify the statement as <em>positive</em> vs.&nbsp;<em>negative</em>.</p>
 <p>There is also a tab-autocomplete feature to find the members and methods of an object. For example, to look up everything in <code>classifier</code>, hit tab after adding a <code>.</code>.</p>
 <p>Uncomment the cells below and hit the tab key to test the auto-complete feature.</p>
-<div class="cell" data-execution_count="27">
+<div id="cell-95" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">## tab after the `.` to auto-complete all variables/methods</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># classifier.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s say you vaguely remember the name of a variable or function, say for example the <code>forward()</code> method. In that case you can type the first few letters and hit tab to auto-complete the full set of options:</p>
-<div class="cell" data-execution_count="28">
+<div id="cell-97" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">## tab after the `.for` to auto-complete the rest of the options</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># classifier.for</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -685,12 +694,12 @@ Note
 <h2 class="anchored" data-anchor-id="asking-questions-and">Asking questions: <code>?</code> and <code>??</code></h2>
 <p>Lastly, we can literally interrogate an object in Jupyter for more information.</p>
 <p>If we tag a single <code>?</code> after an object, we’ll get its basic documentation (docstring). Note that we omit it here to keep the notebook from getting too busy.</p>
-<div class="cell" data-execution_count="29">
+<div id="cell-100" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">## the power of asking questions</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>classifier?</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If we tag on <em>two</em> question marks: <code>??</code>, then we get the full source code of the object:</p>
-<div class="cell" data-execution_count="30">
+<div id="cell-102" class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">## really curious about classifier</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>classifier??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -699,7 +708,7 @@ Note
 <section id="inspecting-a-specific-classifier-function" class="level2">
 <h2 class="anchored" data-anchor-id="inspecting-a-specific-classifier-function">Inspecting a specific <code>classifier</code> function</h2>
 <p>Let’s take a look at the function that does the heavy lifting for our sentiment analysis task: <code>forward()</code>.</p>
-<div class="cell" data-execution_count="31">
+<div id="cell-106" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a> <span class="co"># looking at what actually runs the inputs</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>classifier.forward</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="31">
@@ -707,7 +716,7 @@ Note
 </div>
 </div>
 <p>What does this function actually do? Let’s find out.</p>
-<div class="cell" data-execution_count="32">
+<div id="cell-108" class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># source code of the forward function</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>classifier.forward??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -734,7 +743,7 @@ Type:      method</code></pre>
 </div>
 <p>We can see that it automatically handles whether we’re running a TensorFlow (<code>tf</code>) or PyTorch (<code>pt</code>) model. Then, it makes sure the tensors are on the correct device. Lastly is calls another function, <code>_forward()</code> on the prepared inputs.</p>
 <p>We can follow the rabbit hole as far down as needed. Let’s take a look at the source of <code>_forward</code>.</p>
-<div class="cell" data-execution_count="33">
+<div id="cell-110" class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># going deeper</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>classifier._forward??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -759,7 +768,7 @@ Type:      method</code></pre>
 </div>
 </div>
 <p>Ah, we can see it calls the <code>model</code> of the classifier. This is the <code>distilbert</code> model we saw earlier! Now we can peek under the hood at the actual Transformer LLM.</p>
-<div class="cell" data-execution_count="34">
+<div id="cell-112" class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the distilbert sentiment analysis model</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>classifier.model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="34">
@@ -886,10 +895,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -899,8 +907,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -913,6 +930,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -956,6 +1092,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -981,6 +1118,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1046,4 +1209,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

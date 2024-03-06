@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -59,7 +59,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
@@ -81,7 +81,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -90,6 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -97,11 +104,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rosarivo">
 <meta property="og:title" content="chaski - Intro to normalizing and scheduling Classifier-free Guidance">
-<meta property="og:description" content="">
+<meta property="og:description" content="Enzo’s site.">
 <meta property="og:image" content="https://enzokro.dev/blog/posts/2022-11-15-guidance-expts-1/cat2.jpeg">
-<meta property="og:site-name" content="chaski">
+<meta property="og:site_name" content="chaski">
 <meta name="twitter:title" content="chaski - Intro to normalizing and scheduling Classifier-free Guidance">
-<meta name="twitter:description" content="">
+<meta name="twitter:description" content="Enzo’s site.">
 <meta name="twitter:image" content="https://enzokro.dev/blog/posts/2022-11-15-guidance-expts-1/cat2.jpeg">
 <meta name="twitter:card" content="summary_large_image">
 </head><body class="nav-fixed"><header id="custom-site-header" class="custom-nav page-columns page-rows-contents"> 
@@ -117,12 +124,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
 </header>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../styles.css">
 
@@ -131,9 +165,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">chaski</span>
     </a>
@@ -145,19 +179,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/enzokro_" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/enzokro_"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/enzokro" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/enzokro"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -221,7 +255,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#original-vs.-basenorm-with-cosine" id="toc-original-vs.-basenorm-with-cosine" class="nav-link" data-scroll-target="#original-vs.-basenorm-with-cosine">Original vs.&nbsp;BaseNorm with Cosine</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -258,7 +292,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <blockquote class="blockquote">
 <p>Changing the Classifier-Free Guidance parameter during diffusion.</p>
@@ -382,7 +418,7 @@ Note
 <section id="python-imports" class="level2">
 <h2 class="anchored" data-anchor-id="python-imports">Python imports</h2>
 <p>First we import the python, PyTorch, and HuggingFace modules that we need. We also use the <code>timm</code> library for its built-in Cosine schedules.</p>
-<div class="cell">
+<div id="0cc30037" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
@@ -429,7 +465,7 @@ Note
 <p>“a photograph of an astronaut riding a horse”</p>
 </blockquote>
 <p>This is the same prompt folks used in the forums. It seems like a good, simple starting point for future runs.</p>
-<div class="cell">
+<div id="fed4132f" class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the input prompt for diffusion</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"a photograph of an astronaut riding a horse"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -444,7 +480,7 @@ Note
 </ul>
 <p>Here we use the Stable Diffusion <code>v1-4</code> model from CompVis.</p>
 <p>But it is worth mentioning that this code will work with any Diffusion model name on the HuggingFace hub.</p>
-<div class="cell">
+<div id="d144135e" class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set the diffusion model</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"CompVis/stable-diffusion-v1-4"</span> <span class="co"># "runwayml/stable-diffusion-v1-5"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -453,7 +489,7 @@ Note
 <h2 class="anchored" data-anchor-id="utility-functions.">Utility functions.</h2>
 <p>Next we define some helper functions.</p>
 <p>These helpers create the text embeddings, convert latent features into images, and plot the decoded images. All of these functions are directly from Fahim’s notebook.</p>
-<div class="cell">
+<div id="cbde9284" class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> text_embeddings(prompts, maxlen<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Extracts text embeddings from the given `prompts`."</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    maxlen <span class="op">=</span> maxlen <span class="kw">or</span> tokenizer.model_max_length</span>
@@ -538,7 +574,7 @@ Note
 <blockquote class="blockquote">
 <p>Note: We are using a different <span class="math inline">\(\text{VAE}\)</span> from <code>stability.ai</code> that was fine-tuned for more steps.</p>
 </blockquote>
-<div class="cell">
+<div id="f74c403d" class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_sd_pieces(model_name, dtype<span class="op">=</span>torch.float32):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Loads and returns the individual pieces in a Diffusion pipeline."</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    </span>
@@ -596,7 +632,7 @@ Note
 <p>The Cosine schedule starts from the default <span class="math inline">\(G_\text{max} = 7.5\)</span>. It then slowly works down to a minimum of <span class="math inline">\(G_\text{min} = 0.15\)</span>.</p>
 <p>We also make a schedule with Warmup. Warmup means that <span class="math inline">\(G\)</span> first starts low, then linearly works its way up to <span class="math inline">\(G_\text{max}\)</span>. Only then does it start decreasing back down to <span class="math inline">\(G_\text{min}\)</span>. As a starting point, we warmup during the first 10% of the Diffusion process (aka during the first 5 steps).</p>
 <p>For T-Norm, we use a slightly different Cosine schedule with smaller values. We need this because a large <span class="math inline">\(G\)</span> with T-Norm makes the problem we are trying to solve (<span class="math inline">\(G\)</span> too large) even worse. The smaller T-Norm values also align much better with how we typically think about mixing or moving averages.</p>
-<div class="cell">
+<div id="cef93f6a" class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># parameters for CFG cosine schedules</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>max_g <span class="op">=</span> <span class="fl">7.5</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>min_g <span class="op">=</span> <span class="fl">0.15</span></span>
@@ -634,7 +670,7 @@ Note
 </div>
 <p>We use the Cosine scheduler in <code>timm</code> for convenience.</p>
 <p>That means we need a bit of overhead code. Mainly, we need a dummy PyTorch optimizer and module.</p>
-<div class="cell">
+<div id="27150ed4" class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create dummy model</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> torch.nn.Linear(<span class="dv">1</span>, <span class="dv">1</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -678,7 +714,7 @@ Note
 <span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cfg_per_step</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now that we have both the parameters and builder functions for Cosine schedules, we can create them:</p>
-<div class="cell">
+<div id="952afced" class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># baseline cosine guidance schedule</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>cos_g <span class="op">=</span> get_cos_sched(<span class="op">**</span>cos_params)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -691,9 +727,13 @@ Note
 <section id="plotting-the-cosine-schedules" class="level2">
 <h2 class="anchored" data-anchor-id="plotting-the-cosine-schedules">Plotting the Cosine schedules</h2>
 <p>Let’s plot these new schedules to compare them against the previous, constant guidance.</p>
-<div class="cell">
+<div id="3bb2180d" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -727,7 +767,7 @@ Note
 <p>For convenience we call the unconditioned latents “<span class="math inline">\(\text{u}\)</span>” and the conditioned latents “<span class="math inline">\(\text{t}\)</span>”.</p>
 <p>The base class applies a standard CFG update. However, there are also methods to pre and post process the latents. The goal of these other methods is to easily try different and custom normalizations. For example, we can implement all of our normalization ideas with these methods.</p>
 <p>Lastly, <code>GuidanceTfm</code> takes one initialization parameter: <code>schedules</code>. This is a dictionary that maps a parameter name to an array-like, indexable sequence of values. This sequence is how we tap in to the scheduled <span class="math inline">\(G\)</span> value at timestep <span class="math inline">\(\text{idx}\)</span>. And if we ever want to include or schedule other parameters, we can add them to <code>schedules</code> and access them in any of the <code>encode()</code> functions.</p>
-<div class="cell">
+<div id="af24a0e3" class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> GuidanceTfm:</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Baseline Classifier-free Guidance for Difussion."</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="st">"CFGuidance"</span></span>
@@ -786,7 +826,7 @@ Note
 <p>For the T-Norm experiments, we also define a smaller-valued cosine schedule:<br>
 - T-Norm cosine schedule from <span class="math inline">\(\left(G = 0.25\right)\)</span> down to <span class="math inline">\(\left(G = 0.05\right)\)</span></p>
 <p>The schedule maps below will be the arguments to our <code>GuidanceTfm</code> instances.&nbsp;</p>
-<div class="cell">
+<div id="584f7008" class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># baseline constant schedules with min and max values</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>max_sched        <span class="op">=</span> {<span class="st">'g'</span>: [max_g] <span class="op">*</span> num_steps}</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>min_sched        <span class="op">=</span> {<span class="st">'g'</span>: [min_g] <span class="op">*</span> num_steps}</span>
@@ -802,7 +842,7 @@ Note
 <section id="recreating-the-forum-ideas" class="level2">
 <h2 class="anchored" data-anchor-id="recreating-the-forum-ideas">Recreating the forum ideas</h2>
 <p>First, let’s recreate the experiment baselines from the forums and Fahim’s notebook.</p>
-<div class="cell">
+<div id="63949d49" class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># stores the guidance experiements to run</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>expts <span class="op">=</span> {}</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -831,7 +871,7 @@ Note
 <li>Default and BaseNorm Guidance with Cosine and Cosine Warmup schedules.</li>
 <li>T-Norm and FullNorm Guidance with the smaller T-Cosine schedule.</li>
 </ul>
-<div class="cell">
+<div id="182370da" class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># group the cosine to run, and their names for plotting</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>name2sched <span class="op">=</span> {</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Cos'</span>:        cos_sched,</span>
@@ -872,7 +912,7 @@ Note
 <span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>        expts[expt_name] <span class="op">=</span> expt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Here we print all of the queued experiments:</p>
-<div class="cell">
+<div id="619f5f98" class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Guidance experiments to run:</span><span class="ch">\n</span><span class="st">"</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(<span class="ss">f'</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> k,_ <span class="kw">in</span> expts.items()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -897,7 +937,7 @@ BaseNormGuidance_Sched_CosWarmup</code></pre>
 <p>We are almost there! Now we need a way to actually generate images.</p>
 <p>The <code>generate()</code> function below is almost identical to the the <code>StableDiffusionPipeline()</code> from HuggingFace.</p>
 <p>We make a few changes to ensure that the initial latents are the same between runs. That means that only the guidance schedule and/or normalization affects the outputs.</p>
-<div class="cell">
+<div id="90953f08" class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the shared, initial latents</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>width, height <span class="op">=</span> <span class="dv">512</span>, <span class="dv">512</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -940,7 +980,7 @@ BaseNormGuidance_Sched_CosWarmup</code></pre>
 <span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> image    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s save ourselves some work by writing a harness function to automatically store the experiment results:</p>
-<div class="cell">
+<div id="ca6eb625" class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># store generated images and their title (the experiment name)</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>images, titles <span class="op">=</span> [], []</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -954,7 +994,7 @@ BaseNormGuidance_Sched_CosWarmup</code></pre>
 </section>
 <section id="running-the-guidance-experiments." class="level1">
 <h1>Running the guidance experiments.</h1>
-<div class="cell">
+<div id="aeb2c4ea" class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run each of the functions with the harness</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gname, gtfm <span class="kw">in</span> expts.items():</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Running experiment: </span><span class="sc">{</span>gname<span class="sc">}</span><span class="ss">...'</span>)</span>
@@ -1039,9 +1079,13 @@ Done.</code></pre>
 <section id="showing-all-images-side-by-side" class="level2">
 <h2 class="anchored" data-anchor-id="showing-all-images-side-by-side">Showing all images side by side</h2>
 <p>Our starting image, the baseline, is in the top-left. All other images are from different Guidance normalizations and schedules.</p>
-<div class="cell">
+<div id="c2d1aa19" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>That’s a lot of images. Thankfully, there is one result that stands out above the rest:</p>
@@ -1056,18 +1100,26 @@ Done.</code></pre>
 <li>Better details and colors in the background.</li>
 </ul>
 <p>The horse’s body is still not quite right, but it’s a marked improvement from the baseline.</p>
-<div class="cell">
+<div id="0973ddb3" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="cosine-t-norm-vs.-cosine-fullnorm" class="level2">
 <h2 class="anchored" data-anchor-id="cosine-t-norm-vs.-cosine-fullnorm">Cosine T-Norm vs.&nbsp;Cosine FullNorm</h2>
 <p>These images are close, and both are better than the baseline. It seems we traded some background quality for subject quality with FullNorm vs.&nbsp;T-Norm.</p>
-<div class="cell">
+<div id="bac76ba3" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-22-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -1123,41 +1175,61 @@ Done.</code></pre>
 - More detail in the backgrounds.<br>
 - Better shadowing on subjects.<br>
 - Some moderate clarity gains.</p>
-<div class="cell">
+<div id="c65358c1" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-23-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-23-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="original-vs.-t-norm" class="level2">
 <h2 class="anchored" data-anchor-id="original-vs.-t-norm">Original vs.&nbsp;T-Norm</h2>
-<div class="cell">
+<div id="5f5161ea" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-24-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-24-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="original-vs.-fullnorm" class="level2">
 <h2 class="anchored" data-anchor-id="original-vs.-fullnorm">Original vs.&nbsp;FullNorm</h2>
-<div class="cell">
+<div id="f985b295" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-25-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-25-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="original-vs.-cosine" class="level2">
 <h2 class="anchored" data-anchor-id="original-vs.-cosine">Original vs.&nbsp;Cosine</h2>
-<div class="cell">
+<div id="cdc20289" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-26-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-26-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="original-vs.-basenorm-with-cosine" class="level2">
 <h2 class="anchored" data-anchor-id="original-vs.-basenorm-with-cosine">Original vs.&nbsp;BaseNorm with Cosine</h2>
-<div class="cell">
+<div id="9acb31a5" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-27-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-27-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 
@@ -1245,10 +1317,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1258,8 +1329,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1272,6 +1352,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1315,6 +1514,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1340,6 +1540,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1405,4 +1631,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

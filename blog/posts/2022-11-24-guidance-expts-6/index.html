@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -59,7 +59,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
@@ -81,7 +81,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -90,6 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -97,13 +104,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rosarivo">
 <meta property="og:title" content="chaski - Classifier-free Guidance with Cosine Schedules Pt. 5">
-<meta property="og:description" content="">
+<meta property="og:description" content="Enzo’s site.">
 <meta property="og:image" content="https://enzokro.dev/blog/posts/2022-11-24-guidance-expts-6/better_horse_5.png">
-<meta property="og:site-name" content="chaski">
+<meta property="og:site_name" content="chaski">
 <meta property="og:image:height" content="868">
 <meta property="og:image:width" content="864">
 <meta name="twitter:title" content="chaski - Classifier-free Guidance with Cosine Schedules Pt. 5">
-<meta name="twitter:description" content="">
+<meta name="twitter:description" content="Enzo’s site.">
 <meta name="twitter:image" content="https://enzokro.dev/blog/posts/2022-11-24-guidance-expts-6/better_horse_5.png">
 <meta name="twitter:image-height" content="868">
 <meta name="twitter:image-width" content="864">
@@ -121,12 +128,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
 </header>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 <script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../styles.css">
 
@@ -135,9 +169,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">chaski</span>
     </a>
@@ -149,19 +183,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/enzokro_" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/enzokro_"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/enzokro" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/enzokro"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -218,7 +252,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#cosines-for-the-best-g_textsmall" id="toc-cosines-for-the-best-g_textsmall" class="nav-link" data-scroll-target="#cosines-for-the-best-g_textsmall">Cosines for the best <span class="math inline">\(G_\text{small}\)</span></a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -255,7 +289,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <blockquote class="blockquote">
 <p>Exploring a range of guidance values for T-Normalization.</p>
@@ -278,7 +314,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="python-imports" class="level1">
 <h1>Python imports</h1>
 <p>We start with a few basic python imports.</p>
-<div class="cell">
+<div id="e6c6aecb-36f7-4d0b-ad6a-2ddb293c8a2d" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functools <span class="im">import</span> partial</span>
@@ -290,7 +326,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="seed-for-reproducibility" class="level2">
 <h2 class="anchored" data-anchor-id="seed-for-reproducibility">Seed for reproducibility</h2>
 <p><code>seed_everything</code> makes sure that the results are reproducible across notebooks.</p>
-<div class="cell">
+<div id="79229c30-e77d-4937-aea9-b6210c9dfe41" class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set the seed and pseudo random number generator</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>SEED <span class="op">=</span> <span class="dv">1024</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> seed_everything(seed):</span>
@@ -310,7 +346,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="constant-schedules-with-a-range-of-g_textsmall-values" class="level1">
 <h1>Constant schedules with a range of <span class="math inline">\(G_\text{small}\)</span> values</h1>
 <p>We can try different <span class="math inline">\(G_\text{small}\)</span> values using the <code>cf_guidance</code> library.</p>
-<div class="cell">
+<div id="7172d31f-0019-455c-b9b4-7d6b65d1f947" class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># helpers to create cosine schedules</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cf_guidance.schedules  <span class="im">import</span> get_cos_sched</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -318,7 +354,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cf_guidance.transforms <span class="im">import</span> TNormGuidance, FullNormGuidance</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>For the other schedule parameters, we will use the <a href="https://enzokro.dev/blog/posts/2022-11-20-guidance-expts-2/#default-schedule-parameters">same values</a> from the running series on dynamic Classifier-free Guidance.</p>
-<div class="cell">
+<div id="2ea4ddfe-1989-4efc-90c4-3f619f71d729" class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Default schedule parameters from the blog post</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">######################################</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>max_val           <span class="op">=</span> <span class="fl">0.15</span>  <span class="co"># guidance scaling value</span></span>
@@ -384,16 +420,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="plotting-the-g_textsmall-values" class="level1">
 <h1>Plotting the <span class="math inline">\(G_\text{small}\)</span> values</h1>
-<div class="cell">
+<div id="a076385c-2110-487f-9e26-c12a0f48d01d" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="loading-the-openjourney-model-from-prompt-hero" class="level1">
 <h1>Loading the <code>openjourney</code> model from Prompt Hero</h1>
 <p>The <code>min_diffusion</code> library loads a Stable Diffusion model from the HuggingFace hub.</p>
-<div class="cell">
+<div id="f2838324-f5af-479c-9304-cd365eceb593" class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to load Stable Diffusion pipelines</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> min_diffusion.core <span class="im">import</span> MinimalDiffusion</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -404,15 +444,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>We use it to load the <code>openjourney</code> model on the GPU in <code>torch.float16</code> precision.</p>
-<div class="cell">
+<div id="dc39de99-b497-475e-85d4-d778888a4f6d" class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">'prompthero/openjourney'</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>device     <span class="op">=</span> <span class="st">'cuda'</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>dtype      <span class="op">=</span> torch.float16</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div id="8acb8858-01c7-455d-993d-2bbde67fa07a" class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> MinimalDiffusion(model_name, device, dtype, generator<span class="op">=</span>generator)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div id="8566621b-1eb8-4a06-8d07-2db6e179810f" class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>pipeline.load()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Enabling default unet attention slicing.</code></pre>
@@ -439,14 +479,14 @@ Important
 <p>To enable this fine-tuned style, we need to add the keyword <code>"mdjrny-v4"</code> at the start of the prompt.</p>
 </div>
 </div>
-<div class="cell">
+<div id="16ba06b2-a9bb-49da-8c77-657df665e651" class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># text prompt for image generations</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"mdjrny-v4 style a photograph of an astronaut riding a horse"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="image-parameters" class="level2">
 <h2 class="anchored" data-anchor-id="image-parameters">Image parameters</h2>
 <p>Images will be generated over <span class="math inline">\(50\)</span> diffusion steps. They will have a height and width of <code>512 x 512</code> pixels.</p>
-<div class="cell">
+<div id="bc597768-10db-4f64-a7ac-9839eab90833" class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the number of diffusion steps</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>num_steps <span class="op">=</span> <span class="dv">50</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -459,7 +499,7 @@ Important
 <h1>Running the experiments</h1>
 <p>The <code>run</code> function below generates images for the given <code>prompt</code>.</p>
 <p>It also stores the output images with a matching title for plotting and visualizations.</p>
-<div class="cell">
+<div id="f77a0848-0b0b-41e3-b250-127af7e69fbb" class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run(prompt, schedules, guide_tfm<span class="op">=</span><span class="va">None</span>, generator<span class="op">=</span><span class="va">None</span>,</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>        show_each<span class="op">=</span><span class="va">False</span>, test_run<span class="op">=</span><span class="va">False</span>):</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Runs a dynamic Classifier-free Guidance experiment. </span></span>
@@ -511,7 +551,7 @@ Important
 <p>Now we generate images for the range of constant <span class="math inline">\(G_\text{small}\)</span> values. Then we will check the outputs to see what a good, default value might be.</p>
 <section id="t-normalization-with-g_textsmall-sweep" class="level2">
 <h2 class="anchored" data-anchor-id="t-normalization-with-g_textsmall-sweep"><code>T-Normalization</code> with <span class="math inline">\(G_\text{small}\)</span> sweep</h2>
-<div class="cell">
+<div id="cd54e431-273a-455b-9363-3a494bfb1ef6" class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the k-Sweep experiments...'</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>t_norm_res <span class="op">=</span> run(prompt, const_expts, guide_tfm<span class="op">=</span>TNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -583,7 +623,7 @@ Done.</code></pre>
 </section>
 <section id="full-normalization-with-g_textsmall-sweep" class="level2">
 <h2 class="anchored" data-anchor-id="full-normalization-with-g_textsmall-sweep"><code>Full Normalization</code> with <span class="math inline">\(G_\text{small}\)</span> sweep</h2>
-<div class="cell">
+<div id="93df326b-3c77-40a1-959b-6f871e57a7b4" class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the k-Sweep experiments...'</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>full_norm_res <span class="op">=</span> run(prompt, const_expts, guide_tfm<span class="op">=</span>FullNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -658,17 +698,25 @@ Done.</code></pre>
 <h1>Results</h1>
 <section id="t-normalization-g_textsmall-results" class="level2">
 <h2 class="anchored" data-anchor-id="t-normalization-g_textsmall-results"><code>T-Normalization</code> <span class="math inline">\(G_\text{small}\)</span> results</h2>
-<div class="cell">
+<div id="3c3cf50b-147d-450e-b77f-e0d063de354f" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="full-normalization-g_textsmall-results" class="level2">
 <h2 class="anchored" data-anchor-id="full-normalization-g_textsmall-results"><code>Full Normalization</code> <span class="math inline">\(G_\text{small}\)</span> results</h2>
-<div class="cell">
+<div id="a48ff53f-60fe-4101-9c02-447c7379e411" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-17-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -685,7 +733,7 @@ Done.</code></pre>
 </section>
 <section id="re-runs-to-find-the-phase-change" class="level1">
 <h1>Re-runs to find the phase change</h1>
-<div class="cell">
+<div id="7b2457c2-422d-43e7-aadc-e0ffe9ddca56" class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>low_bound <span class="op">=</span> <span class="fl">0.08</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>hi_bound <span class="op">=</span> <span class="fl">0.102</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>npoints <span class="op">=</span> <span class="dv">11</span></span>
@@ -696,13 +744,13 @@ Done.</code></pre>
        0.098, 0.1  , 0.102])</code></pre>
 </div>
 </div>
-<div class="cell">
+<div id="25c3f6ad-1fd0-47cc-a4c3-17cf22d21451" class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the constant G_small cosine experiments</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>phase_params <span class="op">=</span> {<span class="st">'max_val'</span>: <span class="bu">list</span>(points)}</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>phase_func <span class="op">=</span> <span class="kw">lambda</span> val: [val <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_steps)]</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>phase_expts <span class="op">=</span> create_expts(phase_params, phase_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div id="796f65b7-1b61-44f6-9121-cb773b783dbd" class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>phase_res <span class="op">=</span> run(prompt, phase_expts, guide_tfm<span class="op">=</span>TNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -785,16 +833,20 @@ Done.</code></pre>
 </div>
 <section id="t-normalization-with-g_textsmall-phase-change" class="level2">
 <h2 class="anchored" data-anchor-id="t-normalization-with-g_textsmall-phase-change"><code>T-Normalization</code> with <span class="math inline">\(G_\text{small}\)</span> phase change</h2>
-<div class="cell">
+<div id="1b7808b7-42f1-464b-a7ed-e6d5755df7c8" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>It seems the phase change happens between 0.088 and 0.09. Let’s check if this is also true for <code>Full Normalization</code>.</p>
 </section>
 <section id="full-normalization-with-g_textsmall-phase-change" class="level2">
 <h2 class="anchored" data-anchor-id="full-normalization-with-g_textsmall-phase-change"><code>Full Normalization</code> with <span class="math inline">\(G_\text{small}\)</span> phase change</h2>
-<div class="cell">
+<div id="6119f465-e4da-445d-866f-c1fca3098212" class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>full_phase_res <span class="op">=</span> run(prompt, phase_expts, guide_tfm<span class="op">=</span>FullNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -875,9 +927,13 @@ Done.</code></pre>
 </script>
 </div>
 </div>
-<div class="cell">
+<div id="ec67553b-422e-4bfd-9d85-9e03c3f04542" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-23-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-23-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>The phase change happens in the same place! In fact the change is more pronounced, there is definitely something strange with the horse’s head as we hit the phase transition around <span class="math inline">\(G_\text{small} = 0.09\)</span>.</p>
@@ -887,7 +943,7 @@ Done.</code></pre>
 </section>
 <section id="re-runs-to-find-earlier-potentially-better-values" class="level1">
 <h1>Re-runs to find earlier, potentially better values</h1>
-<div class="cell">
+<div id="ecb21527-d127-4d15-80e7-775f82df8269" class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>low_bound <span class="op">=</span> <span class="fl">0.06</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>hi_bound <span class="op">=</span> <span class="fl">0.082</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>npoints <span class="op">=</span> <span class="dv">11</span></span>
@@ -898,13 +954,13 @@ Done.</code></pre>
        0.078, 0.08 , 0.082])</code></pre>
 </div>
 </div>
-<div class="cell">
+<div id="e9e60d73-b19f-441e-ad16-3757ae160017" class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the constant G_small cosine experiments</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>early_phase_params <span class="op">=</span> {<span class="st">'max_val'</span>: <span class="bu">list</span>(points)}</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>early_phase_func <span class="op">=</span> <span class="kw">lambda</span> val: [val <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_steps)]</span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>early_phase_expts <span class="op">=</span> create_expts(early_phase_params, early_phase_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div id="e29c6149-0d0f-4d0e-b08d-7fc837fefc9c" class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>early_phase_res <span class="op">=</span> run(prompt, early_phase_expts, guide_tfm<span class="op">=</span>TNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -985,9 +1041,13 @@ Done.</code></pre>
 </script>
 </div>
 </div>
-<div class="cell">
+<div id="ca7a501c-a2bb-446a-9263-070e4d6613d8" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-27-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-27-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>This is a mixed bag. The anatomy of the horse’s face is better at lower values, but the rest of the image gains some strange artifacts. For example the horse’s leg starts fraying, and the astronaut merges with horse’s body. It is safe to say we are in “too small” territory for <span class="math inline">\(G_\text{small}.\)</span></p>
@@ -995,7 +1055,7 @@ Done.</code></pre>
 <section id="the-final-check-g-from-0.1-to-0.2" class="level1">
 <h1>The final check: <span class="math inline">\(G\ \)</span> from <span class="math inline">\(0.1\)</span> to <span class="math inline">\(0.2\)</span></h1>
 <p>There is a noticeable change in the image somewhere between 0.1 and 0.2. Let’s do a small sweep in this range to see what happens.</p>
-<div class="cell">
+<div id="62ffb382-1906-4b8d-b308-43a61faa03f9" class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>low_bound <span class="op">=</span> <span class="fl">0.1</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>hi_bound <span class="op">=</span> <span class="fl">0.202</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>npoints <span class="op">=</span> <span class="dv">11</span></span>
@@ -1007,13 +1067,13 @@ Done.</code></pre>
        0.19272727, 0.202     ])</code></pre>
 </div>
 </div>
-<div class="cell">
+<div id="26bd20fa-009a-47e5-9878-b4f18fc6b2a8" class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the constant G_small cosine experiments</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>late_phase_params <span class="op">=</span> {<span class="st">'max_val'</span>: <span class="bu">list</span>(points)}</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>late_phase_func <span class="op">=</span> <span class="kw">lambda</span> val: [val <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_steps)]</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>late_phase_expts <span class="op">=</span> create_expts(late_phase_params, late_phase_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div id="63cc493d-cad8-4c57-a4c7-9b5bbd9520cb" class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>late_phase_res <span class="op">=</span> run(prompt, late_phase_expts, guide_tfm<span class="op">=</span>TNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1094,16 +1154,20 @@ Done.</code></pre>
 </script>
 </div>
 </div>
-<div class="cell">
+<div id="f9941c15-53c9-4e91-afc4-e431776deb0d" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-31-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-31-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Another phase change! Almost exactly at twice the <span class="math inline">\(G_\text{small}\)</span> from the previous phase change. And, after this second phase change, we re-gain some illumination on the horse’s body.</p>
 <section id="checking-for-phase-change-multiples" class="level2">
 <h2 class="anchored" data-anchor-id="checking-for-phase-change-multiples">Checking for phase change multiples</h2>
 <p>Will we find another phase change around three times from the first one? Let’s find out.</p>
-<div class="cell">
+<div id="1ff185c4-7383-4a35-9a2b-f2a1611e70e0" class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>low_bound <span class="op">=</span> <span class="fl">0.25</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>hi_bound <span class="op">=</span> <span class="fl">0.29</span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>npoints <span class="op">=</span> <span class="dv">11</span></span>
@@ -1115,13 +1179,13 @@ Done.</code></pre>
        0.28636364, 0.29      ])</code></pre>
 </div>
 </div>
-<div class="cell">
+<div id="f28dd5c4-cbc9-480e-840b-4560e0cb14d3" class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the constant G_small cosine experiments</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>later_phase_params <span class="op">=</span> {<span class="st">'max_val'</span>: <span class="bu">list</span>(points)}</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>later_phase_func <span class="op">=</span> <span class="kw">lambda</span> val: [val <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_steps)]</span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>later_phase_expts <span class="op">=</span> create_expts(later_phase_params, later_phase_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div id="abde53bd-c4cf-4037-a6ed-c019142937b8" class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>later_phase_res <span class="op">=</span> run(prompt, later_phase_expts, guide_tfm<span class="op">=</span>TNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1202,9 +1266,13 @@ Done.</code></pre>
 </script>
 </div>
 </div>
-<div class="cell">
+<div id="529d743e-caa3-444d-9422-30cba77c2e8d" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-35-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-35-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>There is no clear phase change, but the image is starting to fall apart. It is safe to say we are in territory where <span class="math inline">\(G_\text{small}\)</span> is too large.</p>
@@ -1214,7 +1282,7 @@ Done.</code></pre>
 <section id="cosines-for-the-best-g_textsmall" class="level1">
 <h1>Cosines for the best <span class="math inline">\(G_\text{small}\)</span></h1>
 <p>We saw that that <span class="math inline">\(G_\text{small}\)</span> should be between 0.08 and 0.25. What happens if we try cosine schedules around these values?</p>
-<div class="cell">
+<div id="282cb148-9353-48d1-a0e9-099c1576ff95" class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_cos_expts(params: <span class="bu">dict</span>, schedule_func) <span class="op">-&gt;</span> <span class="bu">list</span>:</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''Creates a list of experiments.</span></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
@@ -1238,7 +1306,7 @@ Done.</code></pre>
 <span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> expts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s sweep a few cosine schedules between the ideal <span class="math inline">\(G_\text{small}\)</span> range.</p>
-<div class="cell">
+<div id="d3d4de3a-da29-4f4d-8179-848f2dba078f" class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>low_cos_bound <span class="op">=</span> <span class="fl">0.08</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>hi_cos_bound <span class="op">=</span> <span class="fl">0.25</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>npoints <span class="op">=</span> <span class="dv">11</span></span>
@@ -1249,13 +1317,13 @@ Done.</code></pre>
        0.23454545, 0.25      ])</code></pre>
 </div>
 </div>
-<div class="cell">
+<div id="d5964986-2503-4f35-8829-27306fec5e36" class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the constant G_small cosine experiments</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>cos_params <span class="op">=</span> {<span class="st">'max_val'</span>: <span class="bu">list</span>(cos_points)}</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>cos_func <span class="op">=</span> partial(cos_harness, default_params<span class="op">=</span>DEFAULT_COS_PARAMS)</span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>cos_expts <span class="op">=</span> create_cos_expts(cos_params, cos_func)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div id="d4623918-809a-452b-b5a9-58167730a957" class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>cos_res <span class="op">=</span> run(prompt, cos_expts, guide_tfm<span class="op">=</span>TNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1336,13 +1404,17 @@ Done.</code></pre>
 </script>
 </div>
 </div>
-<div class="cell">
+<div id="b7b2099b-d794-46b3-8e7a-96917cb327b8" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-40-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-40-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>For completion, let’s try the Cosine sweep on <code>Full Normalization</code></p>
-<div class="cell">
+<div id="3cd01569-6e68-4d1f-ab5b-562d02da4e84" class="cell">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Running the phase change k-Sweep experiments...'</span>)</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>full_norm_cos_res <span class="op">=</span> run(prompt, cos_expts, guide_tfm<span class="op">=</span>FullNormGuidance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1423,9 +1495,13 @@ Done.</code></pre>
 </script>
 </div>
 </div>
-<div class="cell">
+<div id="74675c54-37e5-426c-8222-4d6a8472f2de" class="cell">
 <div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-42-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-42-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -1522,10 +1598,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1535,8 +1610,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1549,6 +1633,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1592,6 +1795,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1617,6 +1821,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1682,4 +1912,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
