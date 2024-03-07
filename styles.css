@@ -123,6 +123,19 @@ div.sourceCode {
   box-shadow: 0 6px 12px rgba(42, 37, 37, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   margin-bottom: 1rem;
+  position: relative; /* Add position relative for the pseudo-element */
+}
+
+div.sourceCode::before {
+  content: 'Input';
+  position: absolute;
+  top: -1.5rem;
+  left: 0;
+  background-color: #c0d0d0;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px 4px 0 0;
+  font-size: 0.9rem;
 }
 
 blockquote > pre {
