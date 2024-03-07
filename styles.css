@@ -1,40 +1,35 @@
 body {
-  font-family: 'Courier New', Courier, monospace; /* A more traditional, typewriter-style font */
-  background-color: #f4f1e9; /* A paper-like background color */
-  color: #333; /* A softer text color */
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #f4f1e9;
+  color: #333;
 }
 
-/* This hides the real quarto-header so we can use our custom-header while still using the included search */
+p {
+  margin-top: 0.1em;
+  margin-bottom: 0.4em;
+  line-height: 1.5;
+}
+
 header#quarto-header {
   display: none;
 }
 
 .custom-nav {
-  /* background-color: lavender; */
   padding-bottom: 3em;
   padding-top: 2em;
 }
 
 .custom-nav-content {
   grid-column: body-content-start/body-content-end;
-  /* grid-column: body-start-outset/page-end-inset; */
   grid-row: content-top/page-bottom;
   align-content: flex-start;
-  /* display: flex; */
-  /* align-items: center; */
-  /* justify-content: space-between; */
-  /* margin-bottom: 3em;
-  margin-top: 2em; */
 }
-
 
 .custom-nav-sidebar {
   grid-column: body-end/page-end;
-  /* grid-column: body-start/body-end-outset; */
   grid-row: content-top/page-bottom;
   display: flex;
   flex-direction: row;
-  /* justify-content: flex-end; */
   align-items: center;
 }
 
@@ -45,14 +40,6 @@ header#quarto-header {
   }
 }
 
-
-img {
-  border: 2px solid #ddd8d8;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
-  padding: 2px;
-}
-
-
 .custom-title {
   font-family: Rosarivo, Georgia, 'Times New Roman', Times, serif;
   font-size: 3.2rem;
@@ -60,9 +47,9 @@ img {
 
 .cell {
   margin-bottom: 1rem;
-  border: none; /* removing the border */
-  background-color: none; /* removing the background color */
-  padding: 0; /* removing the padding */
+  border: none;
+  background-color: none;
+  padding: 0;
 }
 
 .cell > .sourceCode {
@@ -89,7 +76,9 @@ img {
   font-size: 0.9rem;
 }
 
-.cell-output > pre, .cell-output > .sourceCode > pre, .cell-output-stdout > pre {
+.cell-output > pre,
+.cell-output > .sourceCode > pre,
+.cell-output-stdout > pre {
   background-color: #f0f5f7;
   margin-top: -1rem;
   margin-left: 1rem;
@@ -117,6 +106,7 @@ img {
   border-radius: 4px 4px 0 0;
   font-size: 0.9rem;
 }
+
 div.description {
   padding-left: 2px;
   padding-top: 5px;
@@ -125,38 +115,33 @@ div.description {
   opacity: 70%;
 }
 
-
-/* Styling for regular, non code-cell code ``` blocks */
 div.sourceCode {
   font-family: 'Cutive Mono', monospace;
-  background-color: #e8f0f2; /* a subtle blue tint */
-  border: 1px solid #d0d0d0; /* adds a subtle border */
+  background-color: #e8f0f2;
+  border: 1px solid #d0d0d0;
   padding: 0.5rem;
-  font-family: 'Fira Code', monospace; /* a monospaced font ideal for code */
-  box-shadow: 0 6px 12px rgba(42, 37, 37, 0.1), /* increases the shadow spread and blur for a more elevated look */
-              0 1px 3px rgba(0, 0, 0, 0.1); /* adds a second, closer shadow for more depth */
-  border-radius: 4px; /* optional: adds rounded corners */
-  margin-bottom: 1rem; /* adds some space below the code card */
+  box-shadow: 0 6px 12px rgba(42, 37, 37, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  margin-bottom: 1rem;
 }
 
-/* show_doc signature */
 blockquote > pre {
   font-size: 14px;
-  background-color: #f9f9f9; /* A subtle background color for blockquote blocks */
-  border: 1px solid #ddd; /* Adds a border around blockquote blocks */
-  padding: 0.5rem; /* Adds some padding within blockquote blocks */
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 0.5rem;
 }
 
 .table {
   font-size: 16px;
-  /* disable striped tables */
   --bs-table-striped-bg: var(--bs-table-bg);
-  border-collapse: collapse; /* Ensures borders between cells collapse into a single border */
+  border-collapse: collapse;
 }
 
-.table th, .table td {
-  border: 1px solid #ddd; /* Adds a border around table cells */
-  padding: 0.5rem; /* Adds some padding within table cells */
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
 }
 
 .quarto-figure-center > figure > figcaption {
@@ -172,63 +157,72 @@ blockquote > pre {
   font-weight: 1000;
 }
 
-/* Additional styling for headings to give a more formal appearance */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Georgia', serif;
   margin-top: 2rem;
   margin-bottom: 1rem;
 }
 
-/* Optional: Add a vintage-style border around the content */
 .wrapper {
   border: 2px solid #ddd;
   padding: 2rem;
   margin: 2rem;
 }
 
-
-/* Resetting list styles */
-ul, ol {
-  margin: 0;
+ul,
+ol {
+  margin-top: 0.5em; /* Adds space before the list */
+  margin-bottom: 0.5em; /* Adds space after the list */
   padding: 0;
   list-style-position: outside;
 }
 
-/* Styling unordered lists */
 ul {
-  margin-left: 1.5em; /* Adjusts the left margin */
-  list-style-type: square; /* Changes bullet points to squares */
+  margin-left: 1.5em;
+  list-style-type: square;
 }
 
-/* Styling nested unordered lists */
 ul ul {
-  list-style-type: disc; /* Changes bullet points to discs for first level of nesting */
+  list-style-type: disc;
 }
 
 ul ul ul {
-  list-style-type: circle; /* Changes bullet points to circles for second level of nesting */
+  list-style-type: circle;
 }
 
 ul li {
-  margin-bottom: 0.20em; /* Adjusts spacing between bullets */
-  line-height: 1.5; /* Adjusts line height for better readability */
-  /*font-family: 'Times New Roman', Times, serif; /* Gives a more formal font style */
+  margin-bottom: 0.20em;
+  line-height: 1.5;
   font-size: 1em;
 }
 
-/* Styling ordered lists */
 ol {
-  margin-left: 1.5em; /* Adjusts the left margin */
+  margin-left: 1.5em;
 }
 
 ol li {
-  margin-bottom: 0.20em; /* Adjusts spacing between bullets */
-  line-height: 1.5; /* Adjusts line height for better readability */
-  font-family: 'Times New Roman', Times, serif; /* Gives a more formal font style */
+  margin-bottom: 0.20em;
+  line-height: 1.5;
+  font-family: 'Times New Roman', Times, serif;
   font-size: 1em;
 }
 
-/* Styling nested lists */
-ul ul, ul ol, ol ul, ol ol {
-  margin-left: 1em; /* Adjusts the left margin for nested lists */
+ul ul,
+ul ol,
+ol ul,
+ol ol {
+  margin-left: 1em;
+}
+
+img {
+  border: 2px solid #ddd8d8;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+  padding: 2px;
+  margin-top: 0.3em; /* Reduces the padding before the image */
+  margin-bottom: 0.5em; /* Reduces the padding after the image */
 }

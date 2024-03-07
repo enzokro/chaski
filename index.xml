@@ -813,12 +813,18 @@ font-style: inherit;">5</span></span>
 </section>
 <section id="running-mistral-v0.1-with-llama.cpp" class="level1">
 <h1>Running Mistral-v0.1 with llama.cpp</h1>
-<p>This section covers the following:<br>
-1. Creating a virtual env for llama.cpp<br>
-2. Installing the <code>llama.cpp</code> repo<br>
-3. Downloading a quantized <code>Mistral-v0.1</code> model<br>
-4. Running the model directly with <code>llama.cpp</code><br>
-5. Running the model in a Jupyter Notebook</p>
+<p>This section covers the following:</p>
+<ol type="1">
+<li>Creating a virtual env for llama.cpp<br>
+</li>
+<li>Installing the <code>llama.cpp</code> repo<br>
+</li>
+<li>Downloading a quantized <code>Mistral-v0.1</code> model<br>
+</li>
+<li>Running the model directly with <code>llama.cpp</code><br>
+</li>
+<li>Running the model in a Jupyter Notebook</li>
+</ol>
 <p>First, we create a mamba environment to keep our work isolated. Then we download and install the repo.</p>
 <p>Next we download the actual Mistral model from the HuggingFace Model Hub.</p>
 <p>Lastly, we run the Mistral model first with C++ and then in a Jupyter Notebook.</p>
@@ -852,9 +858,12 @@ font-style: inherit;">git</span> clone https://github.com/ggerganov/llama.cpp</s
 background-color: null;
 font-style: inherit;">cd</span> llama.cpp</span></code></pre></div>
 <p>After cloning, we can move inside and prepare it for the build.</p>
-<p>There are two options to build llama.cpp:<br>
-- <a href="https://www.gnu.org/software/make/">GNU Make</a><br>
-- <a href="https://cmake.org/">CMake</a></p>
+<p>There are two options to build llama.cpp:</p>
+<ul>
+<li><a href="https://www.gnu.org/software/make/">GNU Make</a><br>
+</li>
+<li><a href="https://cmake.org/">CMake</a></li>
+</ul>
 <p><code>make</code> works great on Linux, but I’ve had mixed results on Mac. For that reason, we’ll stick with <code>CMake</code> for now.</p>
 <p>The best bet is grabbing the CMake installer from the <a href="https://cmake.org/download/">official site</a>. Download the appropriate one for your system and install it.</p>
 <p>With CMake installed, we can now follow a standard build process. This might look familiar if you’ve installed other software libraries from source.</p>
@@ -902,11 +911,16 @@ font-style: inherit;">--config</span> Release </span></code></pre></div>
 </section>
 <section id="downloading-mistral-v0.1" class="level2">
 <h2 class="anchored" data-anchor-id="downloading-mistral-v0.1">Downloading Mistral-v0.1</h2>
-<p>We will download the <code>Mistral-7B-Instruct-v0.1</code> model. What exactly does it do? We can find out by breaking down the name a bit:<br>
-- <code>Mistral</code> is the name given by the developers, in this case the <a href="https://mistral.ai/">Mistral.ai team</a><br>
-- <code>7B</code> means that the model has 7 billion parameters<br>
-- <code>Instruct</code> means that it was trained to follow and complete user instructions<br>
-- <code>v0.1</code> is the release version for this model</p>
+<p>We will download the <code>Mistral-7B-Instruct-v0.1</code> model. What exactly does it do? We can find out by breaking down the name a bit:</p>
+<ul>
+<li><code>Mistral</code> is the name given by the developers, in this case the <a href="https://mistral.ai/">Mistral.ai team</a><br>
+</li>
+<li><code>7B</code> means that the model has 7 billion parameters<br>
+</li>
+<li><code>Instruct</code> means that it was trained to follow and complete user instructions<br>
+</li>
+<li><code>v0.1</code> is the release version for this model</li>
+</ul>
 <p>Follow the link below to see the model on the HuggingFace Model Hub.</p>
 <blockquote class="blockquote">
 <p>Download link for <a href="https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF"><code>Mistral-7B-Instruct-v0.1</code></a></p>
