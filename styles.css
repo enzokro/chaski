@@ -46,7 +46,11 @@ header#quarto-header {
 }
 
 
-
+img {
+  border: 2px solid #ddd8d8;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+  padding: 2px;
+}
 
 
 .custom-title {
@@ -61,41 +65,58 @@ header#quarto-header {
   padding: 0; /* removing the padding */
 }
 
-
 .cell > .sourceCode {
-  background-color: #e8f0f2; /* a subtle blue tint */
-  border: 1px solid #d0d0d0; /* adds a subtle border */
-  padding: 0.5rem;
-  font-family: 'Fira Code', monospace; /* a monospaced font ideal for code */
-  box-shadow: 0 6px 12px rgba(42, 37, 37, 0.1), /* increases the shadow spread and blur for a more elevated look */
-              0 1px 3px rgba(0, 0, 0, 0.1); /* adds a second, closer shadow for more depth */
-  border-radius: 4px; /* optional: adds rounded corners */
-  margin-bottom: 1rem; /* adds some space below the code card */
+  background-color: #e8f0f2;
+  border: 2px solid #c0d0d0;
+  padding: 1rem;
+  font-family: 'Cutive Mono', monospace;
+  box-shadow: 0 8px 16px rgba(42, 37, 37, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 2;
 }
 
-
-
-.cell-output > pre {
-  margin-bottom: 0;
-  background-color: #f9f9f9; /* A subtle background color for output blocks */
-  border: 1px solid #ddd; /* Adds a border around output blocks */
-  padding: 0.5rem; /* Adds some padding within output blocks */
+.cell > .sourceCode::before {
+  content: 'Input';
+  position: absolute;
+  top: -1.5rem;
+  left: 0;
+  background-color: #c0d0d0;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px 4px 0 0;
+  font-size: 0.9rem;
 }
 
 .cell-output > pre, .cell-output > .sourceCode > pre, .cell-output-stdout > pre {
-  margin-left: 0.8rem;
-  margin-top: 0;
-  background: none;
-  border-left: 2px solid #8f8f8f; /* A more muted border color */
-}
-
-
-.cell-output > .sourceCode {
+  background-color: #f0f5f7;
+  margin-top: -1rem;
+  margin-left: 1rem;
+  margin-right: 0.1rem;
+  margin-bottom: 1.5rem;
   border: none;
-  background: none;
-  margin-top: 0;
+  padding: 2rem 1rem 1rem;
+  border-left: 2px solid #c0d0d0;
+  border-right: 2px solid #c0d0d0;
+  border-bottom: 2px solid #c0d0d0;
+  box-shadow: 0 8px 16px rgba(42, 37, 37, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 0 0 4px 4px;
+  position: relative;
+  z-index: 1;
 }
 
+.cell-output::before {
+  content: 'Output';
+  position: absolute;
+  top: -1.5rem;
+  left: 1rem;
+  background-color: #d0e0e0;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px 4px 0 0;
+  font-size: 0.9rem;
+}
 div.description {
   padding-left: 2px;
   padding-top: 5px;
@@ -107,6 +128,7 @@ div.description {
 
 /* Styling for regular, non code-cell code ``` blocks */
 div.sourceCode {
+  font-family: 'Cutive Mono', monospace;
   background-color: #e8f0f2; /* a subtle blue tint */
   border: 1px solid #d0d0d0; /* adds a subtle border */
   padding: 0.5rem;

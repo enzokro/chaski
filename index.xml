@@ -1644,7 +1644,7 @@ font-style: inherit;">return</span> predictions</span></code></pre></div>
 <div id="cell-63" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># running out simple pipeline on the example text</span></span>
+font-style: inherit;"># running our simple pipeline on the example text</span></span>
 <span id="cb21-2">simple_pipeline(example_sentence)</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>{'label': 'POSITIVE', 'score': 0.9998503923416138}</code></pre>
@@ -2202,11 +2202,9 @@ font-style: inherit;"># the distilbert sentiment analysis model</span></span>
 <section id="intro" class="level1">
 <h1>Intro</h1>
 <p>The main goal of this lesson is to set up a personal blog for this course. The blog is where you will chronicle your learnings and challenges throughout the course. From the course syllabus:</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1">This is a public-facing course. Students should write about their journey to both cement and track their progress.  </span>
-<span id="cb1-2"></span>
-<span id="cb1-3">Publishing is a powerful tool for learning since it casts a piece of work under a new, critical light. Your understanding of a topic is also crystallized by seeing other's work, highlighted from different angles. </span>
-<span id="cb1-4"></span>
-<span id="cb1-5">Blogging out in the open can be scary, but here we aim to make it as easy and helpful as possible.</span></code></pre></div>
+<p>This is a public-facing course. Students should write about their journey to both cement and track their progress.</p>
+<p>Publishing is a powerful tool for learning since it casts a piece of work under a new, critical light. Your understanding of a topic is also crystallized by seeing other’s work, highlighted from different angles.</p>
+<p>Blogging out in the open can be scary, but here we aim to make it as easy and helpful as possible.</p>
 <p>On the topic of blogging and publishing being scary or intimidating: try to focus on writing snippets or summaries about what you’re currently learning. Then, pretend that you’re writing the article you <em>wish</em> you had when first learning about the topic. The first articles are the hardest, to be sure. Once you’ve gotten into the flow with the hints above, other longer articles will flow more easily.</p>
 </section>
 <section id="the-nbdev-framework" class="level1">
@@ -2258,22 +2256,22 @@ font-style: inherit;"># the distilbert sentiment analysis model</span></span>
 </blockquote>
 <p>In this example the empty repo is called <code>sample_blog</code>, but feel free to call it anything you’d like. We’re not tied to this name. We can always make new repos with different, better names.</p>
 <p>Clone the new, empty repo to your computer. Make sure to change the github link below so it points to your repo instead.</p>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># clone the repo to your computer</span></span>
-<span id="cb2-2"><span class="fu" style="color: #4758AB;
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">git</span> clone https://github.com/enzokro/sample_blog.git <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># &lt;-- ! link with your repo here</span></span></code></pre></div>
 <p>Now we can move into this repo and let <code>nbdev</code> work its initialization magic. Run the <code>nbdev_new</code> command to get started. The command will prompt you for some general info, like a short description about the project.</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># move into the new repo and initialize the nbdev project</span></span>
-<span id="cb3-2"><span class="bu" style="color: null;
+<span id="cb2-2"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">cd</span> sample_blog/</span>
-<span id="cb3-3"><span class="ex" style="color: null;
+<span id="cb2-3"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">nbdev_new</span></span></code></pre></div>
 <blockquote class="blockquote">
@@ -2281,20 +2279,20 @@ font-style: inherit;">nbdev_new</span></span></code></pre></div>
 </blockquote>
 <p>After <code>nbdev_new</code> finishes, we will have a brand new <code>nbdev</code> project!</p>
 <p>Run a <code>git status</code> command to see everything that was added. Then we commit and push these changes to Github.</p>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># add, commit, and push the files created by nbdev</span></span>
-<span id="cb4-2"><span class="fu" style="color: #4758AB;
+<span id="cb3-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">git</span> add .</span>
-<span id="cb4-3"><span class="fu" style="color: #4758AB;
+<span id="cb3-3"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">git</span> commit <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-m</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'Initial nbdev project creation'</span></span>
-<span id="cb4-4"><span class="fu" style="color: #4758AB;
+<span id="cb3-4"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">git</span> push</span></code></pre></div>
 <p>As mentioned earlier, <code>nbdev</code> publishes notebooks using Quarto. Let’s now take a look at how to turn this project into a full Quarto blog.</p>
@@ -2302,24 +2300,24 @@ font-style: inherit;">git</span> push</span></code></pre></div>
 <section id="adding-quarto-to-the-mix" class="level3">
 <h3 class="anchored" data-anchor-id="adding-quarto-to-the-mix">Adding Quarto to the Mix</h3>
 <p>Start by activating the virtual environment from the previous <a href="link_tbd">Environment Setup Notebook</a>:</p>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># activate the environment</span></span>
-<span id="cb5-2"><span class="ex" style="color: null;
+<span id="cb4-2"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">mamba</span> activate llm_base</span></code></pre></div>
 <p><code>nbdev</code> comes with a built-in command to install quarto: <code>nbdev_install_quarto</code>. Note that the command will ask for admin privileges.</p>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># install quarto </span></span>
-<span id="cb6-2"><span class="ex" style="color: null;
+<span id="cb5-2"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">nbdev_install_quarto</span></span></code></pre></div>
 <p>You may need to refresh the terminal before it can see the newly installed <code>quarto</code> binary. To be safe, open up a new terminal and re-activate the environment. Then the command below will check if Quarto was installed successfully.</p>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># shows us where quarto was installed</span></span>
-<span id="cb7-2"><span class="fu" style="color: #4758AB;
+<span id="cb6-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">which</span> quarto </span></code></pre></div>
 <p>Now that Quarto is installed, let’s turn our fresh nbdev project into an actual blog.</p>
@@ -2339,29 +2337,29 @@ font-style: inherit;">which</span> quarto </span></code></pre></div>
 │           └───2023-09-27-Blog-Intro/     
 │               │   index.ipynb</code></pre>
 <p>The main change is adding a <code>blog/</code> folder inside of the <code>nbs/</code> directory. Inside, at its top level, we place an <code>index.qmd</code> file that tells Quarto about our blog. Here’s example <code>index.qmd</code> file that titles our blog and describes how posts will be listed:</p>
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><span class="pp" style="color: #AD0000;
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><span class="pp" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">---</span></span>
-<span id="cb9-2"><span class="fu" style="color: #4758AB;
+<span id="cb8-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">title</span><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">:</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;"> Example Blog</span></span>
-<span id="cb9-3"><span class="fu" style="color: #4758AB;
+<span id="cb8-3"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">subtitle</span><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">:</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;"> Publishing with Quarto and nbdev</span></span>
-<span id="cb9-4"><span class="fu" style="color: #4758AB;
+<span id="cb8-4"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">listing</span><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">:</span></span>
-<span id="cb9-5"><span class="at" style="color: #657422;
+<span id="cb8-5"><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2372,7 +2370,7 @@ background-color: null;
 font-style: inherit;"> </span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"date desc"</span></span>
-<span id="cb9-6"><span class="at" style="color: #657422;
+<span id="cb8-6"><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2383,7 +2381,7 @@ background-color: null;
 font-style: inherit;"> </span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"posts"</span></span>
-<span id="cb9-7"><span class="at" style="color: #657422;
+<span id="cb8-7"><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2394,7 +2392,7 @@ background-color: null;
 font-style: inherit;"> </span><span class="ch" style="color: #20794D;
 background-color: null;
 font-style: inherit;">false</span></span>
-<span id="cb9-8"><span class="at" style="color: #657422;
+<span id="cb8-8"><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2405,7 +2403,7 @@ background-color: null;
 font-style: inherit;"> </span><span class="ch" style="color: #20794D;
 background-color: null;
 font-style: inherit;">false</span></span>
-<span id="cb9-9"><span class="at" style="color: #657422;
+<span id="cb8-9"><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2416,7 +2414,7 @@ background-color: null;
 font-style: inherit;"> </span><span class="ch" style="color: #20794D;
 background-color: null;
 font-style: inherit;">true</span></span>
-<span id="cb9-10"><span class="at" style="color: #657422;
+<span id="cb8-10"><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2427,14 +2425,14 @@ background-color: null;
 font-style: inherit;"> </span><span class="ch" style="color: #20794D;
 background-color: null;
 font-style: inherit;">true</span></span>
-<span id="cb9-11"><span class="fu" style="color: #4758AB;
+<span id="cb8-11"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">page-layout</span><span class="kw" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">:</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;"> full</span></span>
-<span id="cb9-12"><span class="pp" style="color: #AD0000;
+<span id="cb8-12"><span class="pp" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">---</span></span></code></pre></div>
 <p>To stay better organized, each post will get its in folder. An <code>index.ipynb</code> Notebook inside each folder will have the post’s actual content. We can also put photos, videos, or any other assets to enhance a post into this folder.</p>
@@ -2447,10 +2445,10 @@ font-style: inherit;">---</span></span></code></pre></div>
 <p><img src="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/github_pages.png" class="img-fluid"></p>
 <p>Specifically, we need to set the <code>Deploy from a branch</code> option under the <code>Build and deployment section</code>. Then, we pick the <code>gh-pages</code> branch as the branch to deploy from. <code>gh-pages</code> is a special branch where nbdev parses our Notebooks into a proper Quarto website.</p>
 <p>Next, run the <code>quarto publish</code> command to build and publish the blog.</p>
-<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># publish the blog on github pages</span></span>
-<span id="cb10-2"><span class="ex" style="color: null;
+<span id="cb9-2"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">quarto</span> publish</span></code></pre></div>
 <p>And there we go! We created and published our first blog post using <code>nbdev</code>. <a href="https://enzokro.dev/blog/posts/2023-09-27-Session_1_nbdev/">Click here</a> for a live link to this Notebook as a blog post.</p>
