@@ -1086,10 +1086,14 @@ font-style: inherit;">--no-penalize-nl</span></span></code></pre></div>
 <strong>9. Track and Analyze:</strong> Monitor your website’s performance and analyze user behavior to identify areas for improvement.<br>
 <strong>10. Continuously Update:</strong> Keep your website up-to-date with new content, updates, and security patches.</p>
 </blockquote>
-<p>Congratulations! We have now:<br>
-- Downloaded and built llama.cpp.<br>
-- Downloaded a quantized Gemma model.<br>
-- Ran the Gemma model on a sample input.</p>
+<p>Congratulations! We have now:</p>
+<ul>
+<li>Downloaded and built llama.cpp.<br>
+</li>
+<li>Downloaded a quantized Gemma model.<br>
+</li>
+<li>Ran the Gemma model on a sample input.</li>
+</ul>
 <p>Everything so far was done in C++ via the terminal.</p>
 <p>Next, let’s run the Gemma model inside a Jupyter Notebook with the llama.cpp python bindings. This will give us a preview into a fun way of augmenting your work with LLMs: coding alongside an Agent that you can talk to anytime by popping into a code cell.</p>
 </section>
