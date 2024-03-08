@@ -23,7 +23,8 @@
 <blockquote class="blockquote">
 <p>General tips to get better outputs from ChatGPT.</p>
 </blockquote>
-<p># Tips and tricks for ChatGPT Prompts</p>
+<section id="tips-and-tricks-for-chatgpt-prompts" class="level1">
+<h1>Tips and tricks for ChatGPT Prompts</h1>
 <p>This post is a recap of openai’s suggestions (as of writing) for improving ChatGPT’s outputs.</p>
 <p>There are many teams actively working on improving and deploying new LLMs with useful (powerful) abilities. Their work has produced several papers that show different ways of improving an LLM’s output.</p>
 <p>The official openAI documentation has the full details and discussion of a few key papers.</p>
@@ -77,6 +78,7 @@
 </ul>
 
 
+</section>
 </section>
 
  ]]></description>

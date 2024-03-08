@@ -20,7 +20,7 @@
 
 body {
   font-family: 'Lora', 'Libre Baskerville', 'Courier New', serif, Courier;
-  background-color: #f4f1e9;
+  background-color: #f8f6f2; /* Warm, light background color */
   color: #333;
   line-height: 1.6;
 }
@@ -36,6 +36,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 2rem;
   margin-bottom: 1rem;
   line-height: 1.3;
+  color: #2e4057; /* Dark blue for headings */
 }
 
 /* Header */
@@ -47,6 +48,7 @@ header#quarto-header {
   font-family: Rosarivo, Georgia, 'Times New Roman', Times, serif;
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
+  color: #5c4040; /* Deep, warm red for the title */
 }
 
 /* Navigation */
@@ -76,22 +78,23 @@ header#quarto-header {
 }
 
 /* Code cells */
-.cell {
+.cell.code {
   margin-bottom: 1.5rem;
 }
 
-.cell > .sourceCode {
-  background-color: #e8f0f2;
-  border: 1px solid #c0d0d0;
+.cell.code > .sourceCode {
+  background-color: #f0f4f8;
+  border: 1px solid #d0dce6;
   padding: 1rem;
   font-family: "Berkeley Mono", "Cutive Mono", monospace;
-  box-shadow: 0 4px 6px rgba(42, 37, 37, 0.1);
+  box-shadow: 0 4px 6px rgba(42, 37, 37, 0.15), 0 2px 4px rgba(42, 37, 37, 0.1);
   border-radius: 4px;
   position: relative;
   z-index: 2;
+  margin-bottom: 1rem;
 }
 
-.cell > .sourceCode::before {
+.cell.code > .sourceCode::before {
   content: 'Input';
   position: absolute;
   top: -1.5rem;
@@ -101,47 +104,50 @@ header#quarto-header {
   padding: 0.25rem 0.5rem;
   border-radius: 4px 4px 0 0;
   font-size: 0.9rem;
+  box-shadow: 0 2px 4px rgba(42, 37, 37, 0.1);
 }
 
 /* Code output */
-.cell-output > pre,
-.cell-output > .sourceCode > pre,
-.cell-output-stdout > pre {
-  background-color: #f0f5f7;
-  margin: -1rem 0 1.5rem 1rem;
+.cell.code .cell-output > pre,
+.cell.code .cell-output > .sourceCode > pre,
+.cell.code .cell-output-stdout > pre {
+  background-color: #f6f8fa;
+  margin: -2rem 0 1.5rem 2rem;
   border: none;
-  padding: 1.5rem 1rem 1rem;
-  border-left: 2px solid #c0d0d0;
-  border-right: 2px solid #c0d0d0;
-  border-bottom: 2px solid #c0d0d0;
-  box-shadow: 0 4px 6px rgba(42, 37, 37, 0.1);
-  border-radius: 0 0 4px 4px;
+  padding: 2rem 1rem 1rem;
+  border-left: 2px solid #d0dce6;
+  border-right: 2px solid #d0dce6;
+  border-bottom: 2px solid #d0dce6;
+  box-shadow: 0 6px 8px rgba(42, 37, 37, 0.15), 0 3px 6px rgba(42, 37, 37, 0.1);
+  border-radius: 0 4px 4px 4px;
   position: relative;
   z-index: 1;
 }
 
-.cell-output::before {
+.cell.code .cell-output::before {
   content: 'Output';
   position: absolute;
   top: -1.5rem;
-  left: 1rem;
-  background-color: #d0e0e0;
+  left: 2rem;
+  background-color: #d0dce6;
   color: white;
   padding: 0.25rem 0.5rem;
   border-radius: 4px 4px 0 0;
   font-size: 0.9rem;
+  box-shadow: 0 2px 4px rgba(42, 37, 37, 0.1);
 }
 
 /* Inline code */
 div.sourceCode {
   font-family: "Berkeley Mono", "Cutive Mono", monospace;
-  background-color: #e8f0f2;
-  border: 1px solid #d0d0d0;
-  padding: 0.5rem;
-  box-shadow: 0 2px 4px rgba(42, 37, 37, 0.1);
+  background-color: #f0f4f8;
+  border: 1px solid #d0dce6;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(42, 37, 37, 0.15), 0 2px 4px rgba(42, 37, 37, 0.1);
   border-radius: 4px;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   position: relative;
+  z-index: 2;
 }
 
 div.sourceCode::before {
@@ -154,12 +160,13 @@ div.sourceCode::before {
   padding: 0.25rem 0.5rem;
   border-radius: 4px 4px 0 0;
   font-size: 0.9rem;
+  box-shadow: 0 2px 4px rgba(42, 37, 37, 0.1);
 }
 
 /* Blockquotes */
 blockquote {
-  background-color: #f8f8f8;
-  border-left: 4px solid #4e8d6c;
+  background-color: #f2f8f5; /* Light, muted green for blockquotes */
+  border-left: 4px solid #4caf50;
   padding: 1rem;
   margin: 1.5rem 0;
   color: #333;
@@ -182,7 +189,7 @@ blockquote p::before {
   left: -3px;
   right: -3px;
   bottom: -3px;
-  background-color: #f8f8f8;
+  background-color: #f2f8f5;
   z-index: -1;
   border-radius: 3px;
 }

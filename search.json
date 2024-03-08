@@ -1285,7 +1285,7 @@
     "href": "blog/posts/2023-04-17-llm-prompt-tips/index.html",
     "title": "Tips for LLM prompts",
     "section": "",
-    "text": "General tips to get better outputs from ChatGPT.\n# Tips and tricks for ChatGPT Prompts\nThis post is a recap of openai’s suggestions (as of writing) for improving ChatGPT’s outputs.\nThere are many teams actively working on improving and deploying new LLMs with useful (powerful) abilities. Their work has produced several papers that show different ways of improving an LLM’s output.\nThe official openAI documentation has the full details and discussion of a few key papers.\nHowever, we can also extract a broad set of suggestions based on what the different proposed improvements share in common."
+    "text": "General tips to get better outputs from ChatGPT."
   },
   {
     "objectID": "blog/posts/2023-04-17-llm-prompt-tips/index.html#improving-outputs",
