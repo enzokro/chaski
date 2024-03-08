@@ -9,7 +9,7 @@
   url("./fonts/berkeley-mono-variable/BerkeleyMonoVariable-Regular.woff") format('woff'); /* Chrome 26+, Opera 23+, Firefox 39+ */
 }
 
-/* Berkeley Mono regular font - latin */
+/* Berkeley Mono italic font - latin */
 @font-face {
   font-family: 'Berkeley Mono';
   font-style: italic;
@@ -84,7 +84,7 @@ header#quarto-header {
   background-color: #e8f0f2;
   border: 1px solid #c0d0d0;
   padding: 1rem;
-  font-family: 'Berkeley Mono', 'Cutive Mono', monospace;
+  font-family: "Berkeley Mono", "Cutive Mono", monospace;
   box-shadow: 0 4px 6px rgba(42, 37, 37, 0.1);
   border-radius: 4px;
   position: relative;
@@ -134,7 +134,7 @@ header#quarto-header {
 
 /* Inline code */
 div.sourceCode {
-  font-family: 'Berkeley Mono', 'Cutive Mono', monospace;
+  font-family: "Berkeley Mono", "Cutive Mono", monospace;
   background-color: #e8f0f2;
   border: 1px solid #d0d0d0;
   padding: 0.5rem;
