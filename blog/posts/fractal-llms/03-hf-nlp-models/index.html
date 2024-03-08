@@ -261,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="notebook-best-practices">Notebook best practices</h2>
 <p>First, let’s set up our notebook to be fully interactive and easy to use. We can do this with a couple of “magic functions” built-in to Jupyter.</p>
 <p>Specifically, we use the magic <code>autoreload</code> and <code>matplotlib</code> functions. The cell below shows them in action:</p>
-<div id="cell-4" class="cell" data-execution_count="1">
+<div id="cell-4" class="cell code-alone" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># best practice notebook magic</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext autoreload</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>autoreload <span class="dv">2</span></span>
@@ -414,12 +414,12 @@ Note
 <p>Once we know its full name, there is a handy <code>from_pretrained()</code> function that will automatically find and download the pieces for us.</p>
 <p>In this case, the distilbert model’s full name is:<br>
 &gt; <code>distilbert-base-uncased-finetuned-sst-2-english</code>.</p>
-<div id="cell-41" class="cell" data-execution_count="8">
+<div id="cell-41" class="cell code-alone" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sentiment analysis model name</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">'distilbert-base-uncased-finetuned-sst-2-english'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In the code below we can now load each of the three NLP pieces for this model.</p>
-<div id="cell-43" class="cell" data-execution_count="9">
+<div id="cell-43" class="cell code-alone" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create the config</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> DistilBertConfig.from_pretrained(model_name)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -436,7 +436,7 @@ Note
 <section id="preprocessing-the-inputs" class="level3">
 <h3 class="anchored" data-anchor-id="preprocessing-the-inputs">Preprocessing the inputs</h3>
 <p>First, we create a <code>preprocess</code> function to turn a given <code>text</code> string into the proper, tokenized inputs than an LLM expects.</p>
-<div id="cell-48" class="cell" data-execution_count="10">
+<div id="cell-48" class="cell code-alone" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> preprocess(text: <span class="bu">str</span>):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Sends `text` through the model's tokenizer.  </span></span>
@@ -458,7 +458,7 @@ Note
 <section id="runnning-the-model" class="level3">
 <h3 class="anchored" data-anchor-id="runnning-the-model">Runnning the model</h3>
 <p>Next up, let’s make our own <code>forward</code> function that run the LLM on preprocessed inputs.</p>
-<div id="cell-54" class="cell" data-execution_count="12">
+<div id="cell-54" class="cell code-alone" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> forward(text: <span class="bu">str</span>):</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">    First we preprocess the `text` into tokens.</span></span>
@@ -471,13 +471,13 @@ Note
 <p>Let’s check what this outputs for our running example sentence.</p>
 <div id="cell-56" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>outputs <span class="op">=</span> forward(example_sentence)<span class="op">;</span> outputs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div class="cell-output cell-output-stdout">
 <pre><code>SequenceClassifierOutput(loss=None, logits=tensor([[-4.2326,  4.5748]], grad_fn=&lt;AddmmBackward0&gt;), hidden_states=None, attentions=None)</code></pre>
 </div>
 </div>
 <p>You’ll see a lot going on in the <code>SequenceClassifierOutput</code> above. To be honest, this is where the original <code>pipeline</code> does most of the heavy-lifting for us. It takes the raw, detailed output from an LLM and converts it into a more human-readable format.</p>
 <p>We’ll mimic this heavy-lifting by using the <code>Config</code> class and model outputs to find out whether the sentence is positive or negative.</p>
-<div id="cell-59" class="cell" data-execution_count="14">
+<div id="cell-59" class="cell code-alone" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> process_outputs(outs):</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Converting the raw model outputs into a human-readable result.</span></span>
@@ -508,7 +508,7 @@ Note
 <span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can now put together a <code>simple_pipeline</code>, and check how it compares to the original <code>pipeline</code>.</p>
-<div id="cell-61" class="cell" data-execution_count="15">
+<div id="cell-61" class="cell code-alone" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simple_pipeline(text):</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Putting the NLP pieces and functions together into a pipeline.</span></span>
@@ -536,21 +536,21 @@ Note
 <h1>True HuggingFace magic: <code>Auto</code> classes</h1>
 <p>With <code>Auto</code> classes, we don’t have to know the exact or proper name of the LLM’s objects to import them. We only need the proper name of the model on the hub:</p>
 <div id="cell-67" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># viewing our distilber model's name</span></span>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># viewing our distilbert model's name</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>model_name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>'distilbert-base-uncased-finetuned-sst-2-english'</code></pre>
 </div>
 </div>
 <p>Run the cell below to import the Auto classes. Then we’ll use them with the model name to create an even cleaner <code>simple_pipeline</code>.</p>
-<div id="cell-69" class="cell" data-execution_count="18">
+<div id="cell-69" class="cell code-alone" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># importing the Auto classes</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoConfig</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoModelForSequenceClassification</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next we create the three key NLP pieces with the Auto classes.</p>
-<div id="cell-71" class="cell" data-execution_count="19">
+<div id="cell-71" class="cell code-alone" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># building the pieces with `Auto` classes</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> AutoConfig.from_pretrained(model_name)</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(model_name)</span>
@@ -619,7 +619,7 @@ Note
 <h2 class="anchored" data-anchor-id="using-the-custom-sentimentpipeline">Using the custom <code>SentimentPipeline</code></h2>
 <p>Let’s leverage both the new class and a different model, to show the power of Auto classes.</p>
 <p>For fun, let’s use BERT model that was trained specifically on tweets. The full model’s name is <a href="https://huggingface.co/finiteautomata/bertweet-base-sentiment-analysis"><code>finiteautomata/bertweet-base-sentiment-analysis</code></a>.</p>
-<div id="cell-76" class="cell" data-execution_count="21">
+<div id="cell-76" class="cell code-alone" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using a different model</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>new_model_name <span class="op">=</span> <span class="st">'finiteautomata/bertweet-base-sentiment-analysis'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -652,7 +652,7 @@ Note
 <section id="appendix-1-counting-the-number-of-parameters-in-a-model" class="level1">
 <h1>Appendix 1: Counting the number of parameters in a model</h1>
 <p>The following code snippet counts the number of trainable parameters in a model. It’s a question that comes up often when working with LLMs, and having a quick reference to find out a rough model’s size often comes in handy.</p>
-<div id="cell-86" class="cell" data-execution_count="24">
+<div id="cell-86" class="cell code-alone" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> count_parameters(model):</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Counts the number of trainable parameters in a `model`.</span></span>
@@ -676,7 +676,7 @@ Note
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># show the contents of the `classifier` object</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>classifier</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="26">
-<pre><code>&lt;transformers.pipelines.text_classification.TextClassificationPipeline at 0x15ac5f6d0&gt;</code></pre>
+<pre><code>&lt;transformers.pipelines.text_classification.TextClassificationPipeline at 0x176de7850&gt;</code></pre>
 </div>
 </div>
 <p>We can see the <code>classifier</code> is a type of <code>TextClassification</code> pipeline. This makes sense: we fed it an input sentence and asked it to classify the statement as <em>positive</em> vs.&nbsp;<em>negative</em>.</p>
@@ -713,7 +713,7 @@ Note
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a> <span class="co"># looking at what actually runs the inputs</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>classifier.forward</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="31">
-<pre><code>&lt;bound method Pipeline.forward of &lt;transformers.pipelines.text_classification.TextClassificationPipeline object at 0x15ac5f6d0&gt;&gt;</code></pre>
+<pre><code>&lt;bound method Pipeline.forward of &lt;transformers.pipelines.text_classification.TextClassificationPipeline object at 0x176de7850&gt;&gt;</code></pre>
 </div>
 </div>
 <p>What does this function actually do? Let’s find out.</p>

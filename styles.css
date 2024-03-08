@@ -27,7 +27,7 @@ body {
 
 /* Typography */
 p {
-  margin-top: 0;
+  margin-top: 0.5rem;
   margin-bottom: 1rem;
 }
 
@@ -84,91 +84,60 @@ header#quarto-header {
   }
 }
 
-/* Code cells */
-.cell.code {
-  margin-bottom: 2rem;
-}
 
-.cell.code > .sourceCode {
+.cell > .sourceCode {
   background-color: #f0f4f8;
   border: 1px solid #d0dce6;
-  padding: 1rem;
-  font-family: "Berkeley Mono", "Cutive Mono", monospace;
-  box-shadow: 0 4px 6px rgba(42, 37, 37, 0.15), 0 2px 4px rgba(42, 37, 37, 0.1);
-  border-radius: 4px;
+  padding: 0.5rem;
+  font-family: 'Berkeley Mono', 'Cutive Mono', monospace;
+  box-shadow: 0 4px 8px rgba(42, 37, 37, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
+  margin-bottom: -1px; /* Negative margin to remove space between code cell and output */
   position: relative;
   z-index: 2;
-  margin-bottom: 1.5rem;
 }
 
-.cell.code > .sourceCode::before {
-  content: 'Input';
-  position: absolute;
-  top: -1.5rem;
-  left: 0;
-  background-color: #c0d0d0;
-  color: white;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px 4px 0 0;
-  font-size: 0.9rem;
-  box-shadow: 0 2px 4px rgba(42, 37, 37, 0.1);
+/* For code cells without output */
+.cell.code-alone > .sourceCode {
+  margin-bottom: 1.15rem; /* Provides spacing for code cells without output */
 }
 
-/* Code output */
-.cell.code .cell-output > pre,
-.cell.code .cell-output > .sourceCode > pre,
-.cell.code .cell-output-stdout > pre {
+/* Code output adjustments for single line to remove the gap */
+.cell-output > pre, 
+.cell-output > .sourceCode > pre, 
+.cell-output-stdout > pre, 
+.cell-output-display > pre, 
+.cell-output-stderr > pre {
   background-color: #f6f8fa;
-  margin: -2rem 0 2rem 2rem;
-  border: none;
-  padding: 2rem 1rem 1rem;
-  border-left: 2px solid #d0dce6;
-  border-right: 2px solid #d0dce6;
-  border-bottom: 2px solid #d0dce6;
-  box-shadow: 0 6px 8px rgba(42, 37, 37, 0.15), 0 3px 6px rgba(42, 37, 37, 0.1);
-  border-radius: 0 4px 4px 4px;
+  margin-top: -1px; /* Negative margin to seamlessly connect with code cell above */
+  margin-left: 0.5rem; /* Align with the code cell padding */
+  margin-right: 0.1rem; /* Align with the code cell padding */
+  margin-bottom: 1rem; /* Spacing after the output */
+  border: 1px solid #d0dce6; /* Uniform border */
+  padding: 1rem; /* Consistent padding */
+  border-radius: 0 0 3px 3px; /* Rounded bottom corners for the output */
+  box-shadow: 0 2px 4px rgba(42, 37, 37, 0.1); /* Consistent shadow with the code cell */
   position: relative;
   z-index: 1;
+  font-family: 'Berkeley Mono', 'Cutive Mono', monospace;
+  white-space: pre-wrap !important; /* Wrap text within the output cell */ 
+  word-break: break-word !important; /* To ensure words break properly */ 
+  overflow-wrap: break-word !important; /* To ensure the words wrap properly */
+  overflow-x: auto !important; /* Allows vertical scrolling if needed */ 
 }
 
-.cell.code .cell-output::before {
-  content: 'Output';
-  position: absolute;
-  top: -1.5rem;
-  left: 2rem;
-  background-color: #d0dce6;
-  color: white;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px 4px 0 0;
-  font-size: 0.9rem;
-  box-shadow: 0 2px 4px rgba(42, 37, 37, 0.1);
-}
 
 /* Inline code */
 div.sourceCode {
-  font-family: "Berkeley Mono", "Cutive Mono", monospace;
   background-color: #f0f4f8;
   border: 1px solid #d0dce6;
   padding: 1rem;
-  box-shadow: 0 4px 6px rgba(42, 37, 37, 0.15), 0 2px 4px rgba(42, 37, 37, 0.1);
-  border-radius: 4px;
-  margin-bottom: 1.5rem;
+  font-family: 'Berkeley Mono', 'Cutive Mono', monospace;
+  box-shadow: 0 4px 8px rgba(42, 37, 37, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.15px; /* Negative margin to remove space between code cell and output */
   position: relative;
   z-index: 2;
 }
 
-div.sourceCode::before {
-  content: 'Code';
-  position: absolute;
-  top: -1.5rem;
-  left: 0;
-  background-color: #c0d0d0;
-  color: white;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px 4px 0 0;
-  font-size: 0.9rem;
-  box-shadow: 0 2px 4px rgba(42, 37, 37, 0.1);
-}
 
 /* Blockquotes */
 blockquote {
