@@ -825,12 +825,18 @@ Note
 </section>
 <section id="running-gemma-with-llama.cpp" class="level1">
 <h1>Running Gemma with llama.cpp</h1>
-<p>This section covers the following:<br>
-1. Create a virtual env for llama.cpp<br>
-2. Install the <code>llama.cpp</code> repo<br>
-3. Download a quantized <code>Gemma</code> model<br>
-4. Run the model directly with <code>llama.cpp</code><br>
-5. Run the model in a Jupyter Notebook</p>
+<p>This section covers the following:</p>
+<ol type="1">
+<li>Create a virtual env for llama.cpp<br>
+</li>
+<li>Install the <code>llama.cpp</code> repo<br>
+</li>
+<li>Download a quantized <code>Gemma</code> model<br>
+</li>
+<li>Run the model directly with <code>llama.cpp</code><br>
+</li>
+<li>Run the model in a Jupyter Notebook</li>
+</ol>
 <p>First, we create a mamba environment to keep our work isolated. Then we download and install the llama.cpp repo. Next we download the actual <code>gemma-7b-it</code> model from the HuggingFace Model Hub. Lastly, we run the <code>gemma-7b-it</code> model first with C++ and then in a Jupyter Notebook.</p>
 <section id="installing-llama.cpp" class="level3">
 <h3 class="anchored" data-anchor-id="installing-llama.cpp">Installing llama.cpp</h3>
@@ -864,9 +870,12 @@ font-style: inherit;">git</span> clone https://github.com/ggerganov/llama.cpp</s
 background-color: null;
 font-style: inherit;">cd</span> llama.cpp</span></code></pre></div>
 <p>After cloning, we can move inside and prepare it for the build.</p>
-<p>There are two options to build llama.cpp:<br>
-- <a href="https://www.gnu.org/software/make/">GNU Make</a><br>
-- <a href="https://cmake.org/">CMake</a></p>
+<p>There are two options to build llama.cpp:</p>
+<ul>
+<li><a href="https://www.gnu.org/software/make/">GNU Make</a><br>
+</li>
+<li><a href="https://cmake.org/">CMake</a></li>
+</ul>
 <p>Previously I had some issues with <code>make</code> on Mac. However, again thanks to the great llama.cpp community, the issues have been fixed. Go ahead and build the llama.cpp project.</p>
 <div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
 background-color: null;

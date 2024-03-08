@@ -1,6 +1,6 @@
 /* Global styles */
 body {
-  font-family: 'Lora', 'Courier New', serif, Courier, monospace;
+  font-family: 'Lora', 'Libre Baskerville', 'Courier New', serif, Courier, monospace;
   background-color: #f4f1e9;
   color: #333;
 }
@@ -13,7 +13,7 @@ p {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Lora', 'Georgia', serif;
+  font-family: 'Lora', 'Libre Baskerville', 'Georgia', serif;
   margin-top: 2rem;
   margin-bottom: 1rem;
 }
