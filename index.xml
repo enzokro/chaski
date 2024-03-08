@@ -949,42 +949,42 @@ font-style: inherit;">\</span></span>
 background-color: null;
 font-style: inherit;">--local-dir-use-symlinks</span> False</span>
 <span id="cb6-13"></span>
-<span id="cb6-14"><span class="co" style="color: #5E5E5E;
+<span id="cb6-14">    </span>
+<span id="cb6-15"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># download the quantized gemma-7b-it model</span></span>
-<span id="cb6-15"><span class="ex" style="color: null;
+font-style: inherit;">## other sample model downloads:</span></span>
+<span id="cb6-16"></span>
+<span id="cb6-17"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">huggingface-cli</span> download TheBloke/Mistral-7B-Instruct-v0.2-GGUF <span class="dt" style="color: #AD0000;
+font-style: inherit;"># # download a quantized Mistral-7B model</span></span>
+<span id="cb6-18"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb6-16">    mistral-7b-instruct-v0.2.Q4_K_S.gguf <span class="dt" style="color: #AD0000;
+font-style: inherit;"># huggingface-cli download TheBloke/Mistral-7B-Instruct-v0.2-GGUF \</span></span>
+<span id="cb6-19"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb6-17">    <span class="at" style="color: #657422;
+font-style: inherit;">#     mistral-7b-instruct-v0.2.Q4_K_S.gguf \</span></span>
+<span id="cb6-20"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">--local-dir</span> . <span class="dt" style="color: #AD0000;
+font-style: inherit;">#     --local-dir . \</span></span>
+<span id="cb6-21"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb6-18">    <span class="at" style="color: #657422;
+font-style: inherit;">#     --local-dir-use-symlinks False</span></span>
+<span id="cb6-22"></span>
+<span id="cb6-23"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">--local-dir-use-symlinks</span> False</span>
-<span id="cb6-19"></span>
-<span id="cb6-20"><span class="ex" style="color: null;
+font-style: inherit;"># # download a Llama-2 model for chatting</span></span>
+<span id="cb6-24"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">huggingface-cli</span> download TheBloke/Llama-2-7B-Chat-GGUF <span class="dt" style="color: #AD0000;
+font-style: inherit;"># huggingface-cli download TheBloke/Llama-2-7B-Chat-GGUF \</span></span>
+<span id="cb6-25"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb6-21">    llama-2-7b-chat.Q4_K_M.gguf <span class="dt" style="color: #AD0000;
+font-style: inherit;">#     llama-2-7b-chat.Q4_K_M.gguf \</span></span>
+<span id="cb6-26"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb6-22">    <span class="at" style="color: #657422;
+font-style: inherit;">#     --local-dir . \</span></span>
+<span id="cb6-27"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">--local-dir</span> . <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb6-23">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--local-dir-use-symlinks</span> False</span></code></pre></div>
+font-style: inherit;">#     --local-dir-use-symlinks False</span></span></code></pre></div>
 <p>Once the model is downloaded, we can run it with the <code>main</code> binary from the llama.cpp repo.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
