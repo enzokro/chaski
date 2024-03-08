@@ -1,19 +1,34 @@
+/* Global styles */
 body {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Lora', 'Courier New', serif, Courier, monospace;
   background-color: #f4f1e9;
   color: #333;
 }
 
+/* Typography */
 p {
   margin-top: 0.2em;
   margin-bottom: 0.65em;
   line-height: 1.55;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Lora', 'Georgia', serif;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Header */
 header#quarto-header {
   display: none;
 }
 
+.custom-title {
+  font-family: Rosarivo, Georgia, 'Times New Roman', Times, serif;
+  font-size: 3.4rem;
+}
+
+/* Navigation */
 .custom-nav {
   padding-bottom: 3em;
   padding-top: 2em;
@@ -40,11 +55,7 @@ header#quarto-header {
   }
 }
 
-.custom-title {
-  font-family: Rosarivo, Georgia, 'Times New Roman', Times, serif;
-  font-size: 3.2rem;
-}
-
+/* Code cells */
 .cell {
   margin-bottom: 1rem;
   border: none;
@@ -76,6 +87,7 @@ header#quarto-header {
   font-size: 0.9rem;
 }
 
+/* Code output */
 .cell-output > pre,
 .cell-output > .sourceCode > pre,
 .cell-output-stdout > pre {
@@ -107,14 +119,7 @@ header#quarto-header {
   font-size: 0.9rem;
 }
 
-div.description {
-  padding-left: 2px;
-  padding-top: 5px;
-  font-style: italic;
-  font-size: 135%;
-  opacity: 70%;
-}
-
+/* Inline code */
 div.sourceCode {
   font-family: 'Cutive Mono', monospace;
   background-color: #e8f0f2;
@@ -123,7 +128,7 @@ div.sourceCode {
   box-shadow: 0 6px 12px rgba(42, 37, 37, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   margin-bottom: 1rem;
-  position: relative; /* Add position relative for the pseudo-element */
+  position: relative;
 }
 
 div.sourceCode::before {
@@ -138,6 +143,16 @@ div.sourceCode::before {
   font-size: 0.9rem;
 }
 
+/* Blockquotes */
+blockquote {
+  background-color: #f5f5f5;
+  border-left: 4px solid #ccc;
+  padding: 1em;
+  margin: 1em 0;
+  font-style: italic;
+  color: #333;
+}
+
 blockquote > pre {
   font-size: 14px;
   background-color: #f9f9f9;
@@ -145,61 +160,10 @@ blockquote > pre {
   padding: 0.5rem;
 }
 
-.table {
-  font-size: 16px;
-  --bs-table-striped-bg: var(--bs-table-bg);
-  border-collapse: collapse;
-}
-
-.table th,
-.table td {
-  border: 1px solid #ddd;
-  padding: 0.5rem;
-}
-
-.quarto-figure-center > figure > figcaption {
-  text-align: center;
-}
-
-.figure-caption {
-  font-size: 75%;
-  font-style: italic;
-}
-
-.title.toc-ignore {
-  font-weight: 1000;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: 'Georgia', serif;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-}
-
-.wrapper {
-  border: 2px solid #ddd;
-  padding: 2rem;
-  margin: 2rem;
-}
-
-blockquote {
-  background-color: #f5f5f5; /* Adds a light gray background color */
-  border-left: 4px solid #ccc; /* Adds a left border for visual emphasis */
-  padding: 1em; /* Adds padding around the blockquote content */
-  margin: 1em 0; /* Adds margin before and after the blockquote */
-  font-style: italic; /* Applies italic styling to the text */
-  color: #333; /* Sets a darker text color for better contrast */
-}
-
-ul,
-ol {
-  margin-top: 0.5em; /* Adds space before the list */
-  margin-bottom: 0.5em; /* Adds space after the list */
+/* Lists */
+ul, ol {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
   padding: 0;
   list-style-position: outside;
 }
@@ -217,7 +181,7 @@ ul ul ul {
   list-style-type: circle;
 }
 
-ul li {
+ul li, ol li {
   margin-bottom: 0.20em;
   line-height: 1.5;
   font-size: 1em;
@@ -227,24 +191,78 @@ ol {
   margin-left: 1.5em;
 }
 
-ol li {
-  margin-bottom: 0.20em;
-  line-height: 1.5;
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 1em;
+ul ul, ul ol, ol ul, ol ol {
+  margin-left: 1em;
 }
 
-ul ul,
-ul ol,
-ol ul,
-ol ol {
-  margin-left: 1em;
+/* Tables */
+.table {
+  font-size: 16px;
+  --bs-table-striped-bg: var(--bs-table-bg);
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+}
+
+/* Figures */
+.quarto-figure-center > figure > figcaption {
+  text-align: center;
+}
+
+.figure-caption {
+  font-size: 75%;
+  font-style: italic;
 }
 
 img {
   border: 2px solid #ddd8d8;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
   padding: 2px;
-  margin-top: 0.3em; /* Reduces the padding before the image */
-  margin-bottom: 0.5em; /* Reduces the padding after the image */
+  margin-top: 0.3em;
+  margin-bottom: 0.5em;
+}
+
+/* Misc */
+.title.toc-ignore {
+  font-weight: 1000;
+}
+
+.wrapper {
+  border: 2px solid #ddd;
+  padding: 2rem;
+  margin: 2rem;
+}
+
+div.description {
+  padding-left: 2px;
+  padding-top: 5px;
+  font-style: italic;
+  font-size: 135%;
+  opacity: 70%;
+}
+
+/* Collapsible content */
+.collapsible-content {
+  display: none;
+  padding-left: 1em;
+}
+
+.collapsible-trigger {
+  cursor: pointer;
+  position: relative;
+  padding-left: 1em;
+}
+
+.collapsible-trigger::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  transition: transform 0.3s;
+}
+
+.collapsible-trigger.active::before {
+  transform: rotate(90deg);
 }
