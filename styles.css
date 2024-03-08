@@ -145,19 +145,32 @@ div.sourceCode::before {
 
 /* Blockquotes */
 blockquote {
-  background-color: #f5f5f5;
-  border-left: 4px solid #ccc;
+  background-color: #f8f8f8; /* Change to a very light gray */
+  border-left: 4px solid #4e8d6c; /* Change to a muted purple left border */
   padding: 1em;
   margin: 1em 0;
-  font-style: italic;
   color: #333;
+  font-family: 'Lora', 'Courier New' serif, Courier, monospace;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
-blockquote > pre {
-  font-size: 14px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  padding: 0.5rem;
+blockquote p {
+  position: relative;
+  z-index: 1;
+  text-shadow: 2px 2px 3px #f8f8f8; /* Add a subtle text shadow */
+}
+
+blockquote p::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background-color: #f8f8f8; /* Add a semi-transparent white background */
+  z-index: -1;
+  border-radius: 5px; /* Add rounded corners to the background */
 }
 
 /* Lists */
