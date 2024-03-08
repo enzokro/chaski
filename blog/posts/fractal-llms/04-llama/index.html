@@ -180,15 +180,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#quantized-models" id="toc-quantized-models" class="nav-link" data-scroll-target="#quantized-models">Quantized models</a></li>
   </ul></li>
   <li><a href="#overview-of-llama.cpp" id="toc-overview-of-llama.cpp" class="nav-link" data-scroll-target="#overview-of-llama.cpp">Overview of llama.cpp</a></li>
-  <li><a href="#running-mistral-v0.1-with-llama.cpp" id="toc-running-mistral-v0.1-with-llama.cpp" class="nav-link" data-scroll-target="#running-mistral-v0.1-with-llama.cpp">Running Mistral-v0.1 with llama.cpp</a>
+  <li><a href="#running-gemma-with-llama.cpp" id="toc-running-gemma-with-llama.cpp" class="nav-link" data-scroll-target="#running-gemma-with-llama.cpp">Running Gemma with llama.cpp</a>
   <ul class="collapse">
-  <li><a href="#building-llama.cpp" id="toc-building-llama.cpp" class="nav-link" data-scroll-target="#building-llama.cpp">Building llama.cpp</a></li>
-  <li><a href="#downloading-mistral-v0.1" id="toc-downloading-mistral-v0.1" class="nav-link" data-scroll-target="#downloading-mistral-v0.1">Downloading Mistral-v0.1</a></li>
-  <li><a href="#running-the-mistral-model" id="toc-running-the-mistral-model" class="nav-link" data-scroll-target="#running-the-mistral-model">Running the Mistral model</a></li>
+  <li><a href="#installing-llama.cpp" id="toc-installing-llama.cpp" class="nav-link" data-scroll-target="#installing-llama.cpp">Installing llama.cpp</a></li>
+  <li><a href="#the-gemma-model" id="toc-the-gemma-model" class="nav-link" data-scroll-target="#the-gemma-model">The Gemma model</a>
+  <ul class="collapse">
+  <li><a href="#breaking-down-the-quantized-gemma-names" id="toc-breaking-down-the-quantized-gemma-names" class="nav-link" data-scroll-target="#breaking-down-the-quantized-gemma-names">Breaking down the quantized gemma names</a></li>
+  <li><a href="#downloaidng-a-quantized-gemma-model" id="toc-downloaidng-a-quantized-gemma-model" class="nav-link" data-scroll-target="#downloaidng-a-quantized-gemma-model">Downloaidng a quantized Gemma model</a></li>
   </ul></li>
-  <li><a href="#running-mistral-v0.1-with-python" id="toc-running-mistral-v0.1-with-python" class="nav-link" data-scroll-target="#running-mistral-v0.1-with-python">Running Mistral-v0.1 with python</a>
+  <li><a href="#running-the-gemma-model" id="toc-running-the-gemma-model" class="nav-link" data-scroll-target="#running-the-gemma-model">Running the Gemma model</a></li>
+  <li><a href="#gemma-model-outputs" id="toc-gemma-model-outputs" class="nav-link" data-scroll-target="#gemma-model-outputs">Gemma model outputs</a></li>
+  </ul></li>
+  <li><a href="#running-gemma-with-python" id="toc-running-gemma-with-python" class="nav-link" data-scroll-target="#running-gemma-with-python">Running Gemma with python</a>
   <ul class="collapse">
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul></li>
+  <li><a href="#appendix-1-quantizing-the-gemma-7b-it-model" id="toc-appendix-1-quantizing-the-gemma-7b-it-model" class="nav-link" data-scroll-target="#appendix-1-quantizing-the-gemma-7b-it-model">Appendix 1: Quantizing the gemma-7b-it model</a>
+  <ul class="collapse">
+  <li><a href="#downloading-the-original-model" id="toc-downloading-the-original-model" class="nav-link" data-scroll-target="#downloading-the-original-model">Downloading the original model</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/enzokro/chaski/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -233,170 +242,208 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <blockquote class="blockquote">
-<p>Using llama.cpp to run a quantized Mistral-v0.1 model.</p>
+<p>Using llama.cpp to run a quantized Gemma model.</p>
 </blockquote>
 <section id="intro" class="level1">
 <h1>Intro</h1>
-<p>Welcome to the fourth lesson of the course. Let’s recap our progress so far:</p>
+<p>Welcome to the fourth lesson. Here is what we have done so far:</p>
 <ul>
-<li>Lesson 1: We made a python environment for LLMs.<br>
+<li>Lesson 1: Created a python environment for LLMs.<br>
 </li>
 <li>Lesson 2: Set up a personal blog to track our progress.</li>
-<li>Lesson 3: Ran our first LLM with the HuggingFace API.</li>
+<li>Lesson 3: Ran our first LLM using the HuggingFace API.</li>
 </ul>
-<p>In this notebook, we will now run a quantized LLM using the <a href="https://github.com/ggerganov/llama.cpp">llama.cpp</a> library. We choose the powerful and recently released <a href="https://mistral.ai/news/announcing-mistral-7b/"><code>Mistral-7B-Instruct-v0.1</code></a> model.</p>
-<p>Let’s start by looking at how this quantized model is different from the LLMs we ran in the previous lesson.</p>
+<p>In this notebook, we will run an LLM using the <a href="https://github.com/ggerganov/llama.cpp"><code>llama.cpp</code></a> library. We’ll deploy a version of the powerful, recently released <a href="https://blog.google/technology/developers/gemma-open-models/"><code>Gemma</code></a> model.</p>
+<p>llama.cpp is a library that lets us easily run <em>quantized</em> LLMs. What does it mean for a model to be quantized?</p>
 <section id="quantized-models" class="level2">
 <h2 class="anchored" data-anchor-id="quantized-models">Quantized models</h2>
-<p>llama.cpp is a library that lets us easily run <em>quantized</em> LLMs. What does it mean for a model to be quantized?</p>
-<p>Quantizing a model reduces the amount of memory it needs to run. This means we can fit a previously too-large model on less powerful machines, like a laptop or even a smaller GPU.</p>
-<p>To be more specific, quantization reduces the number of bits that represent each of the model’s weights. For example, instead of using floats with 32 bits of precision, we can use 8-bit or 4-bit floats to cut down on the overall memory.</p>
-<p>LLMs lose some of their accuracy and power when we quantize the weights. But, the performance drop is more than made up by the ability to run larger models on smaller machines.</p>
+<p>Quantizing a model reduces the amount of memory it takes up. This lets us run previously too-large models on less powerful hardware, like a laptop or a small, consumer GPU.</p>
+<p>Quantization works by reducing the number of bits that represent a model’s weights. For example, instead of using floats with 32 bits of precision, we can use 8-bit or 4-bit floats to reduce the memory footprint by quite a bit.</p>
+<p>LLMs do lose some accuracy and power when their weights are quantized. But, the drop in performance is more than made up for by the ability to run larger models on smaller machines. It’s better to run <em>something</em>, than to not run anything at all.</p>
 </section>
 </section>
 <section id="overview-of-llama.cpp" class="level1">
 <h1>Overview of llama.cpp</h1>
-<p>llama.cpp is designed to run quantized LLMs on a Mac. Despite its name, the project supports many other models beyond Llama and Llama-2. There are also <a href="https://github.com/abetlen/llama-cpp-python">python bindings</a> to make our lives even easier.</p>
-<p>The picture below comes from project’s README, and shows low-level details about how the repo works and what it supports.</p>
+<p>llama.cpp is a library focused on running quantized LLMs on Mac computers. Despite its name, the project supports many other models beyond Llama and Llama-2. It also has a set of <a href="https://github.com/abetlen/llama-cpp-python">python bindings</a> to make our lives easier.</p>
+<p>The picture below from project’s README shows the low-level details about how the repo works and what it supports.</p>
 <p><img src="llama_description.png" class="img-fluid"></p>
-<p>The original project was hacked together in a <a href="https://github.com/ggerganov/llama.cpp/issues/33#issuecomment-1465108022">single evening</a>, and has since become arguably the SOTA for deploying LLMs on CPUs. This is in large part thanks to the dedicated and helpful community behind it.</p>
+<p>The original project was hacked together in a <a href="https://github.com/ggerganov/llama.cpp/issues/33#issuecomment-1465108022">single evening</a>, and has since become arguably the SOTA for deploying LLMs on CPUs. This is in largely thanks to the helpful and dedicated community behind it.</p>
 <p>Below we can see the full list of models that llama.cpp supports as of writing.</p>
 <p><img src="llama_model_support.png" class="img-fluid"></p>
-<p>The benefits of llama.cpp go beyond its code or models. Folks are always collaborating in <a href="https://github.com/ggerganov/llama.cpp/pulls">Pull Requests</a> to bring in the latest, greatest advances from the flood of LLM progress. Tracking these PRs is a great way of keeping up to date with the field.</p>
-<p>The community is also very open to hackers and new ideas: if something works and there’s proof, then it gets merged in.</p>
-<p>Next, let’s use llama.cpp to run a quantized <code>Mistral-v0.1</code> model.</p>
+<p>The benefits of llama.cpp stretch beyond its code and models. Folks are always collaborating in <a href="https://github.com/ggerganov/llama.cpp/pulls">Pull Requests</a> to bring in the latest, greatest advances from the flood of LLM progress. In fact, tracking these PRs is a great way of keeping up to date with the larger LLM field.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The proof of the community’s power is in the this notebook. Originally, it used a Mistral model. And even though Gemma was released very recently, there was a PR to run it with llama.cpp within a few days of release.</p>
+</div>
+</div>
+<p>The community is also open to hackers and new approaches: if there is proof than an idea works, then it gets merged in.</p>
+<p>Next, let’s use llama.cpp to run a quantized <code>Gemma</code> model.</p>
 </section>
-<section id="running-mistral-v0.1-with-llama.cpp" class="level1">
-<h1>Running Mistral-v0.1 with llama.cpp</h1>
-<p>This section covers the following:</p>
-<ol type="1">
-<li>Creating a virtual env for llama.cpp<br>
-</li>
-<li>Installing the <code>llama.cpp</code> repo<br>
-</li>
-<li>Downloading a quantized <code>Mistral-v0.1</code> model<br>
-</li>
-<li>Running the model directly with <code>llama.cpp</code><br>
-</li>
-<li>Running the model in a Jupyter Notebook</li>
-</ol>
-<p>First, we create a mamba environment to keep our work isolated. Then we download and install the repo.</p>
-<p>Next we download the actual Mistral model from the HuggingFace Model Hub.</p>
-<p>Lastly, we run the Mistral model first with C++ and then in a Jupyter Notebook.</p>
-<section id="building-llama.cpp" class="level3">
-<h3 class="anchored" data-anchor-id="building-llama.cpp">Building llama.cpp</h3>
-<p>Go ahead and create a new python3.11 mamba environment:</p>
+<section id="running-gemma-with-llama.cpp" class="level1">
+<h1>Running Gemma with llama.cpp</h1>
+<p>This section covers the following:<br>
+1. Create a virtual env for llama.cpp<br>
+2. Instal the <code>llama.cpp</code> repo<br>
+3. Download a quantized <code>Gemma</code> model<br>
+4. Run the model directly with <code>llama.cpp</code><br>
+5. Run the model in a Jupyter Notebook</p>
+<p>First, we create a mamba environment to keep our work isolated. Then we download and install the llama.cpp repo. Next we download the actual gemma-7b-it model from the HuggingFace Model Hub. Lastly, we run the gemma-7b-it model first with C++ and then in a Jupyter Notebook.</p>
+<section id="installing-llama.cpp" class="level3">
+<h3 class="anchored" data-anchor-id="installing-llama.cpp">Installing llama.cpp</h3>
+<p>Start by creating a new mamba environment for llama.cpp.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create an environment for llama.cpp</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> create <span class="at">-n</span> llama-cpp python=3.11</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This isn’t <em>strictly</em> necessary for llama.cpp since it uses C++, but we will need the env later for the python bindings. And in any case, it’s best practice to keep our projects in isolated environments.</p>
-<p>Next, activate the new environment:</p>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> create <span class="at">-y</span> <span class="at">-n</span> llama-cpp python=3.11</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This isn’t <em>strictly</em> necessary for llama.cpp since it uses C++, but we will need the env later for the python bindings. And in any case, it’s a good idea to keep our projects in isolated environments.</p>
+<p>Next up, activate this new environment.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># activate the environment</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate llama-cpp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>We can now clone the repo.</p>
+<p>Now clone the repo and move into the directory.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clone and move into the llama.cpp repo</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ggerganov/llama.cpp</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> llama.cpp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>After cloning, we can move inside and prepare it for the build.</p>
-<p>There are two options to build llama.cpp:</p>
-<ul>
-<li><a href="https://www.gnu.org/software/make/">GNU Make</a><br>
-</li>
-<li><a href="https://cmake.org/">CMake</a></li>
-</ul>
-<p><code>make</code> works great on Linux, but I’ve had mixed results on Mac. For that reason, we’ll stick with <code>CMake</code> for now.</p>
-<p>The best bet is grabbing the CMake installer from the <a href="https://cmake.org/download/">official site</a>. Download the appropriate one for your system and install it.</p>
-<p>With CMake installed, we can now follow a standard build process. This might look familiar if you’ve installed other software libraries from source.</p>
-<p>Start by creating and moving into the special <code>build/</code> folder:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a build directory and move into it</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> build</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> build</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Then run the <code>cmake</code> command that prepares the build. Here is where we can also specify other, special build options. For example, on Mac we can pass the <code>LLAMA_METAL=1</code> flag to use the GPU, or on Linux we can pass the <code>LLAMA_CUBLAS=1</code> flag to use an NVIDIA GPU.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare the llama.cpp build with Mac hardware acceleration</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-DLLAMA_METAL</span><span class="op">=</span>1 ..</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># # or, use the line below on Linux/Window to build for NVIDIA GPUs</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># cmake -DLLAMA_CUBLAS=1 ..</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>With the setup files ready we can now build the project:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build the accelerated llama.cpp project</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">--build</span> . <span class="at">--config</span> Release </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Once the build finishes, the binaries to run models will be inside of the <code>build/bin</code> folder. Inside this folder, the executable binary called <code>main</code> is how we’ll be calling llama.cpp to run LLMs.</p>
-<p>Now, we are ready to download the Mistral model.</p>
+<p>There are two options to build llama.cpp:<br>
+- <a href="https://www.gnu.org/software/make/">GNU Make</a><br>
+- <a href="https://cmake.org/">CMake</a></p>
+<p>Previously I had some issues with <code>make</code> on Mac. However, again thanks to the great llama.cpp community, the issues have been fixed. Go ahead and build the llama.cpp project.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># from the main llama.cpp directory, build it</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>That’s it! llama.cpp is now installed. We can now grab the quantized Gemma model.</p>
 </section>
-<section id="downloading-mistral-v0.1" class="level2">
-<h2 class="anchored" data-anchor-id="downloading-mistral-v0.1">Downloading Mistral-v0.1</h2>
-<p>We will download the <code>Mistral-7B-Instruct-v0.1</code> model. What exactly does it do? We can find out by breaking down the name a bit:</p>
-<ul>
-<li><code>Mistral</code> is the name given by the developers, in this case the <a href="https://mistral.ai/">Mistral.ai team</a><br>
-</li>
-<li><code>7B</code> means that the model has 7 billion parameters<br>
-</li>
-<li><code>Instruct</code> means that it was trained to follow and complete user instructions<br>
-</li>
-<li><code>v0.1</code> is the release version for this model</li>
-</ul>
-<p>Follow the link below to see the model on the HuggingFace Model Hub.</p>
+<section id="the-gemma-model" class="level2">
+<h2 class="anchored" data-anchor-id="the-gemma-model">The Gemma model</h2>
+<p>We will be working with the <a href="https://huggingface.co/google/gemma-7b-it"><code>gemma-7b-it</code></a> model. What exactly does it do? We can find out by breaking down the name a bit:<br>
+- <code>gemma</code> is the name given by the developers. - <code>7B</code> means that the model has 7 billion parameters<br>
+- <code>it</code> means that it was trained to follow and complete user instructions</p>
+<p>The link above takes you to the official, original model page on HuggingFace. I went ahead and quantized and uploaded a few models, as part of the lesson (check the Appendix for more details).</p>
 <blockquote class="blockquote">
-<p>Download link for <a href="https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF"><code>Mistral-7B-Instruct-v0.1</code></a></p>
+<p><a href="https://huggingface.co/enzokro/gemma-7b-it-gguf/tree/main">My quantized Gemma models</a></p>
 </blockquote>
-<p>Once on the page, click on the <code>Files and version</code> tab near the top. Here you’ll see a big list of different quantized models.</p>
-<p><img src="mistral_quantized.png" class="img-fluid"></p>
-<p>The files shown here are variants of the same, base Mistral model that were quantized in different ways.</p>
-<p>The names can be overwhelming. Let’s break them down a bit.</p>
-<p>You’ll notice that each file ends with a format like this: <code>Q*_*.gguf</code>.</p>
-<p>For example one model from the list is: <code>mistral-7B-Instruct-v0.1.Q4_K_S.gguf</code>. We already covered the first part of the name above.</p>
-<p>The <code>Q4</code> part means that the model was quantized with 4-bits. The <code>K_S</code> part refers to the specific flavor of quantization that was used.</p>
-<p>There is an unfortunate tradeoff between quantization and performance. The fewer bits we use, the smaller and faster the model will be at the code of performance. And the more bits we use, the better its performance but the slower the model.</p>
+<p>Once on the page, click on the <code>Files</code> tab near the top. Here you’ll see a big list of different quantized models.</p>
+<p><img src="enzokro_gemma_quants.png" class="img-fluid"></p>
+<p>The files shown here are variants of the same, base gemma-7b-it model that were quantized in different ways. Why are there two different files, and how are they different?</p>
+<section id="breaking-down-the-quantized-gemma-names" class="level3">
+<h3 class="anchored" data-anchor-id="breaking-down-the-quantized-gemma-names">Breaking down the quantized gemma names</h3>
+<p>You can see how each quantized gemma model ends with a format like: <code>Q*_*.gguf</code>.</p>
+<p>For example the first file above is: <em>gemma-7b-it-v0.1.<strong>Q4_K_S.gguf</strong></em>. We already covered what the first part of the name means.</p>
+<p>The <code>Q4</code> part tells us that the model was quantized with 4-bits. The <code>K_S</code> part refers to the specific flavor of quantization that was used.</p>
+<p>There is an unfortunate tradeoff between quantization and performance. The fewer bits we use, the smaller and faster the model will be at the code of performance. And the more bits we use, the better its performance but the slower and larger the model.</p>
 <p>In general, the <code>Q4</code> and <code>Q5</code> models offer a good balance between speed, performance, and size.</p>
-<p>Let’s get back to running the model.</p>
-<p>We choose the <code>Q5_K_M</code> model. It is not much larger than the <code>Q4</code> models and has a performance better enough to make it worthwhile.</p>
-<p>Before grabbing this model, make sure the huggingface-hub CLI is installed. This will let us download models easily in the terminal.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install a tool to download HuggingFace models via the terminal</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install huggingface-hub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Then move into the <code>models/</code> folder inside of the llama.cpp repo, and download the our chosen model as follows:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download the Mistral Q5_K_M model</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">huggingface-cli</span> download TheBloke/Mistral-7B-Instruct-v0.1-GGUF <span class="dt">\</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    mistral-7b-instruct-v0.1.Q5_K_M.gguf <span class="dt">\</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--local-dir</span> . <span class="dt">\</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--local-dir-use-symlinks</span> False</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Once the model is downloaded, we’ll use the binary created by the build process to run it.</p>
+<p>Here we stick with the <code>Q5_K_M</code> model. It is not much larger than the <code>Q4</code> model, and has a performance better enough to make it worthwhile.</p>
+<p>Before grabbing this model, we need to install the <code>huggingface-hub</code> command-line interface (CLI) is installed. This tool will let us point to and download any model on the HuggingFace hub.</p>
 </section>
-<section id="running-the-mistral-model" class="level2">
-<h2 class="anchored" data-anchor-id="running-the-mistral-model">Running the Mistral model</h2>
-<p>We’ll use the <code>main</code> binary inside of the <code>build/</code> folder from before to run the <code>Q5_K_M</code> model.</p>
-<p>Run the following command to see the Mistral LLM in action! Here we prompt it to tell us how to build a website in 10 steps.</p>
-<p>The <code>-m</code> flag points to the model weight we downloaded into the <code>models/</code> folder.</p>
+<section id="downloaidng-a-quantized-gemma-model" class="level3">
+<h3 class="anchored" data-anchor-id="downloaidng-a-quantized-gemma-model">Downloaidng a quantized Gemma model</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install a tool to download HuggingFace models via the terminal</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install huggingface-hub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then move into <code>models/</code> and create a <code>gemma-7b-it</code> folder. Having one folder for each family of models keeps the folder from getting cluttered. Once inside, download the Q5_K_M model.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># from the llama.cpp directory, move into the models directory</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> models</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create and move into the gemma-7b-it directory</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> gemma-7b-it</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> gemma-7b-it</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># download the quantized gemma-7b-it model</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="ex">huggingface-cli</span> download enzokro/gemma-7b-it-gguf <span class="dt">\</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    gemma-7b-it-Q5_K_M.gguf <span class="dt">\</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">--local-dir</span> . <span class="dt">\</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">--local-dir-use-symlinks</span> False</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># download the quantized gemma-7b-it model</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="ex">huggingface-cli</span> download TheBloke/Mistral-7B-Instruct-v0.2-GGUF <span class="dt">\</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    mistral-7b-instruct-v0.2.Q4_K_S.gguf <span class="dt">\</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">--local-dir</span> . <span class="dt">\</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">--local-dir-use-symlinks</span> False</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="ex">huggingface-cli</span> download TheBloke/Llama-2-7B-Chat-GGUF <span class="dt">\</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    llama-2-7b-chat.Q4_K_M.gguf <span class="dt">\</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">--local-dir</span> . <span class="dt">\</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">--local-dir-use-symlinks</span> False</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once the model is downloaded, we can run it with the <code>main</code> binary from the llama.cpp repo.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The binaries are created as part of the build process - make sure you’ve ran those before going forward.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="running-the-gemma-model" class="level2">
+<h2 class="anchored" data-anchor-id="running-the-gemma-model">Running the Gemma model</h2>
+<p>Let’s get right to it. Start with the command below, which will immediately prompt and run the quantized gemma model. We’re asking it to give us 10 simple steps for building a website. Then, we’ll breakdown exactly what the command is doing.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run a simple example to see quantized Gemma in action</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./main</span> <span class="at">-m</span> models/gemma-7b-it/gemma-7b-it-Q5_K_M.gguf <span class="dt">\</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">-p</span> <span class="st">"Please provide 10 simple steps for building a website."</span> <span class="dt">\</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--in-prefix</span> <span class="st">"&lt;start_of_turn&gt;user\n"</span> <span class="dt">\</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--in-suffix</span> <span class="st">"&lt;end_of_turn&gt;\n&lt;start_of_turn&gt;model\n"</span> <span class="dt">\</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">-e</span> <span class="dt">\</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">--temp</span> 0 <span class="dt">\</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">--repeat-penalty</span> 1.0 <span class="dt">\</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">--no-penalize-nl</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>-m</code> flag points to the quantized model weight we downloaded into the <code>models/gemma-7b-it</code> folder.</p>
 <p>The <code>-p</code> flag is the prompt for the model to follow.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># from build/, run the official example to see Mistral-v0.1 in action</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./bin/main</span> <span class="at">-m</span> ../models/mistral-7b-instruct-v0.1.Q5_K_M.gguf <span class="dt">\</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">-p</span> <span class="st">"Building a website can be done in 10 simple steps:\nStep 1:"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Here’s a short snippet from my output after running the command:</p>
-<pre><code>Building a website can be done in 10 simple steps:  
-
-Step 1: Choose your website builder
-Step 2: Select a template and customize it to suit your needs.
-Step 3: Add content to your website such as text, images, and videos.
-Step 4: Optimize your website for search engines using keywords and meta tags.
-Step 5: Publish your website on the web server or hosting provider.
-Step 6: Promote your website through social media, email marketing, paid advertising, and other channels.
-Step 7: Monitor your website's analytics to see how users interact with it.
-Step 8: Keep your website up-to-date by regularly updating content and fixing any bugs or errors.
-Step 9: Consider adding e-commerce functionality to sell products or services online.
-Step 10: Continuously improve your website's design, usability, and performance to enhance the user experience</code></pre>
+<p>Here is where things get interesting. Remember that Gemma was trained to follow instructions from a user. During training, it was shown a pair of <code>&lt;PROMPT&gt;</code> and <code>&lt;RESPONSE&gt;</code> strings. The <code>&lt;PROMPT&gt;</code> string is the user’s input, and the <code>&lt;RESPONSE&gt;</code> string is the model’s output.</p>
+<p>That means the model expects to see the same <code>&lt;PROMPT&gt; | &lt;RESPONSE&gt;</code> format in its input. This is very similar to the text preprocessing steps we covered in Lesson 3. Making sure we follow the model’s expected prompt format is the last text preprocessing step we <em>must</em> do.</p>
+<p>Without this prompt structure, the model will technically still run. But we’d be throwing away a huge portion of the model’s power.</p>
+<p>For the Gemma models, the <code>&lt;PROMPT&gt;</code> must begin with the phrase <code>&lt;start_of_turn&gt;user\n</code>. This tells the model to prepare for an instruction. And the <code>&lt;RESPONSE&gt;</code> string must begin with the phrase <code>&lt;end_of_turn&gt;\n&lt;start_of_turn&gt;model\n</code>. This tells the model to start following the request.</p>
+<p>We specify the first string by passing in the <code>--in-prefix</code> argument. And we specify the second by passing in the <code>--in-suffix</code> argument. Our actual prompt will be sandwiched between these two strings:</p>
+<pre><code>&lt;start_of_turn&gt;user
+|| INSTRUCTION_HERE ||
+&lt;end_of_turn&gt;
+&lt;start_of_turn&gt;model</code></pre>
+<p>The last three arguments are specific to the instruction model. They control the temperature, the repeat penalty, and the penalty for newlines.</p>
+<pre><code>--temp 0
+--repeat-penalty 1.0
+--no-penalize-nl</code></pre>
+<p>Think of them as sprinkles on top to get better model outputs. And for reference, they were suggested by <a href="https://huggingface.co/google/gemma-7b-it/discussions/38#65d7b14adb51f7c160769fa1">Georgi Gerganov</a>, the main author of llama.cpp.</p>
+</section>
+<section id="gemma-model-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="gemma-model-outputs">Gemma model outputs</h2>
+<p>Here’s a the output I got after running the command:</p>
+<blockquote class="blockquote">
+<p>Please provide 10 simple steps for building a website.</p>
+<p><strong>1. Choose a Domain Name:</strong> Select a domain name that is relevant to your website’s content and easy to remember.<br>
+<strong>2. Choose a Web Host:</strong> Select a web hosting service that meets your needs in terms of bandwidth, storage space, and reliability.<br>
+<strong>3. Select a Content Management System (CMS):</strong> Choose a CMS platform that offers the features you need to manage your website content easily.<br>
+<strong>4. Design Your Website:</strong> Create a visually appealing website design that is responsive to different devices.<br>
+<strong>5. Add Content:</strong> Populate your website with high-quality content that is relevant to your target audience.<br>
+<strong>6. Optimize for Search Engines:</strong> Use SEO techniques to optimize your website for search engines to improve its visibility.<br>
+<strong>7. Create a Mobile-Friendly Version:</strong> Ensure your website is responsive and optimized for mobile devices.<br>
+<strong>8. Promote Your Website:</strong> Use social media and other marketing channels to promote your website.<br>
+<strong>9. Track and Analyze:</strong> Monitor your website’s performance and analyze user behavior to identify areas for improvement.<br>
+<strong>10. Continuously Update:</strong> Keep your website up-to-date with new content, updates, and security patches.</p>
+</blockquote>
 <p>Congratulation! We have now:<br>
 - Downloaded and built llama.cpp.<br>
-- Downloaded a quantized Mistral-v0.1 model.<br>
-- Ran the Mistral model on a sample input.</p>
+- Downloaded a quantized Gemma model.<br>
+- Ran the Gemma model on a sample input.</p>
 <p>Everything so far was done in C++ via the terminal.</p>
-<p>Next, let’s run the Mistral model inside a Jupyter Notebook with the llama.cpp python bindings. This will give us a preview into a fun way of augmenting your work with LLMs: coding alongside an Agent that you can talk to anytime by popping into a code cell.</p>
+<p>Next, let’s run the Gemma model inside a Jupyter Notebook with the llama.cpp python bindings. This will give us a preview into a fun way of augmenting your work with LLMs: coding alongside an Agent that you can talk to anytime by popping into a code cell.</p>
 </section>
 </section>
-<section id="running-mistral-v0.1-with-python" class="level1">
-<h1>Running Mistral-v0.1 with python</h1>
+<section id="running-gemma-with-python" class="level1">
+<h1>Running Gemma with python</h1>
 <p>Make sure to install the llama.cpp python bindings inside of the mamba virtual environment we created earlier.</p>
 <p>The pair of pip commands below will install the bindings.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install the python bindings with Metal acceleration</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> uninstall llama-cpp-python <span class="at">-y</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="va">CMAKE_ARGS</span><span class="op">=</span><span class="st">"-DLLAMA_METAL=on"</span> <span class="ex">pip</span> install <span class="at">-U</span> llama-cpp-python <span class="at">--no-cache-dir</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install the python bindings with Metal acceleration</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> uninstall llama-cpp-python <span class="at">-y</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="va">CMAKE_ARGS</span><span class="op">=</span><span class="st">"-DLLAMA_METAL=on"</span> <span class="ex">pip</span> install <span class="at">-U</span> llama-cpp-python <span class="at">--no-cache-dir</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The two commands above:<br>
 - First uninstall older versions of the bindings, if any are found.<br>
 - Then, it installs the bindings with Metal (Mac GPU) acceleration.</p>
@@ -413,38 +460,92 @@ Note
 <p>Make sure to change the <code>CMAKE_ARGS</code> to CUDA if running on Linux.</p>
 </div>
 </div>
+<p>Next up, let’s install the ipykernel package. This will let us run the llama.cpp environment inside of a Jupyter Notebook.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install the ipykernel package to run in notebooks</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install ipykernel</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>After installing the bindings, run the following code snippet in the notebook. This will tell us if the bindings are installed correctly.</p>
-<div id="cell-56" class="cell" data-execution_count="1">
+<div id="cell-59" class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check if we can import the llama.cpp python bindings </span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> llama_cpp <span class="im">import</span> Llama</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>If the command above works, we can now run the Mistral-v0.1 model inside a Jupyter Notebook!</p>
-<p>We can instantiate a <code>Llama</code> model object and point it to the weights we downloaded earlier. Make sure to change the paths to match your own.</p>
-<div id="cell-58" class="cell" data-execution_count="2">
+<p>If the command above works, we can now run the Gemma model inside a Jupyter Notebook!</p>
+<p>We can instantiate a <code>Llama</code> model object and point it to the weights we downloaded earlier. Make sure to change the paths to match your own. Here we point to the Q4 model to try something different.</p>
+<div id="cell-61" class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># point the Llama class to the model weights we downloaded in the previous sections</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>work_dir <span class="op">=</span> <span class="st">"/Users/cck/repos/llama.cpp/"</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> Llama(<span class="ss">f"</span><span class="sc">{</span>work_dir<span class="sc">}</span><span class="ss">/models/mistral-7b-instruct-v0.1.Q5_K_M.gguf"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>llm <span class="op">=</span> Llama(<span class="ss">f"</span><span class="sc">{</span>work_dir<span class="sc">}</span><span class="ss">/models/gemma-7b-it/gemma-7b-it-Q4_K_M.gguf"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s prompt it again to give us 10 steps for building a website.</p>
-<div id="cell-60" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># asking Mistral for help building a website</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Building a website can be done in 10 simple steps:</span><span class="ch">\n</span><span class="st">Step 1:"</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> llm(prompt, max_tokens<span class="op">=</span><span class="dv">512</span>, echo<span class="op">=</span><span class="va">True</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-63" class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># asking Gemma for help building a website</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>prefix <span class="op">=</span> <span class="st">"&lt;start_of_turn&gt;user"</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>suffix <span class="op">=</span> <span class="st">"&lt;end_of_turn&gt;</span><span class="ch">\n</span><span class="st">&lt;start_of_turn&gt;model</span><span class="ch">\n</span><span class="st">"</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Please provide 10 simple steps for building a website."</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>full_prompt <span class="op">=</span> <span class="ss">f'''&lt;start_of_turn&gt;user</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>prompt<span class="sc">}</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="ss">&lt;end_of_turn&gt;</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="ss">&lt;start_of_turn&gt;model"</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="ss">'''</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Let’s see what it said!</p>
-<div id="cell-62" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># viewing the in-notebook Mistral generation</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>output[<span class="st">'choices'</span>][<span class="dv">0</span>][<span class="st">'text'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>"Building a website can be done in 10 simple steps:\nStep 1: Plan the website: Determine what you want to achieve with your website, who your audience is, and how much content you need.\nStep 2: Choose a platform: There are many platforms available for building a website, such as WordPress, Wix, Squarespace, or Weebly. Choose one that suits your needs and budget.\nStep 3: Choose a domain name: Your domain name should be easy to remember and relevant to your business or brand. Register it with a domain registrar such as GoDaddy or Namecheap.\nStep 4: Design your website: Create a layout and choose colors, fonts, and images that align with your brand and appeal to your audience. Use a template or hire a web designer if needed.\nStep 5: Add content: Write and upload the text, images, and videos that will make up your website's content. Keep it easy to read and navigate, with clear calls to action.\nStep 6: Optimize for search engines: Use keywords, meta descriptions, and alt tags to improve your website's visibility on search engines such as Google.\nStep 7: Add functionality: Install plugins or add code to your website to add features such as a contact form, e-commerce cart, or social media integration.\nStep 8: Test and launch: Test your website for any errors or bugs before launching it to the public. Make sure it works on all devices and browsers.\nStep 9: Promote your website: Use social media, email marketing, and other channels to drive traffic to your website and attract new visitors.\nStep 10: Monitor and update: Keep track of your website's performance with analytics tools such as Google Analytics. Make updates and improvements as needed to keep your website relevant and engaging for your audience."</code></pre>
+<div id="cell-64" class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(full_prompt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div id="cell-65" class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calling the llm from the notebook</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> llm(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    full_prompt, </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    max_tokens<span class="op">=</span><span class="dv">1000</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    temperature<span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    repeat_penalty<span class="op">=</span><span class="fl">1.0</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    echo<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Congrats! We’ve now ran the <code>Mistral-7B-Instruct-v0.1</code> model with llama.cpp in both C++ and python.</p>
+<div id="cell-66" class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> some_function(input_one): </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># some programming...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-67" class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>llm(<span class="st">"Please remind me about the XYZ module."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s look inside <code>output</code> to see what the model said.</p>
+<div id="cell-69" class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-overflow-wrap code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># viewing the in-notebook gemma-7b-it generation</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(output[<span class="st">'choices'</span>][<span class="dv">0</span>][<span class="st">'text'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-70" class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># checking out the llm's arguments</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>llm??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Congrats! We’ve now ran the <code>gemma-7b-it</code> model with llama.cpp in both C++ and python.</p>
 <p>The C++ version is ideal for a server or production application. And as for python version, we can now bootup a handy LLM assistant inside a Jupyter Notebook, and ask it questions as we code or develop.</p>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>This notebook covered the llama.cpp library and how to use it to run LLMs. We then ran a <code>Mistral-7B-Instruct-v0.1</code> model with llama.cpp in both C++ and python.</p>
+<p>This notebook covered the llama.cpp library and how to use it to run LLMs. We then ran a <code>gemma-7b-it</code> model with llama.cpp in both C++ and python.</p>
 <p>The main goal here was to get you familiar with quantized models, which are the ones we’ll eventually be deploy on our local devices.</p>
+</section>
+</section>
+<section id="appendix-1-quantizing-the-gemma-7b-it-model" class="level1">
+<h1>Appendix 1: Quantizing the gemma-7b-it model</h1>
+<p>The model we used in this notebook was already quantized. I quantized the official, full GGUF model from Google and uploaded it to my own HuggingFace account.</p>
+<p>The steps below are how I quantized this model.</p>
+<section id="downloading-the-original-model" class="level2">
+<h2 class="anchored" data-anchor-id="downloading-the-original-model">Downloading the original model</h2>
+<p>First, we move into the <code>models/</code> folder and download the original model. I create a special <code>hf_models</code> folder to keep any models that came from the huggingface hub. Start from the base llama directory.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># move into the models/ and create a folder for huggingface models</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> models/</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> hf_models</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> hf_models</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download the original model</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">huggingface-cli</span> download google/gemma-7b-it <span class="dt">\</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    gemma-7b-it.gguf <span class="dt">\</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--local-dir</span> . <span class="dt">\</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--local-dir-use-symlinks</span> False</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once we have this model, we can run llama.cpp’s <code>quantize</code> command to compress it. I put this into a proper <code>gemma-7b-it</code> folder inside <code>models/</code> to keep things organized.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a folder for gemma-7b-it</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> models/gemma-7b-it</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># quantize the original model to the Q4_K_M format</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./quantize</span> models/hf_models/gemma-7b-it.gguf models/gemma-7b-it/gemma-7b-it-Q5_K_M.gguf Q5_K_M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
