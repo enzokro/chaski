@@ -892,11 +892,11 @@ font-style: inherit;">make</span></span></code></pre></div>
 </blockquote>
 <p>Once on the page, click on the <code>Files</code> tab near the top. Here you’ll see a big list of different quantized models.</p>
 <p><img src="https://enzokro.dev/blog/posts/fractal-llms/04-llama/enzokro_gemma_quants.png" class="img-fluid"></p>
-<p>The files shown here are variants of the same, base gemma-7b-it model that were quantized in different ways. Why are there two different files, and how are they different?</p>
+<p>The files shown here are variants of the same, base <code>gemma-7b-it</code> model that were quantized in different ways. Why are there two different files, and how are they different?</p>
 <section id="breaking-down-the-quantized-gemma-names" class="level3">
 <h3 class="anchored" data-anchor-id="breaking-down-the-quantized-gemma-names">Breaking down the quantized gemma names</h3>
 <p>You can see how each quantized gemma model ends with a format like: <code>Q*_*.gguf</code>.</p>
-<p>For example the first file above is: <em>gemma-7b-it-v0.1.<strong>Q4_K_S.gguf</strong></em>. We already covered what the first part of the name means.</p>
+<p>For example the first file above is: <em>gemma-7b-it-<strong>Q4_K_S.gguf</strong></em>. We already covered what the first part of the name means.</p>
 <p>The <code>Q4</code> part tells us that the model was quantized with 4-bits. The <code>K_S</code> part refers to the specific flavor of quantization that was used.</p>
 <p>There is an unfortunate tradeoff between quantization and performance. The fewer bits we use, the smaller and faster the model will be at the code of performance. And the more bits we use, the better its performance but the slower and larger the model.</p>
 <p>In general, the <code>Q4</code> and <code>Q5</code> models offer a good balance between speed, performance, and size.</p>
