@@ -3,19 +3,20 @@ body {
   font-family: 'Lora', 'Libre Baskerville', 'Courier New', serif, Courier, monospace;
   background-color: #f4f1e9;
   color: #333;
+  line-height: 1.6;
 }
 
 /* Typography */
 p {
-  margin-top: 0.2em;
-  margin-bottom: 0.65em;
-  line-height: 1.55;
+  margin-top: 0;
+  margin-bottom: 1rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Georgia', 'Lora', 'Georgia', serif;
   margin-top: 2rem;
   margin-bottom: 1rem;
+  line-height: 1.3;
 }
 
 /* Header */
@@ -25,13 +26,13 @@ header#quarto-header {
 
 .custom-title {
   font-family: Rosarivo, Georgia, 'Times New Roman', Times, serif;
-  font-size: 3.2rem;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
 }
 
 /* Navigation */
 .custom-nav {
-  padding-bottom: 3em;
-  padding-top: 2em;
+  padding: 1.5em 0;
 }
 
 .custom-nav-content {
@@ -57,20 +58,16 @@ header#quarto-header {
 
 /* Code cells */
 .cell {
-  margin-bottom: 1rem;
-  border: none;
-  background-color: none;
-  padding: 0;
+  margin-bottom: 1.5rem;
 }
 
 .cell > .sourceCode {
   background-color: #e8f0f2;
-  border: 2px solid #c0d0d0;
+  border: 1px solid #c0d0d0;
   padding: 1rem;
   font-family: 'Berkeley Mono', 'Cutive Mono', monospace;
-  box-shadow: 0 8px 16px rgba(42, 37, 37, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(42, 37, 37, 0.1);
   border-radius: 4px;
-  margin-bottom: 0;
   position: relative;
   z-index: 2;
 }
@@ -92,16 +89,13 @@ header#quarto-header {
 .cell-output > .sourceCode > pre,
 .cell-output-stdout > pre {
   background-color: #f0f5f7;
-  margin-top: -1rem;
-  margin-left: 1rem;
-  margin-right: 0.1rem;
-  margin-bottom: 1.5rem;
+  margin: -1rem 0 1.5rem 1rem;
   border: none;
-  padding: 2rem 1rem 1rem;
+  padding: 1.5rem 1rem 1rem;
   border-left: 2px solid #c0d0d0;
   border-right: 2px solid #c0d0d0;
   border-bottom: 2px solid #c0d0d0;
-  box-shadow: 0 8px 16px rgba(42, 37, 37, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px rgba(42, 37, 37, 0.1);
   border-radius: 0 0 4px 4px;
   position: relative;
   z-index: 1;
@@ -125,14 +119,14 @@ div.sourceCode {
   background-color: #e8f0f2;
   border: 1px solid #d0d0d0;
   padding: 0.5rem;
-  box-shadow: 0 6px 12px rgba(42, 37, 37, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(42, 37, 37, 0.1);
   border-radius: 4px;
   margin-bottom: 1rem;
   position: relative;
 }
 
 div.sourceCode::before {
-  content: 'Input';
+  content: 'Code';
   position: absolute;
   top: -1.5rem;
   left: 0;
@@ -145,10 +139,10 @@ div.sourceCode::before {
 
 /* Blockquotes */
 blockquote {
-  background-color: #f8f8f8; /* Change to a very light gray */
-  border-left: 4px solid #4e8d6c; /* Change to a muted purple left border */
-  padding: 1em;
-  margin: 1em 0;
+  background-color: #f8f8f8;
+  border-left: 4px solid #4e8d6c;
+  padding: 1rem;
+  margin: 1.5rem 0;
   color: #333;
   font-family: 'Lora', 'Courier New' serif, Courier, monospace;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -156,68 +150,45 @@ blockquote {
 }
 
 blockquote p {
+  margin: 0;
   position: relative;
   z-index: 1;
-  text-shadow: 2px 2px 3px #f8f8f8; /* Add a subtle text shadow */
 }
 
 blockquote p::before {
   content: "";
   position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
-  background-color: #f8f8f8; /* Add a semi-transparent white background */
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background-color: #f8f8f8;
   z-index: -1;
-  border-radius: 5px; /* Add rounded corners to the background */
+  border-radius: 3px;
 }
 
 /* Lists */
 ul, ol {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  padding: 0;
-  list-style-position: outside;
-}
-
-ul {
-  margin-left: 1.5em;
-  list-style-type: square;
-}
-
-ul ul {
-  list-style-type: disc;
-}
-
-ul ul ul {
-  list-style-type: circle;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-left: 2rem;
 }
 
 ul li, ol li {
-  margin-bottom: 0.20em;
-  line-height: 1.5;
-  font-size: 1em;
-}
-
-ol {
-  margin-left: 1.5em;
-}
-
-ul ul, ul ol, ol ul, ol ol {
-  margin-left: 1em;
+  margin-bottom: 0.5rem;
 }
 
 /* Tables */
 .table {
   font-size: 16px;
-  --bs-table-striped-bg: var(--bs-table-bg);
+  margin-bottom: 1.5rem;
+  width: 100%;
   border-collapse: collapse;
 }
 
 .table th, .table td {
   border: 1px solid #ddd;
-  padding: 0.5rem;
+  padding: 0.75rem;
 }
 
 /* Figures */
@@ -226,56 +197,34 @@ ul ul, ul ol, ol ul, ol ol {
 }
 
 .figure-caption {
-  font-size: 75%;
+  font-size: 90%;
   font-style: italic;
+  margin-top: 0.5rem;
 }
 
 img {
-  border: 1.5px solid #ddd8d8;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ddd8d8;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
   padding: 2px;
-  margin-top: 0.3em;
-  margin-bottom: 0.5em;
+  margin: 1rem 0;
 }
 
 /* Misc */
 .title.toc-ignore {
-  font-weight: 1000;
-}
-
-.wrapper {
-  border: 2px solid #ddd;
-  padding: 2rem;
-  margin: 2rem;
+  font-weight: 700;
 }
 
 div.description {
-  padding-left: 2px;
-  padding-top: 5px;
+  padding: 0.5rem 0;
   font-style: italic;
-  font-size: 135%;
-  opacity: 70%;
+  font-size: 120%;
+  opacity: 80%;
 }
 
-/* Collapsible content */
-.collapsible-content {
-  display: none;
-  padding-left: 1em;
-}
-
-.collapsible-trigger {
-  cursor: pointer;
-  position: relative;
-  padding-left: 1em;
-}
-
-.collapsible-trigger::before {
-  content: '▸';
-  position: absolute;
-  left: 0;
-  transition: transform 0.3s;
-}
-
-.collapsible-trigger.active::before {
-  transform: rotate(90deg);
+.wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
 }
