@@ -2414,7 +2414,7 @@ font-style: inherit;"># the distilbert sentiment analysis model</span></span>
   <media:content url="https://enzokro.dev/blog/posts/fractal-llms/03-hf-nlp-models/llama.jpeg" medium="image" type="image/jpeg"/>
 </item>
 <item>
-  <title>Lessong 2: Blogging with nbdev</title>
+  <title>Lesson 2: Blogging with nbdev</title>
   <dc:creator>Chris Kroenke</dc:creator>
   <link>https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/</link>
   <description><![CDATA[ 
@@ -2423,7 +2423,7 @@ font-style: inherit;"># the distilbert sentiment analysis model</span></span>
 
 
 <blockquote class="blockquote">
-<p>Making a personal blog course using nbdev.</p>
+<p>Making a personal blog with nbdev.</p>
 </blockquote>
 <section id="intro" class="level1">
 <h1>Intro</h1>
@@ -2436,9 +2436,12 @@ font-style: inherit;"># the distilbert sentiment analysis model</span></span>
 <section id="the-nbdev-framework" class="level1">
 <h1>The <code>nbdev</code> framework</h1>
 <p>We will setup our blog using <a href="https://nbdev.fast.ai/"><code>nbdev</code></a>. It is a great tool for creating powerful applications. <code>nbdev</code>’s core idea is that a project’s code, documentation, and tests should exist together as a unified, interactive document.</p>
-<p><code>nbdev</code> is inspired by two paradigms in the coding world:<br>
-- <a href="https://en.wikipedia.org/wiki/Literate_programming">Literate Programming</a><br>
-- <a href="https://en.wikipedia.org/wiki/Exploratory_programming">Exploratory Programming</a></p>
+<p><code>nbdev</code> is inspired by two paradigms in the coding world:</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Literate_programming">Literate Programming</a><br>
+</li>
+<li><a href="https://en.wikipedia.org/wiki/Exploratory_programming">Exploratory Programming</a></li>
+</ul>
 <p>Feel free to take some time now and click on the links above to learn more about these paradigms.</p>
 <p>Now, let’s go over these two ideas and explore why their combination is so powerful.</p>
 <section id="literate-programming" class="level2">
@@ -2463,14 +2466,17 @@ font-style: inherit;"># the distilbert sentiment analysis model</span></span>
 <p>And the best part is that if anything breaks, we can always restart the Notebook and try again. It’s like clearing out the whiteboard and taking another pass at the problem.</p>
 <p>We’ve talked a big game about what <code>nbdev</code> can do for writing great software projects. Now, to get back on track, let’s look at how <code>nbdev</code> can turn Notebooks into our future blog posts.</p>
 </section>
-</section>
-<section id="turning-notebooks-into-blog-posts" class="level1">
-<h1>Turning Notebooks into Blog Posts</h1>
+<section id="turning-notebooks-into-blog-posts" class="level2">
+<h2 class="anchored" data-anchor-id="turning-notebooks-into-blog-posts">Turning Notebooks into Blog Posts</h2>
 <p>First, a high-level look at the process we will follow to setup our blog:</p>
-<p><strong>High-Level Steps</strong><br>
-1. Create a new <code>nbdev</code> project.<br>
-2. Make a blog inside the project.<br>
-3. Publish and host the blog for free on Github Pages.</p>
+<p><strong>High-Level Steps:</strong></p>
+<ol type="1">
+<li>Create a new <code>nbdev</code> project.<br>
+</li>
+<li>Make a blog inside the project.<br>
+</li>
+<li>Publish and host the blog for free on Github Pages.</li>
+</ol>
 <p><code>nbdev</code> relies on the <a href="https://quarto.org/">Quarto framework</a> to publish blogs. Quarto is a framework for writing beautiful technical and scientific articles. In a way, it’s a blogging platform for Literate Programming, where a series of code and comments lead the reader on a journey.</p>
 <p>The picture below from the official Quarto site gives shows what the framework is all about.</p>
 <p><img src="https://enzokro.dev/blog/posts/fractal-llms/02-nbdev/quarto.png" class="img-fluid"></p>
@@ -2678,6 +2684,7 @@ font-style: inherit;"># publish the blog on github pages</span></span>
 background-color: null;
 font-style: inherit;">quarto</span> publish</span></code></pre></div>
 <p>And there we go! We created and published our first blog post using <code>nbdev</code>. <a href="https://enzokro.dev/blog/posts/2023-09-27-Session_1_nbdev/">Click here</a> for a live link to this Notebook as a blog post.</p>
+</section>
 </section>
 </section>
 </section>
