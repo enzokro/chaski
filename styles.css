@@ -67,7 +67,7 @@ header#quarto-header {
   background-color: #e8f0f2;
   border: 2px solid #c0d0d0;
   padding: 1rem;
-  font-family: 'Cutive Mono', monospace;
+  font-family: 'Berkeley Mono', 'Cutive Mono', monospace;
   box-shadow: 0 8px 16px rgba(42, 37, 37, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   margin-bottom: 0;
@@ -121,7 +121,7 @@ header#quarto-header {
 
 /* Inline code */
 div.sourceCode {
-  font-family: 'Cutive Mono', monospace;
+  font-family: 'Berkeley Mono', 'Cutive Mono', monospace;
   background-color: #e8f0f2;
   border: 1px solid #d0d0d0;
   padding: 0.5rem;
