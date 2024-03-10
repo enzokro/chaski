@@ -3,23 +3,23 @@
   --quarto-hl-al-color: #9B3A40;
   --quarto-hl-an-color: #4682B4;
   --quarto-hl-at-color: #3B5278;
-  --quarto-hl-bn-color: #C98A9B;
+  --quarto-hl-bn-color: #F44336;
   --quarto-hl-bu-color: #4682B4;
   --quarto-hl-ch-color: #9f79ee;
   --quarto-hl-co-color: #3C763D;
   --quarto-hl-cv-color: #3C763D;
-  --quarto-hl-cn-color: #C98A9B;
-  --quarto-hl-cf-color: #D2691E;
+  --quarto-hl-cn-color: #F44336;
+  --quarto-hl-cf-color: #DB5A18;
   --quarto-hl-dt-color: #3B5278;
-  --quarto-hl-dv-color: #C98A9B;
+  --quarto-hl-dv-color: #F44336;
   --quarto-hl-do-color: #3C763D;
   --quarto-hl-er-color: #9B3A40;
   --quarto-hl-ex-color: #3B5278;
-  --quarto-hl-fl-color: #C98A9B;
+  --quarto-hl-fl-color: #F44336;
   --quarto-hl-fu-color: #4682B4;
-  --quarto-hl-im-color: #D2691E;
+  --quarto-hl-im-color: #DB5A18;
   --quarto-hl-in-color: #6A8998;
-  --quarto-hl-kw-color: #D2691E;
+  --quarto-hl-kw-color: #DB5A18;
   --quarto-hl-op-color: #333;
   --quarto-hl-ot-color: #3B5278;
   --quarto-hl-pp-color: #3B5278;
@@ -55,7 +55,7 @@ code span.at {
 }
 
 code span.bn {
-  color: #C98A9B;
+  color: #F44336;
   font-style: inherit;
 }
 
@@ -82,12 +82,12 @@ code span.cv {
 }
 
 code span.cn {
-  color: #C98A9B;
+  color: #F44336;
   font-style: inherit;
 }
 
 code span.cf {
-  color: #D2691E;
+  color: #DB5A18;
   font-weight: bold;
   font-style: inherit;
 }
@@ -98,7 +98,7 @@ code span.dt {
 }
 
 code span.dv {
-  color: #C98A9B;
+  color: #F44336;
   font-style: inherit;
 }
 
@@ -120,7 +120,7 @@ code span.ex {
 }
 
 code span.fl {
-  color: #C98A9B;
+  color: #F44336;
   font-style: inherit;
 }
 
@@ -130,7 +130,7 @@ code span.fu {
 }
 
 code span.im {
-  color: #D2691E;
+  color: #DB5A18;
   font-weight: bold;
   font-style: inherit;
 }
@@ -141,7 +141,7 @@ code span.in {
 }
 
 code span.kw {
-  color: #D2691E;
+  color: #DB5A18;
   font-weight: bold;
   font-style: inherit;
 }
