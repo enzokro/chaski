@@ -119,10 +119,9 @@ header#quarto-header {
   position: relative;
   z-index: 1;
   font-family: 'Berkeley Mono', 'Cutive Mono', monospace;
-  white-space: pre-wrap !important; /* Wrap text within the output cell */ 
-  word-break: break-word !important; /* To ensure words break properly */ 
-  overflow-wrap: break-word !important; /* To ensure the words wrap properly */
-  overflow-x: auto !important; /* Allows vertical scrolling if needed */ 
+  white-space: pre-wrap; /* Wrap text within the output cell */
+  word-break: break-word; /* Break words if needed */
+  overflow-wrap: break-word; /* Wrap long words */
 }
 
 
