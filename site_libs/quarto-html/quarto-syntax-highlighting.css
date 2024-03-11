@@ -1,35 +1,35 @@
 /* quarto syntax highlight colors */
 :root {
   --quarto-hl-al-color: #9B3A40;
-  --quarto-hl-an-color: #4682B4;
-  --quarto-hl-at-color: #3B5278;
-  --quarto-hl-bn-color: #E53935;
-  --quarto-hl-bu-color: #4682B4;
-  --quarto-hl-ch-color: #9A72E0;
+  --quarto-hl-an-color: #4C9EDC;
+  --quarto-hl-at-color: #4B6EAF;
+  --quarto-hl-bn-color: #E8625C;
+  --quarto-hl-bu-color: #4C9EDC;
+  --quarto-hl-ch-color: #A77EE8;
   --quarto-hl-co-color: #5C8A60;
   --quarto-hl-cv-color: #5C8A60;
-  --quarto-hl-cn-color: #E53935;
-  --quarto-hl-cf-color: #DB6C18;
-  --quarto-hl-dt-color: #3B5278;
-  --quarto-hl-dv-color: #E53935;
+  --quarto-hl-cn-color: #E8625C;
+  --quarto-hl-cf-color: #EC8B45;
+  --quarto-hl-dt-color: #4B6EAF;
+  --quarto-hl-dv-color: #E8625C;
   --quarto-hl-do-color: #5C8A60;
-  --quarto-hl-er-color: #9B3A40;
-  --quarto-hl-ex-color: #3B5278;
-  --quarto-hl-fl-color: #E53935;
-  --quarto-hl-fu-color: #4682B4;
-  --quarto-hl-im-color: #DB6C18;
+  --quarto-hl-er-color: #FF5370;
+  --quarto-hl-ex-color: #4B6EAF;
+  --quarto-hl-fl-color: #E8625C;
+  --quarto-hl-fu-color: #52A5EB;
+  --quarto-hl-im-color: #EC8B45;
   --quarto-hl-in-color: #6A8998;
-  --quarto-hl-kw-color: #DB6C18;
-  --quarto-hl-op-color: #333;
-  --quarto-hl-ot-color: #3B5278;
-  --quarto-hl-pp-color: #3B5278;
-  --quarto-hl-re-color: #4682B4;
-  --quarto-hl-sc-color: #9A72E0;
-  --quarto-hl-ss-color: #9A72E0;
-  --quarto-hl-st-color: #9A72E0;
-  --quarto-hl-va-color: #3B5278;
-  --quarto-hl-vs-color: #9A72E0;
-  --quarto-hl-wa-color: #D1BD91;
+  --quarto-hl-kw-color: #EC8B45;
+  --quarto-hl-op-color: #EC8B45;
+  --quarto-hl-ot-color: #4B6EAF;
+  --quarto-hl-pp-color: #4B6EAF;
+  --quarto-hl-re-color: #4C9EDC;
+  --quarto-hl-sc-color: #A77EE8;
+  --quarto-hl-ss-color: #A77EE8;
+  --quarto-hl-st-color: #A77EE8;
+  --quarto-hl-va-color: #4B6EAF;
+  --quarto-hl-vs-color: #A77EE8;
+  --quarto-hl-wa-color: #E8A25C;
 }
 
 /* other quarto variables */
@@ -45,28 +45,28 @@ code span.al {
 }
 
 code span.an {
-  color: #4682B4;
+  color: #4C9EDC;
   font-style: inherit;
 }
 
 code span.at {
-  color: #3B5278;
+  color: #4B6EAF;
   font-style: inherit;
 }
 
 code span.bn {
-  color: #E53935;
+  color: #E8625C;
   font-style: inherit;
 }
 
 code span.bu {
-  color: #4682B4;
+  color: #4C9EDC;
   font-weight: bold;
   font-style: inherit;
 }
 
 code span.ch {
-  color: #9A72E0;
+  color: #A77EE8;
   font-style: inherit;
 }
 
@@ -81,23 +81,23 @@ code span.cv {
 }
 
 code span.cn {
-  color: #E53935;
+  color: #E8625C;
   font-style: inherit;
 }
 
 code span.cf {
-  color: #DB6C18;
+  color: #EC8B45;
   font-weight: bold;
   font-style: inherit;
 }
 
 code span.dt {
-  color: #3B5278;
+  color: #4B6EAF;
   font-style: inherit;
 }
 
 code span.dv {
-  color: #E53935;
+  color: #E8625C;
   font-style: inherit;
 }
 
@@ -107,29 +107,29 @@ code span.do {
 }
 
 code span.er {
-  color: #9B3A40;
+  color: #FF5370;
   font-style: inherit;
   text-decoration: underline;
 }
 
 code span.ex {
-  color: #3B5278;
+  color: #4B6EAF;
   font-weight: bold;
   font-style: inherit;
 }
 
 code span.fl {
-  color: #E53935;
+  color: #E8625C;
   font-style: inherit;
 }
 
 code span.fu {
-  color: #4682B4;
+  color: #52A5EB;
   font-style: inherit;
 }
 
 code span.im {
-  color: #DB6C18;
+  color: #EC8B45;
   font-weight: bold;
   font-style: inherit;
 }
@@ -140,7 +140,7 @@ code span.in {
 }
 
 code span.kw {
-  color: #DB6C18;
+  color: #EC8B45;
   font-weight: bold;
   font-style: inherit;
 }
@@ -167,53 +167,53 @@ div.sourceCode pre.sourceCode {
 }
 
 code span.op {
-  color: #333;
+  color: #EC8B45;
   font-style: inherit;
 }
 
 code span.ot {
-  color: #3B5278;
+  color: #4B6EAF;
   font-style: inherit;
 }
 
 code span.pp {
-  color: #3B5278;
+  color: #4B6EAF;
   font-style: inherit;
 }
 
 code span.re {
-  color: #4682B4;
+  color: #4C9EDC;
   background-color: #E8EDF4;
   font-style: inherit;
 }
 
 code span.sc {
-  color: #9A72E0;
+  color: #A77EE8;
   font-style: inherit;
 }
 
 code span.ss {
-  color: #9A72E0;
+  color: #A77EE8;
   font-style: inherit;
 }
 
 code span.st {
-  color: #9A72E0;
+  color: #A77EE8;
   font-style: inherit;
 }
 
 code span.va {
-  color: #3B5278;
+  color: #4B6EAF;
   font-style: inherit;
 }
 
 code span.vs {
-  color: #9A72E0;
+  color: #A77EE8;
   font-style: inherit;
 }
 
 code span.wa {
-  color: #D1BD91;
+  color: #E8A25C;
   font-style: inherit;
 }
 
